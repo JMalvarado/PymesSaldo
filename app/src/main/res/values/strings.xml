@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PYMESSALDO</string>
+    <string name="hello">Saldo de estados de cuenta</string>
+    <string name="botonName"> TRY IT</string>
+    <string name="snackIsAdd"> Ingreso Satisfactorio </string>
+    <string name="snackNotAdd"> Ingreso Fallido </string>
+</resources>
