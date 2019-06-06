@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //private TextView Gasto;
     private EditText Ingreso;
     private EditText Ingasto;
+    private EditText Indescripcion;
     private Button btsaldo;
     //private TextView Date;
     DateTimeFormatter dtf;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Buttogasto=findViewById(R.id.idGasto);
         Ingreso=findViewById(R.id.etIngreso);
         Ingasto=findViewById(R.id.etGasto);
+        Indescripcion=findViewById(R.id.etdescripcion);
         VERTODO=findViewById(R.id.tabla);
         //Date=findViewById(R.id.date);
         TRYIT.setOnClickListener(this);
@@ -82,12 +84,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.Ingreso:
 
-                if ( (Ingreso.getText().toString().equals("")) || (Ingasto.getText().toString().equals("")) ) {
+                if ( (Ingreso.getText().toString().equals("")) && (Ingasto.getText().toString().equals("")) ) {
                     showMessage("Alerta", "Por favor complete todos los espacios");
                     break;
                 }
 
-                boolean isResultadd = SaldoDB.addEntry(DateNow,GastoVarint,IngresoVarint);
+                String descripcion = Indescripcion.getText().toString();
+
+                boolean isResultadd = SaldoDB.addEntry(DateNow,GastoVarint,IngresoVarint,descripcion);
 
                 if (isResultadd){
                     Toast.makeText(getApplicationContext(),getString(R.string.snackIsAdd),Toast.LENGTH_LONG).show();
@@ -97,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 Ingreso.setText("");
                 Ingasto.setText("");
+                Indescripcion.setText("");
                 break;
 
             case R.id.btsaldo:
@@ -123,13 +128,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 int totalSaldo = TotalIngresos - TotalGastos;
+                String strTotalSaldo = Integer.toString(totalSaldo);
 
-                System.out.println(totalSaldo);
+                //System.out.println(totalSaldo);
 
-                intentSaldos.putExtra("saldototal",totalSaldo);
-
+                //intentSaldos.putExtra("saldototal",totalSaldo);
 
                 startActivity(intentSaldos);
+
+                //showMessage("Saldo a la fecha", "Su saldo para el mes en curso:\n"+strTotalSaldo);
 
                 break;
 
@@ -144,7 +151,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //buffer.append("id: "+resultado.getString(0)+"\n");
                     buffer.append("Fecha: "+resultado.getString(1)+"\n");
                     buffer.append("Ingreso: "+resultado.getString(2)+"\n");
-                    buffer.append("Gasto: "+resultado.getString(3)+"\n\n");
+                    buffer.append("Gasto: "+resultado.getString(3)+"\n");
+                    buffer.append("Descripcion: "+resultado.getString(4)+"\n\n");
                 }
 
                 showMessage("Cuenta",buffer.toString());

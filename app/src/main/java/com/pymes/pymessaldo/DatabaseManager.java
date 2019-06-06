@@ -19,6 +19,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final String Col_Fecha = "Fecha";
     private static final String Col_Ingreso = "Ingreso";
     private static final String Col_Gasto = "Gasto";
+    private static final String Col_Descripcion = "Descripcion";
+
 
     //constructor
 
@@ -39,7 +41,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "Fecha DATE," +
                 "Ingreso INTEGER," +
-                "Gasto INTEGER)");
+                "Gasto INTEGER," +
+                "Descripcion TEXT)");
     }
 
     /**
@@ -56,7 +59,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
 
-    public boolean addEntry(String Date, int gasto, int ingreso) {
+    public boolean addEntry(String Date, int gasto, int ingreso, String descripcion) {
 
         SQLiteDatabase db = this.getWritableDatabase(); //Obtiene la instancia de base de datos para ingresar datos.
 
@@ -64,6 +67,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         contentValues.put(Col_Fecha, Date); //Almacena clave-valor para la tabla.
         contentValues.put(Col_Ingreso, ingreso); //Almacena clave-valor para la tabla.
         contentValues.put(Col_Gasto, gasto); //Almacena clave-valor para la tabla.
+        contentValues.put(Col_Descripcion, descripcion);
 
         //Ingresa datos.
         long resultado = db.insert(TABLA1_NOMBRE, null, contentValues);

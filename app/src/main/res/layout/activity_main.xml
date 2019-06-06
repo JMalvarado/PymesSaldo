@@ -28,6 +28,17 @@
 
     <TableRow>
 
+        <EditText
+            android:id="@+id/etdescripcion"
+            android:layout_column="1"
+            android:hint="Descripcion"
+            android:layout_width="0dp"
+            android:maxLength="30"
+            android:padding="20dip" />
+    </TableRow>
+
+    <TableRow>
+
         <Button
             android:id="@+id/Ingreso"
             android:layout_width="wrap_content"
