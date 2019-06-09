@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText Ingasto;
     private EditText Indescripcion;
     private Button btsaldo;
+    private Button btBusqueda;
     //private TextView Date;
     DateTimeFormatter dtf;
     private Button VERTODO;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         TRYIT=findViewById(R.id.Ingreso);
         btsaldo=findViewById(R.id.btsaldo);
+        btBusqueda=findViewById(R.id.busqueda);
         //Buttogasto=findViewById(R.id.idGasto);
         Ingreso=findViewById(R.id.etIngreso);
         Ingasto=findViewById(R.id.etGasto);
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TRYIT.setOnClickListener(this);
         btsaldo.setOnClickListener(this);
         VERTODO.setOnClickListener(this);
+        btBusqueda.setOnClickListener(this);
         //Buttogasto.setOnClickListener(this);
         SaldoDB=new DatabaseManager(this);
         dtf=DateTimeFormatter.ofPattern("YYYY-MM-dd");
@@ -130,13 +133,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int totalSaldo = TotalIngresos - TotalGastos;
                 String strTotalSaldo = Integer.toString(totalSaldo);
 
-                //System.out.println(totalSaldo);
-
                 //intentSaldos.putExtra("saldototal",totalSaldo);
 
-                startActivity(intentSaldos);
+                //startActivity(intentSaldos);
 
-                //showMessage("Saldo a la fecha", "Su saldo para el mes en curso:\n"+strTotalSaldo);
+                showMessage("Saldo a la fecha", "Su saldo para el mes en curso es:\n"+strTotalSaldo);
 
                 break;
 
@@ -156,6 +157,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 showMessage("Cuenta",buffer.toString());
+                break;
+
+            case R.id.busqueda:
+                Intent intentBusqueda = new Intent (this,Busqueda.class);
+
+                startActivity(intentBusqueda);
+
                 break;
         }
 
