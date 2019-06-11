@@ -1,44 +1,59 @@
 package com.pymes.pymessaldo;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    private String[] dataSet;
+    private List<ListData> listData;
+    private Context context;
+
+    public MyAdapter(List<ListData> listData, Context context) {
+        this.listData = listData;
+        this.context = context;
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.data_list, viewGroup, false);
+
+        return new MyViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+        ListData data = listData.get(i);
+
+        myViewHolder.tvDescr.setText(data.getDescr());
+        myViewHolder.tvFecha.setText(data.getFecha());
+    }
+
+    @Override
+    public int getItemCount() {
+        return listData.size();
+    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
-        public MyViewHolder(TextView tv) {
-            super(tv);
-            textView = tv;
+
+        public TextView tvDescr;
+        public TextView tvFecha;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            tvDescr = itemView.findViewById(R.id.tvListDescr);
+            tvFecha = itemView.findViewById(R.id.tvListFecha);
+
         }
     }
 
-    public MyAdapter (String[] myDataSet) {
-        dataSet = myDataSet;
-    }
 
-    // Crear nueva vista
-    @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder (ViewGroup parent, int viewtype) {
-        // Crear nueva vista
-        TextView v = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_saldos, parent, false);
-        MyViewHolder vh = new MyViewHolder(v);
-        return vh;
-    }
-
-    // Reemplazar el contenido de la vista
-    @Override
-    public void onBindViewHolder (MyViewHolder holder, int position){
-        holder.textView.setText(dataSet[position]);
-    }
-
-    // Retornar el tamanyo del dataset
-    @Override
-    public int getItemCount () {
-        return dataSet.length;
-    }
 }

@@ -162,5 +162,23 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 "AND strftime('%m',Fecha)=strftime('%m',date('now'))", null);
         return resultado;
     }
+
+    public Cursor getDataFromBegToDate (String finalDate) {
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor resultado=db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '"+finalDate+"' ", null);
+        return resultado;
+    }
+
+    public Cursor getDataFromDateToToday (String beginDate) {
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor resultado=db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '"+beginDate+"' ", null);
+        return resultado;
+    }
+
+    public Cursor getDataInDate (String beginDate, String finalDate) {
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor resultado=db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha BETWEEN '"+beginDate+"' AND '"+finalDate+"' ", null);
+        return resultado;
+    }
 }
 

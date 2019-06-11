@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btsaldo:
-                Intent intentSaldos=new Intent (this,Saldos.class);
+                //Intent intentSaldos=new Intent (this,Saldos.class);
 
                 ArrayList<Integer> ingresos = SaldoDB.getCurrentMonthIngresos();
                 ArrayList<Integer> gastos = SaldoDB.getCurrentMonthGastos();

@@ -1,5 +1,7 @@
 package com.pymes.pymessaldo;
 
+import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +12,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Busqueda extends AppCompatActivity {
 
@@ -24,8 +29,15 @@ public class Busqueda extends AppCompatActivity {
 
     private String diaInicSelec;
     private String mesInicSelec;
+    private String anyoInicSelec;
     private String diaFinalSelec;
     private String mesFinalSelec;
+    private String anyoFinalSelec;
+
+    DateTimeFormatter dtf;
+    String DateNow;
+
+    public static DatabaseManager SaldoDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +66,13 @@ public class Busqueda extends AppCompatActivity {
         mesInicioSpinner.setAdapter(adapterSpinnerMeses);
         diaFinalSpinner.setAdapter(adapterSpinnerDias);
         mesFinalSpinner.setAdapter(adapterSpinnerMeses);
+
+        SaldoDB=new DatabaseManager(this);
+
+        dtf=DateTimeFormatter.ofPattern("YYYY-MM-dd");
+        LocalDateTime now = LocalDateTime.now();
+        DateNow = dtf.format(now);
+
     }
 
     public void onClick(View view) {
@@ -97,6 +116,13 @@ public class Busqueda extends AppCompatActivity {
                     diaInicSelec = diaInicioSpinner.getSelectedItem().toString();
                     mesInicSelec = mesInicioSpinner.getSelectedItem().toString();
 
+                    if (anyo.getText().toString().equals("")) {
+                        Toast.makeText(this, "Por favor complete todos los espacios", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+
+                    anyoInicSelec = anyo.getText().toString();
+
                 }
 
                 if (!cbFinal.isChecked()) {
@@ -104,9 +130,57 @@ public class Busqueda extends AppCompatActivity {
                     diaFinalSelec = diaFinalSpinner.getSelectedItem().toString();
                     mesFinalSelec = mesFinalSpinner.getSelectedItem().toString();
 
+                    if (anyoFinal.getText().toString().equals("")) {
+                        Toast.makeText(this, "Por favor complete todos los espacios", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+
+                    anyoFinalSelec = anyoFinal.getText().toString();
+
+                }
+
+                Cursor resultado;
+
+                if ( (cbInicio.isChecked()) && (!cbFinal.isChecked()) ) {
+                    String finalDate = anyoFinalSelec+"-"+mesFinalSelec+"-"+diaFinalSelec;
+                    resultado = SaldoDB.getDataFromBegToDate(finalDate);
+                }
+                else if ( (!cbInicio.isChecked()) && (cbFinal.isChecked()) ) {
+                    String begDate = anyoInicSelec+"-"+mesInicSelec+"-"+diaInicSelec;
+                    resultado = SaldoDB.getDataFromDateToToday(begDate);
+                }
+                else if ( (cbInicio.isChecked()) && (cbFinal.isChecked() ) ) {
+                    resultado = SaldoDB.getAllData();
+                }
+                else {
+                    String begDate = anyoInicSelec+"-"+mesInicSelec+"-"+diaInicSelec;
+                    String finalDate = anyoFinalSelec+"-"+mesFinalSelec+"-"+diaFinalSelec;
+                    resultado = SaldoDB.getDataInDate(begDate, finalDate);
+                }
+
+                if(resultado.getCount()==0){
+                    showMessage("Alerta","No existen datos para mostrar");
+                }
+                else {
+                    StringBuffer buffer = new StringBuffer();
+                    while (resultado.moveToNext()){
+                        //buffer.append("id: "+resultado.getString(0)+"\n");
+                        buffer.append("Fecha: "+resultado.getString(1)+"\n");
+                        buffer.append("Ingreso: "+resultado.getString(2)+"\n");
+                        buffer.append("Gasto: "+resultado.getString(3)+"\n");
+                        buffer.append("Descripcion: "+resultado.getString(4)+"\n\n");
+                    }
                 }
 
                 break;
         }
+    }
+
+    public void showMessage(String titulo, String mensaje){
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(titulo);
+        builder.setMessage(mensaje);
+        builder.show();
     }
 }
