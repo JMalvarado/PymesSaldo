@@ -1,5 +1,6 @@
 package com.pymes.pymessaldo;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class Busqueda extends AppCompatActivity {
 
@@ -153,6 +155,11 @@ public class Busqueda extends AppCompatActivity {
                     resultado = SaldoDB.getAllData();
                 }
                 else {
+                    if ( (Integer.parseInt(anyoInicSelec)) < (Integer.parseInt(anyoFinalSelec)) ) {
+                        Toast.makeText(this, "El año inicial debe ser menor al final", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+
                     String begDate = anyoInicSelec+"-"+mesInicSelec+"-"+diaInicSelec;
                     String finalDate = anyoFinalSelec+"-"+mesFinalSelec+"-"+diaFinalSelec;
                     resultado = SaldoDB.getDataInDate(begDate, finalDate);
@@ -162,14 +169,26 @@ public class Busqueda extends AppCompatActivity {
                     showMessage("Alerta","No existen datos para mostrar");
                 }
                 else {
-                    StringBuffer buffer = new StringBuffer();
-                    while (resultado.moveToNext()){
-                        //buffer.append("id: "+resultado.getString(0)+"\n");
-                        buffer.append("Fecha: "+resultado.getString(1)+"\n");
-                        buffer.append("Ingreso: "+resultado.getString(2)+"\n");
-                        buffer.append("Gasto: "+resultado.getString(3)+"\n");
-                        buffer.append("Descripcion: "+resultado.getString(4)+"\n\n");
+                    Intent intentSearch = new Intent (this, DataSearch.class);
+
+                    ArrayList<String> descripciones = new ArrayList<>();
+                    ArrayList<String> fechas = new ArrayList<>();
+                    ArrayList<String> ingresos = new ArrayList<>();
+                    ArrayList<String> gastos = new ArrayList<>();
+
+                    while (resultado.moveToNext()) {
+                        descripciones.add(resultado.getString(4));
+                        fechas.add(resultado.getString(1));
+                        ingresos.add(resultado.getString(2));
+                        gastos.add(resultado.getString(3));
                     }
+
+                    intentSearch.putStringArrayListExtra("DESCRIPCIONES", descripciones);
+                    intentSearch.putStringArrayListExtra("FECHAS", fechas);
+                    intentSearch.putStringArrayListExtra("INGRESOS", ingresos);
+                    intentSearch.putStringArrayListExtra("GASTOS", gastos);
+
+                    startActivity(intentSearch);
                 }
 
                 break;
