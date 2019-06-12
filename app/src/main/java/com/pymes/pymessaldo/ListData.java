@@ -6,12 +6,18 @@ public class ListData {
     private String fecha;
     private String ingreso;
     private String gasto;
+    private String id;
 
-    public ListData(String descr, String fecha, String ingreso, String gasto) {
+    public ListData(String descr, String fecha, String ingreso, String gasto, String id) {
+        this.id = id;
         this.descr = descr;
         this.fecha = fecha;
         this.ingreso = ingreso;
         this.gasto = gasto;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getIngreso() {

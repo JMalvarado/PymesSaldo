@@ -259,18 +259,21 @@ public class Busqueda extends AppCompatActivity {
                     ArrayList<String> fechas = new ArrayList<>();
                     ArrayList<String> ingresos = new ArrayList<>();
                     ArrayList<String> gastos = new ArrayList<>();
+                    ArrayList<String> ids = new ArrayList<>();
 
                     while (resultado.moveToNext()) {
                         descripciones.add(resultado.getString(4));
                         fechas.add(resultado.getString(1));
                         ingresos.add(resultado.getString(2));
                         gastos.add(resultado.getString(3));
+                        ids.add(resultado.getString(0));
                     }
 
                     intentSearch.putStringArrayListExtra("DESCRIPCIONES", descripciones);
                     intentSearch.putStringArrayListExtra("FECHAS", fechas);
                     intentSearch.putStringArrayListExtra("INGRESOS", ingresos);
                     intentSearch.putStringArrayListExtra("GASTOS", gastos);
+                    intentSearch.putStringArrayListExtra("IDS", ids);
 
                     startActivity(intentSearch);
                 }

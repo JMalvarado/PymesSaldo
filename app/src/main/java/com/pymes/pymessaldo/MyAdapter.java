@@ -44,6 +44,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
                 intentInfo.putExtra("INGRESODATA", data.getIngreso());
                 intentInfo.putExtra("GASTODATA", data.getGasto());
+                intentInfo.putExtra("ID", data.getId());
 
                 context.startActivity(intentInfo);
             }

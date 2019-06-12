@@ -19,6 +19,7 @@ public class DataSearch extends AppCompatActivity {
     private ArrayList<String> fechas;
     private ArrayList<String> ingresos;
     private ArrayList<String> gastos;
+    private ArrayList<String> ids;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +36,21 @@ public class DataSearch extends AppCompatActivity {
         fechas = new ArrayList<>();
         ingresos = new ArrayList<>();
         gastos = new ArrayList<>();
+        ids = new ArrayList<>();
 
         descripciones = getIntent().getStringArrayListExtra("DESCRIPCIONES");
         fechas = getIntent().getStringArrayListExtra("FECHAS");
         ingresos = getIntent().getStringArrayListExtra("INGRESOS");
         gastos = getIntent().getStringArrayListExtra("GASTOS");
+        ids = getIntent().getStringArrayListExtra("IDS");
 
         for (int i=0; i<descripciones.size(); i++) {
             ListData listData = new ListData(
                     descripciones.get(i),
                     fechas.get(i),
                     ingresos.get(i),
-                    gastos.get(i)
+                    gastos.get(i),
+                    ids.get(i)
             );
 
             listItems.add(listData);
