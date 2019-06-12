@@ -1,11 +1,13 @@
 package com.pymes.pymessaldo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.List;
 
@@ -30,10 +32,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        ListData data = listData.get(i);
+        final ListData data = listData.get(i);
 
         myViewHolder.tvDescr.setText(data.getDescr());
         myViewHolder.tvFecha.setText(data.getFecha());
+
+        myViewHolder.linearLayout_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentInfo = new Intent (context, ItemInfo.class);
+
+                intentInfo.putExtra("INGRESODATA", data.getIngreso());
+                intentInfo.putExtra("GASTODATA", data.getGasto());
+
+                context.startActivity(intentInfo);
+            }
+        });
     }
 
     @Override
@@ -45,13 +59,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         public TextView tvDescr;
         public TextView tvFecha;
+        public LinearLayout linearLayout_data;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvDescr = itemView.findViewById(R.id.tvListDescr);
             tvFecha = itemView.findViewById(R.id.tvListFecha);
-
+            linearLayout_data = itemView.findViewById(R.id.linearLayout_data);
         }
     }
 

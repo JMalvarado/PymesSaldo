@@ -44,7 +44,9 @@ public class DataSearch extends AppCompatActivity {
         for (int i=0; i<descripciones.size(); i++) {
             ListData listData = new ListData(
                     descripciones.get(i),
-                    fechas.get(i)
+                    fechas.get(i),
+                    ingresos.get(i),
+                    gastos.get(i)
             );
 
             listItems.add(listData);

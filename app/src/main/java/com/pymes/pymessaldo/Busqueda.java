@@ -116,7 +116,46 @@ public class Busqueda extends AppCompatActivity {
                 if (!cbInicio.isChecked()) {
 
                     diaInicSelec = diaInicioSpinner.getSelectedItem().toString();
-                    mesInicSelec = mesInicioSpinner.getSelectedItem().toString();
+
+                    String mesInicialPalabra = mesInicioSpinner.getSelectedItem().toString();
+                    switch (mesInicialPalabra) {
+                        case "Ene":
+                            mesInicSelec = "01";
+                            break;
+                        case "Feb":
+                            mesInicSelec = "02";
+                            break;
+                        case "Mar":
+                            mesInicSelec = "03";
+                            break;
+                        case "Abr":
+                            mesInicSelec = "04";
+                            break;
+                        case "May":
+                            mesInicSelec = "05";
+                            break;
+                        case "Jun":
+                            mesInicSelec = "06";
+                            break;
+                        case "Jul":
+                            mesInicSelec = "07";
+                            break;
+                        case "Ago":
+                            mesInicSelec = "08";
+                            break;
+                        case "Set":
+                            mesInicSelec = "09";
+                            break;
+                        case "Oct":
+                            mesInicSelec = "10";
+                            break;
+                        case "Nov":
+                            mesInicSelec = "11";
+                            break;
+                        default:
+                            mesInicSelec = "12";
+                            break;
+                    }
 
                     if (anyo.getText().toString().equals("")) {
                         Toast.makeText(this, "Por favor complete todos los espacios", Toast.LENGTH_LONG).show();
@@ -130,7 +169,45 @@ public class Busqueda extends AppCompatActivity {
                 if (!cbFinal.isChecked()) {
 
                     diaFinalSelec = diaFinalSpinner.getSelectedItem().toString();
-                    mesFinalSelec = mesFinalSpinner.getSelectedItem().toString();
+                    String mesInicialPalabra = mesFinalSpinner.getSelectedItem().toString();
+                    switch (mesInicialPalabra) {
+                        case "Ene":
+                            mesFinalSelec = "01";
+                            break;
+                        case "Feb":
+                            mesFinalSelec = "02";
+                            break;
+                        case "Mar":
+                            mesFinalSelec = "03";
+                            break;
+                        case "Abr":
+                            mesFinalSelec = "04";
+                            break;
+                        case "May":
+                            mesFinalSelec = "05";
+                            break;
+                        case "Jun":
+                            mesFinalSelec = "06";
+                            break;
+                        case "Jul":
+                            mesFinalSelec = "07";
+                            break;
+                        case "Ago":
+                            mesFinalSelec = "08";
+                            break;
+                        case "Set":
+                            mesFinalSelec = "09";
+                            break;
+                        case "Oct":
+                            mesFinalSelec = "10";
+                            break;
+                        case "Nov":
+                            mesFinalSelec = "11";
+                            break;
+                        default:
+                            mesFinalSelec = "12";
+                            break;
+                    }
 
                     if (anyoFinal.getText().toString().equals("")) {
                         Toast.makeText(this, "Por favor complete todos los espacios", Toast.LENGTH_LONG).show();
@@ -155,10 +232,17 @@ public class Busqueda extends AppCompatActivity {
                     resultado = SaldoDB.getAllData();
                 }
                 else {
-                    if ( (Integer.parseInt(anyoInicSelec)) < (Integer.parseInt(anyoFinalSelec)) ) {
+                    if ( (Integer.parseInt(anyoInicSelec)) > (Integer.parseInt(anyoFinalSelec)) ) {
                         Toast.makeText(this, "El año inicial debe ser menor al final", Toast.LENGTH_LONG).show();
                         break;
                     }
+
+                    System.out.println(anyoInicSelec);
+                    System.out.println(mesInicSelec);
+                    System.out.println(diaInicSelec);
+                    System.out.println(anyoFinalSelec);
+                    System.out.println(mesFinalSelec);
+                    System.out.println(diaFinalSelec);
 
                     String begDate = anyoInicSelec+"-"+mesInicSelec+"-"+diaInicSelec;
                     String finalDate = anyoFinalSelec+"-"+mesFinalSelec+"-"+diaFinalSelec;
@@ -166,7 +250,7 @@ public class Busqueda extends AppCompatActivity {
                 }
 
                 if(resultado.getCount()==0){
-                    showMessage("Alerta","No existen datos para mostrar");
+                    Toast.makeText(this, "No se encontraron datos", Toast.LENGTH_LONG).show();
                 }
                 else {
                     Intent intentSearch = new Intent (this, DataSearch.class);
@@ -193,13 +277,5 @@ public class Busqueda extends AppCompatActivity {
 
                 break;
         }
-    }
-
-    public void showMessage(String titulo, String mensaje){
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(titulo);
-        builder.setMessage(mensaje);
-        builder.show();
     }
 }

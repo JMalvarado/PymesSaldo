@@ -10,19 +10,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ItemInfo"
+            android:parentActivityName=".DataSearch">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DataSearch" />
+        </activity>
+        <activity
             android:name=".DataSearch"
             android:parentActivityName=".Busqueda">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Busqueda"></meta-data>
-
+                android:value=".Busqueda" />
         </activity>
         <activity
             android:name=".Busqueda"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"></meta-data>
+                android:value=".MainActivity" />
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
