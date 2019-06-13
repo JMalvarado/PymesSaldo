@@ -3,6 +3,8 @@ package com.pymes.pymessaldo;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -36,17 +38,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TRYIT=findViewById(R.id.Ingreso);
         btsaldo=findViewById(R.id.btsaldo);
         btBusqueda=findViewById(R.id.busqueda);
-        //Buttogasto=findViewById(R.id.idGasto);
         Ingreso=findViewById(R.id.etIngreso);
         Ingasto=findViewById(R.id.etGasto);
         Indescripcion=findViewById(R.id.etdescripcion);
         VERTODO=findViewById(R.id.tabla);
-        //Date=findViewById(R.id.date);
         TRYIT.setOnClickListener(this);
         btsaldo.setOnClickListener(this);
         VERTODO.setOnClickListener(this);
         btBusqueda.setOnClickListener(this);
-        //Buttogasto.setOnClickListener(this);
         SaldoDB=new DatabaseManager(this);
         dtf=DateTimeFormatter.ofPattern("YYYY-MM-dd");
 
@@ -105,8 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btsaldo:
-                //Intent intentSaldos=new Intent (this,Saldos.class);
-
                 ArrayList<Integer> ingresos = SaldoDB.getCurrentMonthIngresos();
                 ArrayList<Integer> gastos = SaldoDB.getCurrentMonthGastos();
 
@@ -130,10 +127,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int totalSaldo = TotalIngresos - TotalGastos;
                 String strTotalSaldo = Integer.toString(totalSaldo);
 
-                //intentSaldos.putExtra("saldototal",totalSaldo);
-
-                //startActivity(intentSaldos);
-
                 showMessage("Saldo a la fecha", "Su saldo para el mes en curso es:\n"+strTotalSaldo);
 
                 break;
@@ -146,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 StringBuffer buffer = new StringBuffer();
                 while (resultado.moveToNext()){
-                    //buffer.append("id: "+resultado.getString(0)+"\n");
                     buffer.append("Fecha: "+resultado.getString(1)+"\n");
                     buffer.append("Ingreso: "+resultado.getString(2)+"\n");
                     buffer.append("Gasto: "+resultado.getString(3)+"\n");
@@ -174,5 +166,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.show();
     }
 
+    @Override
+    public void onBackPressed() {
+        Snackbar.make(findViewById(R.id.Layout), "Presione el botón 'Salir'", Snackbar.LENGTH_LONG)
+                .setAction("Salir", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intentSalir = new Intent(Intent.ACTION_MAIN);
+                        intentSalir.addCategory(Intent.CATEGORY_HOME);
+                        intentSalir.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intentSalir);
+                    }
+                })
+                .show();
+    }
 }
 
