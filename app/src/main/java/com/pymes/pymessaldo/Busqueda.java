@@ -2,13 +2,10 @@ package com.pymes.pymessaldo;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -20,6 +17,7 @@ import java.util.ArrayList;
 
 public class Busqueda extends AppCompatActivity {
 
+    private CheckBox cbMes;
     private CheckBox cbInicio;
     private CheckBox cbFinal;
     private EditText anyo;
@@ -29,12 +27,15 @@ public class Busqueda extends AppCompatActivity {
     private Spinner diaFinalSpinner;
     private Spinner mesFinalSpinner;
 
-    private String diaInicSelec;
-    private String mesInicSelec;
-    private String anyoInicSelec;
-    private String diaFinalSelec;
-    private String mesFinalSelec;
-    private String anyoFinalSelec;
+    public static String diaInicSelec;
+    public static String mesInicSelec;
+    public static String anyoInicSelec;
+    public static String diaFinalSelec;
+    public static String mesFinalSelec;
+    public static String anyoFinalSelec;
+    public static boolean cbMesIsChecked;
+    public static boolean cbInicioIsChecked;
+    public static boolean cbFinalIsChecked;
 
     DateTimeFormatter dtf;
     String DateNow;
@@ -46,6 +47,7 @@ public class Busqueda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busqueda);
 
+        cbMes = findViewById(R.id.cbMes);
         cbInicio = findViewById(R.id.cbInicio);
         cbFinal = findViewById(R.id.cbFinal);
         anyo = findViewById(R.id.etAnyo);
@@ -79,6 +81,33 @@ public class Busqueda extends AppCompatActivity {
 
     public void onClick(View view) {
         switch (view.getId()) {
+
+            case R.id.cbMes:
+                if(!cbMes.isChecked()) {
+                    cbInicio.setEnabled(true);
+                    diaInicioSpinner.setEnabled(true);
+                    mesInicioSpinner.setEnabled(true);
+                    anyo.setEnabled(true);
+
+                    cbFinal.setEnabled(true);
+                    diaFinalSpinner.setEnabled(true);
+                    mesFinalSpinner.setEnabled(true);
+                    anyoFinal.setEnabled(true);
+
+                }
+                else {
+                    cbInicio.setEnabled(false);
+                    diaInicioSpinner.setEnabled(false);
+                    mesInicioSpinner.setEnabled(false);
+                    anyo.setEnabled(false);
+
+                    cbFinal.setEnabled(false);
+                    diaFinalSpinner.setEnabled(false);
+                    mesFinalSpinner.setEnabled(false);
+                    anyoFinal.setEnabled(false);
+                }
+
+                break;
 
             case R.id.cbInicio:
 
@@ -157,7 +186,7 @@ public class Busqueda extends AppCompatActivity {
                             break;
                     }
 
-                    if (anyo.getText().toString().equals("")) {
+                    if ( (anyo.getText().toString().equals("")) && (!cbMes.isChecked()) ) {
                         Toast.makeText(this, "Por favor complete todos los espacios", Toast.LENGTH_LONG).show();
                         break;
                     }
@@ -209,7 +238,7 @@ public class Busqueda extends AppCompatActivity {
                             break;
                     }
 
-                    if (anyoFinal.getText().toString().equals("")) {
+                    if ( (anyoFinal.getText().toString().equals("")) && (!cbMes.isChecked()) ) {
                         Toast.makeText(this, "Por favor complete todos los espacios", Toast.LENGTH_LONG).show();
                         break;
                     }
@@ -220,7 +249,10 @@ public class Busqueda extends AppCompatActivity {
 
                 Cursor resultado;
 
-                if ( (cbInicio.isChecked()) && (!cbFinal.isChecked()) ) {
+                if(cbMes.isChecked()) {
+                    resultado = SaldoDB.getMonthData();
+                }
+                else if ( (cbInicio.isChecked()) && (!cbFinal.isChecked()) ) {
                     String finalDate = anyoFinalSelec+"-"+mesFinalSelec+"-"+diaFinalSelec;
                     resultado = SaldoDB.getDataFromBegToDate(finalDate);
                 }
@@ -228,7 +260,7 @@ public class Busqueda extends AppCompatActivity {
                     String begDate = anyoInicSelec+"-"+mesInicSelec+"-"+diaInicSelec;
                     resultado = SaldoDB.getDataFromDateToToday(begDate);
                 }
-                else if ( (cbInicio.isChecked()) && (cbFinal.isChecked() ) ) {
+                else if ( (cbInicio.isChecked()) && (cbFinal.isChecked()) ) {
                     resultado = SaldoDB.getAllData();
                 }
                 else {
@@ -236,13 +268,6 @@ public class Busqueda extends AppCompatActivity {
                         Toast.makeText(this, "El año inicial debe ser menor al final", Toast.LENGTH_LONG).show();
                         break;
                     }
-
-                    System.out.println(anyoInicSelec);
-                    System.out.println(mesInicSelec);
-                    System.out.println(diaInicSelec);
-                    System.out.println(anyoFinalSelec);
-                    System.out.println(mesFinalSelec);
-                    System.out.println(diaFinalSelec);
 
                     String begDate = anyoInicSelec+"-"+mesInicSelec+"-"+diaInicSelec;
                     String finalDate = anyoFinalSelec+"-"+mesFinalSelec+"-"+diaFinalSelec;
@@ -274,6 +299,10 @@ public class Busqueda extends AppCompatActivity {
                     intentSearch.putStringArrayListExtra("INGRESOS", ingresos);
                     intentSearch.putStringArrayListExtra("GASTOS", gastos);
                     intentSearch.putStringArrayListExtra("IDS", ids);
+
+                    cbMesIsChecked = cbMes.isChecked();
+                    cbInicioIsChecked = cbInicio.isChecked();
+                    cbFinalIsChecked = cbFinal.isChecked();
 
                     startActivity(intentSearch);
                 }

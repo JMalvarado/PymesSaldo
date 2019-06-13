@@ -156,7 +156,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return gastos;
     }
 
-    public Cursor getAllData(){
+    public Cursor getAllData() {
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor resultado=db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE, null);
+        return resultado;
+    }
+
+    public Cursor getMonthData() {
         SQLiteDatabase db=this.getWritableDatabase();
         Cursor resultado=db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
                 "AND strftime('%m',Fecha)=strftime('%m',date('now'))", null);
@@ -179,6 +185,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
         Cursor resultado=db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha BETWEEN '"+beginDate+"' AND '"+finalDate+"' ", null);
         return resultado;
+    }
+
+    public Integer deleteData (String id) {
+        SQLiteDatabase db=this.getWritableDatabase();
+        return db.delete(TABLA1_NOMBRE, "ID = ?", new String[] {id});
     }
 }
 

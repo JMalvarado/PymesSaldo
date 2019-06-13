@@ -3,7 +3,6 @@ package com.pymes.pymessaldo;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -20,14 +19,11 @@ import java.util.Iterator;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button TRYIT;
-    //private Button Buttogasto;
-    //private TextView Gasto;
     private EditText Ingreso;
     private EditText Ingasto;
     private EditText Indescripcion;
     private Button btsaldo;
     private Button btBusqueda;
-    //private TextView Date;
     DateTimeFormatter dtf;
     private Button VERTODO;
 
@@ -143,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.tabla:
-                Cursor resultado = SaldoDB.getAllData();
+                Cursor resultado = SaldoDB.getMonthData();
                 if(resultado.getCount()==0){
                     showMessage("Alerta","No existen datos para mostrar");
                     break;
