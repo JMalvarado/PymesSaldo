@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">PYMES Saldo</string>
+
+
+    <!--- Navigation Drawer -->
+    <string name="nav_change_profile">Cambiar perfil</string>
+    <string name="nav_add_entry">Agregar entrada</string>
+    <string name="nav_explore">Explorar</string>
+    <string name="nav_month_balance">Balance al mes</string>
+    <string name="nav_add_profile">Agregar perfil</string>
+    <string name="nav_conf_profile">Configurar perfil</string>
+    <string name="nav_exit">Salir</string>
+
+</resources>

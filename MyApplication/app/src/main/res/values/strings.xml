@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">PYMES Saldo</string>
+    <string name="addEntry_name">Agregar entrada</string>
+    <string name="itemInfo_name">Datos</string>
+    <string name="dataSearch_name">Exploración</string>
+    <string name="addProfile_name">Agregar negocio</string>
+    <string name="balance_name">Balance</string>
+    <string name="search_name">Explorar</string>
+
+    <string name="activity_add_profile_hint_nombre">Nombre del negocio</string>
+    <string name="activity_add_profile_button_ingresar">Agregar negocio</string>
+    <string name="activity_add_profile_msg_samename">El negocio ya existe</string>
+    <string name="fragment_search_textview_filtro">Filtro</string>
+    <string name="fragment_search_textview_inicio">Inicio</string>
+    <string name="fragment_search_textview_dia">Dia</string>
+    <string name="fragment_search_textview_mes">Mes</string>
+    <string name="fragment_search_textview_anyo">Año</string>
+    <string name="fragment_search_checkbox_principio">Desde el principio</string>
+    <string name="fragment_search_textview_final">Final</string>
+    <string name="fragment_search_checkox_hastahoy">Hasta hoy</string>
+    <string name="fragment_search_button_buscar">Buscar</string>
+    <string name="fragment_search_button_datebeg">Fecha</string>
+    <string name="fragment_search_button_datefinal">Fecha</string>
+    <string name="fragment_search_checkbox_saldoalmes">Saldo al mes</string>
+    <string name="fragment_balance_textView_titleBalance">El balance para el mes en curso es</string>
+
+    <string name="iteminfo_textView_gasto">Gasto:</string>
+    <string name="iteminfo_textView_ingreso">Ingreso:</string>
+    <string name="addentry_textView_hintIngreso">Ingreso</string>
+    <string name="addentry_textView_hintGasto">Gasto</string>
+    <string name="addentry_textView_hintDescr">Descripcion</string>
+    <string name="addentry_button_textIngresar">Ingresar</string>
+
+    <!-- Toast, snack bar and alerts -->
+    <string name="toast_addprofileactivity_noname">Por favor ingrese un nombre</string>
+    <string name="toast_searchfragment_nodata">Por favor seleccione las fechas deseadas</string>
+    <string name="toast_searchfragment_yeargreaterthan">El año inicial debe ser menor al final</string>
+    <string name="toast_searchfragment_nodatafound">No se encontraron datos</string>
+    <string name="toast_addEntryActivity_succesAdd">Dato ingresado con exito</string>
+    <string name="toast_addEntryActivity_noSuccesAdd">Error al ingresar dato</string>
+    <string name="snack_mainActivity_exit">Presione Salir</string>
+    <string name="alert_title">Alerta</string>
+    <string name="alert_addEntryActivity_nodata">Por favor complete todos los espacios</string>
+
+    <!-- Navigation Drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="toolbar_action_help">Ayuda</string>
+    <!-- Navigation Drawer Menu -->
+    <string name="nav_change_profile">Cambiar perfil</string>
+    <string name="nav_add_entry">Agregar entrada</string>
+    <string name="nav_explore">Explorar</string>
+    <string name="nav_month_balance">Balance al mes</string>
+    <string name="nav_add_profile">Agregar perfil</string>
+    <string name="nav_conf_profile">Configurar perfil</string>
+    <string name="nav_exit">Salir</string>
+
+</resources>

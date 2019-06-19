@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/navgroup_options"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_explore"
+            android:icon="@drawable/ic_search"
+            android:title="@string/nav_explore" />
+
+        <item
+            android:id="@+id/nav_month_balance"
+            android:icon="@drawable/ic_balance"
+            android:title="@string/nav_month_balance" />
+    </group>
+
+    <group
+        android:id="@+id/navgroup_profile"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_change_profile"
+            android:icon="@drawable/ic_profile"
+            android:title="@string/nav_change_profile" />
+
+        <item
+            android:id="@+id/nav_conf_profile"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/nav_conf_profile" />
+
+        <item
+            android:id="@+id/nav_add_profile"
+            android:icon="@drawable/ic_add_profile"
+            android:title="@string/nav_add_profile" />
+    </group>
+
+    <group
+        android:id="@+id/navgroup_exit"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/ic_exit"
+            android:title="@string/nav_exit" />
+    </group>
+
+</menu>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_info_descr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/iteminfo_textView_ingreso"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="@color/colorPrimary" />
+
+    <View
+        android:id="@+id/divider0_info"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="32dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/iteminfo_textView_ingreso" />
+
+    <TextView
+        android:id="@+id/tv_info_ingreso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/divider1_info"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="32dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/iteminfo_textView_gasto" />
+
+    <TextView
+        android:id="@+id/tv_info_gasto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/divider2_info"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="32dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_editar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="16dp"
+            android:backgroundTint="@android:color/darker_gray"
+            android:src="@drawable/ic_edit"
+            app:backgroundTint="@color/colorPrimary"
+            app:rippleColor="@color/colorPrimary" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_eliminar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:backgroundTint="@android:color/darker_gray"
+            android:src="@drawable/ic_delete"
+            app:backgroundTint="@color/colorPrimary"
+            app:rippleColor="@color/colorPrimary" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
