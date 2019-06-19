@@ -1,11 +1,14 @@
 package com.example.myapplication.activities.activities;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -16,6 +19,7 @@ import com.example.myapplication.activities.data.DatabaseManager;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 
 
 public class AddEntryActivity extends AppCompatActivity {
@@ -24,10 +28,16 @@ public class AddEntryActivity extends AppCompatActivity {
     private EditText editText_profit;
     private EditText editText_spend;
     private EditText editText_description;
+    private TextView textView_date;
     private Button button_in;
+    private Button button_addDate;
 
     // Global variables
     DateTimeFormatter dtf;
+    private String strDay;
+    private String strMonth;
+    private String strYear;
+    private String date;
 
     // Database instance
     public static DatabaseManager SaldoDB;
@@ -42,6 +52,8 @@ public class AddEntryActivity extends AppCompatActivity {
         editText_profit = findViewById(R.id.etIngreso);
         editText_spend = findViewById(R.id.etGasto);
         editText_description = findViewById(R.id.etdescripcion);
+        textView_date = findViewById(R.id.textView_addEntry_date);
+        button_addDate = findViewById(R.id.button_addEntry_date);
 
         // Database instance
         SaldoDB = new DatabaseManager(this);
@@ -58,6 +70,84 @@ public class AddEntryActivity extends AppCompatActivity {
         int IngresoVarint;
         int GastoVarint;
 
+        if (!textView_date.getText().toString().equals("")) {
+            // Cast day with 1 digit to 2
+            switch (strDay) {
+                case "1":
+                    strDay = "01";
+                    break;
+                case "2":
+                    strDay = "02";
+                    break;
+                case "3":
+                    strDay = "03";
+                    break;
+                case "4":
+                    strDay = "04";
+                    break;
+                case "5":
+                    strDay = "05";
+                    break;
+                case "6":
+                    strDay = "06";
+                    break;
+                case "7":
+                    strDay = "07";
+                    break;
+                case "8":
+                    strDay = "08";
+                    break;
+                case "9":
+                    strDay = "09";
+                    break;
+                default:
+                    break;
+            }
+
+            // Cast month with 1 digit to 2
+            switch (strMonth) {
+                case "1":
+                    strMonth = "01";
+                    break;
+                case "2":
+                    strMonth = "02";
+                    break;
+                case "3":
+                    strMonth = "03";
+                    break;
+                case "4":
+                    strMonth = "04";
+                    break;
+                case "5":
+                    strMonth = "05";
+                    break;
+                case "6":
+                    strMonth = "06";
+                    break;
+                case "7":
+                    strMonth = "07";
+                    break;
+                case "8":
+                    strMonth = "08";
+                    break;
+                case "9":
+                    strMonth = "09";
+                    break;
+                default:
+                    break;
+            }
+
+            // Set complete selected date
+            date = strYear + "-" + strMonth + "-" + strDay;
+        } else {
+            // Set now date
+            String DateNow;
+            LocalDateTime now = LocalDateTime.now();
+            DateNow = dtf.format(now);
+
+            date = DateNow;
+        }
+
         // Set 0 to blank spaces
         if (IngresoVar.equals("")) {
             IngresoVarint = 0;
@@ -70,11 +160,6 @@ public class AddEntryActivity extends AppCompatActivity {
         } else {
             GastoVarint = Integer.parseInt(GastoVar);
         }
-
-        // Set now date
-        String DateNow;
-        LocalDateTime now = LocalDateTime.now();
-        DateNow = dtf.format(now);
 
         switch (v.getId()) {
             case R.id.Ingreso:
@@ -95,7 +180,7 @@ public class AddEntryActivity extends AppCompatActivity {
                 SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
                 String id = prefs.getString("ID", null);
 
-                boolean isResultadd = SaldoDB.addEntry(DateNow, GastoVarint, IngresoVarint, descripcion, id);
+                boolean isResultadd = SaldoDB.addEntry(date, GastoVarint, IngresoVarint, descripcion, id);
 
                 if (isResultadd) {
                     Toast.makeText(getApplicationContext(), getString(R.string.toast_addEntryActivity_succesAdd), Toast.LENGTH_LONG).show();
@@ -105,6 +190,26 @@ public class AddEntryActivity extends AppCompatActivity {
                 editText_profit.setText("");
                 editText_spend.setText("");
                 editText_description.setText("");
+
+                break;
+
+            case R.id.button_addEntry_date:
+                Calendar calendar = Calendar.getInstance();
+                int dayPick = calendar.get(Calendar.DAY_OF_MONTH);
+                int monthPick = calendar.get(Calendar.MONTH);
+                int yearPick = calendar.get(Calendar.YEAR);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        textView_date.setText(new StringBuilder().append(i2).append("-").append(i1 + 1).append("-").append(i).toString());
+                        strDay = Integer.toString(i2);
+                        strMonth = Integer.toString(i1 + 1);
+                        strYear = Integer.toString(i);
+                    }
+                }, yearPick, monthPick, dayPick);
+                datePickerDialog.show();
+
                 break;
         }
 

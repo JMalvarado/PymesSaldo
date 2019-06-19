@@ -2,7 +2,7 @@
     <string name="app_name">PYMES Saldo</string>
     <string name="addEntry_name">Agregar entrada</string>
     <string name="itemInfo_name">Datos</string>
-    <string name="dataSearch_name">Exploración</string>
+    <string name="dataSearch_name">Lista</string>
     <string name="addProfile_name">Agregar negocio</string>
     <string name="balance_name">Balance</string>
     <string name="search_name">Explorar</string>
@@ -21,7 +21,7 @@
     <string name="fragment_search_button_buscar">Buscar</string>
     <string name="fragment_search_button_datebeg">Fecha</string>
     <string name="fragment_search_button_datefinal">Fecha</string>
-    <string name="fragment_search_checkbox_saldoalmes">Saldo al mes</string>
+    <string name="fragment_search_checkbox_saldoalmes">Datos del mes</string>
     <string name="fragment_balance_textView_titleBalance">El balance para el mes en curso es</string>
 
     <string name="iteminfo_textView_gasto">Gasto:</string>
@@ -30,6 +30,7 @@
     <string name="addentry_textView_hintGasto">Gasto</string>
     <string name="addentry_textView_hintDescr">Descripcion</string>
     <string name="addentry_button_textIngresar">Ingresar</string>
+    <string name="addentry_button_textFecha">Fecha</string>
 
     <!-- Toast, snack bar and alerts -->
     <string name="toast_addprofileactivity_noname">Por favor ingrese un nombre</string>

@@ -125,14 +125,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 intBegMonth = calendar.get(Calendar.MONTH);
                 intBegYear = calendar.get(Calendar.YEAR);
 
-                begDay = Integer.toString(intBegDay);
-                begMonth = Integer.toString(intBegMonth + 1);
-                begYear = Integer.toString(intBegYear);
-
                 datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         textView_dateBeging.setText(new StringBuilder().append(i2).append("-").append(i1 + 1).append("-").append(i).toString());
+                        begDay = Integer.toString(i2);
+                        begMonth = Integer.toString(i1 + 1);
+                        begYear = Integer.toString(i);
                     }
                 }, intBegYear, intBegMonth, intBegDay);
                 datePickerDialog.show();
@@ -145,14 +144,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 intFinMonth = calendar.get(Calendar.MONTH);
                 intFinYear = calendar.get(Calendar.YEAR);
 
-                finDay = Integer.toString(intFinDay);
-                finMonth = Integer.toString(intFinMonth + 1);
-                finYear = Integer.toString(intFinYear);
-
                 datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         textView_dateFinal.setText(new StringBuilder().append(i2).append("-").append(i1 + 1).append("-").append(i).toString());
+                        finDay = Integer.toString(i2);
+                        finMonth = Integer.toString(i1 + 1);
+                        finYear = Integer.toString(i);
                     }
                 }, intFinYear, intFinMonth, intFinDay);
                 datePickerDialog.show();
@@ -319,11 +317,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 } else if ((checkBox_begining.isChecked()) && (checkBox_final.isChecked())) {
                     resultado = SaldoDB.getEntryAllData(MainActivity.idInstance);
                 } else {
-                    if (intBegYear > intFinYear) {
-                        Toast.makeText(view.getContext(), getString(R.string.toast_searchfragment_yeargreaterthan), Toast.LENGTH_LONG).show();
-                        break;
-                    }
-
                     String begDate = begYear + "-" + begMonth + "-" + begDay;
                     String finalDate = finYear + "-" + finMonth + "-" + finDay;
                     resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate);

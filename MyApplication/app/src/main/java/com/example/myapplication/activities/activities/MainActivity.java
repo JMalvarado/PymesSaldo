@@ -31,7 +31,6 @@ import android.view.Menu;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -146,17 +145,15 @@ public class MainActivity extends AppCompatActivity
             int totalProfit = 0;
             int totalSpend = 0;
 
-            Iterator<Integer> profitIt = profit.iterator();
-            while (profitIt.hasNext()) {
+            for (Integer integer1 : profit) {
                 int ing;
-                ing = profitIt.next();
+                ing = integer1;
                 totalProfit += ing;
             }
 
-            Iterator<Integer> spendIt = spend.iterator();
-            while (spendIt.hasNext()) {
+            for (Integer integer : spend) {
                 int gas;
-                gas = spendIt.next();
+                gas = integer;
                 totalSpend += gas;
             }
 
