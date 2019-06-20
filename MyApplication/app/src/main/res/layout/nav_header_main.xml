@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
@@ -15,12 +16,32 @@
         android:id="@+id/textview_navheadermain_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="60dp"
+        android:background="@color/colorWhite" />
+
     <TextView
-        android:id="@+id/textview_navheadermain_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"
+        android:gravity="center_horizontal"
+        android:text="@string/header_textView_spinnerTitle"
+        android:textColor="@color/cardview_dark_background"
+        tools:ignore="PrivateResource" />
+
+    <Spinner
+        android:id="@+id/spinner_navHeader_profiles"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:theme="@style/spinner_style" />
 
 </LinearLayout>

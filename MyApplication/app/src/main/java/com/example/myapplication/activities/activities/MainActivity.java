@@ -28,6 +28,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -84,14 +87,61 @@ public class MainActivity extends AppCompatActivity
             intentAddProfile.putExtra("IS_NEW_USER", true);
             startActivity(intentAddProfile);
         } else {
-            // Instantiate text views for the header of the drawer
-            TextView tv_navheader_title = navHeader.findViewById(R.id.textview_navheadermain_title);
+            // Array List to store the profiles names
+            ArrayList<String> profilesList = new ArrayList<>();
+
+            // Instantiate text view and spinner for the header of the drawer
+            final TextView tv_navheader_title = navHeader.findViewById(R.id.textview_navheadermain_title);
+            Spinner spinner_instances = navHeader.findViewById(R.id.spinner_navHeader_profiles);
+
+            // Add profiles names to profilesList
+            while (instancesData.moveToNext()) {
+                profilesList.add(instancesData.getString(1));
+            }
+
+            // Create adapter for the spinner of profiles
+            ArrayAdapter<String> spinnerAdapter;
+            spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, profilesList);
+            spinner_instances.setAdapter(spinnerAdapter);
 
             // Set text title and id with shared preference
             SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
             String name = prefs.getString("NAME", null);
             idInstance = prefs.getString("ID", null);
             tv_navheader_title.setText(name);
+
+            int spinner_DefaultPosition = 0;
+            for (int i = 0; spinner_DefaultPosition < profilesList.size(); i++) {
+                if (profilesList.get(i).equals(name)) {
+                    spinner_DefaultPosition = i;
+                    break;
+                }
+            }
+            spinner_instances.setSelection(spinner_DefaultPosition);
+
+            // Set spinner itemClickListener
+            spinner_instances.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    String name = adapterView.getItemAtPosition(i).toString();
+                    String id = db.getInstanceId(name);
+
+                    // Store the instance as default
+                    SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("NAME", name);
+                    editor.putString("ID", id);
+                    editor.apply();
+
+                    idInstance = id;
+
+                    tv_navheader_title.setText(name);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                }
+            });
         }
     }
 
@@ -166,8 +216,6 @@ public class MainActivity extends AppCompatActivity
             balanceFragment.setArguments(balanceBundle);
 
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, balanceFragment).commit();
-
-        } else if (id == R.id.nav_change_profile) {
 
         } else if (id == R.id.nav_add_profile) {
             Intent addProfileIntent = new Intent(this, AddProfileActivity.class);

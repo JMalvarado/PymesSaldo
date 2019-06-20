@@ -6,6 +6,7 @@
     <string name="addProfile_name">Agregar negocio</string>
     <string name="balance_name">Balance</string>
     <string name="search_name">Explorar</string>
+    <string name="editEntry_name">Editar entrada</string>
 
     <string name="activity_add_profile_hint_nombre">Nombre del negocio</string>
     <string name="activity_add_profile_button_ingresar">Agregar negocio</string>
@@ -29,8 +30,10 @@
     <string name="addentry_textView_hintIngreso">Ingreso</string>
     <string name="addentry_textView_hintGasto">Gasto</string>
     <string name="addentry_textView_hintDescr">Descripcion</string>
+    <string name="header_textView_spinnerTitle">Seleccione el perfil</string>
     <string name="addentry_button_textIngresar">Ingresar</string>
     <string name="addentry_button_textFecha">Fecha</string>
+    <string name="editEntry_button_textEditar">Editar</string>
 
     <!-- Toast, snack bar and alerts -->
     <string name="toast_addprofileactivity_noname">Por favor ingrese un nombre</string>
@@ -48,7 +51,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="toolbar_action_help">Ayuda</string>
     <!-- Navigation Drawer Menu -->
-    <string name="nav_change_profile">Cambiar perfil</string>
     <string name="nav_add_entry">Agregar entrada</string>
     <string name="nav_explore">Explorar</string>
     <string name="nav_month_balance">Balance al mes</string>

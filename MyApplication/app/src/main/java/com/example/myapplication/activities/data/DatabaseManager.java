@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "Saldos.db";
 
     //tabla1
@@ -134,7 +134,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
      */
     public String getInstanceName(String id) {
         Cursor consulta = this.getReadableDatabase().rawQuery(
-                "SELECT * FROM " + TABLA2_NOMBRE, null);
+                "SELECT * FROM " + TABLA2_NOMBRE + " WHERE Instancias_ID="+id, null);
 
         String name = "";
 
@@ -143,6 +143,24 @@ public class DatabaseManager extends SQLiteOpenHelper {
         }
 
         return name;
+    }
+
+    /**
+     * Get instance id from database, with the given name parameter
+     * @param name
+     * @return
+     */
+    public String getInstanceId(String name) {
+        Cursor consulta = this.getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLA2_NOMBRE + " WHERE Nombre='"+name+"'", null);
+
+        String id = "";
+
+        while (consulta.moveToNext()) {
+            id = consulta.getString(0);
+        }
+
+        return id;
     }
 
     /**
@@ -326,5 +344,31 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public Integer deleteEntryData(String Instancias_ID, String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLA1_NOMBRE, "ID = ? AND Instancias_ID=?", new String[]{id,Instancias_ID});
+    }
+
+    /**
+     * Edit an entry with the given id and instancia id
+     * @param id
+     * @param date
+     * @param ingreso
+     * @param gasto
+     * @param descr
+     * @param inst_ID
+     * @return
+     */
+    public boolean editEntryData(String id, String date, String ingreso, String gasto, String descr, String inst_ID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ID", id);
+        contentValues.put(Col_InstanciaID, inst_ID);
+        contentValues.put(Col_Fecha, date);
+        contentValues.put(Col_Ingreso, ingreso);
+        contentValues.put(Col_Gasto, gasto);
+        contentValues.put(Col_Descripcion, descr);
+
+        db.update(TABLA1_NOMBRE, contentValues, "ID=? AND Instancias_ID=?", new String[]{id, inst_ID});
+
+        return true;
     }
 }

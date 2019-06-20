@@ -30,6 +30,7 @@ public class ItemInfo extends AppCompatActivity {
 
     private String ingreso;
     private String gasto;
+    private String fecha;
     private String id;
     private String descr;
 
@@ -61,11 +62,13 @@ public class ItemInfo extends AppCompatActivity {
         gasto = getIntent().getStringExtra("GASTODATA");
         id = getIntent().getStringExtra("ID");
         descr = getIntent().getStringExtra("DESCRIPCION");
+        fecha = getIntent().getStringExtra("FECHA");
 
         ingresoTV.setText(ingreso);
         gastoTV.setText(gasto);
         descrTV.setText(descr);
 
+        // Floating button delete, click listener
         borrarFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,10 +93,18 @@ public class ItemInfo extends AppCompatActivity {
             }
         });
 
+        // Floating button edit, click listener
         editarFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "EDITAR", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Intent editIntent = new Intent(v.getContext(), EditEntryActivity.class);
+                editIntent.putExtra("ID", id);
+                editIntent.putExtra("INGRESO", ingreso);
+                editIntent.putExtra("GASTO", gasto);
+                editIntent.putExtra("FECHA", fecha);
+                editIntent.putExtra("DESCR", descr);
+
+                startActivity(editIntent);
             }
         });
     }

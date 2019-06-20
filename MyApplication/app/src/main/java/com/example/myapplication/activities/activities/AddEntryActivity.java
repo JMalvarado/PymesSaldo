@@ -40,7 +40,7 @@ public class AddEntryActivity extends AppCompatActivity {
     private String date;
 
     // Database instance
-    public static DatabaseManager SaldoDB;
+    private DatabaseManager SaldoDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
