@@ -25,17 +25,43 @@
         android:id="@+id/divider3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/colorWhite" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
         android:text="@string/header_textView_spinnerTitle"
         android:textColor="@color/cardview_dark_background"
         tools:ignore="PrivateResource" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imageButton_navHeader_confProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:contentDescription="@string/navHeader_imageButton_decr_editProfile"
+            android:src="@drawable/round_create_black_18dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton_navHeader_addProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:contentDescription="@string/navHeader_imageButton_descr_addProfile"
+            android:src="@drawable/round_add_black_18dp" />
+
+    </LinearLayout>
 
     <Spinner
         android:id="@+id/spinner_navHeader_profiles"

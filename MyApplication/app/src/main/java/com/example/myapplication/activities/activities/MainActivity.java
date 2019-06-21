@@ -30,6 +30,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -37,6 +38,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    // Components view
+    private ImageButton imageButton_addProfile;
+    private ImageButton imageButton_confProfile;
 
     // Variables
     public static String idInstance;
@@ -90,9 +95,11 @@ public class MainActivity extends AppCompatActivity
             // Array List to store the profiles names
             ArrayList<String> profilesList = new ArrayList<>();
 
-            // Instantiate text view and spinner for the header of the drawer
+            // Instantiate text view, spinner and buttons for the header of the drawer
             final TextView tv_navheader_title = navHeader.findViewById(R.id.textview_navheadermain_title);
             Spinner spinner_instances = navHeader.findViewById(R.id.spinner_navHeader_profiles);
+            imageButton_addProfile = navHeader.findViewById(R.id.imageButton_navHeader_addProfile);
+            imageButton_confProfile = navHeader.findViewById(R.id.imageButton_navHeader_confProfile);
 
             // Add profiles names to profilesList
             while (instancesData.moveToNext()) {
@@ -111,7 +118,7 @@ public class MainActivity extends AppCompatActivity
             tv_navheader_title.setText(name);
 
             int spinner_DefaultPosition = 0;
-            for (int i = 0; spinner_DefaultPosition < profilesList.size(); i++) {
+            for (int i = 0; i < profilesList.size(); i++) {
                 if (profilesList.get(i).equals(name)) {
                     spinner_DefaultPosition = i;
                     break;
@@ -140,6 +147,23 @@ public class MainActivity extends AppCompatActivity
 
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
+                }
+            });
+
+            // Set clickListener for the add and edit profile buttons
+            imageButton_addProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent addProfileIntent = new Intent(view.getContext(), AddProfileActivity.class);
+                    startActivity(addProfileIntent);
+                }
+            });
+
+            imageButton_confProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent editProfileIntent = new Intent(view.getContext(), EditProfileActivity.class);
+                    startActivity(editProfileIntent);
                 }
             });
         }
@@ -217,10 +241,6 @@ public class MainActivity extends AppCompatActivity
 
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, balanceFragment).commit();
 
-        } else if (id == R.id.nav_add_profile) {
-            Intent addProfileIntent = new Intent(this, AddProfileActivity.class);
-            startActivity(addProfileIntent);
-
         } else if (id == R.id.nav_explore) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new SearchFragment()).commit();
 
@@ -229,9 +249,6 @@ public class MainActivity extends AppCompatActivity
             intentSalir.addCategory(Intent.CATEGORY_HOME);
             intentSalir.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intentSalir);
-
-        } else if (id == R.id.nav_conf_profile) {
-
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

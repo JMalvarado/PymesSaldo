@@ -24,6 +24,6 @@
         android:layout_margin="16dp"
         android:onClick="onClickAddProfile"
         android:padding="32dp"
-        android:text="@string/activity_add_profile_button_ingresar" />
+        android:text="@string/editEntry_button_textEditar" />
 
 </LinearLayout>

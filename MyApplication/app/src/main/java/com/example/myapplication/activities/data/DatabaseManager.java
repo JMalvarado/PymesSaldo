@@ -347,6 +347,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     /**
+     * Delete a row from table Instancias given by the instance_ID
+     * @param Instancias_ID
+     * @return
+     */
+    public Integer deleteInstance(String Instancias_ID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLA2_NOMBRE, "Instancias_Id=?", new String[]{Instancias_ID});
+    }
+
+    /**
      * Edit an entry with the given id and instancia id
      * @param id
      * @param date
@@ -368,6 +378,24 @@ public class DatabaseManager extends SQLiteOpenHelper {
         contentValues.put(Col_Descripcion, descr);
 
         db.update(TABLA1_NOMBRE, contentValues, "ID=? AND Instancias_ID=?", new String[]{id, inst_ID});
+
+        return true;
+    }
+
+    /**
+     * Edit an instance with the given id instance
+     * @param instance_ID
+     * @param name
+     * @return
+     */
+    public boolean editInstance(String instance_ID, String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Instancias_ID", instance_ID);
+        contentValues.put(Col_Nombre, name);
+
+        db.update(TABLA2_NOMBRE, contentValues, "Instancias_ID=?", new String[]{instance_ID});
 
         return true;
     }

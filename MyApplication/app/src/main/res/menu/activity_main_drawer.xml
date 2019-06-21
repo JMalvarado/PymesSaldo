@@ -19,21 +19,6 @@
     </group>
 
     <group
-        android:id="@+id/navgroup_profile"
-        android:checkableBehavior="single">
-
-        <item
-            android:id="@+id/nav_conf_profile"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/nav_conf_profile" />
-
-        <item
-            android:id="@+id/nav_add_profile"
-            android:icon="@drawable/ic_add_profile"
-            android:title="@string/nav_add_profile" />
-    </group>
-
-    <group
         android:id="@+id/navgroup_exit"
         android:checkableBehavior="single">
 

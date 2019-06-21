@@ -45,7 +45,7 @@ public class ItemInfo extends AppCompatActivity {
 
         SaldoDB = new DatabaseManager(this);
 
-        opciones = new CharSequence[]{"Si", "No"};
+        opciones = new CharSequence[]{getString(R.string.alert_optSi), getString(R.string.alert_optNo)};
 
         if (getSupportActionBar() != null) {
             ActionBar actionBar = getSupportActionBar();
@@ -74,7 +74,7 @@ public class ItemInfo extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setCancelable(false);
-                builder.setTitle("¿Desea eliminar el dato?");
+                builder.setTitle(getString(R.string.alert_title_deleteData));
                 builder.setItems(opciones, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

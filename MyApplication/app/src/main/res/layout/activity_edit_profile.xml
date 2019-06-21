@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".activities.activities.EditProfileActivity">
+
+    <EditText
+        android:id="@+id/editText_editProfile_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="60dp"
+        android:autofillHints=""
+        android:gravity="center_horizontal"
+        android:hint="@string/activity_add_profile_hint_nombre"
+        android:inputType="text"
+        android:padding="20dip"
+        tools:ignore="LabelFor" />
+
+    <Button
+        android:id="@+id/button_editProfile_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickEditProfile"
+        android:text="@string/editProfile_button_editarNegocio" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_editProfile_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@android:color/darker_gray"
+        android:src="@drawable/ic_delete"
+        app:backgroundTint="@color/colorPrimary"
+        app:rippleColor="@color/colorPrimary" />
+
+</LinearLayout>

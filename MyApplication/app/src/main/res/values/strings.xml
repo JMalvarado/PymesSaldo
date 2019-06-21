@@ -7,10 +7,17 @@
     <string name="balance_name">Balance</string>
     <string name="search_name">Explorar</string>
     <string name="editEntry_name">Editar entrada</string>
+    <string name="editProfile_name">Editar Perfil</string>
 
     <string name="activity_add_profile_hint_nombre">Nombre del negocio</string>
     <string name="activity_add_profile_button_ingresar">Agregar negocio</string>
     <string name="activity_add_profile_msg_samename">El negocio ya existe</string>
+
+    <string name="alert_optSi">Si</string>
+    <string name="alert_optNo">No</string>
+    <string name="alert_title_deleteProfile">¿Desea eliminar el perfil?</string>
+    <string name="alert_title_deleteData">¿Desea eliminar el dato?</string>
+
     <string name="fragment_search_textview_filtro">Filtro</string>
     <string name="fragment_search_textview_inicio">Inicio</string>
     <string name="fragment_search_textview_dia">Dia</string>
@@ -30,10 +37,13 @@
     <string name="addentry_textView_hintIngreso">Ingreso</string>
     <string name="addentry_textView_hintGasto">Gasto</string>
     <string name="addentry_textView_hintDescr">Descripcion</string>
-    <string name="header_textView_spinnerTitle">Seleccione el perfil</string>
+    <string name="header_textView_spinnerTitle">PERFIL</string>
     <string name="addentry_button_textIngresar">Ingresar</string>
     <string name="addentry_button_textFecha">Fecha</string>
     <string name="editEntry_button_textEditar">Editar</string>
+    <string name="editProfile_button_editarNegocio">Editar negocio</string>
+    <string name="navHeader_imageButton_decr_editProfile">Edit profile</string>
+    <string name="navHeader_imageButton_descr_addProfile">Add profile</string>
 
     <!-- Toast, snack bar and alerts -->
     <string name="toast_addprofileactivity_noname">Por favor ingrese un nombre</string>
