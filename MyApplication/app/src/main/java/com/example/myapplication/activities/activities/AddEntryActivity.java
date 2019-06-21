@@ -2,6 +2,7 @@ package com.example.myapplication.activities.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -61,6 +62,12 @@ public class AddEntryActivity extends AppCompatActivity {
         // Set date format
         dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent mainActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(mainActivityIntent);
     }
 
     public void onClickAddEntry(View v) {

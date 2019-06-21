@@ -142,6 +142,15 @@ public class MainActivity extends AppCompatActivity
 
                     idInstance = id;
 
+                    // Get and show the default fragment
+                    String strBalance = getMonthBalance();
+                    Bundle balanceBundle = new Bundle();
+                    balanceBundle.putString("BALANCE", strBalance);
+                    BalanceFragment balanceFragment = new BalanceFragment();
+                    balanceFragment.setArguments(balanceBundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, balanceFragment).commit();
+
+                    // Set title head text
                     tv_navheader_title.setText(name);
                 }
 
@@ -166,6 +175,14 @@ public class MainActivity extends AppCompatActivity
                     startActivity(editProfileIntent);
                 }
             });
+
+            // Get and show the default fragment
+            String strBalance = getMonthBalance();
+            Bundle balanceBundle = new Bundle();
+            balanceBundle.putString("BALANCE", strBalance);
+            BalanceFragment balanceFragment = new BalanceFragment();
+            balanceFragment.setArguments(balanceBundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, balanceFragment).commit();
         }
     }
 
@@ -207,32 +224,41 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Get the month balance data in String type
+     *
+     * @return
+     */
+    private String getMonthBalance() {
+        ArrayList<Integer> profit = db.getEntryCurrentMonthIngresos(idInstance);
+        ArrayList<Integer> spend = db.getEntryCurrentMonthGastos(idInstance);
+
+        int totalProfit = 0;
+        int totalSpend = 0;
+
+        for (Integer integer1 : profit) {
+            int ing;
+            ing = integer1;
+            totalProfit += ing;
+        }
+
+        for (Integer integer : spend) {
+            int gas;
+            gas = integer;
+            totalSpend += gas;
+        }
+
+        int balance = totalProfit - totalSpend;
+
+        return Integer.toString(balance);
+    }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_month_balance) {
-            ArrayList<Integer> profit = db.getEntryCurrentMonthIngresos(idInstance);
-            ArrayList<Integer> spend = db.getEntryCurrentMonthGastos(idInstance);
-
-            int totalProfit = 0;
-            int totalSpend = 0;
-
-            for (Integer integer1 : profit) {
-                int ing;
-                ing = integer1;
-                totalProfit += ing;
-            }
-
-            for (Integer integer : spend) {
-                int gas;
-                gas = integer;
-                totalSpend += gas;
-            }
-
-            int balance = totalProfit - totalSpend;
-            String strBalance = Integer.toString(balance);
+            String strBalance = getMonthBalance();
 
             Bundle balanceBundle = new Bundle();
             balanceBundle.putString("BALANCE", strBalance);

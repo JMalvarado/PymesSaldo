@@ -67,9 +67,9 @@ public class AddProfileActivity extends AppCompatActivity {
                     Toast.makeText(this, R.string.toast_addprofileactivity_noname, Toast.LENGTH_LONG).show();
                 } else {
                     Cursor instances = db.getInstancesAllData();
-                    if(instances.getCount()>0) {
+                    if (instances.getCount() > 0) {
                         String name = et_name.getText().toString();
-                        while(instances.moveToNext()) {
+                        while (instances.moveToNext()) {
                             if (name.equals(instances.getString(1))) {
                                 Toast.makeText(this, R.string.activity_add_profile_msg_samename, Toast.LENGTH_LONG).show();
                                 return;
@@ -84,7 +84,7 @@ public class AddProfileActivity extends AppCompatActivity {
                     String id = "";
                     Cursor cursor = db.getInstancesAllData();
                     while (cursor.moveToNext()) {
-                        id= cursor.getString(0);
+                        id = cursor.getString(0);
                     }
 
                     // Store the instance as default

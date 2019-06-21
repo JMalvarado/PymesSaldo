@@ -71,14 +71,14 @@ public class EditEntryActivity extends AppCompatActivity {
         editText_description.setText(descr);
         textView_date.setText(fecha);
 
-        strYear = fecha.substring(0,4);
-        strMonth = fecha.substring(5,7);
+        strYear = fecha.substring(0, 4);
+        strMonth = fecha.substring(5, 7);
         strDay = fecha.substring(8);
 
         // Set date calendar click listener
     }
 
-    public void onClickEditEntry (View view) {
+    public void onClickEditEntry(View view) {
         switch (view.getId()) {
             case R.id.button_editEntry_date:
                 Calendar calendar = Calendar.getInstance();
@@ -186,7 +186,6 @@ public class EditEntryActivity extends AppCompatActivity {
                 } else {
                     GastoVarint = Integer.parseInt(GastoVar);
                 }
-
 
 
                 if ((editText_profit.getText().toString().equals("")) && (editText_spend.getText().toString().equals(""))) {

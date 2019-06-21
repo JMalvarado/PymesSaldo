@@ -158,7 +158,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.buttonBuscar:
-                if ( (!checkBox_begining.isChecked()) && (!checkBox_monthData.isChecked()) )  {
+                if ((!checkBox_begining.isChecked()) && (!checkBox_monthData.isChecked())) {
                     if ((textView_dateBeging.getText().toString().equals("")) && (!checkBox_monthData.isChecked())) {
                         Toast.makeText(view.getContext(), getString(R.string.toast_searchfragment_nodata), Toast.LENGTH_LONG).show();
                         break;
@@ -231,7 +231,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     }
                 }
 
-                if ( (!checkBox_final.isChecked()) && (!checkBox_monthData.isChecked()) ) {
+                if ((!checkBox_final.isChecked()) && (!checkBox_monthData.isChecked())) {
                     if ((textView_dateFinal.getText().toString().equals("")) && (!checkBox_monthData.isChecked())) {
                         Toast.makeText(view.getContext(), getString(R.string.toast_searchfragment_nodata), Toast.LENGTH_LONG).show();
                         break;

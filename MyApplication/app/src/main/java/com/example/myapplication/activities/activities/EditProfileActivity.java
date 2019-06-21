@@ -116,6 +116,16 @@ public class EditProfileActivity extends AppCompatActivity {
 
             db.editInstance(idInstance, editText_profileName.getText().toString());
 
+            // Get new default profile
+            String itemName = editText_profileName.getText().toString();
+
+            // Set new default profile
+            // Store the instance as default
+            SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("NAME", itemName);
+            editor.apply();
+
             editText_profileName.setText("");
 
             Intent mainActivityIntent = new Intent(this, MainActivity.class);

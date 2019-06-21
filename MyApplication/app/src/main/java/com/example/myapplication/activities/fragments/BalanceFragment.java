@@ -46,11 +46,9 @@ public class BalanceFragment extends Fragment {
         // Set text color
         if (Integer.parseInt(balance) < 0) {
             textView_balance.setTextColor(Color.RED);
-        }
-        else if (Integer.parseInt(balance) == 0) {
+        } else if (Integer.parseInt(balance) == 0) {
             textView_balance.setTextColor(Color.BLACK);
-        }
-        else {
+        } else {
             textView_balance.setTextColor(Color.GREEN);
         }
 

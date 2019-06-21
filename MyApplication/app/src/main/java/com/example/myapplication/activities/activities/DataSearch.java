@@ -66,4 +66,10 @@ public class DataSearch extends AppCompatActivity {
 
         rvList.setAdapter(rvAdapter);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent mainActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(mainActivityIntent);
+    }
 }

@@ -134,7 +134,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
      */
     public String getInstanceName(String id) {
         Cursor consulta = this.getReadableDatabase().rawQuery(
-                "SELECT * FROM " + TABLA2_NOMBRE + " WHERE Instancias_ID="+id, null);
+                "SELECT * FROM " + TABLA2_NOMBRE + " WHERE Instancias_ID=" + id, null);
 
         String name = "";
 
@@ -147,12 +147,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     /**
      * Get instance id from database, with the given name parameter
+     *
      * @param name
      * @return
      */
     public String getInstanceId(String name) {
         Cursor consulta = this.getReadableDatabase().rawQuery(
-                "SELECT * FROM " + TABLA2_NOMBRE + " WHERE Nombre='"+name+"'", null);
+                "SELECT * FROM " + TABLA2_NOMBRE + " WHERE Nombre='" + name + "'", null);
 
         String id = "";
 
@@ -175,6 +176,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     /**
      * Get all the data from Column Gastos
+     *
      * @param Instancias_ID ID of the current instance
      * @return
      */
@@ -187,7 +189,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         ArrayList<Integer> gastos = new ArrayList<>();
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
-                "SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID="+Instancias_ID, null);
+                "SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
             gasto = consulta.getInt(4);
@@ -211,7 +213,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         ArrayList<Integer> ingresos = new ArrayList<>();
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
-                "SELECT * FROM " + TABLA1_NOMBRE+" WHERE Instancias_ID="+Instancias_ID, null);
+                "SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
             ingreso = consulta.getInt(3);
@@ -236,7 +238,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
-                        "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID="+Instancias_ID, null);
+                        "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
             ingreso = consulta.getInt(3);
@@ -261,7 +263,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
-                        "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID="+Instancias_ID, null);
+                        "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
             gasto = consulta.getInt(4);
@@ -278,7 +280,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
      */
     public Cursor getEntryAllData(String Instancias_ID) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE+" WHERE Instancias_ID="+Instancias_ID, null);
+        Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
         return resultado;
     }
 
@@ -290,7 +292,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public Cursor getEntryMonthData(String Instancias_ID) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
-                "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID="+Instancias_ID, null);
+                "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
         return resultado;
     }
 
@@ -302,7 +304,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
      */
     public Cursor getEntryDataFromBegToDate(String Instancias_ID, String finalDate) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' AND Instancias_ID="+Instancias_ID, null);
+        Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' AND Instancias_ID=" + Instancias_ID, null);
         return resultado;
     }
 
@@ -314,7 +316,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
      */
     public Cursor getEntryDataFromDateToToday(String Instancias_ID, String beginDate) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' AND Instancias_ID="+Instancias_ID, null);
+        Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' AND Instancias_ID=" + Instancias_ID, null);
         return resultado;
     }
 
@@ -327,7 +329,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
      */
     public Cursor getEntryDataInDate(String Instancias_ID, String beginDate, String finalDate) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' AND '" + finalDate + "') AND Instancias_ID="+Instancias_ID, null);
+        Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID, null);
         return resultado;
     }
 
@@ -343,11 +345,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
      */
     public Integer deleteEntryData(String Instancias_ID, String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLA1_NOMBRE, "ID = ? AND Instancias_ID=?", new String[]{id,Instancias_ID});
+        return db.delete(TABLA1_NOMBRE, "ID = ? AND Instancias_ID=?", new String[]{id, Instancias_ID});
     }
 
     /**
      * Delete a row from table Instancias given by the instance_ID
+     *
      * @param Instancias_ID
      * @return
      */
@@ -358,6 +361,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     /**
      * Edit an entry with the given id and instancia id
+     *
      * @param id
      * @param date
      * @param ingreso
@@ -384,6 +388,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     /**
      * Edit an instance with the given id instance
+     *
      * @param instance_ID
      * @param name
      * @return
