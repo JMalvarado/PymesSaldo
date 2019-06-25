@@ -343,10 +343,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     ArrayList<String> ids = new ArrayList<>();
 
                     while (resultado.moveToNext()) {
-                        descripciones.add(resultado.getString(5));
-                        fechas.add(resultado.getString(2));
-                        ingresos.add(resultado.getString(3));
-                        gastos.add(resultado.getString(4));
+                        descripciones.add(resultado.getString(6));
+                        fechas.add(resultado.getString(3));
+                        ingresos.add(resultado.getString(4));
+                        gastos.add(resultado.getString(5));
                         ids.add(resultado.getString(0));
                     }
 

@@ -21,11 +21,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final String Col_Gasto = "Gasto";
     private static final String Col_Descripcion = "Descripcion";
     private static final String Col_InstanciaID = "Instancias_ID";
+    private static final String Col_CategID = "Categorias_ID";
 
     //tabla2
     private static final String TABLA2_NOMBRE = "Instancias";
     //columnas
     private static final String Col_Nombre = "Nombre";
+
+    //tabla3
+    private static final String TABLA3_NOMBRE = "Categorias";
+    //columnas
+    private static final String Col_NombreCateg = "Nombre";
 
     //constructor
 
@@ -46,15 +52,23 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 "(Instancias_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "Nombre TEXT)");
 
+        // Create table for categories
+        sqLiteDatabase.execSQL("create table " + TABLA3_NOMBRE + " " +
+                "(Categorias_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "Nombre TEXT)");
+
         // Create table for entries
         sqLiteDatabase.execSQL("create table " + TABLA1_NOMBRE + " " +
                 "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "Instancias_ID INTEGER," +
+                "Categorias_ID INTEGER," +
                 "Fecha DATE," +
                 "Ingreso INTEGER," +
                 "Gasto INTEGER," +
                 "Descripcion TEXT," +
                 "FOREIGN KEY (Instancias_ID) REFERENCES Instancias (Instancias_ID) " +
+                "ON DELETE CASCADE ON UPDATE NO ACTION," +
+                "FOREIGN KEY (Categorias_ID) REFERENCES Categorias (Categorias_ID) " +
                 "ON DELETE CASCADE ON UPDATE NO ACTION)");
     }
 
@@ -69,6 +83,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLA1_NOMBRE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLA2_NOMBRE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLA3_NOMBRE);
         onCreate(sqLiteDatabase);
     }
 
@@ -87,12 +102,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param instance_id
      * @return
      */
-    public boolean addEntry(String Date, int gasto, int ingreso, String descripcion, String instance_id) {
+    public boolean addEntry(String Date, int gasto, int ingreso, String descripcion, String instance_id, String categ_id) {
 
         SQLiteDatabase db = this.getWritableDatabase(); //Obtiene la instancia de base de datos para ingresar datos.
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(Col_InstanciaID, instance_id);
+        contentValues.put(Col_CategID, categ_id);
         contentValues.put(Col_Fecha, Date);
         contentValues.put(Col_Ingreso, ingreso);
         contentValues.put(Col_Gasto, gasto);
@@ -102,6 +118,23 @@ public class DatabaseManager extends SQLiteOpenHelper {
         long resultado = db.insert(TABLA1_NOMBRE, null, contentValues);
 
         //Retorna el estado del resultado del metodo insert.
+        return resultado != -1;
+    }
+
+    /**
+     * Add a category to table Categorias
+     *
+     * @param name
+     * @return
+     */
+    public boolean addCategory(String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Col_NombreCateg, name);
+
+        long resultado = db.insert(TABLA3_NOMBRE, null, contentValues);
+
         return resultado != -1;
     }
 
@@ -175,6 +208,35 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     /**
+     * Get category id from database, with the given name parameter
+     *
+     * @param name
+     * @return
+     */
+    public String getCategoryId(String name) {
+        Cursor consulta = this.getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLA3_NOMBRE + " WHERE Nombre='" + name + "'", null);
+
+        String id = "";
+
+        while (consulta.moveToNext()) {
+            id = consulta.getString(0);
+        }
+
+        return id;
+    }
+
+    /**
+     * Get all the data from table Categorias
+     *
+     * @return Cursor with all the information in all the columns
+     */
+    public Cursor getCategoryAllData() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLA3_NOMBRE, null);
+    }
+
+    /**
      * Get all the data from Column Gastos
      *
      * @param Instancias_ID ID of the current instance
@@ -192,7 +254,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            gasto = consulta.getInt(4);
+            gasto = consulta.getInt(5);
             gastos.add(gasto);
         }
 
@@ -216,7 +278,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            ingreso = consulta.getInt(3);
+            ingreso = consulta.getInt(4);
             ingresos.add(ingreso);
         }
 
@@ -241,7 +303,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                         "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            ingreso = consulta.getInt(3);
+            ingreso = consulta.getInt(4);
             ingresos.add(ingreso);
         }
 
@@ -266,7 +328,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                         "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            gasto = consulta.getInt(4);
+            gasto = consulta.getInt(5);
             gastos.add(gasto);
         }
 
