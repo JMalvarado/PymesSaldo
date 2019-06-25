@@ -31,6 +31,8 @@
     <string name="fragment_search_button_datefinal">Fecha</string>
     <string name="fragment_search_checkbox_saldoalmes">Datos del mes</string>
     <string name="fragment_balance_textView_titleBalance">El balance para el mes en curso es</string>
+    <string name="fragment_balance_textView_ingresos">Ingresos:</string>
+    <string name="fragment_balance_textView_gastos">Gastos:</string>
 
     <string name="iteminfo_textView_gasto">Gasto:</string>
     <string name="iteminfo_textView_ingreso">Ingreso:</string>
@@ -44,6 +46,10 @@
     <string name="editProfile_button_editarNegocio">Editar</string>
     <string name="navHeader_imageButton_decr_editProfile">Edit profile</string>
     <string name="navHeader_imageButton_descr_addProfile">Add profile</string>
+    <string name="dataList_imageButton_decr_edit">Edit entry</string>
+    <string name="dataList_imageButton_decr_delete">Delete entry</string>
+    <string name="dataList_textView_ingr">Ingreso:</string>
+    <string name="dataList_textView_gast">Gasto:</string>
 
     <!-- Toast, snack bar and alerts -->
     <string name="toast_addprofileactivity_noname">Por favor ingrese un nombre</string>

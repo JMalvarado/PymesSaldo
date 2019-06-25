@@ -30,6 +30,73 @@
                 android:id="@+id/tvListFecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvListIngr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/dataList_textView_ingr"
+                    android:textColor="@color/colorBlack" />
+
+                <TextView
+                    android:id="@+id/textView_dataList_ingr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvListGast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/dataList_textView_gast"
+                    android:textColor="@color/colorBlack" />
+
+                <TextView
+                    android:id="@+id/textView_dataList_gast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButton_dataList_edit"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:contentDescription="@string/dataList_imageButton_decr_edit"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_edit"
+                    android:layout_height="match_parent" />
+
+                <ImageButton
+                    android:id="@+id/imageButton_dataList_delete"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:contentDescription="@string/dataList_imageButton_decr_delete"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_delete"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

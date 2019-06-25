@@ -64,6 +64,7 @@ public class DataSearch extends AppCompatActivity {
         ids = getIntent().getStringArrayListExtra("IDS");
 
         for (int i = 0; i < descripciones.size(); i++) {
+            assert ids != null;
             ListData listData = new ListData(
                     descripciones.get(i),
                     fechas.get(i),

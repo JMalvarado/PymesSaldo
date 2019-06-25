@@ -15,7 +15,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.fragments.SearchFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
