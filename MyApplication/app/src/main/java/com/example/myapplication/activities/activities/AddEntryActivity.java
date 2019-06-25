@@ -30,6 +30,7 @@ public class AddEntryActivity extends AppCompatActivity {
     private EditText editText_spend;
     private EditText editText_description;
     private TextView textView_date;
+    private TextView textView_instanceName;
     private Button button_in;
     private Button button_addDate;
 
@@ -55,6 +56,7 @@ public class AddEntryActivity extends AppCompatActivity {
         editText_description = findViewById(R.id.etdescripcion);
         textView_date = findViewById(R.id.textView_addEntry_date);
         button_addDate = findViewById(R.id.button_addEntry_date);
+        textView_instanceName = findViewById(R.id.textView_addEntry_instanceName);
 
         // Database instance
         SaldoDB = new DatabaseManager(this);
@@ -62,6 +64,10 @@ public class AddEntryActivity extends AppCompatActivity {
         // Set date format
         dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
 
+        // Set instance name as title
+        SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+        String name = prefs.getString("NAME", null);
+        textView_instanceName.setText(name);
     }
 
     @Override

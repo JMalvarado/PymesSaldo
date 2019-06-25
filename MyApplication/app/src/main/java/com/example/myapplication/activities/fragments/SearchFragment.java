@@ -1,7 +1,9 @@
 package com.example.myapplication.activities.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -31,6 +33,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private CheckBox checkBox_monthData, checkBox_begining, checkBox_final;
     private Button button_search, button_dateBegin, button_dateFinal;
     private TextView textView_dateBeging, textView_dateFinal;
+    private TextView textView_instanceName;
 
     // Global variables
     public static String begDay, begMonth, begYear, finDay, finMonth, finYear;
@@ -72,6 +75,12 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
         textView_dateBeging = view.findViewById(R.id.textview_search_datebeg);
         textView_dateFinal = view.findViewById(R.id.textview_search_datefinal);
+        textView_instanceName = view.findViewById(R.id.textView_fragmentSearch_instanceName);
+
+        // Set instance name as title
+        SharedPreferences prefs =  getActivity().getSharedPreferences("instance", Context.MODE_PRIVATE);
+        String name = prefs.getString("NAME", null);
+        textView_instanceName.setText(name);
 
         SaldoDB = new DatabaseManager(view.getContext());
 

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -24,6 +25,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editText_profileName;
     private Button button_edit;
     private FloatingActionButton fab_delete;
+    private TextView textView_instanceName;
 
     // Database instance / Global variables
     private DatabaseManager db;
@@ -40,12 +42,17 @@ public class EditProfileActivity extends AppCompatActivity {
         editText_profileName = findViewById(R.id.editText_editProfile_name);
         button_edit = findViewById(R.id.button_editProfile_edit);
         fab_delete = findViewById(R.id.fab_editProfile_delete);
+        textView_instanceName = findViewById(R.id.textView_editProfile_instanceName);
+
+        // Set instance name as title
+        SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+        String name = prefs.getString("NAME", null);
+        textView_instanceName.setText(name);
 
         // Initialize database instance
         db = new DatabaseManager(this);
 
         // Profile data
-        SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
         nameInstance = prefs.getString("NAME", null);
         idInstance = prefs.getString("ID", null);
 

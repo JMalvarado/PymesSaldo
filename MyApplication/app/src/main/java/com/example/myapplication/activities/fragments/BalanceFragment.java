@@ -1,6 +1,8 @@
 package com.example.myapplication.activities.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -20,6 +22,7 @@ public class BalanceFragment extends Fragment {
 
     // Instantiate view components
     private TextView textView_balance;
+    private TextView textView_instanceName;
 
     // Global variables
     private String balance;
@@ -35,6 +38,12 @@ public class BalanceFragment extends Fragment {
 
         // Initialize view components
         textView_balance = view.findViewById(R.id.textView_balance);
+        textView_instanceName = view.findViewById(R.id.textView_fragmentBalance_instanceName);
+
+        // Set instance name as title
+        SharedPreferences prefs =  getActivity().getSharedPreferences("instance", Context.MODE_PRIVATE);
+        String name = prefs.getString("NAME", null);
+        textView_instanceName.setText(name);
 
         // Get data from main activity
         assert getArguments() != null;

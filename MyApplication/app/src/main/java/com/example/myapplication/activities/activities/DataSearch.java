@@ -1,7 +1,10 @@
 package com.example.myapplication.activities.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,9 +19,12 @@ import java.util.List;
 
 public class DataSearch extends AppCompatActivity {
 
+    // Cmponents view
     private RecyclerView rvList;
     private RecyclerView.Adapter rvAdapter;
+    private TextView textView_instanceName;
 
+    // Global variables
     private List<ListData> listItems;
 
     private ArrayList<String> descripciones;
@@ -31,6 +37,13 @@ public class DataSearch extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_search);
+
+        textView_instanceName = findViewById(R.id.textView_dataSearch_instanceName);
+
+        // Set instance name as title
+        SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+        String name = prefs.getString("NAME", null);
+        textView_instanceName.setText(name);
 
         rvList = findViewById(R.id.dataRecyclerView);
         rvList.setHasFixedSize(true);
