@@ -88,6 +88,9 @@ public class MainActivity extends AppCompatActivity
            If not, show the activity to create a profile. */
         Cursor instancesData = db.getInstancesAllData();
         if (instancesData.getCount() == 0) {
+            // Add default categories
+            db.addCategory(getString(R.string.mainActivity_addCategory_others));
+
             Intent intentAddProfile = new Intent(this, AddProfileActivity.class);
             intentAddProfile.putExtra("IS_NEW_USER", true);
             startActivity(intentAddProfile);

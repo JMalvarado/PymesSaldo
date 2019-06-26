@@ -12,6 +12,7 @@
     <string name="activity_add_profile_hint_nombre">Nombre del estado</string>
     <string name="activity_add_profile_button_ingresar">Agregar</string>
     <string name="activity_add_profile_msg_samename">El estado ya existe</string>
+    <string name="activity_add_entry_textView_category">Categoría:</string>
 
     <string name="alert_optSi">Si</string>
     <string name="alert_optNo">No</string>
@@ -50,6 +51,8 @@
     <string name="dataList_imageButton_decr_delete">Delete entry</string>
     <string name="dataList_textView_ingr">Ingreso:</string>
     <string name="dataList_textView_gast">Gasto:</string>
+    <string name="activity_addEntry_addCategory_spinner">Agregar…</string>
+    <string name="mainActivity_addCategory_others">Otros</string>
 
     <!-- Toast, snack bar and alerts -->
     <string name="toast_addprofileactivity_noname">Por favor ingrese un nombre</string>
@@ -61,6 +64,10 @@
     <string name="snack_mainActivity_exit">Presione Salir</string>
     <string name="alert_title">Alerta</string>
     <string name="alert_addEntryActivity_nodata">Por favor complete todos los espacios</string>
+    <string name="alert_title_addCategory">Categoría</string>
+    <string name="alert_mssg_addCategory">Nueva categoría</string>
+    <string name="alert_positiveBttn_addCategory">OK</string>
+    <string name="alert_negativeBttn_addCategory">Cancelar</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
