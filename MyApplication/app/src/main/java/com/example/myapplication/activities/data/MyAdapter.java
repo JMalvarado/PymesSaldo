@@ -48,10 +48,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         final ListData data = listData.get(i);
 
+        SaldoDB = new DatabaseManager(context);
+
         myViewHolder.tvDescr.setText(data.getDescr());
         myViewHolder.tvFecha.setText(data.getFecha());
         myViewHolder.tvProfit.setText(data.getIngreso());
         myViewHolder.tvSpend.setText(data.getGasto());
+        System.out.println("CATEGORIA: ------ "+data.getCategId());
+        System.out.println("CATEGORIA: ------ "+SaldoDB.getCategoryName(data.getCategId()));
+        myViewHolder.tvCategory.setText(SaldoDB.getCategoryName(data.getCategId()));
 
         myViewHolder.imBttnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,12 +67,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 editIntent.putExtra("GASTO", data.getGasto());
                 editIntent.putExtra("FECHA", data.getFecha());
                 editIntent.putExtra("DESCR", data.getDescr());
+                editIntent.putExtra("CATEG", data.getCategId());
 
                 context.startActivity(editIntent);
             }
         });
-
-        SaldoDB = new DatabaseManager(context);
 
         final CharSequence[] opciones;
         opciones = new CharSequence[]{context.getResources().getString(R.string.alert_optSi), context.getResources().getString(R.string.alert_optNo)};
@@ -143,12 +147,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             ArrayList<String> ingresos = new ArrayList<>();
             ArrayList<String> gastos = new ArrayList<>();
             ArrayList<String> ids = new ArrayList<>();
+            ArrayList<String> categids = new ArrayList<>();
 
             while (resultado.moveToNext()) {
-                descripciones.add(resultado.getString(5));
-                fechas.add(resultado.getString(2));
-                ingresos.add(resultado.getString(3));
-                gastos.add(resultado.getString(4));
+                descripciones.add(resultado.getString(6));
+                categids.add(resultado.getString(2));
+                fechas.add(resultado.getString(3));
+                ingresos.add(resultado.getString(4));
+                gastos.add(resultado.getString(5));
                 ids.add(resultado.getString(0));
             }
 
@@ -157,6 +163,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             intentSearch.putStringArrayListExtra("INGRESOS", ingresos);
             intentSearch.putStringArrayListExtra("GASTOS", gastos);
             intentSearch.putStringArrayListExtra("IDS", ids);
+            intentSearch.putStringArrayListExtra("CATEGIDS", categids);
 
             context.startActivity(intentSearch);
         }
@@ -175,6 +182,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public TextView tvFecha;
         public TextView tvProfit;
         public TextView tvSpend;
+        public TextView tvCategory;
         public LinearLayout linearLayout_data;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -185,6 +193,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             tvProfit = itemView.findViewById(R.id.textView_dataList_ingr);
             tvSpend = itemView.findViewById(R.id.textView_dataList_gast);
             linearLayout_data = itemView.findViewById(R.id.linearLayout_data);
+            tvCategory = itemView.findViewById(R.id.textView_dataList_category);
             imBttnEdit = itemView.findViewById(R.id.imageButton_dataList_edit);
             imBttnDelete = itemView.findViewById(R.id.imageButton_dataList_delete);
         }

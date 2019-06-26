@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "Saldos.db";
 
     //tabla1
@@ -227,6 +227,26 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     /**
+     * Get category name from database, with the given id parameter
+     *
+     * @param id
+     * @return
+     */
+    public String getCategoryName(String id) {
+        Cursor consulta = this.getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLA3_NOMBRE + " WHERE Categorias_ID='" + id + "'", null);
+
+        String name = "";
+
+        while (consulta.moveToNext()) {
+            name = consulta.getString(1);
+        }
+
+        return name;
+    }
+
+
+    /**
      * Get all the data from table Categorias
      *
      * @return Cursor with all the information in all the columns
@@ -432,12 +452,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param inst_ID
      * @return
      */
-    public boolean editEntryData(String id, String date, String ingreso, String gasto, String descr, String inst_ID) {
+    public boolean editEntryData(String id, String date, String ingreso, String gasto, String descr, String inst_ID, String categ_ID) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("ID", id);
         contentValues.put(Col_InstanciaID, inst_ID);
+        contentValues.put(Col_CategID, categ_ID);
         contentValues.put(Col_Fecha, date);
         contentValues.put(Col_Ingreso, ingreso);
         contentValues.put(Col_Gasto, gasto);

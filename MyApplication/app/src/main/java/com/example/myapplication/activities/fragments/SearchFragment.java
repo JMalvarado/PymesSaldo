@@ -341,9 +341,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     ArrayList<String> ingresos = new ArrayList<>();
                     ArrayList<String> gastos = new ArrayList<>();
                     ArrayList<String> ids = new ArrayList<>();
+                    ArrayList<String> categids = new ArrayList<>();
 
                     while (resultado.moveToNext()) {
                         descripciones.add(resultado.getString(6));
+                        categids.add(resultado.getString(2));
                         fechas.add(resultado.getString(3));
                         ingresos.add(resultado.getString(4));
                         gastos.add(resultado.getString(5));
@@ -355,6 +357,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     intentSearch.putStringArrayListExtra("INGRESOS", ingresos);
                     intentSearch.putStringArrayListExtra("GASTOS", gastos);
                     intentSearch.putStringArrayListExtra("IDS", ids);
+                    intentSearch.putStringArrayListExtra("CATEGIDS", categids);
 
                     checkboxMonthIsChecked = checkBox_monthData.isChecked();
                     checkboxBegIsChecked = checkBox_begining.isChecked();

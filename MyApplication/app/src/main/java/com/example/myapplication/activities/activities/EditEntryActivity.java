@@ -5,19 +5,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class EditEntryActivity extends AppCompatActivity {
@@ -30,6 +37,7 @@ public class EditEntryActivity extends AppCompatActivity {
     private TextView textView_instanceName;
     private Button button_in;
     private Button button_addDate;
+    private Spinner spinner_categories;
 
     // Global variables
     private String id;
@@ -37,16 +45,23 @@ public class EditEntryActivity extends AppCompatActivity {
     private String gasto;
     private String descr;
     private String fecha;
+    private String idCateg;
     private DatabaseManager SaldoDB;
     private String strDay;
     private String strMonth;
     private String strYear;
     private String date;
+    private String category_id;
+    private int spinner_DefaultPosition = 0;
+    private ArrayAdapter<String> spinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_entry);
+
+        // Database
+        SaldoDB = new DatabaseManager(this);
 
         // Initialize components view
         button_in = findViewById(R.id.button_editEntry_edit);
@@ -57,13 +72,52 @@ public class EditEntryActivity extends AppCompatActivity {
         button_addDate = findViewById(R.id.button_editEntry_date);
         textView_instanceName = findViewById(R.id.textView_editEntry_instanceName);
 
+
+        // Set Spinner category data
+        spinner_categories = findViewById(R.id.spinner_editEntry_category);
+
+        // Get categories
+        Cursor categoriesData = SaldoDB.getCategoryAllData();
+
+        // Array List to store the categories names
+        ArrayList<String> categoriesList = new ArrayList<>();
+
+        // Add categories names to categoriesList
+        while (categoriesData.moveToNext()) {
+            categoriesList.add(categoriesData.getString(1));
+        }
+
+        // Add option: "Agregar..." category
+        categoriesList.add(getString(R.string.activity_addEntry_addCategory_spinner));
+        // Create adapter for the spinner of categories
+        spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesList);
+        spinner_categories.setAdapter(spinnerAdapter);
+
+        // Set spinner categories onClickListener
+        spinner_categories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String category_name = adapterView.getItemAtPosition(i).toString();
+
+                if (category_name.equals(getString(R.string.activity_addEntry_addCategory_spinner))) {
+                    // if category_name = Add...
+                    openDialog();
+                } else {
+                    // else, get category id with the given name
+                    category_id = SaldoDB.getCategoryId(category_name);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+
         // Set instance name as title
         SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
         String name = prefs.getString("NAME", null);
         textView_instanceName.setText(name);
-
-        // Database
-        SaldoDB = new DatabaseManager(this);
 
         // Get intent extra info
         id = getIntent().getStringExtra("ID");
@@ -71,6 +125,7 @@ public class EditEntryActivity extends AppCompatActivity {
         gasto = getIntent().getStringExtra("GASTO");
         descr = getIntent().getStringExtra("DESCR");
         fecha = getIntent().getStringExtra("FECHA");
+        idCateg = getIntent().getStringExtra("CATEG");
 
         // Set actual data on views and variables
         editText_profit.setText(ingreso);
@@ -78,9 +133,94 @@ public class EditEntryActivity extends AppCompatActivity {
         editText_description.setText(descr);
         textView_date.setText(fecha);
 
+        // Set actual category position in spinner
+        String categName = SaldoDB.getCategoryName(idCateg);
+        for (int i = 0; i < categoriesList.size(); i++) {
+            if (categoriesList.get(i).equals(categName)) {
+                spinner_DefaultPosition = i;
+                break;
+            }
+        }
+        spinner_categories.setSelection(spinner_DefaultPosition);
+
         strYear = fecha.substring(0, 4);
         strMonth = fecha.substring(5, 7);
         strDay = fecha.substring(8);
+    }
+
+    /**
+     * Alert dialog to add category
+     */
+    private void openDialog() {
+        // Inflate layout
+        LayoutInflater inflater = LayoutInflater.from(EditEntryActivity.this);
+        View subView = inflater.inflate(R.layout.dialog_add_category, null);
+
+        // Initialize edit Text for category name
+        final EditText editText_categoryName = subView.findViewById(R.id.dialogLayoutAddCategory_editText_categoryName);
+
+        // Alert dialog build
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.alert_title_addCategory));
+        builder.setMessage(getString(R.string.alert_mssg_addCategory));
+        builder.setView(subView);
+        AlertDialog alertDialog = builder.create();
+
+        // Positive option
+        builder.setPositiveButton(getString(R.string.alert_positiveBttn_addCategory), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Add category to data base
+                if (!editText_categoryName.getText().toString().equals("")) {
+                    // check if the category exist
+                    Cursor cursorNames = SaldoDB.getCategoryAllData();
+                    boolean isExistCategory = false;
+                    while (cursorNames.moveToNext()) {
+                        if (cursorNames.getString(1).equals(editText_categoryName.getText().toString())) {
+                            isExistCategory = true;
+                            break;
+                        }
+                    }
+                    if (isExistCategory) {
+                        Toast.makeText(EditEntryActivity.this, getString(R.string.toast_addEntryActivity_alertAddCateg_existCategory), Toast.LENGTH_LONG).show();
+                    } else {
+                        SaldoDB.addCategory(editText_categoryName.getText().toString());
+                    }
+                } else {
+                    Toast.makeText(EditEntryActivity.this, getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
+                }
+                // Get categories
+                Cursor categoriesData = SaldoDB.getCategoryAllData();
+
+                // Array List to store the categories names
+                ArrayList<String> categoriesList = new ArrayList<>();
+
+                // Add categories names to categoriesList
+                while (categoriesData.moveToNext()) {
+                    categoriesList.add(categoriesData.getString(1));
+                }
+
+                // Add option: "Agregar..." category
+                categoriesList.add(getString(R.string.activity_addEntry_addCategory_spinner));
+                // Create adapter for the spinner of categories
+                spinnerAdapter = new ArrayAdapter<>(EditEntryActivity.this, android.R.layout.simple_spinner_item, categoriesList);
+                spinner_categories.setAdapter(spinnerAdapter);
+
+                spinner_categories.setSelection(categoriesList.size()-2);
+            }
+        });
+
+        // Negative option
+        builder.setNegativeButton(getString(R.string.alert_negativeBttn_addCategory), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(EditEntryActivity.this, getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
+
+                spinner_categories.setSelection(spinner_DefaultPosition);
+            }
+        });
+
+        builder.show();
     }
 
     public void onClickEditEntry(View view) {
@@ -210,7 +350,7 @@ public class EditEntryActivity extends AppCompatActivity {
                 String id_inst = prefs.getString("ID", null);
 
                 boolean isResultadd = SaldoDB.editEntryData(id, date, Integer.toString(IngresoVarint),
-                        Integer.toString(GastoVarint), descripcion, id_inst);
+                        Integer.toString(GastoVarint), descripcion, id_inst, category_id);
 
                 if (isResultadd) {
                     Toast.makeText(getApplicationContext(), getString(R.string.toast_addEntryActivity_succesAdd), Toast.LENGTH_LONG).show();

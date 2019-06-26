@@ -49,6 +49,7 @@ public class AddEntryActivity extends AppCompatActivity {
     private String strYear;
     private String date;
     private String category_id;
+    ArrayAdapter<String> spinnerAdapter;
 
     // Database instance
     private DatabaseManager SaldoDB;
@@ -96,9 +97,11 @@ public class AddEntryActivity extends AppCompatActivity {
         categoriesList.add(getString(R.string.activity_addEntry_addCategory_spinner));
 
         // Create adapter for the spinner of categories
-        ArrayAdapter<String> spinnerAdapter;
         spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesList);
         spinner_categories.setAdapter(spinnerAdapter);
+
+        // Set default position
+        spinner_categories.setSelection(0);
 
         // Set spinner categories onClickListener
         spinner_categories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -155,15 +158,31 @@ public class AddEntryActivity extends AppCompatActivity {
                         }
                     }
                     if (isExistCategory) {
-                        Toast.makeText(AddEntryActivity.this, "La categoría ya existe", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddEntryActivity.this, getString(R.string.toast_addEntryActivity_alertAddCateg_existCategory), Toast.LENGTH_LONG).show();
                     } else {
                         SaldoDB.addCategory(editText_categoryName.getText().toString());
                     }
                 } else {
-                    Toast.makeText(AddEntryActivity.this, "Cancelado", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddEntryActivity.this, getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
                 }
-                Intent intent = new Intent(AddEntryActivity.this, AddEntryActivity.class);
-                startActivity(intent);
+                // Get categories
+                Cursor categoriesData = SaldoDB.getCategoryAllData();
+
+                // Array List to store the categories names
+                ArrayList<String> categoriesList = new ArrayList<>();
+
+                // Add categories names to categoriesList
+                while (categoriesData.moveToNext()) {
+                    categoriesList.add(categoriesData.getString(1));
+                }
+
+                // Add option: "Agregar..." category
+                categoriesList.add(getString(R.string.activity_addEntry_addCategory_spinner));
+                // Create adapter for the spinner of categories
+                spinnerAdapter = new ArrayAdapter<>(AddEntryActivity.this, android.R.layout.simple_spinner_item, categoriesList);
+                spinner_categories.setAdapter(spinnerAdapter);
+                // Set default position
+                spinner_categories.setSelection(categoriesList.size()-2);
             }
         });
 
@@ -171,10 +190,10 @@ public class AddEntryActivity extends AppCompatActivity {
         builder.setNegativeButton(getString(R.string.alert_negativeBttn_addCategory), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(AddEntryActivity.this, "Cancelado", Toast.LENGTH_LONG).show();
+                Toast.makeText(AddEntryActivity.this, getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(AddEntryActivity.this, AddEntryActivity.class);
-                startActivity(intent);
+                // Set default position
+                spinner_categories.setSelection(0);
             }
         });
 

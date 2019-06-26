@@ -51,6 +51,7 @@
     <string name="dataList_imageButton_decr_delete">Delete entry</string>
     <string name="dataList_textView_ingr">Ingreso:</string>
     <string name="dataList_textView_gast">Gasto:</string>
+    <string name="dataList_textView_categ">Categoría:</string>
     <string name="activity_addEntry_addCategory_spinner">Agregar…</string>
     <string name="mainActivity_addCategory_others">Otros</string>
 
@@ -61,6 +62,8 @@
     <string name="toast_searchfragment_nodatafound">No se encontraron datos</string>
     <string name="toast_addEntryActivity_succesAdd">Dato ingresado con exito</string>
     <string name="toast_addEntryActivity_noSuccesAdd">Error al ingresar dato</string>
+    <string name="toast_addEntryActivity_alertAddCateg_Canceled">Cancelado</string>
+    <string name="toast_addEntryActivity_alertAddCateg_existCategory">La categoría ya existe</string>
     <string name="snack_mainActivity_exit">Presione Salir</string>
     <string name="alert_title">Alerta</string>
     <string name="alert_addEntryActivity_nodata">Por favor complete todos los espacios</string>
