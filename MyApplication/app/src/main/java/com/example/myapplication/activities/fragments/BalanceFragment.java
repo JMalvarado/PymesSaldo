@@ -119,7 +119,7 @@ public class BalanceFragment extends Fragment {
     }
 
     /**
-     * Get String with the balance (totalProfit - totalSpend) of the month
+     * Get String with the balance (totalProfit - totalSpend) of current the month
      *
      * @return balance
      */

@@ -56,6 +56,7 @@
     <string name="dataList_textView_categ">Categoría:</string>
     <string name="activity_addEntry_addCategory_spinner">Agregar…</string>
     <string name="mainActivity_addCategory_others">Otros</string>
+    <string name="mainActivity_addEntry_lastBalance">Balance de: </string>
 
     <!-- Toast, snack bar and alerts -->
     <string name="toast_addprofileactivity_noname">Por favor ingrese un nombre</string>

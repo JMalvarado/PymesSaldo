@@ -34,7 +34,10 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -84,6 +87,7 @@ public class MainActivity extends AppCompatActivity
         // Instance of the Database Manager
         db = new DatabaseManager(this);
 
+
         /* Make an initial query to verify if there is any instance created.
            If not, show the activity to create a profile. */
         Cursor instancesData = db.getInstancesAllData();
@@ -95,6 +99,46 @@ public class MainActivity extends AppCompatActivity
             intentAddProfile.putExtra("IS_NEW_USER", true);
             startActivity(intentAddProfile);
         } else {
+            /* Verify the actual month, if it change, add the previous positive
+               balance as a profit in the actual month */
+
+            // Get the current year and month
+            Calendar calendar = Calendar.getInstance();
+            String currentMonth = Integer.toString(calendar.get(Calendar.MONTH)+1);
+            String currentYear = Integer.toString(calendar.get(Calendar.YEAR));
+
+            // Get the shared preferences month and year
+            SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+            String spMonth = prefs.getString("LASTMONTH", null);
+            String spYear = prefs.getString("LASTYEAR", null);
+
+            // Verify not null data
+            if ( (spMonth != null) && (spYear != null) ) {
+                // Compare month and year
+                if ( (!spMonth.equals(currentMonth)) || (!spYear.equals(currentYear)) ) {
+                    // Verify if the balance is positive
+                    String balance = getInMonthYearBalance(spMonth, spYear);
+                    int intBalance = Integer.parseInt(balance);
+                    if (intBalance>0) {
+                        // Get current date
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+                        String dateNow;
+                        LocalDateTime now = LocalDateTime.now();
+                        dateNow = dtf.format(now);
+
+                        // Get current time
+                        String timeNow = java.time.LocalTime.now().toString();
+
+                        // Get id instance
+                        String id = prefs.getString("ID", null);
+
+                        String newEntryDescription = getString(R.string.mainActivity_addEntry_lastBalance)+spMonth+"-"+spYear;
+                        db.addEntry(dateNow, timeNow, 0, intBalance, newEntryDescription, id, "1");
+                    }
+                }
+            }
+
+
             // Array List to store the profiles names
             ArrayList<String> profilesList = new ArrayList<>();
 
@@ -115,7 +159,7 @@ public class MainActivity extends AppCompatActivity
             spinner_instances.setAdapter(spinnerAdapter);
 
             // Set text title and id with shared preference
-            SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+            prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
             String name = prefs.getString("NAME", null);
             idInstance = prefs.getString("ID", null);
             tv_navheader_title.setText(name);
@@ -190,10 +234,7 @@ public class MainActivity extends AppCompatActivity
                     .setAction("Salir", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intentSalir = new Intent(Intent.ACTION_MAIN);
-                            intentSalir.addCategory(Intent.CATEGORY_HOME);
-                            intentSalir.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intentSalir);
+                            onExit();
                         }
                     })
                     .show();
@@ -230,14 +271,85 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new SearchFragment()).commit();
 
         } else if (id == R.id.nav_exit) {
-            Intent intentSalir = new Intent(Intent.ACTION_MAIN);
-            intentSalir.addCategory(Intent.CATEGORY_HOME);
-            intentSalir.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intentSalir);
+            onExit();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * Exit operation
+     */
+    private void onExit() {
+        // Get the current year and month before exit
+        Calendar calendar = Calendar.getInstance();
+        String lastMonth = Integer.toString(calendar.get(Calendar.MONTH)+1);
+        String lastYear = Integer.toString(calendar.get(Calendar.YEAR));
+
+        // Store the currrent year and month
+        SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("LASTMONTH", lastMonth);
+        editor.putString("LASTYEAR", lastYear);
+        editor.apply();
+
+        Intent intentSalir = new Intent(Intent.ACTION_MAIN);
+        intentSalir.addCategory(Intent.CATEGORY_HOME);
+        intentSalir.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intentSalir);
+    }
+
+    /**
+     * Get integer with the total profit of the given month and year
+     *
+     * @return total profit
+     */
+    private int getTotalProfit(String month, String year) {
+        ArrayList<Integer> profit = db.getEntryInMonthYearIngresos(idInstance, month, year);
+
+        int totalProfit = 0;
+
+        for (Integer integer1 : profit) {
+            int ing;
+            ing = integer1;
+            totalProfit += ing;
+        }
+
+        return totalProfit;
+    }
+
+    /**
+     * Get integer with the total spend of the given month and year
+     *
+     * @return spend
+     */
+    private int getTotalSpend(String month, String year) {
+        ArrayList<Integer> spend = db.getEntryInMonthYearGastos(idInstance, month, year);
+
+        int totalSpend = 0;
+
+        for (Integer integer1 : spend) {
+            int gas;
+            gas = integer1;
+            totalSpend += gas;
+        }
+
+        return totalSpend;
+    }
+
+    /**
+     * Get String with the balance (totalProfit - totalSpend) of the given month and year
+     *
+     * @return balance
+     */
+    private String getInMonthYearBalance(String month, String year) {
+        int totalProfit = getTotalProfit(month, year);
+        int totalSpend = getTotalSpend(month, year);
+
+        int balance = totalProfit - totalSpend;
+
+        return Integer.toString(balance);
     }
 }

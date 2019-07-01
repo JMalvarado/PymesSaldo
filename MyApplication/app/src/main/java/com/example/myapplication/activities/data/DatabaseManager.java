@@ -335,6 +335,31 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     /**
+     * Get the data from column ingresos in the given month and year
+     *
+     * @return
+     */
+    public ArrayList<Integer> getEntryInMonthYearIngresos(String Instancias_ID, String month, String year) {
+        //valores a usar.
+        int ingreso;
+
+        //lista a retornar
+
+        ArrayList<Integer> ingresos = new ArrayList<>();
+
+        Cursor consulta = this.getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='"+year+"' " +
+                        "AND strftime('%m',Fecha)='"+month+"' AND Instancias_ID=" + Instancias_ID, null);
+
+        while (consulta.moveToNext()) {
+            ingreso = consulta.getInt(5);
+            ingresos.add(ingreso);
+        }
+
+        return ingresos;
+    }
+
+    /**
      * Get the data from column Gasto in the current month
      *
      * @return
@@ -350,6 +375,31 @@ public class DatabaseManager extends SQLiteOpenHelper {
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
                         "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
+
+        while (consulta.moveToNext()) {
+            gasto = consulta.getInt(6);
+            gastos.add(gasto);
+        }
+
+        return gastos;
+    }
+
+    /**
+     * Get the data from column Gasto in the given month and year
+     *
+     * @return
+     */
+    public ArrayList<Integer> getEntryInMonthYearGastos(String Instancias_ID, String month, String year) {
+        //valores a usar.
+        int gasto;
+
+        //lista a retornar
+
+        ArrayList<Integer> gastos = new ArrayList<>();
+
+        Cursor consulta = this.getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='"+year+"' " +
+                        "AND strftime('%m',Fecha)='"+month+"' AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
             gasto = consulta.getInt(6);

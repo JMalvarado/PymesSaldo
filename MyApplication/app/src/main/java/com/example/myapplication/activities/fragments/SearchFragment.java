@@ -372,10 +372,4 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
-
-    /*@Override
-    public void onBackPressed() {
-        //Intent intentMain = new Intent (this, MainActivity.class);
-        //startActivity(intentMain);
-    }*/
 }
