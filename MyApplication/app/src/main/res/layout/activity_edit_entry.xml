@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/Layout_editEntry"
     android:layout_width="match_parent"
@@ -23,86 +24,175 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/etIngreso_editEntry"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
-        android:autofillHints=""
-        android:hint="@string/addentry_textView_hintIngreso"
-        android:inputType="number"
-        android:padding="15dip" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/etGasto_editEntry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:autofillHints=""
-        android:hint="@string/addentry_textView_hintGasto"
-        android:inputType="number"
-        android:padding="15dip" />
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_constraintStart_toStartOf="parent">
 
-    <EditText
-        android:id="@+id/etdescripcion_editEntry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:autofillHints=""
-        android:hint="@string/addentry_textView_hintDescr"
-        android:inputType="text"
-        android:maxLength="30"
-        android:padding="15dip" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/activity_add_entry_textView_category"
-        android:textSize="18sp" />
+                <EditText
+                    android:id="@+id/etIngreso_editEntry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:hint="@string/addentry_textView_hintIngreso"
+                    android:inputType="number"
+                    android:padding="15dip" />
 
-    <Spinner
-        android:id="@+id/spinner_editEntry_category"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:theme="@style/spinner_style" />
+                <EditText
+                    android:id="@+id/etGasto_editEntry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:hint="@string/addentry_textView_hintGasto"
+                    android:inputType="number"
+                    android:padding="15dip" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/etdescripcion_editEntry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:hint="@string/addentry_textView_hintDescr"
+                    android:inputType="text"
+                    android:maxLength="30"
+                    android:padding="15dip" />
 
-        <Button
-            android:id="@+id/button_editEntry_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="16dp"
-            android:onClick="onClickEditEntry"
-            android:text="@string/addentry_button_textFecha" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView_editEntry_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/activity_add_entry_textView_category"
+                        android:textSize="18sp" />
 
-    </LinearLayout>
+                    <Spinner
+                        android:id="@+id/spinner_editEntry_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="16dp"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:theme="@style/spinner_style" />
 
-    <Button
-        android:id="@+id/button_editEntry_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:onClick="onClickEditEntry"
-        android:text="@string/editEntry_button_textEditar" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/activity_edit_entry_textView_profile"
+                        android:textSize="18sp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_editEntry_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="16dp"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:theme="@style/spinner_style" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/button_editEntry_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onClickEditEntry"
+                        android:text="@string/addentry_button_textFecha" />
+
+                    <TextView
+                        android:id="@+id/textView_editEntry_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/button_editEntry_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:onClick="onClickEditEntry"
+                        android:text="@string/addentry_button_textHora" />
+
+                    <TextView
+                        android:id="@+id/textView_editEntry_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/button_editEntry_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:onClick="onClickEditEntry"
+                    android:text="@string/editEntry_button_textEditar" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
 
 </LinearLayout>

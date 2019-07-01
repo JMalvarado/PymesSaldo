@@ -31,6 +31,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/tvListHora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -101,19 +106,19 @@
 
                 <ImageButton
                     android:id="@+id/imageButton_dataList_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:contentDescription="@string/dataList_imageButton_decr_edit"
-                    android:layout_width="wrap_content"
-                    android:src="@drawable/ic_edit"
-                    android:layout_height="match_parent" />
+                    android:src="@drawable/ic_edit" />
 
                 <ImageButton
                     android:id="@+id/imageButton_dataList_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:contentDescription="@string/dataList_imageButton_decr_delete"
-                    android:layout_width="wrap_content"
-                    android:src="@drawable/ic_delete"
-                    android:layout_height="match_parent" />
+                    android:src="@drawable/ic_delete" />
 
             </LinearLayout>
 

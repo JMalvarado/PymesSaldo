@@ -4,7 +4,7 @@
     <string name="itemInfo_name">Datos</string>
     <string name="dataSearch_name">Lista</string>
     <string name="addProfile_name">Agregar estado financiero</string>
-    <string name="balance_name">Balance</string>
+    <string name="balance_name">Balance del mes</string>
     <string name="search_name">Explorar</string>
     <string name="editEntry_name">Editar entrada</string>
     <string name="editProfile_name">Editar estado financiero</string>
@@ -13,13 +13,14 @@
     <string name="activity_add_profile_button_ingresar">Agregar</string>
     <string name="activity_add_profile_msg_samename">El estado ya existe</string>
     <string name="activity_add_entry_textView_category">Categoría:</string>
+    <string name="activity_edit_entry_textView_profile">Estado financiero:</string>
 
     <string name="alert_optSi">Si</string>
     <string name="alert_optNo">No</string>
     <string name="alert_title_deleteProfile">¿Desea eliminar el estado?</string>
     <string name="alert_title_deleteData">¿Desea eliminar el dato?</string>
 
-    <string name="fragment_search_textview_filtro">Filtro</string>
+    <string name="fragment_search_textview_filtro">Filtro:</string>
     <string name="fragment_search_textview_inicio">Inicio</string>
     <string name="fragment_search_textview_dia">Dia</string>
     <string name="fragment_search_textview_mes">Mes</string>
@@ -43,6 +44,7 @@
     <string name="header_textView_spinnerTitle">ESTADO FINANCIERO</string>
     <string name="addentry_button_textIngresar">Ingresar</string>
     <string name="addentry_button_textFecha">Fecha</string>
+    <string name="addentry_button_textHora">Hora</string>
     <string name="editEntry_button_textEditar">Editar</string>
     <string name="editProfile_button_editarNegocio">Editar</string>
     <string name="navHeader_imageButton_decr_editProfile">Edit profile</string>

@@ -50,12 +50,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         SaldoDB = new DatabaseManager(context);
 
+        String realTime = data.getHora().substring(0,5);
+
         myViewHolder.tvDescr.setText(data.getDescr());
         myViewHolder.tvFecha.setText(data.getFecha());
+        myViewHolder.tvHora.setText(realTime);
         myViewHolder.tvProfit.setText(data.getIngreso());
         myViewHolder.tvSpend.setText(data.getGasto());
-        System.out.println("CATEGORIA: ------ "+data.getCategId());
-        System.out.println("CATEGORIA: ------ "+SaldoDB.getCategoryName(data.getCategId()));
         myViewHolder.tvCategory.setText(SaldoDB.getCategoryName(data.getCategId()));
 
         myViewHolder.imBttnEdit.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +67,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 editIntent.putExtra("INGRESO", data.getIngreso());
                 editIntent.putExtra("GASTO", data.getGasto());
                 editIntent.putExtra("FECHA", data.getFecha());
+                editIntent.putExtra("HORA", data.getHora());
                 editIntent.putExtra("DESCR", data.getDescr());
                 editIntent.putExtra("CATEG", data.getCategId());
 
@@ -144,22 +146,25 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
             ArrayList<String> descripciones = new ArrayList<>();
             ArrayList<String> fechas = new ArrayList<>();
+            ArrayList<String> horas = new ArrayList<>();
             ArrayList<String> ingresos = new ArrayList<>();
             ArrayList<String> gastos = new ArrayList<>();
             ArrayList<String> ids = new ArrayList<>();
             ArrayList<String> categids = new ArrayList<>();
 
             while (resultado.moveToNext()) {
-                descripciones.add(resultado.getString(6));
+                descripciones.add(resultado.getString(7));
                 categids.add(resultado.getString(2));
                 fechas.add(resultado.getString(3));
-                ingresos.add(resultado.getString(4));
-                gastos.add(resultado.getString(5));
+                horas.add(resultado.getString(4));
+                ingresos.add(resultado.getString(5));
+                gastos.add(resultado.getString(6));
                 ids.add(resultado.getString(0));
             }
 
             intentSearch.putStringArrayListExtra("DESCRIPCIONES", descripciones);
             intentSearch.putStringArrayListExtra("FECHAS", fechas);
+            intentSearch.putStringArrayListExtra("HORAS", horas);
             intentSearch.putStringArrayListExtra("INGRESOS", ingresos);
             intentSearch.putStringArrayListExtra("GASTOS", gastos);
             intentSearch.putStringArrayListExtra("IDS", ids);
@@ -180,6 +185,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public ImageButton imBttnDelete;
         public TextView tvDescr;
         public TextView tvFecha;
+        public TextView tvHora;
         public TextView tvProfit;
         public TextView tvSpend;
         public TextView tvCategory;
@@ -190,6 +196,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
             tvDescr = itemView.findViewById(R.id.tvListDescr);
             tvFecha = itemView.findViewById(R.id.tvListFecha);
+            tvHora = itemView.findViewById(R.id.tvListHora);
             tvProfit = itemView.findViewById(R.id.textView_dataList_ingr);
             tvSpend = itemView.findViewById(R.id.textView_dataList_gast);
             linearLayout_data = itemView.findViewById(R.id.linearLayout_data);

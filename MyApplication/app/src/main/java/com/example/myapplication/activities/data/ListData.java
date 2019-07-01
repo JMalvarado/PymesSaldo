@@ -4,18 +4,24 @@ public class ListData {
 
     private String descr;
     private String fecha;
+    private String hora;
     private String ingreso;
     private String gasto;
     private String id;
     private String categId;
 
-    public ListData(String descr, String fecha, String ingreso, String gasto, String id, String categId) {
+    public ListData(String descr, String fecha, String hora, String ingreso, String gasto, String id, String categId) {
         this.categId = categId;
         this.id = id;
         this.descr = descr;
         this.fecha = fecha;
+        this.hora = hora;
         this.ingreso = ingreso;
         this.gasto = gasto;
+    }
+
+    public String getHora() {
+        return hora;
     }
 
     public String getCategId() {

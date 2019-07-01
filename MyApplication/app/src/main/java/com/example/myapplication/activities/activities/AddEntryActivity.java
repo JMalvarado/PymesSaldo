@@ -1,6 +1,7 @@
 package com.example.myapplication.activities.activities;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -37,17 +39,18 @@ public class AddEntryActivity extends AppCompatActivity {
     private EditText editText_spend;
     private EditText editText_description;
     private TextView textView_date;
+    private TextView textView_time;
     private TextView textView_instanceName;
     private Button button_in;
     private Button button_addDate;
+    private Button button_addTime;
     private Spinner spinner_categories;
 
     // Global variables
     DateTimeFormatter dtf;
-    private String strDay;
-    private String strMonth;
-    private String strYear;
+    private String strDay, strMonth, strYear, strHour, strMinute;
     private String date;
+    private String time;
     private String category_id;
     ArrayAdapter<String> spinnerAdapter;
 
@@ -65,7 +68,9 @@ public class AddEntryActivity extends AppCompatActivity {
         editText_spend = findViewById(R.id.etGasto);
         editText_description = findViewById(R.id.etdescripcion);
         textView_date = findViewById(R.id.textView_addEntry_date);
+        textView_time = findViewById(R.id.textView_addEntry_time);
         button_addDate = findViewById(R.id.button_addEntry_date);
+        button_addTime = findViewById(R.id.button_addEntry_time);
         textView_instanceName = findViewById(R.id.textView_addEntry_instanceName);
 
         // Database instance
@@ -73,6 +78,17 @@ public class AddEntryActivity extends AppCompatActivity {
 
         // Set date format
         dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+
+        // Set date now in the textView
+        String DateNow;
+        LocalDateTime now = LocalDateTime.now();
+        DateNow = dtf.format(now);
+        date = DateNow;
+        textView_date.setText(date);
+
+        // Set time now in the textView
+        time = java.time.LocalTime.now().toString();
+        textView_time.setText(time);
 
         // Set instance name as title
         SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
@@ -182,7 +198,7 @@ public class AddEntryActivity extends AppCompatActivity {
                 spinnerAdapter = new ArrayAdapter<>(AddEntryActivity.this, android.R.layout.simple_spinner_item, categoriesList);
                 spinner_categories.setAdapter(spinnerAdapter);
                 // Set default position
-                spinner_categories.setSelection(categoriesList.size()-2);
+                spinner_categories.setSelection(categoriesList.size() - 2);
             }
         });
 
@@ -213,100 +229,25 @@ public class AddEntryActivity extends AppCompatActivity {
         int IngresoVarint;
         int GastoVarint;
 
-        if (!textView_date.getText().toString().equals("")) {
-            // Cast day with 1 digit to 2
-            switch (strDay) {
-                case "1":
-                    strDay = "01";
-                    break;
-                case "2":
-                    strDay = "02";
-                    break;
-                case "3":
-                    strDay = "03";
-                    break;
-                case "4":
-                    strDay = "04";
-                    break;
-                case "5":
-                    strDay = "05";
-                    break;
-                case "6":
-                    strDay = "06";
-                    break;
-                case "7":
-                    strDay = "07";
-                    break;
-                case "8":
-                    strDay = "08";
-                    break;
-                case "9":
-                    strDay = "09";
-                    break;
-                default:
-                    break;
-            }
-
-            // Cast month with 1 digit to 2
-            switch (strMonth) {
-                case "1":
-                    strMonth = "01";
-                    break;
-                case "2":
-                    strMonth = "02";
-                    break;
-                case "3":
-                    strMonth = "03";
-                    break;
-                case "4":
-                    strMonth = "04";
-                    break;
-                case "5":
-                    strMonth = "05";
-                    break;
-                case "6":
-                    strMonth = "06";
-                    break;
-                case "7":
-                    strMonth = "07";
-                    break;
-                case "8":
-                    strMonth = "08";
-                    break;
-                case "9":
-                    strMonth = "09";
-                    break;
-                default:
-                    break;
-            }
-
-            // Set complete selected date
-            date = strYear + "-" + strMonth + "-" + strDay;
-        } else {
-            // Set now date
-            String DateNow;
-            LocalDateTime now = LocalDateTime.now();
-            DateNow = dtf.format(now);
-
-            date = DateNow;
-        }
-
-        // Set 0 to blank spaces
-        if (IngresoVar.equals("")) {
-            IngresoVarint = 0;
-        } else {
-            IngresoVarint = Integer.parseInt(IngresoVar);
-        }
-
-        if (GastoVar.equals("")) {
-            GastoVarint = 0;
-        } else {
-            GastoVarint = Integer.parseInt(GastoVar);
-        }
-
         switch (v.getId()) {
             case R.id.Ingreso:
+                date = textView_date.getText().toString();
+                time = textView_time.getText().toString();
 
+                // Set 0 to blank spaces
+                if (IngresoVar.equals("")) {
+                    IngresoVarint = 0;
+                } else {
+                    IngresoVarint = Integer.parseInt(IngresoVar);
+                }
+
+                if (GastoVar.equals("")) {
+                    GastoVarint = 0;
+                } else {
+                    GastoVarint = Integer.parseInt(GastoVar);
+                }
+
+                // Verify blank spaces
                 if ((editText_profit.getText().toString().equals("")) && (editText_spend.getText().toString().equals(""))) {
                     showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_nodata));
                     break;
@@ -323,7 +264,7 @@ public class AddEntryActivity extends AppCompatActivity {
                 SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
                 String id = prefs.getString("ID", null);
 
-                boolean isResultadd = SaldoDB.addEntry(date, GastoVarint, IngresoVarint, descripcion, id, category_id);
+                boolean isResultadd = SaldoDB.addEntry(date, time, GastoVarint, IngresoVarint, descripcion, id, category_id);
 
                 if (isResultadd) {
                     Toast.makeText(getApplicationContext(), getString(R.string.toast_addEntryActivity_succesAdd), Toast.LENGTH_LONG).show();
@@ -345,13 +286,164 @@ public class AddEntryActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        textView_date.setText(new StringBuilder().append(i2).append("-").append(i1 + 1).append("-").append(i).toString());
                         strDay = Integer.toString(i2);
                         strMonth = Integer.toString(i1 + 1);
                         strYear = Integer.toString(i);
+
+                        // Cast day with 1 digit to 2
+                        switch (strDay) {
+                            case "1":
+                                strDay = "01";
+                                break;
+                            case "2":
+                                strDay = "02";
+                                break;
+                            case "3":
+                                strDay = "03";
+                                break;
+                            case "4":
+                                strDay = "04";
+                                break;
+                            case "5":
+                                strDay = "05";
+                                break;
+                            case "6":
+                                strDay = "06";
+                                break;
+                            case "7":
+                                strDay = "07";
+                                break;
+                            case "8":
+                                strDay = "08";
+                                break;
+                            case "9":
+                                strDay = "09";
+                                break;
+                            default:
+                                break;
+                        }
+
+                        // Cast month with 1 digit to 2
+                        switch (strMonth) {
+                            case "1":
+                                strMonth = "01";
+                                break;
+                            case "2":
+                                strMonth = "02";
+                                break;
+                            case "3":
+                                strMonth = "03";
+                                break;
+                            case "4":
+                                strMonth = "04";
+                                break;
+                            case "5":
+                                strMonth = "05";
+                                break;
+                            case "6":
+                                strMonth = "06";
+                                break;
+                            case "7":
+                                strMonth = "07";
+                                break;
+                            case "8":
+                                strMonth = "08";
+                                break;
+                            case "9":
+                                strMonth = "09";
+                                break;
+                            default:
+                                break;
+                        }
+
+                        textView_date.setText(new StringBuilder().append(strYear).append("-").append(strMonth).append("-").append(strYear).toString());
                     }
                 }, yearPick, monthPick, dayPick);
                 datePickerDialog.show();
+
+                break;
+
+            case R.id.button_addEntry_time:
+                Calendar timepick = Calendar.getInstance();
+                int hourPick = timepick.get(Calendar.HOUR_OF_DAY);
+                int minutesPick = timepick.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        strHour = Integer.toString(i);
+                        strMinute = Integer.toString(i1);
+
+                        // Cast hour with 1 digit to 2
+                        switch (strHour) {
+                            case "1":
+                                strHour = "01";
+                                break;
+                            case "2":
+                                strHour = "02";
+                                break;
+                            case "3":
+                                strHour = "03";
+                                break;
+                            case "4":
+                                strHour = "04";
+                                break;
+                            case "5":
+                                strHour = "05";
+                                break;
+                            case "6":
+                                strHour = "06";
+                                break;
+                            case "7":
+                                strHour = "07";
+                                break;
+                            case "8":
+                                strHour = "08";
+                                break;
+                            case "9":
+                                strHour = "09";
+                                break;
+                            default:
+                                break;
+                        }
+
+                        // Cast minute with 1 digit to 2
+                        switch (strMinute) {
+                            case "1":
+                                strMinute = "01";
+                                break;
+                            case "2":
+                                strMinute = "02";
+                                break;
+                            case "3":
+                                strMinute = "03";
+                                break;
+                            case "4":
+                                strMinute = "04";
+                                break;
+                            case "5":
+                                strMinute = "05";
+                                break;
+                            case "6":
+                                strMinute = "06";
+                                break;
+                            case "7":
+                                strMinute = "07";
+                                break;
+                            case "8":
+                                strMinute = "08";
+                                break;
+                            case "9":
+                                strMinute = "09";
+                                break;
+                            default:
+                                break;
+                        }
+
+                        textView_time.setText(new StringBuilder().append(strHour).append(":").append(strMinute).append(":00.000").toString());
+                    }
+                }, hourPick, minutesPick, false);
+                timePickerDialog.show();
 
                 break;
         }

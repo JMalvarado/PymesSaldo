@@ -10,13 +10,14 @@ import java.util.ArrayList;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
     private static final String DATABASE_NAME = "Saldos.db";
 
     //tabla1
     private static final String TABLA1_NOMBRE = "Saldos";
     //columnas
     private static final String Col_Fecha = "Fecha";
+    private static final String Col_Hora = "Hora";
     private static final String Col_Ingreso = "Ingreso";
     private static final String Col_Gasto = "Gasto";
     private static final String Col_Descripcion = "Descripcion";
@@ -63,6 +64,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 "Instancias_ID INTEGER," +
                 "Categorias_ID INTEGER," +
                 "Fecha DATE," +
+                "Hora TIME, " +
                 "Ingreso INTEGER," +
                 "Gasto INTEGER," +
                 "Descripcion TEXT," +
@@ -96,13 +98,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * Add an entry to table Saldos
      *
      * @param Date
+     * @param hora
      * @param gasto
      * @param ingreso
      * @param descripcion
      * @param instance_id
      * @return
      */
-    public boolean addEntry(String Date, int gasto, int ingreso, String descripcion, String instance_id, String categ_id) {
+    public boolean addEntry(String Date, String hora,  int gasto, int ingreso, String descripcion, String instance_id, String categ_id) {
 
         SQLiteDatabase db = this.getWritableDatabase(); //Obtiene la instancia de base de datos para ingresar datos.
 
@@ -110,6 +113,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         contentValues.put(Col_InstanciaID, instance_id);
         contentValues.put(Col_CategID, categ_id);
         contentValues.put(Col_Fecha, Date);
+        contentValues.put(Col_Hora, hora);
         contentValues.put(Col_Ingreso, ingreso);
         contentValues.put(Col_Gasto, gasto);
         contentValues.put(Col_Descripcion, descripcion);
@@ -274,7 +278,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            gasto = consulta.getInt(5);
+            gasto = consulta.getInt(6);
             gastos.add(gasto);
         }
 
@@ -298,7 +302,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            ingreso = consulta.getInt(4);
+            ingreso = consulta.getInt(5);
             ingresos.add(ingreso);
         }
 
@@ -323,7 +327,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                         "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            ingreso = consulta.getInt(4);
+            ingreso = consulta.getInt(5);
             ingresos.add(ingreso);
         }
 
@@ -348,7 +352,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                         "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            gasto = consulta.getInt(5);
+            gasto = consulta.getInt(6);
             gastos.add(gasto);
         }
 
@@ -452,14 +456,15 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param inst_ID
      * @return
      */
-    public boolean editEntryData(String id, String date, String ingreso, String gasto, String descr, String inst_ID, String categ_ID) {
+    public boolean editEntryData(String id, String date, String hora, String ingreso, String gasto, String descr, String inst_ID, String new_inst_ID, String categ_ID) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("ID", id);
-        contentValues.put(Col_InstanciaID, inst_ID);
+        contentValues.put(Col_InstanciaID, new_inst_ID);
         contentValues.put(Col_CategID, categ_ID);
         contentValues.put(Col_Fecha, date);
+        contentValues.put(Col_Hora, hora);
         contentValues.put(Col_Ingreso, ingreso);
         contentValues.put(Col_Gasto, gasto);
         contentValues.put(Col_Descripcion, descr);

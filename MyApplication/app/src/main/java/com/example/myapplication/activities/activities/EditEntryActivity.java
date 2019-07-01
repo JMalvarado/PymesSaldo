@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -34,10 +36,13 @@ public class EditEntryActivity extends AppCompatActivity {
     private EditText editText_spend;
     private EditText editText_description;
     private TextView textView_date;
+    private TextView textView_time;
     private TextView textView_instanceName;
     private Button button_in;
     private Button button_addDate;
+    private Button button_addTime;
     private Spinner spinner_categories;
+    private Spinner spinner_profiles;
 
     // Global variables
     private String id;
@@ -45,15 +50,18 @@ public class EditEntryActivity extends AppCompatActivity {
     private String gasto;
     private String descr;
     private String fecha;
+    private String hora;
     private String idCateg;
     private DatabaseManager SaldoDB;
-    private String strDay;
-    private String strMonth;
-    private String strYear;
+    private String strDay, strMonth, strYear, strHour, strMinute;
     private String date;
+    private String time;
     private String category_id;
+    private String id_inst;
+    private String new_id_inst;
     private int spinner_DefaultPosition = 0;
     private ArrayAdapter<String> spinnerAdapter;
+    private ArrayAdapter<String> spinnerAdapterProfiles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +71,19 @@ public class EditEntryActivity extends AppCompatActivity {
         // Database
         SaldoDB = new DatabaseManager(this);
 
+        // Get curent id instance
+        SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+        id_inst = prefs.getString("ID", null);
+
         // Initialize components view
         button_in = findViewById(R.id.button_editEntry_edit);
         editText_profit = findViewById(R.id.etIngreso_editEntry);
         editText_spend = findViewById(R.id.etGasto_editEntry);
         editText_description = findViewById(R.id.etdescripcion_editEntry);
         textView_date = findViewById(R.id.textView_editEntry_date);
+        textView_time = findViewById(R.id.textView_editEntry_time);
         button_addDate = findViewById(R.id.button_editEntry_date);
+        button_addTime = findViewById(R.id.button_editEntry_time);
         textView_instanceName = findViewById(R.id.textView_editEntry_instanceName);
 
 
@@ -114,8 +128,39 @@ public class EditEntryActivity extends AppCompatActivity {
         });
 
 
+        // Set spinner of profiles data
+        spinner_profiles = findViewById(R.id.spinner_editEntry_profile);
+
+        // Get profiles
+        Cursor profilesData = SaldoDB.getInstancesAllData();
+
+        // Array List to store the categories names
+        ArrayList<String> profilesList = new ArrayList<>();
+
+        // Add categories names to categoriesList
+        while (profilesData.moveToNext()) {
+            profilesList.add(profilesData.getString(1));
+        }
+
+        // Create adapter for the spinner of profiles
+        spinnerAdapterProfiles = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, profilesList);
+        spinner_profiles.setAdapter(spinnerAdapterProfiles);
+
+        // Set spinner profiles onClickListener
+        spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String profile_name = adapterView.getItemAtPosition(i).toString();
+                new_id_inst = SaldoDB.getInstanceId(profile_name);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+
         // Set instance name as title
-        SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
         String name = prefs.getString("NAME", null);
         textView_instanceName.setText(name);
 
@@ -125,6 +170,7 @@ public class EditEntryActivity extends AppCompatActivity {
         gasto = getIntent().getStringExtra("GASTO");
         descr = getIntent().getStringExtra("DESCR");
         fecha = getIntent().getStringExtra("FECHA");
+        hora = getIntent().getStringExtra("HORA");
         idCateg = getIntent().getStringExtra("CATEG");
 
         // Set actual data on views and variables
@@ -132,11 +178,23 @@ public class EditEntryActivity extends AppCompatActivity {
         editText_spend.setText(gasto);
         editText_description.setText(descr);
         textView_date.setText(fecha);
+        textView_time.setText(hora);
 
         // Set actual category position in spinner
         String categName = SaldoDB.getCategoryName(idCateg);
         for (int i = 0; i < categoriesList.size(); i++) {
             if (categoriesList.get(i).equals(categName)) {
+                spinner_DefaultPosition = i;
+                break;
+            }
+        }
+        spinner_categories.setSelection(spinner_DefaultPosition);
+
+        // Set actual profile position in spinner
+        String id_prefs = prefs.getString("ID", null);
+        String profileName = SaldoDB.getInstanceName(id_prefs);
+        for (int i = 0; i < profilesList.size(); i++) {
+            if (profilesList.get(i).equals(profileName)) {
                 spinner_DefaultPosition = i;
                 break;
             }
@@ -244,9 +302,95 @@ public class EditEntryActivity extends AppCompatActivity {
 
                 break;
 
+            case R.id.button_editEntry_time:
+                Calendar timepick = Calendar.getInstance();
+                int hourPick = timepick.get(Calendar.HOUR_OF_DAY);
+                int minutesPick = timepick.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        strHour = Integer.toString(i);
+                        strMinute = Integer.toString(i1);
+
+                        // Cast hour with 1 digit to 2
+                        switch (strHour) {
+                            case "1":
+                                strHour = "01";
+                                break;
+                            case "2":
+                                strHour = "02";
+                                break;
+                            case "3":
+                                strHour = "03";
+                                break;
+                            case "4":
+                                strHour = "04";
+                                break;
+                            case "5":
+                                strHour = "05";
+                                break;
+                            case "6":
+                                strHour = "06";
+                                break;
+                            case "7":
+                                strHour = "07";
+                                break;
+                            case "8":
+                                strHour = "08";
+                                break;
+                            case "9":
+                                strHour = "09";
+                                break;
+                            default:
+                                break;
+                        }
+
+                        // Cast minute with 1 digit to 2
+                        switch (strMinute) {
+                            case "1":
+                                strMinute = "01";
+                                break;
+                            case "2":
+                                strMinute = "02";
+                                break;
+                            case "3":
+                                strMinute = "03";
+                                break;
+                            case "4":
+                                strMinute = "04";
+                                break;
+                            case "5":
+                                strMinute = "05";
+                                break;
+                            case "6":
+                                strMinute = "06";
+                                break;
+                            case "7":
+                                strMinute = "07";
+                                break;
+                            case "8":
+                                strMinute = "08";
+                                break;
+                            case "9":
+                                strMinute = "09";
+                                break;
+                            default:
+                                break;
+                        }
+
+                        textView_time.setText(new StringBuilder().append(strHour).append(":").append(strMinute).append(":00.000").toString());
+                    }
+                }, hourPick, minutesPick, false);
+                timePickerDialog.show();
+
+                break;
+
             case R.id.button_editEntry_edit:
                 String IngresoVar = editText_profit.getText().toString();
                 String GastoVar = editText_spend.getText().toString();
+
+                time = textView_time.getText().toString();
 
                 int IngresoVarint;
                 int GastoVarint;
@@ -345,12 +489,8 @@ public class EditEntryActivity extends AppCompatActivity {
 
                 String descripcion = editText_description.getText().toString();
 
-                // Get id instance
-                SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
-                String id_inst = prefs.getString("ID", null);
-
-                boolean isResultadd = SaldoDB.editEntryData(id, date, Integer.toString(IngresoVarint),
-                        Integer.toString(GastoVarint), descripcion, id_inst, category_id);
+                boolean isResultadd = SaldoDB.editEntryData(id, date, time, Integer.toString(IngresoVarint),
+                        Integer.toString(GastoVarint), descripcion, id_inst, new_id_inst, category_id);
 
                 if (isResultadd) {
                     Toast.makeText(getApplicationContext(), getString(R.string.toast_addEntryActivity_succesAdd), Toast.LENGTH_LONG).show();

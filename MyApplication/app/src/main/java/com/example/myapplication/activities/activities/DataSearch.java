@@ -29,6 +29,7 @@ public class DataSearch extends AppCompatActivity {
 
     private ArrayList<String> descripciones;
     private ArrayList<String> fechas;
+    private ArrayList<String> horas;
     private ArrayList<String> ingresos;
     private ArrayList<String> gastos;
     private ArrayList<String> ids;
@@ -54,12 +55,14 @@ public class DataSearch extends AppCompatActivity {
 
         descripciones = new ArrayList<>();
         fechas = new ArrayList<>();
+        horas = new ArrayList<>();
         ingresos = new ArrayList<>();
         gastos = new ArrayList<>();
         ids = new ArrayList<>();
 
         descripciones = getIntent().getStringArrayListExtra("DESCRIPCIONES");
         fechas = getIntent().getStringArrayListExtra("FECHAS");
+        horas = getIntent().getStringArrayListExtra("HORAS");
         ingresos = getIntent().getStringArrayListExtra("INGRESOS");
         gastos = getIntent().getStringArrayListExtra("GASTOS");
         ids = getIntent().getStringArrayListExtra("IDS");
@@ -71,6 +74,7 @@ public class DataSearch extends AppCompatActivity {
             ListData listData = new ListData(
                     descripciones.get(i),
                     fechas.get(i),
+                    horas.get(i),
                     ingresos.get(i),
                     gastos.get(i),
                     ids.get(i),
