@@ -9,6 +9,19 @@
     <string name="editEntry_name">Editar entrada</string>
     <string name="editProfile_name">Editar estado financiero</string>
 
+    <string name="month_January">Enero</string>
+    <string name="month_February">Febrero</string>
+    <string name="month_March">Marzo</string>
+    <string name="month_April">Abril</string>
+    <string name="month_May">Mayo</string>
+    <string name="month_June">Junio</string>
+    <string name="month_July">Julio</string>
+    <string name="month_August">Agosto</string>
+    <string name="month_September">Septiembre</string>
+    <string name="month_October">Octubre</string>
+    <string name="month_November">Noviembre</string>
+    <string name="month_December">Diciembre</string>
+
     <string name="activity_add_profile_hint_nombre">Nombre del estado</string>
     <string name="activity_add_profile_button_ingresar">Agregar</string>
     <string name="activity_add_profile_msg_samename">El estado ya existe</string>
@@ -81,7 +94,7 @@
     <string name="toolbar_action_help">Ayuda</string>
     <!-- Navigation Drawer Menu -->
     <string name="nav_add_entry">Agregar entrada</string>
-    <string name="nav_explore">Explorar</string>
+    <string name="nav_explore">Explorar movimientos</string>
     <string name="nav_month_balance">Balance del mes</string>
     <string name="nav_add_profile">Agregar estado financiero</string>
     <string name="nav_conf_profile">Configurar estado</string>

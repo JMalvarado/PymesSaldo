@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -169,16 +170,25 @@ public class EditEntryActivity extends AppCompatActivity {
         ingreso = getIntent().getStringExtra("INGRESO");
         gasto = getIntent().getStringExtra("GASTO");
         descr = getIntent().getStringExtra("DESCR");
-        fecha = getIntent().getStringExtra("FECHA");
-        hora = getIntent().getStringExtra("HORA");
+        fecha= date = getIntent().getStringExtra("FECHA");
+        hora= time = getIntent().getStringExtra("HORA");
         idCateg = getIntent().getStringExtra("CATEG");
 
         // Set actual data on views and variables
         editText_profit.setText(ingreso);
         editText_spend.setText(gasto);
         editText_description.setText(descr);
-        textView_date.setText(fecha);
-        textView_time.setText(hora);
+
+        // Show date in format DD-MM-YY
+        String year = fecha.substring(0,4);
+        String month = fecha.substring(5,7);
+        String day = fecha.substring(8,10);
+        String sepearator = "-";
+        String dateToShow = day+sepearator+month+sepearator+year;
+        textView_date.setText(dateToShow);
+        // Show time in format HH:MM
+        String timeToShow = hora.substring(0,5);
+        textView_time.setText(timeToShow);
 
         // Set actual category position in spinner
         String categName = SaldoDB.getCategoryName(idCateg);
@@ -199,7 +209,7 @@ public class EditEntryActivity extends AppCompatActivity {
                 break;
             }
         }
-        spinner_categories.setSelection(spinner_DefaultPosition);
+        spinner_profiles.setSelection(spinner_DefaultPosition);
 
         strYear = fecha.substring(0, 4);
         strMonth = fecha.substring(5, 7);
@@ -292,10 +302,80 @@ public class EditEntryActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        textView_date.setText(new StringBuilder().append(i2).append("-").append(i1 + 1).append("-").append(i).toString());
                         strDay = Integer.toString(i2);
                         strMonth = Integer.toString(i1 + 1);
                         strYear = Integer.toString(i);
+
+                        // Cast day with 1 digit to 2
+                        switch (strDay) {
+                            case "1":
+                                strDay = "01";
+                                break;
+                            case "2":
+                                strDay = "02";
+                                break;
+                            case "3":
+                                strDay = "03";
+                                break;
+                            case "4":
+                                strDay = "04";
+                                break;
+                            case "5":
+                                strDay = "05";
+                                break;
+                            case "6":
+                                strDay = "06";
+                                break;
+                            case "7":
+                                strDay = "07";
+                                break;
+                            case "8":
+                                strDay = "08";
+                                break;
+                            case "9":
+                                strDay = "09";
+                                break;
+                            default:
+                                break;
+                        }
+
+                        // Cast month with 1 digit to 2
+                        switch (strMonth) {
+                            case "1":
+                                strMonth = "01";
+                                break;
+                            case "2":
+                                strMonth = "02";
+                                break;
+                            case "3":
+                                strMonth = "03";
+                                break;
+                            case "4":
+                                strMonth = "04";
+                                break;
+                            case "5":
+                                strMonth = "05";
+                                break;
+                            case "6":
+                                strMonth = "06";
+                                break;
+                            case "7":
+                                strMonth = "07";
+                                break;
+                            case "8":
+                                strMonth = "08";
+                                break;
+                            case "9":
+                                strMonth = "09";
+                                break;
+                            default:
+                                break;
+                        }
+
+                        // Show in format DD-MM-YY
+                        textView_date.setText(new StringBuilder().append(strDay).append("-").append(strMonth).append("-").append(strYear).toString());
+                        // Store in format YY-MM-DD
+                        date = new StringBuilder().append(strYear).append("-").append(strMonth).append("-").append(strDay).toString();
                     }
                 }, yearPick, monthPick, dayPick);
                 datePickerDialog.show();
@@ -379,7 +459,8 @@ public class EditEntryActivity extends AppCompatActivity {
                                 break;
                         }
 
-                        textView_time.setText(new StringBuilder().append(strHour).append(":").append(strMinute).append(":00.000").toString());
+                        textView_time.setText(new StringBuilder().append(strHour).append(":").append(strMinute).toString());
+                        time  = new StringBuilder().append(strHour).append(":").append(strMinute).append(":00.000").toString();
                     }
                 }, hourPick, minutesPick, false);
                 timePickerDialog.show();
@@ -390,78 +471,8 @@ public class EditEntryActivity extends AppCompatActivity {
                 String IngresoVar = editText_profit.getText().toString();
                 String GastoVar = editText_spend.getText().toString();
 
-                time = textView_time.getText().toString();
-
                 int IngresoVarint;
                 int GastoVarint;
-
-                switch (strDay) {
-                    case "1":
-                        strDay = "01";
-                        break;
-                    case "2":
-                        strDay = "02";
-                        break;
-                    case "3":
-                        strDay = "03";
-                        break;
-                    case "4":
-                        strDay = "04";
-                        break;
-                    case "5":
-                        strDay = "05";
-                        break;
-                    case "6":
-                        strDay = "06";
-                        break;
-                    case "7":
-                        strDay = "07";
-                        break;
-                    case "8":
-                        strDay = "08";
-                        break;
-                    case "9":
-                        strDay = "09";
-                        break;
-                    default:
-                        break;
-                }
-
-                // Cast month with 1 digit to 2
-                switch (strMonth) {
-                    case "1":
-                        strMonth = "01";
-                        break;
-                    case "2":
-                        strMonth = "02";
-                        break;
-                    case "3":
-                        strMonth = "03";
-                        break;
-                    case "4":
-                        strMonth = "04";
-                        break;
-                    case "5":
-                        strMonth = "05";
-                        break;
-                    case "6":
-                        strMonth = "06";
-                        break;
-                    case "7":
-                        strMonth = "07";
-                        break;
-                    case "8":
-                        strMonth = "08";
-                        break;
-                    case "9":
-                        strMonth = "09";
-                        break;
-                    default:
-                        break;
-                }
-
-                // Set complete selected date
-                date = strYear + "-" + strMonth + "-" + strDay;
 
                 // Set 0 to blank spaces
                 if (IngresoVar.equals("")) {

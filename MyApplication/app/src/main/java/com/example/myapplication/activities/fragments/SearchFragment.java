@@ -1,10 +1,13 @@
 package com.example.myapplication.activities.fragments;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,12 +36,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     // View components
     private CheckBox checkBox_monthData, checkBox_begining, checkBox_final;
     private Button button_search, button_dateBegin, button_dateFinal;
+    private ProgressBar progressBar;
     private TextView textView_dateBeging, textView_dateFinal;
     private TextView textView_instanceName;
 
     // Global variables
     public static String begDay, begMonth, begYear, finDay, finMonth, finYear;
-    public static int intBegDay, intBegMonth, intBegYear, intFinDay, intFinMonth, intFinYear;
+    private static int intBegDay, intBegMonth, intBegYear, intFinDay, intFinMonth, intFinYear;
     public static boolean checkboxMonthIsChecked, checkboxBegIsChecked, checkboxFinalIsChecked;
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
@@ -77,8 +82,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         textView_dateFinal = view.findViewById(R.id.textview_search_datefinal);
         textView_instanceName = view.findViewById(R.id.textView_fragmentSearch_instanceName);
 
+        progressBar = view.findViewById(R.id.progressBar_searchFragment);
+
         // Set instance name as title
-        SharedPreferences prefs =  getActivity().getSharedPreferences("instance", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences("instance", Context.MODE_PRIVATE);
         String name = prefs.getString("NAME", null);
         textView_instanceName.setText(name);
 
@@ -167,6 +174,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.buttonBuscar:
+                checkboxMonthIsChecked = checkBox_monthData.isChecked();
+                checkboxBegIsChecked = checkBox_begining.isChecked();
+                checkboxFinalIsChecked = checkBox_final.isChecked();
+
                 if ((!checkBox_begining.isChecked()) && (!checkBox_monthData.isChecked())) {
                     if ((textView_dateBeging.getText().toString().equals("")) && (!checkBox_monthData.isChecked())) {
                         Toast.makeText(view.getContext(), getString(R.string.toast_searchfragment_nodata), Toast.LENGTH_LONG).show();
@@ -313,63 +324,139 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     }
                 }
 
-                Cursor resultado;
+                new Task(view.getContext()).execute();
 
-                if (checkBox_monthData.isChecked()) {
-                    resultado = SaldoDB.getEntryMonthData(MainActivity.idInstance);
-                } else if ((checkBox_begining.isChecked()) && (!checkBox_final.isChecked())) {
-                    String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                    resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate);
-                } else if ((!checkBox_begining.isChecked()) && (checkBox_final.isChecked())) {
-                    String begDate = begYear + "-" + begMonth + "-" + begDay;
-                    resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate);
-                } else if ((checkBox_begining.isChecked()) && (checkBox_final.isChecked())) {
-                    resultado = SaldoDB.getEntryAllData(MainActivity.idInstance);
-                } else {
-                    String begDate = begYear + "-" + begMonth + "-" + begDay;
-                    String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                    resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate);
-                }
+//                Cursor resultado;
+//
+//                if (checkBox_monthData.isChecked()) {
+//                    resultado = SaldoDB.getEntryMonthData(MainActivity.idInstance);
+//                } else if ((checkBox_begining.isChecked()) && (!checkBox_final.isChecked())) {
+//                    String finalDate = finYear + "-" + finMonth + "-" + finDay;
+//                    resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate);
+//                } else if ((!checkBox_begining.isChecked()) && (checkBox_final.isChecked())) {
+//                    String begDate = begYear + "-" + begMonth + "-" + begDay;
+//                    resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate);
+//                } else if ((checkBox_begining.isChecked()) && (checkBox_final.isChecked())) {
+//                    resultado = SaldoDB.getEntryAllData(MainActivity.idInstance);
+//                } else {
+//                    String begDate = begYear + "-" + begMonth + "-" + begDay;
+//                    String finalDate = finYear + "-" + finMonth + "-" + finDay;
+//                    resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate);
+//                }
 
-                if (resultado.getCount() == 0) {
-                    Toast.makeText(view.getContext(), getString(R.string.toast_searchfragment_nodatafound), Toast.LENGTH_LONG).show();
-                } else {
-                    Intent intentSearch = new Intent(view.getContext(), DataSearch.class);
-
-                    ArrayList<String> descripciones = new ArrayList<>();
-                    ArrayList<String> fechas = new ArrayList<>();
-                    ArrayList<String> horas = new ArrayList<>();
-                    ArrayList<String> ingresos = new ArrayList<>();
-                    ArrayList<String> gastos = new ArrayList<>();
-                    ArrayList<String> ids = new ArrayList<>();
-                    ArrayList<String> categids = new ArrayList<>();
-
-                    while (resultado.moveToNext()) {
-                        descripciones.add(resultado.getString(7));
-                        categids.add(resultado.getString(2));
-                        fechas.add(resultado.getString(3));
-                        horas.add(resultado.getString(4));
-                        ingresos.add(resultado.getString(5));
-                        gastos.add(resultado.getString(6));
-                        ids.add(resultado.getString(0));
-                    }
-
-                    intentSearch.putStringArrayListExtra("DESCRIPCIONES", descripciones);
-                    intentSearch.putStringArrayListExtra("FECHAS", fechas);
-                    intentSearch.putStringArrayListExtra("HORAS", horas);
-                    intentSearch.putStringArrayListExtra("INGRESOS", ingresos);
-                    intentSearch.putStringArrayListExtra("GASTOS", gastos);
-                    intentSearch.putStringArrayListExtra("IDS", ids);
-                    intentSearch.putStringArrayListExtra("CATEGIDS", categids);
-
-                    checkboxMonthIsChecked = checkBox_monthData.isChecked();
-                    checkboxBegIsChecked = checkBox_begining.isChecked();
-                    checkboxFinalIsChecked = checkBox_final.isChecked();
-
-                    startActivity(intentSearch);
-                }
+//                if (resultado.getCount() == 0) {
+//                    Toast.makeText(view.getContext(), getString(R.string.toast_searchfragment_nodatafound), Toast.LENGTH_LONG).show();
+//                } else {
+//                    Intent intentSearch = new Intent(view.getContext(), DataSearch.class);
+//
+//                    ArrayList<String> descripciones = new ArrayList<>();
+//                    ArrayList<String> fechas = new ArrayList<>();
+//                    ArrayList<String> horas = new ArrayList<>();
+//                    ArrayList<String> ingresos = new ArrayList<>();
+//                    ArrayList<String> gastos = new ArrayList<>();
+//                    ArrayList<String> ids = new ArrayList<>();
+//                    ArrayList<String> categids = new ArrayList<>();
+//
+//                    while (resultado.moveToNext()) {
+//                        descripciones.add(resultado.getString(7));
+//                        categids.add(resultado.getString(2));
+//                        fechas.add(resultado.getString(3));
+//                        horas.add(resultado.getString(4));
+//                        ingresos.add(resultado.getString(5));
+//                        gastos.add(resultado.getString(6));
+//                        ids.add(resultado.getString(0));
+//                    }
+//
+//                    intentSearch.putStringArrayListExtra("DESCRIPCIONES", descripciones);
+//                    intentSearch.putStringArrayListExtra("FECHAS", fechas);
+//                    intentSearch.putStringArrayListExtra("HORAS", horas);
+//                    intentSearch.putStringArrayListExtra("INGRESOS", ingresos);
+//                    intentSearch.putStringArrayListExtra("GASTOS", gastos);
+//                    intentSearch.putStringArrayListExtra("IDS", ids);
+//                    intentSearch.putStringArrayListExtra("CATEGIDS", categids);
+//
+//                    startActivity(intentSearch);
+//                }
 
                 break;
+        }
+    }
+
+    private class Task extends AsyncTask<String, Void, Cursor> {
+
+        private Context myContext;
+
+        Task(Context context) {
+            myContext = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+            button_search.setEnabled(false);
+        }
+
+        @Override
+        protected void onPostExecute(Cursor resultado) {
+            progressBar.setVisibility(View.INVISIBLE);
+            button_search.setEnabled(true);
+
+            if (resultado.getCount() == 0) {
+                Toast.makeText(myContext, getString(R.string.toast_searchfragment_nodatafound), Toast.LENGTH_LONG).show();
+            } else {
+                Intent intentSearch = new Intent(myContext, DataSearch.class);
+
+                ArrayList<String> descripciones = new ArrayList<>();
+                ArrayList<String> fechas = new ArrayList<>();
+                ArrayList<String> horas = new ArrayList<>();
+                ArrayList<String> ingresos = new ArrayList<>();
+                ArrayList<String> gastos = new ArrayList<>();
+                ArrayList<String> ids = new ArrayList<>();
+                ArrayList<String> categids = new ArrayList<>();
+
+                while (resultado.moveToNext()) {
+                    descripciones.add(resultado.getString(7));
+                    categids.add(resultado.getString(2));
+                    fechas.add(resultado.getString(3));
+                    horas.add(resultado.getString(4));
+                    ingresos.add(resultado.getString(5));
+                    gastos.add(resultado.getString(6));
+                    ids.add(resultado.getString(0));
+                }
+
+                intentSearch.putStringArrayListExtra("DESCRIPCIONES", descripciones);
+                intentSearch.putStringArrayListExtra("FECHAS", fechas);
+                intentSearch.putStringArrayListExtra("HORAS", horas);
+                intentSearch.putStringArrayListExtra("INGRESOS", ingresos);
+                intentSearch.putStringArrayListExtra("GASTOS", gastos);
+                intentSearch.putStringArrayListExtra("IDS", ids);
+                intentSearch.putStringArrayListExtra("CATEGIDS", categids);
+
+                startActivity(intentSearch);
+            }
+        }
+
+        @Override
+        protected Cursor doInBackground(String... strings) {
+            Cursor resultado;
+
+            if (checkboxMonthIsChecked) {
+                resultado = SaldoDB.getEntryMonthData(MainActivity.idInstance);
+            } else if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
+                String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate);
+            } else if ((!checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
+                String begDate = begYear + "-" + begMonth + "-" + begDay;
+                resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate);
+            } else if ((checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
+                resultado = SaldoDB.getEntryAllData(MainActivity.idInstance);
+            } else {
+                String begDate = begYear + "-" + begMonth + "-" + begDay;
+                String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate);
+            }
+
+            return resultado;
         }
     }
 }

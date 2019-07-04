@@ -50,10 +50,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         SaldoDB = new DatabaseManager(context);
 
+        // Show time in format HH:MM
         String realTime = data.getHora().substring(0,5);
 
+        // Show date in format DD-MM-YY
+        String dateToShow = data.getFecha();
+        String year = dateToShow.substring(0,4);
+        String month = dateToShow.substring(5,7);
+        String day = dateToShow.substring(8,10);
+        String sepearator = "-";
+        dateToShow = day+sepearator+month+sepearator+year;
+
         myViewHolder.tvDescr.setText(data.getDescr());
-        myViewHolder.tvFecha.setText(data.getFecha());
+        myViewHolder.tvFecha.setText(dateToShow);
         myViewHolder.tvHora.setText(realTime);
         myViewHolder.tvProfit.setText(data.getIngreso());
         myViewHolder.tvSpend.setText(data.getGasto());

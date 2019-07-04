@@ -16,6 +16,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Objects;
 
 
@@ -26,11 +27,12 @@ public class BalanceFragment extends Fragment {
     private TextView textView_instanceName;
     private TextView textView_profit;
     private TextView textView_spend;
+    private TextView textView_date;
 
     // Global variables
     private String idInstance;
 
-    DatabaseManager db;
+    private DatabaseManager db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,12 +51,36 @@ public class BalanceFragment extends Fragment {
         textView_instanceName = view.findViewById(R.id.textView_fragmentBalance_instanceName);
         textView_profit = view.findViewById(R.id.textView_fragmentBalance_insgresos);
         textView_spend = view.findViewById(R.id.textView_fragmentBalance_gastos);
+        textView_date = view.findViewById(R.id.textView_fragmentBalance_date);
 
         // Set instance name as title
         SharedPreferences prefs = getActivity().getSharedPreferences("instance", Context.MODE_PRIVATE);
         String name = prefs.getString("NAME", null);
         idInstance = prefs.getString("ID", null);
         textView_instanceName.setText(name);
+
+        // Set month and year in text view
+        String monthAndYear;
+
+        String[] monthNames = {getString(R.string.month_January),
+                getString(R.string.month_February),
+                getString(R.string.month_March),
+                getString(R.string.month_April),
+                getString(R.string.month_May),
+                getString(R.string.month_June),
+                getString(R.string.month_July),
+                getString(R.string.month_August),
+                getString(R.string.month_September),
+                getString(R.string.month_October),
+                getString(R.string.month_November),
+                getString(R.string.month_December)};
+
+        Calendar calendar = Calendar.getInstance();
+        String month = monthNames[calendar.get(Calendar.MONTH)];
+        String year = Integer.toString(calendar.get(Calendar.YEAR));
+        monthAndYear = month+", "+year;
+
+        textView_date.setText(monthAndYear);
 
         // Get data
         // Global variables

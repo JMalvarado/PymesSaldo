@@ -83,12 +83,22 @@ public class AddEntryActivity extends AppCompatActivity {
         String DateNow;
         LocalDateTime now = LocalDateTime.now();
         DateNow = dtf.format(now);
+        // Store in format YY-MM-DD
         date = DateNow;
-        textView_date.setText(date);
+        // Show date in format DD-MM-YY
+        String dateToShow;
+        String year = date.substring(0,4);
+        String month = date.substring(5,7);
+        String day = date.substring(8,10);
+        String sepearator = "-";
+        dateToShow = day+sepearator+month+sepearator+year;
+        textView_date.setText(dateToShow);
 
-        // Set time now in the textView
+        // Store time in format HH:MM:SS.SSSS
         time = java.time.LocalTime.now().toString();
-        textView_time.setText(time);
+        String timeToShow = time.substring(0,5);
+        // Show time in format HH:MM
+        textView_time.setText(timeToShow);
 
         // Set instance name as title
         SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
@@ -231,9 +241,6 @@ public class AddEntryActivity extends AppCompatActivity {
 
         switch (v.getId()) {
             case R.id.Ingreso:
-                date = textView_date.getText().toString();
-                time = textView_time.getText().toString();
-
                 // Set 0 to blank spaces
                 if (IngresoVar.equals("")) {
                     IngresoVarint = 0;
@@ -274,6 +281,27 @@ public class AddEntryActivity extends AppCompatActivity {
                 editText_profit.setText("");
                 editText_spend.setText("");
                 editText_description.setText("");
+
+                // Set date now in the textView
+                String DateNow;
+                LocalDateTime now = LocalDateTime.now();
+                DateNow = dtf.format(now);
+                // Store in format YY-MM-DD
+                date = DateNow;
+                // Show date in format DD-MM-YY
+                String dateToShow;
+                String year = date.substring(0,4);
+                String month = date.substring(5,7);
+                String day = date.substring(8,10);
+                String sepearator = "-";
+                dateToShow = day+sepearator+month+sepearator+year;
+                textView_date.setText(dateToShow);
+
+                // Store time in format HH:MM:SS.SSSS
+                time = java.time.LocalTime.now().toString();
+                String timeToShow = time.substring(0,5);
+                // Show time in format HH:MM
+                textView_time.setText(timeToShow);
 
                 break;
 
@@ -355,8 +383,10 @@ public class AddEntryActivity extends AppCompatActivity {
                             default:
                                 break;
                         }
-
-                        textView_date.setText(new StringBuilder().append(strYear).append("-").append(strMonth).append("-").append(strYear).toString());
+                        // Show in format DD-MM-YY
+                        textView_date.setText(new StringBuilder().append(strDay).append("-").append(strMonth).append("-").append(strYear).toString());
+                        // Store in format YY-MM-DD
+                        date = new StringBuilder().append(strYear).append("-").append(strMonth).append("-").append(strDay).toString();
                     }
                 }, yearPick, monthPick, dayPick);
                 datePickerDialog.show();
@@ -440,7 +470,8 @@ public class AddEntryActivity extends AppCompatActivity {
                                 break;
                         }
 
-                        textView_time.setText(new StringBuilder().append(strHour).append(":").append(strMinute).append(":00.000").toString());
+                        textView_time.setText(new StringBuilder().append(strHour).append(":").append(strMinute).toString());
+                        time  = new StringBuilder().append(strHour).append(":").append(strMinute).append(":00.000").toString();
                     }
                 }, hourPick, minutesPick, false);
                 timePickerDialog.show();
