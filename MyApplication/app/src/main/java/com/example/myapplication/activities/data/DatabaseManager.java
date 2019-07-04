@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "Saldos.db";
 
     //tabla1
@@ -34,8 +34,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
     //columnas
     private static final String Col_NombreCateg = "Nombre";
 
-    //constructor
+    //tabla4
+    private static final String TABLA4_NOMBRE = "Ahorro";
+    //columnas
+    private static final String Col_InstIDAhorro = "Instancias_ID";
+    private static final String Col_MontoAhorro = "Monto";
+    private static final String Col_FechaAhorro = "Fecha";
+    private static final String Col_HoraAhorro = "Hora";
+    private static final String Col_TipoMovAhorro = "Tipo";
 
+    //constructor
     public DatabaseManager(Context context) {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -72,6 +80,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 "ON DELETE CASCADE ON UPDATE NO ACTION," +
                 "FOREIGN KEY (Categorias_ID) REFERENCES Categorias (Categorias_ID) " +
                 "ON DELETE CASCADE ON UPDATE NO ACTION)");
+
+        // Create table for Saving
+        sqLiteDatabase.execSQL("create table " + TABLA4_NOMBRE + " " +
+                "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Instancias_ID INTEGER," +
+                "Monto INTEGER," +
+                "Fecha DATE," +
+                "Hora TIME, " +
+                "Tipo TEXT," +
+                "FOREIGN KEY (Instancias_ID) REFERENCES Instancias (Instancias_ID) " +
+                "ON DELETE CASCADE ON UPDATE NO ACTION)");
     }
 
     /**
@@ -86,6 +105,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLA1_NOMBRE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLA2_NOMBRE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLA3_NOMBRE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLA4_NOMBRE);
         onCreate(sqLiteDatabase);
     }
 
@@ -105,7 +125,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param instance_id
      * @return
      */
-    public boolean addEntry(String Date, String hora,  int gasto, int ingreso, String descripcion, String instance_id, String categ_id) {
+    public boolean addEntry(String Date, String hora, int gasto, int ingreso, String descripcion, String instance_id, String categ_id) {
 
         SQLiteDatabase db = this.getWritableDatabase(); //Obtiene la instancia de base de datos para ingresar datos.
 
@@ -155,6 +175,30 @@ public class DatabaseManager extends SQLiteOpenHelper {
         contentValues.put(Col_Nombre, name);
 
         long resultado = db.insert(TABLA2_NOMBRE, null, contentValues);
+
+        return resultado != -1;
+    }
+
+    /**
+     * Add new saving data to table "Ahorro"
+     * @param instanceID
+     * @param value
+     * @param date
+     * @param time
+     * @param type
+     * @return
+     */
+    public boolean addSaving(String instanceID, int value, String date, String time, String type) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Col_InstIDAhorro, instanceID);
+        contentValues.put(Col_MontoAhorro, value);
+        contentValues.put(Col_FechaAhorro, date);
+        contentValues.put(Col_HoraAhorro, time);
+        contentValues.put(Col_TipoMovAhorro, type);
+
+        long resultado = db.insert(TABLA4_NOMBRE, null, contentValues);
 
         return resultado != -1;
     }
@@ -348,8 +392,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
         ArrayList<Integer> ingresos = new ArrayList<>();
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
-                "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='"+year+"' " +
-                        "AND strftime('%m',Fecha)='"+month+"' AND Instancias_ID=" + Instancias_ID, null);
+                "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
             ingreso = consulta.getInt(5);
@@ -398,8 +442,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
         ArrayList<Integer> gastos = new ArrayList<>();
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
-                "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='"+year+"' " +
-                        "AND strftime('%m',Fecha)='"+month+"' AND Instancias_ID=" + Instancias_ID, null);
+                "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
             gasto = consulta.getInt(6);

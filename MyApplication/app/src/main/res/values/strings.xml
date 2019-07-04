@@ -28,11 +28,6 @@
     <string name="activity_add_entry_textView_category">Categoría:</string>
     <string name="activity_edit_entry_textView_profile">Estado financiero:</string>
 
-    <string name="alert_optSi">Si</string>
-    <string name="alert_optNo">No</string>
-    <string name="alert_title_deleteProfile">¿Desea eliminar el estado?</string>
-    <string name="alert_title_deleteData">¿Desea eliminar el dato?</string>
-
     <string name="fragment_search_textview_filtro">Filtro:</string>
     <string name="fragment_search_textview_inicio">Inicio</string>
     <string name="fragment_search_textview_dia">Dia</string>
@@ -48,6 +43,8 @@
     <string name="fragment_balance_textView_titleBalance">El balance para el mes en curso es</string>
     <string name="fragment_balance_textView_ingresos">Ingresos:</string>
     <string name="fragment_balance_textView_gastos">Gastos:</string>
+    <string name="fragment_saving_radioButton_abono">Abono</string>
+    <string name="fragment_saving_radioButton_retiro">Retiro</string>
 
     <string name="iteminfo_textView_gasto">Gasto:</string>
     <string name="iteminfo_textView_ingreso">Ingreso:</string>
@@ -69,7 +66,9 @@
     <string name="dataList_textView_categ">Categoría:</string>
     <string name="activity_addEntry_addCategory_spinner">Agregar…</string>
     <string name="mainActivity_addCategory_others">Otros</string>
-    <string name="mainActivity_addEntry_lastBalance">Balance de: </string>
+    <string name="mainActivity_addEntry_lastBalance">Remanente de: </string>
+    <string name="addEntryViewPagerAdapter_title1">Movimiento</string>
+    <string name="addEntryViewPagerAdapter_title2">Ahorro</string>
 
     <!-- Toast, snack bar and alerts -->
     <string name="toast_addprofileactivity_noname">Por favor ingrese un nombre</string>
@@ -87,6 +86,10 @@
     <string name="alert_mssg_addCategory">Nueva categoría</string>
     <string name="alert_positiveBttn_addCategory">OK</string>
     <string name="alert_negativeBttn_addCategory">Cancelar</string>
+    <string name="alert_optSi">Si</string>
+    <string name="alert_optNo">No</string>
+    <string name="alert_title_deleteProfile">¿Desea eliminar el estado?</string>
+    <string name="alert_title_deleteData">¿Desea eliminar el dato?</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -99,5 +102,8 @@
     <string name="nav_add_profile">Agregar estado financiero</string>
     <string name="nav_conf_profile">Configurar estado</string>
     <string name="nav_exit">Salir</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

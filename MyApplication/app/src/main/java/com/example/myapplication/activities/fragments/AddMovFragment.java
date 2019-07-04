@@ -1,38 +1,58 @@
-package com.example.myapplication.activities.activities;
+package com.example.myapplication.activities.fragments;
 
+
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activities.data.AddEntryViewPagerAdapter;
-import com.google.android.material.tabs.TabLayout;
+import com.example.myapplication.activities.data.DatabaseManager;
 
-public class AddEntryActivity extends AppCompatActivity {
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Objects;
 
-    /*// View components
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class AddMovFragment extends Fragment implements View.OnClickListener {
+
+    // View components
     private EditText editText_profit;
     private EditText editText_spend;
     private EditText editText_description;
     private TextView textView_date;
     private TextView textView_time;
-    private TextView textView_instanceName;
+    //private TextView textView_instanceName;
     private Button button_in;
     private Button button_addDate;
     private Button button_addTime;
-    private Spinner spinner_categories;*/
-    private ViewPager viewPager;
-    private AddEntryViewPagerAdapter viewPagerAdapter;
-    private TabLayout tabLayout;
-    private TextView textView_instanceName;
+    private Spinner spinner_categories;
 
-   /* // Global variables
-    DateTimeFormatter dtf;
+    // Global variables
+    private DateTimeFormatter dtf;
     private String strDay, strMonth, strYear, strHour, strMinute;
     private String date;
     private String time;
@@ -40,45 +60,35 @@ public class AddEntryActivity extends AppCompatActivity {
     ArrayAdapter<String> spinnerAdapter;
 
     // Database instance
-    private DatabaseManager SaldoDB;*/
+    private DatabaseManager SaldoDB;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_entry);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_add_mov, container, false);
 
-        /*// Initialize components
-        button_in = findViewById(R.id.Ingreso);
-        editText_profit = findViewById(R.id.etIngreso);
-        editText_spend = findViewById(R.id.etGasto);
-        editText_description = findViewById(R.id.etdescripcion);
-        textView_date = findViewById(R.id.textView_addEntry_date);
-        textView_time = findViewById(R.id.textView_addEntry_time);
-        button_addDate = findViewById(R.id.button_addEntry_date);
-        button_addTime = findViewById(R.id.button_addEntry_time);
-        textView_instanceName = findViewById(R.id.textView_addEntry_instanceName);*/
-        textView_instanceName = findViewById(R.id.textView_addEntry_instanceName);
-        viewPager = findViewById(R.id.viewPager_addEntryActivity);
-        tabLayout = findViewById(R.id.tabLayout_addEntry);
+        // Initialize components
+        button_in = view.findViewById(R.id.Ingreso);
+        button_in.setOnClickListener(this);
+        editText_profit = view.findViewById(R.id.etIngreso);
+        editText_spend = view.findViewById(R.id.etGasto);
+        editText_description = view.findViewById(R.id.etdescripcion);
+        textView_date = view.findViewById(R.id.textView_addEntry_date);
+        textView_time = view.findViewById(R.id.textView_addEntry_time);
+        button_addDate = view.findViewById(R.id.button_addEntry_date);
+        button_addDate.setOnClickListener(this);
+        button_addTime = view.findViewById(R.id.button_addEntry_time);
+        button_addTime.setOnClickListener(this);
+        //textView_instanceName = view.findViewById(R.id.textView_addEntry_instanceName);
 
-        // Set instance name as title
-        SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
-        String name = prefs.getString("NAME", null);
-        textView_instanceName.setText(name);
-
-        // initialize viewPager Adapter
-        viewPagerAdapter = new AddEntryViewPagerAdapter(getSupportFragmentManager(), this);
-        viewPager.setAdapter(viewPagerAdapter);
-
-        tabLayout.setupWithViewPager(viewPager);
-
-        /*// Database instance
-        SaldoDB = new DatabaseManager(this);
+        // Database instance
+        SaldoDB = new DatabaseManager(view.getContext());
 
         // Set date format
-        dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");*/
+        dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
 
-        /*// Set date now in the textView
+        // Set date now in the textView
         String DateNow;
         LocalDateTime now = LocalDateTime.now();
         DateNow = dtf.format(now);
@@ -86,26 +96,26 @@ public class AddEntryActivity extends AppCompatActivity {
         date = DateNow;
         // Show date in format DD-MM-YY
         String dateToShow;
-        String year = date.substring(0,4);
-        String month = date.substring(5,7);
-        String day = date.substring(8,10);
+        String year = date.substring(0, 4);
+        String month = date.substring(5, 7);
+        String day = date.substring(8, 10);
         String sepearator = "-";
-        dateToShow = day+sepearator+month+sepearator+year;
+        dateToShow = day + sepearator + month + sepearator + year;
         textView_date.setText(dateToShow);
 
         // Store time in format HH:MM:SS.SSSS
         time = java.time.LocalTime.now().toString();
-        String timeToShow = time.substring(0,5);
+        String timeToShow = time.substring(0, 5);
         // Show time in format HH:MM
         textView_time.setText(timeToShow);
 
         // Set instance name as title
-        SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
-        String name = prefs.getString("NAME", null);
-        textView_instanceName.setText(name);
+        //SharedPreferences prefs = Objects.requireNonNull(getActivity()).getSharedPreferences("instance", Context.MODE_PRIVATE);
+        //String name = prefs.getString("NAME", null);
+        //textView_instanceName.setText(name);
 
         // Set Spinner category data
-        spinner_categories = findViewById(R.id.spinner_addEntry_category);
+        spinner_categories = view.findViewById(R.id.spinner_addEntry_category);
 
         // Get categories
         Cursor categoriesData = SaldoDB.getCategoryAllData();
@@ -122,7 +132,7 @@ public class AddEntryActivity extends AppCompatActivity {
         categoriesList.add(getString(R.string.activity_addEntry_addCategory_spinner));
 
         // Create adapter for the spinner of categories
-        spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesList);
+        spinnerAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, categoriesList);
         spinner_categories.setAdapter(spinnerAdapter);
 
         // Set default position
@@ -146,22 +156,24 @@ public class AddEntryActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
-        });*/
+        });
+
+        return view;
     }
 
     /**
      * Alert dialog to add category
-     *//*
+     */
     private void openDialog() {
         // Inflate layout
-        LayoutInflater inflater = LayoutInflater.from(AddEntryActivity.this);
+        LayoutInflater inflater = LayoutInflater.from(getContext());
         View subView = inflater.inflate(R.layout.dialog_add_category, null);
 
         // Initialize edit Text for category name
         final EditText editText_categoryName = subView.findViewById(R.id.dialogLayoutAddCategory_editText_categoryName);
 
         // Alert dialog build
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(getString(R.string.alert_title_addCategory));
         builder.setMessage(getString(R.string.alert_mssg_addCategory));
         builder.setView(subView);
@@ -183,12 +195,12 @@ public class AddEntryActivity extends AppCompatActivity {
                         }
                     }
                     if (isExistCategory) {
-                        Toast.makeText(AddEntryActivity.this, getString(R.string.toast_addEntryActivity_alertAddCateg_existCategory), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_existCategory), Toast.LENGTH_LONG).show();
                     } else {
                         SaldoDB.addCategory(editText_categoryName.getText().toString());
                     }
                 } else {
-                    Toast.makeText(AddEntryActivity.this, getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
                 }
                 // Get categories
                 Cursor categoriesData = SaldoDB.getCategoryAllData();
@@ -204,7 +216,7 @@ public class AddEntryActivity extends AppCompatActivity {
                 // Add option: "Agregar..." category
                 categoriesList.add(getString(R.string.activity_addEntry_addCategory_spinner));
                 // Create adapter for the spinner of categories
-                spinnerAdapter = new ArrayAdapter<>(AddEntryActivity.this, android.R.layout.simple_spinner_item, categoriesList);
+                spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categoriesList);
                 spinner_categories.setAdapter(spinnerAdapter);
                 // Set default position
                 spinner_categories.setSelection(categoriesList.size() - 2);
@@ -215,7 +227,7 @@ public class AddEntryActivity extends AppCompatActivity {
         builder.setNegativeButton(getString(R.string.alert_negativeBttn_addCategory), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(AddEntryActivity.this, getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
 
                 // Set default position
                 spinner_categories.setSelection(0);
@@ -223,22 +235,25 @@ public class AddEntryActivity extends AppCompatActivity {
         });
 
         builder.show();
-    }*/
-
-    @Override
-    public void onBackPressed() {
-        Intent mainActivityIntent = new Intent(this, MainActivity.class);
-        startActivity(mainActivityIntent);
     }
 
-    /*public void onClickAddEntry(View v) {
+    private void showMessage(String titulo, String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(true);
+        builder.setTitle(titulo);
+        builder.setMessage(mensaje);
+        builder.show();
+    }
+
+    @Override
+    public void onClick(View view) {
         String IngresoVar = editText_profit.getText().toString();
         String GastoVar = editText_spend.getText().toString();
 
         int IngresoVarint;
         int GastoVarint;
 
-        switch (v.getId()) {
+        switch (view.getId()) {
             case R.id.Ingreso:
                 // Set 0 to blank spaces
                 if (IngresoVar.equals("")) {
@@ -267,15 +282,16 @@ public class AddEntryActivity extends AppCompatActivity {
                 String descripcion = editText_description.getText().toString();
 
                 // Get id instance
-                SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+                SharedPreferences prefs = Objects.requireNonNull(getActivity()).getSharedPreferences("instance", Context.MODE_PRIVATE);
                 String id = prefs.getString("ID", null);
 
-                boolean isResultadd = SaldoDB.addEntry(date, time, GastoVarint, IngresoVarint, descripcion, id, category_id);
+                boolean isResult = SaldoDB.addEntry(date, time, GastoVarint, IngresoVarint, descripcion, id, category_id);
 
-                if (isResultadd) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.toast_addEntryActivity_succesAdd), Toast.LENGTH_LONG).show();
+                // Check result
+                if (isResult) {
+                    Toast.makeText(view.getContext(), getString(R.string.toast_addEntryActivity_succesAdd), Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.toast_addEntryActivity_noSuccesAdd), Toast.LENGTH_LONG).show();
+                    Toast.makeText(view.getContext(), getString(R.string.toast_addEntryActivity_noSuccesAdd), Toast.LENGTH_LONG).show();
                 }
                 editText_profit.setText("");
                 editText_spend.setText("");
@@ -289,16 +305,16 @@ public class AddEntryActivity extends AppCompatActivity {
                 date = DateNow;
                 // Show date in format DD-MM-YY
                 String dateToShow;
-                String year = date.substring(0,4);
-                String month = date.substring(5,7);
-                String day = date.substring(8,10);
+                String year = date.substring(0, 4);
+                String month = date.substring(5, 7);
+                String day = date.substring(8, 10);
                 String sepearator = "-";
-                dateToShow = day+sepearator+month+sepearator+year;
+                dateToShow = day + sepearator + month + sepearator + year;
                 textView_date.setText(dateToShow);
 
                 // Store time in format HH:MM:SS.SSSS
                 time = java.time.LocalTime.now().toString();
-                String timeToShow = time.substring(0,5);
+                String timeToShow = time.substring(0, 5);
                 // Show time in format HH:MM
                 textView_time.setText(timeToShow);
 
@@ -310,7 +326,7 @@ public class AddEntryActivity extends AppCompatActivity {
                 int monthPick = calendar.get(Calendar.MONTH);
                 int yearPick = calendar.get(Calendar.YEAR);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         strDay = Integer.toString(i2);
@@ -397,7 +413,7 @@ public class AddEntryActivity extends AppCompatActivity {
                 int hourPick = timepick.get(Calendar.HOUR_OF_DAY);
                 int minutesPick = timepick.get(Calendar.MINUTE);
 
-                TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(view.getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
                         strHour = Integer.toString(i);
@@ -470,22 +486,12 @@ public class AddEntryActivity extends AppCompatActivity {
                         }
 
                         textView_time.setText(new StringBuilder().append(strHour).append(":").append(strMinute).toString());
-                        time  = new StringBuilder().append(strHour).append(":").append(strMinute).append(":00.000").toString();
+                        time = new StringBuilder().append(strHour).append(":").append(strMinute).append(":00.000").toString();
                     }
                 }, hourPick, minutesPick, false);
                 timePickerDialog.show();
 
                 break;
         }
-
     }
-
-    public void showMessage(String titulo, String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(titulo);
-        builder.setMessage(mensaje);
-        builder.show();
-    }*/
 }
-

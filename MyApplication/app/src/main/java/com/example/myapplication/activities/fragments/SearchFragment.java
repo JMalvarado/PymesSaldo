@@ -1,8 +1,6 @@
 package com.example.myapplication.activities.fragments;
 
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
