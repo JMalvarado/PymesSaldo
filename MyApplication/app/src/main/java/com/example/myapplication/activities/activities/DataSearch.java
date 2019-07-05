@@ -23,6 +23,7 @@ public class DataSearch extends AppCompatActivity {
     private RecyclerView rvList;
     private RecyclerView.Adapter rvAdapter;
     private TextView textView_instanceName;
+    private TextView textView_periodTitle;
 
     // Global variables
     private List<ListData> listItems;
@@ -40,7 +41,9 @@ public class DataSearch extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_search);
 
+        // Initialize view components
         textView_instanceName = findViewById(R.id.textView_dataSearch_instanceName);
+        textView_periodTitle = findViewById(R.id.tvTitPeriodoLista);
 
         // Set instance name as title
         SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
@@ -68,6 +71,23 @@ public class DataSearch extends AppCompatActivity {
         ids = getIntent().getStringArrayListExtra("IDS");
         categIds = getIntent().getStringArrayListExtra("CATEGIDS");
 
+        // Get range date for period
+        // Initial date
+        String dateTmp = fechas.get(0);
+        // Set on format DD-MM-YYYY
+        String year = dateTmp.substring(0, 4);
+        String month = dateTmp.substring(5, 7);
+        String day = dateTmp.substring(8, 10);
+        String sepearator = "-";
+        String dateInit = day+sepearator+month+sepearator+year;
+        // Final date
+        dateTmp = fechas.get(fechas.size()-1);
+        // Set on format DD-MM-YYYY
+        year = dateTmp.substring(0, 4);
+        month = dateTmp.substring(5, 7);
+        day = dateTmp.substring(8, 10);
+        String dateFin = day+sepearator+month+sepearator+year;
+
         for (int i = 0; i < descripciones.size(); i++) {
             assert ids != null;
             assert categIds != null;
@@ -87,6 +107,8 @@ public class DataSearch extends AppCompatActivity {
         rvAdapter = new MyAdapter(listItems, this);
 
         rvList.setAdapter(rvAdapter);
+
+        textView_periodTitle.setText(new StringBuilder().append(getString(R.string.fragment_search_period_title)).append(dateInit).append(" - ").append(dateFin).toString());
     }
 
     @Override

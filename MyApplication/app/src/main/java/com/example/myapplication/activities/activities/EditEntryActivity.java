@@ -372,9 +372,9 @@ public class EditEntryActivity extends AppCompatActivity {
                                 break;
                         }
 
-                        // Show in format DD-MM-YY
+                        // Show in format DD-MM-YYYY
                         textView_date.setText(new StringBuilder().append(strDay).append("-").append(strMonth).append("-").append(strYear).toString());
-                        // Store in format YY-MM-DD
+                        // Store in format YYYY-MM-DD
                         date = new StringBuilder().append(strYear).append("-").append(strMonth).append("-").append(strDay).toString();
                     }
                 }, yearPick, monthPick, dayPick);

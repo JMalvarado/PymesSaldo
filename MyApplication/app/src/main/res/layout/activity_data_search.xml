@@ -23,6 +23,22 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout_fragmentDataSearch_periodoTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitPeriodoLista"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

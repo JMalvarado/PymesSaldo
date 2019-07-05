@@ -301,9 +301,9 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
                 String DateNow;
                 LocalDateTime now = LocalDateTime.now();
                 DateNow = dtf.format(now);
-                // Store in format YY-MM-DD
+                // Store in format YYYY-MM-DD
                 date = DateNow;
-                // Show date in format DD-MM-YY
+                // Show date in format DD-MM-YYYY
                 String dateToShow;
                 String year = date.substring(0, 4);
                 String month = date.substring(5, 7);

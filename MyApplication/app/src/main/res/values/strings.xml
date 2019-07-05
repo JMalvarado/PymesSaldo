@@ -2,7 +2,7 @@
     <string name="app_name">PYMES Saldo</string>
     <string name="addEntry_name">Agregar movimiento</string>
     <string name="itemInfo_name">Datos</string>
-    <string name="dataSearch_name">Lista</string>
+    <string name="dataSearch_name">Lista de movimientos</string>
     <string name="addProfile_name">Agregar estado financiero</string>
     <string name="balance_name">Balance del mes</string>
     <string name="save_name">Ahorro</string>
@@ -29,6 +29,7 @@
     <string name="activity_add_entry_textView_category">Categoría:</string>
     <string name="activity_edit_entry_textView_profile">Estado financiero:</string>
 
+    <string name="fragment_search_period_title">Periodo:</string>
     <string name="fragment_search_textview_filtro">Filtro:</string>
     <string name="fragment_search_textview_inicio">Inicio</string>
     <string name="fragment_search_textview_dia">Dia</string>
