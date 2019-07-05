@@ -9,6 +9,8 @@ import android.os.Bundle;
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.fragments.BalanceFragment;
+import com.example.myapplication.activities.fragments.SaveMoneyFragment;
+import com.example.myapplication.activities.fragments.SavingFragment;
 import com.example.myapplication.activities.fragments.SearchFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity
 
         // Initialize Navigation drawer view components
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         View navHeader = navigationView.getHeaderView(0);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity
 
             // Get the current year and month
             Calendar calendar = Calendar.getInstance();
-            String currentMonth = Integer.toString(calendar.get(Calendar.MONTH)+1);
+            String currentMonth = Integer.toString(calendar.get(Calendar.MONTH) + 1);
             String currentYear = Integer.toString(calendar.get(Calendar.YEAR));
 
             // Get the shared preferences month and year
@@ -113,13 +115,13 @@ public class MainActivity extends AppCompatActivity
             String spYear = prefs.getString("LASTYEAR", null);
 
             // Verify not null data
-            if ( (spMonth != null) && (spYear != null) ) {
+            if ((spMonth != null) && (spYear != null)) {
                 // Compare month and year
-                if ( (!spMonth.equals(currentMonth)) || (!spYear.equals(currentYear)) ) {
+                if ((!spMonth.equals(currentMonth)) || (!spYear.equals(currentYear))) {
                     // Verify if the balance is positive
                     String balance = getInMonthYearBalance(spMonth, spYear);
                     int intBalance = Integer.parseInt(balance);
-                    if (intBalance>0) {
+                    if (intBalance > 0) {
                         // Get current date
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
                         String dateNow;
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity
                         // Get id instance
                         String id = prefs.getString("ID", null);
 
-                        String newEntryDescription = getString(R.string.mainActivity_addEntry_lastBalance)+spMonth+"-"+spYear;
+                        String newEntryDescription = getString(R.string.mainActivity_addEntry_lastBalance) + spMonth + "-" + spYear;
                         db.addEntry(dateNow, timeNow, 0, intBalance, newEntryDescription, id, "1");
                     }
                 }
@@ -191,6 +193,8 @@ public class MainActivity extends AppCompatActivity
 
                     BalanceFragment balanceFragment = new BalanceFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, balanceFragment).commit();
+
+                    navigationView.getMenu().getItem(1).setChecked(true);
 
                     // Set title head text
                     tv_navheader_title.setText(name);
@@ -264,14 +268,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_month_balance) {
-            BalanceFragment balanceFragment = new BalanceFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, balanceFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new BalanceFragment()).commit();
 
         } else if (id == R.id.nav_explore) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new SearchFragment()).commit();
 
         } else if (id == R.id.nav_exit) {
             onExit();
+        } else if (id == R.id.nav_money_save) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new SaveMoneyFragment()).commit();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -285,7 +290,7 @@ public class MainActivity extends AppCompatActivity
     private void onExit() {
         // Get the current year and month before exit
         Calendar calendar = Calendar.getInstance();
-        String lastMonth = Integer.toString(calendar.get(Calendar.MONTH)+1);
+        String lastMonth = Integer.toString(calendar.get(Calendar.MONTH) + 1);
         String lastYear = Integer.toString(calendar.get(Calendar.YEAR));
 
         // Store the currrent year and month

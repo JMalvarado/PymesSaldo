@@ -513,6 +513,54 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return resultado;
     }
 
+    /**
+     * Get the data from Ahorro of type "A"
+     *
+     * @return
+     */
+    public ArrayList<Integer> getSaveAllPayment(String Instancias_ID) {
+        //valores a usar.
+        int abono;
+
+        //lista a retornar
+
+        ArrayList<Integer> abonos = new ArrayList<>();
+
+        Cursor consulta = this.getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLA4_NOMBRE + " WHERE Tipo='A' AND Instancias_ID=" + Instancias_ID, null);
+
+        while (consulta.moveToNext()) {
+            abono = consulta.getInt(2);
+            abonos.add(abono);
+        }
+
+        return abonos;
+    }
+
+    /**
+     * Get the data from Ahorro of type "R"
+     *
+     * @return
+     */
+    public ArrayList<Integer> getSaveAllWithdrawal(String Instancias_ID) {
+        //valores a usar.
+        int retiro;
+
+        //lista a retornar
+
+        ArrayList<Integer> retiros = new ArrayList<>();
+
+        Cursor consulta = this.getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLA4_NOMBRE + " WHERE Tipo='R' AND Instancias_ID=" + Instancias_ID, null);
+
+        while (consulta.moveToNext()) {
+            retiro = consulta.getInt(2);
+            retiros.add(retiro);
+        }
+
+        return retiros;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     /// Delete methods
     ////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">PYMES Saldo</string>
-    <string name="addEntry_name">Agregar entrada</string>
+    <string name="addEntry_name">Agregar movimiento</string>
     <string name="itemInfo_name">Datos</string>
     <string name="dataSearch_name">Lista</string>
     <string name="addProfile_name">Agregar estado financiero</string>
     <string name="balance_name">Balance del mes</string>
+    <string name="save_name">Ahorro</string>
     <string name="search_name">Explorar</string>
-    <string name="editEntry_name">Editar entrada</string>
+    <string name="editEntry_name">Editar movimiento</string>
     <string name="editProfile_name">Editar estado financiero</string>
 
     <string name="month_January">Enero</string>
@@ -45,6 +46,7 @@
     <string name="fragment_balance_textView_gastos">Gastos:</string>
     <string name="fragment_saving_radioButton_abono">Abono</string>
     <string name="fragment_saving_radioButton_retiro">Retiro</string>
+    <string name="fragment_saveMoney_textView_ahorro">Tienes ahorrado:</string>
 
     <string name="iteminfo_textView_gasto">Gasto:</string>
     <string name="iteminfo_textView_ingreso">Ingreso:</string>
@@ -99,11 +101,9 @@
     <string name="nav_add_entry">Agregar entrada</string>
     <string name="nav_explore">Explorar movimientos</string>
     <string name="nav_month_balance">Balance del mes</string>
+    <string name="nav_money_save">Ahorro</string>
     <string name="nav_add_profile">Agregar estado financiero</string>
     <string name="nav_conf_profile">Configurar estado</string>
     <string name="nav_exit">Salir</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
