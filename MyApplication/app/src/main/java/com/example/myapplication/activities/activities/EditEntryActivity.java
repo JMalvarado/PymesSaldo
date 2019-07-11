@@ -18,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -34,16 +36,15 @@ public class EditEntryActivity extends AppCompatActivity {
 
     // Components view
     private EditText editText_profit;
-    private EditText editText_spend;
     private EditText editText_description;
     private TextView textView_date;
     private TextView textView_time;
     private TextView textView_instanceName;
-    private Button button_in;
-    private Button button_addDate;
-    private Button button_addTime;
     private Spinner spinner_categories;
     private Spinner spinner_profiles;
+    private RadioGroup radioGroup_addMov;
+    private RadioButton radioButton_in;
+    private RadioButton radioButton_spend;
 
     // Global variables
     private String id;
@@ -77,15 +78,14 @@ public class EditEntryActivity extends AppCompatActivity {
         id_inst = prefs.getString("ID", null);
 
         // Initialize components view
-        button_in = findViewById(R.id.button_editEntry_edit);
         editText_profit = findViewById(R.id.etIngreso_editEntry);
-        editText_spend = findViewById(R.id.etGasto_editEntry);
         editText_description = findViewById(R.id.etdescripcion_editEntry);
         textView_date = findViewById(R.id.textView_editEntry_date);
         textView_time = findViewById(R.id.textView_editEntry_time);
-        button_addDate = findViewById(R.id.button_editEntry_date);
-        button_addTime = findViewById(R.id.button_editEntry_time);
         textView_instanceName = findViewById(R.id.textView_editEntry_instanceName);
+        radioGroup_addMov = findViewById(R.id.radioGroup_addMov);
+        radioButton_in = findViewById(R.id.radioButton_fragmentAddMov_Ingreso);
+        radioButton_spend = findViewById(R.id.radioButton_fragmentAddMov_Gasto);
 
 
         // Set Spinner category data
@@ -160,7 +160,6 @@ public class EditEntryActivity extends AppCompatActivity {
             }
         });
 
-
         // Set instance name as title
         String name = prefs.getString("NAME", null);
         textView_instanceName.setText(name);
@@ -170,24 +169,27 @@ public class EditEntryActivity extends AppCompatActivity {
         ingreso = getIntent().getStringExtra("INGRESO");
         gasto = getIntent().getStringExtra("GASTO");
         descr = getIntent().getStringExtra("DESCR");
-        fecha= date = getIntent().getStringExtra("FECHA");
-        hora= time = getIntent().getStringExtra("HORA");
+        fecha = date = getIntent().getStringExtra("FECHA");
+        hora = time = getIntent().getStringExtra("HORA");
         idCateg = getIntent().getStringExtra("CATEG");
 
         // Set actual data on views and variables
-        editText_profit.setText(ingreso);
-        editText_spend.setText(gasto);
+        if (ingreso.equals("0")) {
+            editText_profit.setText(gasto);
+        } else {
+            editText_profit.setText(ingreso);
+        }
         editText_description.setText(descr);
 
         // Show date in format DD-MM-YY
-        String year = fecha.substring(0,4);
-        String month = fecha.substring(5,7);
-        String day = fecha.substring(8,10);
+        String year = fecha.substring(0, 4);
+        String month = fecha.substring(5, 7);
+        String day = fecha.substring(8, 10);
         String sepearator = "-";
-        String dateToShow = day+sepearator+month+sepearator+year;
+        String dateToShow = day + sepearator + month + sepearator + year;
         textView_date.setText(dateToShow);
         // Show time in format HH:MM
-        String timeToShow = hora.substring(0,5);
+        String timeToShow = hora.substring(0, 5);
         textView_time.setText(timeToShow);
 
         // Set actual category position in spinner
@@ -274,7 +276,7 @@ public class EditEntryActivity extends AppCompatActivity {
                 spinnerAdapter = new ArrayAdapter<>(EditEntryActivity.this, android.R.layout.simple_spinner_item, categoriesList);
                 spinner_categories.setAdapter(spinnerAdapter);
 
-                spinner_categories.setSelection(categoriesList.size()-2);
+                spinner_categories.setSelection(categoriesList.size() - 2);
             }
         });
 
@@ -293,7 +295,7 @@ public class EditEntryActivity extends AppCompatActivity {
 
     public void onClickEditEntry(View view) {
         switch (view.getId()) {
-            case R.id.button_editEntry_date:
+            case R.id.fab_calendar_editMovActivity:
                 Calendar calendar = Calendar.getInstance();
                 int dayPick = calendar.get(Calendar.DAY_OF_MONTH);
                 int monthPick = calendar.get(Calendar.MONTH);
@@ -382,7 +384,7 @@ public class EditEntryActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.button_editEntry_time:
+            case R.id.fab_clock_editMovActivity:
                 Calendar timepick = Calendar.getInstance();
                 int hourPick = timepick.get(Calendar.HOUR_OF_DAY);
                 int minutesPick = timepick.get(Calendar.MINUTE);
@@ -460,35 +462,28 @@ public class EditEntryActivity extends AppCompatActivity {
                         }
 
                         textView_time.setText(new StringBuilder().append(strHour).append(":").append(strMinute).toString());
-                        time  = new StringBuilder().append(strHour).append(":").append(strMinute).append(":00.000").toString();
+                        time = new StringBuilder().append(strHour).append(":").append(strMinute).append(":00.000").toString();
                     }
                 }, hourPick, minutesPick, false);
                 timePickerDialog.show();
 
                 break;
 
-            case R.id.button_editEntry_edit:
-                String IngresoVar = editText_profit.getText().toString();
-                String GastoVar = editText_spend.getText().toString();
-
-                int IngresoVarint;
-                int GastoVarint;
+            case R.id.Ingreso_editMov:
+                String montoStr = editText_profit.getText().toString();
+                long ingresoInt;
+                long gastoInt;
 
                 // Set 0 to blank spaces
-                if (IngresoVar.equals("")) {
-                    IngresoVarint = 0;
+                if (radioGroup_addMov.getCheckedRadioButtonId() == R.id.radioButton_fragmentAddMov_Gasto) {
+                    ingresoInt = 0;
+                    gastoInt = Long.parseLong(montoStr);
                 } else {
-                    IngresoVarint = Integer.parseInt(IngresoVar);
+                    ingresoInt = Long.parseLong(montoStr);
+                    gastoInt = 0;
                 }
 
-                if (GastoVar.equals("")) {
-                    GastoVarint = 0;
-                } else {
-                    GastoVarint = Integer.parseInt(GastoVar);
-                }
-
-
-                if ((editText_profit.getText().toString().equals("")) && (editText_spend.getText().toString().equals(""))) {
+                if ((editText_profit.getText().toString().equals(""))) {
                     showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_nodata));
                     break;
                 }
@@ -500,8 +495,8 @@ public class EditEntryActivity extends AppCompatActivity {
 
                 String descripcion = editText_description.getText().toString();
 
-                boolean isResultadd = SaldoDB.editEntryData(id, date, time, Integer.toString(IngresoVarint),
-                        Integer.toString(GastoVarint), descripcion, id_inst, new_id_inst, category_id);
+                boolean isResultadd = SaldoDB.editEntryData(id, date, time, Long.toString(ingresoInt),
+                        Long.toString(gastoInt), descripcion, id_inst, new_id_inst, category_id);
 
                 if (isResultadd) {
                     Toast.makeText(getApplicationContext(), getString(R.string.toast_addEntryActivity_succesAdd), Toast.LENGTH_LONG).show();
@@ -511,6 +506,11 @@ public class EditEntryActivity extends AppCompatActivity {
 
                 Intent mainIntent = new Intent(this, MainActivity.class);
                 startActivity(mainIntent);
+
+                break;
+
+            case R.id.cancel_editMov:
+                onBackPressed();
 
                 break;
         }

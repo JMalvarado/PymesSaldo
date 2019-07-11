@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.ListData;
 import com.example.myapplication.activities.data.MyAdapter;
+import com.example.myapplication.activities.fragments.SearchFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DataSearch extends AppCompatActivity {
@@ -72,21 +74,91 @@ public class DataSearch extends AppCompatActivity {
         categIds = getIntent().getStringArrayListExtra("CATEGIDS");
 
         // Get range date for period
-        // Initial date
-        String dateTmp = fechas.get(0);
-        // Set on format DD-MM-YYYY
-        String year = dateTmp.substring(0, 4);
-        String month = dateTmp.substring(5, 7);
-        String day = dateTmp.substring(8, 10);
-        String sepearator = "-";
-        String dateInit = day+sepearator+month+sepearator+year;
-        // Final date
-        dateTmp = fechas.get(fechas.size()-1);
-        // Set on format DD-MM-YYYY
-        year = dateTmp.substring(0, 4);
-        month = dateTmp.substring(5, 7);
-        day = dateTmp.substring(8, 10);
-        String dateFin = day+sepearator+month+sepearator+year;
+        if (SearchFragment.checkboxMonthIsChecked) {
+            // Set month and year in text view
+            String monthAndYear;
+
+            String[] monthNames = {getString(R.string.month_January),
+                    getString(R.string.month_February),
+                    getString(R.string.month_March),
+                    getString(R.string.month_April),
+                    getString(R.string.month_May),
+                    getString(R.string.month_June),
+                    getString(R.string.month_July),
+                    getString(R.string.month_August),
+                    getString(R.string.month_September),
+                    getString(R.string.month_October),
+                    getString(R.string.month_November),
+                    getString(R.string.month_December)};
+
+            Calendar calendar = Calendar.getInstance();
+            String month = monthNames[calendar.get(Calendar.MONTH)];
+            String year = Integer.toString(calendar.get(Calendar.YEAR));
+            monthAndYear = month + ", " + year;
+
+            textView_periodTitle.setText(new StringBuilder().
+                    append(getString(R.string.fragment_search_period_title)).append(" ").
+                    append(monthAndYear).toString());
+
+        } else if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked)) {
+            // Initial date
+            String dateTmp = fechas.get(0);
+            // Set on format DD-MM-YYYY
+            String year = dateTmp.substring(0, 4);
+            String month = dateTmp.substring(5, 7);
+            String day = dateTmp.substring(8, 10);
+            String sepearator = "-";
+            String dateInit = day + sepearator + month + sepearator + year;
+            // Final date
+            year = SearchFragment.finYear;
+            month = SearchFragment.finMonth;
+            day = SearchFragment.finDay;
+            String dateFin = day + sepearator + month + sepearator + year;
+
+            textView_periodTitle.setText(new StringBuilder().
+                    append(getString(R.string.fragment_search_period_title)).append(" ").
+                    append(dateInit).append(" - ").append(dateFin).toString());
+
+        } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
+            // Initial date
+            String year = SearchFragment.begYear;
+            String month = SearchFragment.begMonth;
+            String day = SearchFragment.begDay;
+            String sepearator = "-";
+            String dateInit = day + sepearator + month + sepearator + year;
+            // Final date
+            String dateTmp = fechas.get(fechas.size() - 1);
+            // Set on format DD-MM-YYYY
+            year = dateTmp.substring(0, 4);
+            month = dateTmp.substring(5, 7);
+            day = dateTmp.substring(8, 10);
+            String dateFin = day + sepearator + month + sepearator + year;
+
+            textView_periodTitle.setText(new StringBuilder().
+                    append(getString(R.string.fragment_search_period_title)).
+                    append(" ").append(dateInit).append(" - ").append(dateFin).toString());
+
+        } else if ((SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
+            textView_periodTitle.setText(new StringBuilder().
+                    append(getString(R.string.fragment_search_period_title)).
+                    append(" ").append(getString(R.string.fragment_search_period_title_all)).toString());
+        } else {
+            // Initial date
+            String year = SearchFragment.begYear;
+            String month = SearchFragment.begMonth;
+            String day = SearchFragment.begDay;
+            String sepearator = "-";
+            String dateInit = day + sepearator + month + sepearator + year;
+            // Final date
+            year = SearchFragment.finYear;
+            month = SearchFragment.finMonth;
+            day = SearchFragment.finDay;
+            String dateFin = day + sepearator + month + sepearator + year;
+
+            textView_periodTitle.setText(new StringBuilder().
+                    append(getString(R.string.fragment_search_period_title)).append(" ").
+                    append(dateInit).append(" - ").append(dateFin).toString());
+        }
 
         for (int i = 0; i < descripciones.size(); i++) {
             assert ids != null;
@@ -107,8 +179,6 @@ public class DataSearch extends AppCompatActivity {
         rvAdapter = new MyAdapter(listItems, this);
 
         rvList.setAdapter(rvAdapter);
-
-        textView_periodTitle.setText(new StringBuilder().append(getString(R.string.fragment_search_period_title)).append(dateInit).append(" - ").append(dateFin).toString());
     }
 
     @Override

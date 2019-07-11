@@ -10,7 +10,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.fragments.BalanceFragment;
 import com.example.myapplication.activities.fragments.SaveMoneyFragment;
-import com.example.myapplication.activities.fragments.SavingFragment;
 import com.example.myapplication.activities.fragments.SearchFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity
                 if ((!spMonth.equals(currentMonth)) || (!spYear.equals(currentYear))) {
                     // Verify if the balance is positive
                     String balance = getInMonthYearBalance(spMonth, spYear);
-                    int intBalance = Integer.parseInt(balance);
+                    long intBalance = Long.parseLong(balance);
                     if (intBalance > 0) {
                         // Get current date
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
@@ -311,13 +310,13 @@ public class MainActivity extends AppCompatActivity
      *
      * @return total profit
      */
-    private int getTotalProfit(String month, String year) {
-        ArrayList<Integer> profit = db.getEntryInMonthYearIngresos(idInstance, month, year);
+    private long getTotalProfit(String month, String year) {
+        ArrayList<Long> profit = db.getEntryInMonthYearIngresos(idInstance, month, year);
 
-        int totalProfit = 0;
+        long totalProfit = 0;
 
-        for (Integer integer1 : profit) {
-            int ing;
+        for (Long integer1 : profit) {
+            long ing;
             ing = integer1;
             totalProfit += ing;
         }
@@ -330,13 +329,13 @@ public class MainActivity extends AppCompatActivity
      *
      * @return spend
      */
-    private int getTotalSpend(String month, String year) {
-        ArrayList<Integer> spend = db.getEntryInMonthYearGastos(idInstance, month, year);
+    private long getTotalSpend(String month, String year) {
+        ArrayList<Long> spend = db.getEntryInMonthYearGastos(idInstance, month, year);
 
-        int totalSpend = 0;
+        long totalSpend = 0;
 
-        for (Integer integer1 : spend) {
-            int gas;
+        for (Long integer1 : spend) {
+            long gas;
             gas = integer1;
             totalSpend += gas;
         }
@@ -350,11 +349,11 @@ public class MainActivity extends AppCompatActivity
      * @return balance
      */
     private String getInMonthYearBalance(String month, String year) {
-        int totalProfit = getTotalProfit(month, year);
-        int totalSpend = getTotalSpend(month, year);
+        long totalProfit = getTotalProfit(month, year);
+        long totalSpend = getTotalSpend(month, year);
 
-        int balance = totalProfit - totalSpend;
+        long balance = totalProfit - totalSpend;
 
-        return Integer.toString(balance);
+        return Long.toString(balance);
     }
 }

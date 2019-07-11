@@ -13,10 +13,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,7 @@ import com.example.myapplication.*;
 import com.example.myapplication.activities.activities.DataSearch;
 import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.data.DatabaseManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,17 +37,21 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
     // View components
     private CheckBox checkBox_monthData, checkBox_begining, checkBox_final;
-    private Button button_search, button_dateBegin, button_dateFinal;
+    private FloatingActionButton fab_dateBegin, fab_dateFinal;
+    private FloatingActionButton fab_find;
     private ProgressBar progressBar;
     private TextView textView_dateBeging, textView_dateFinal;
     private TextView textView_instanceName;
+    private Spinner spinner_categories;
 
     // Global variables
     public static String begDay, begMonth, begYear, finDay, finMonth, finYear;
     private static int intBegDay, intBegMonth, intBegYear, intFinDay, intFinMonth, intFinYear;
     public static boolean checkboxMonthIsChecked, checkboxBegIsChecked, checkboxFinalIsChecked;
+    public static int categoryIDSelected;
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
+    private ArrayAdapter<String> spinnerAdapter;
 
     // Database manager instance
     private DatabaseManager SaldoDB;
@@ -67,18 +75,20 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         checkBox_final = view.findViewById(R.id.cbFinal);
         checkBox_final.setOnClickListener(this);
 
-        button_search = view.findViewById(R.id.buttonBuscar);
-        button_search.setOnClickListener(this);
+        fab_find = view.findViewById(R.id.Buscar_searchFragment);
+        fab_find.setOnClickListener(this);
 
-        button_dateBegin = view.findViewById(R.id.button_search_selectdatebeg);
-        button_dateBegin.setOnClickListener(this);
+        fab_dateBegin = view.findViewById(R.id.fab_calendar1_searchFragment);
+        fab_dateBegin.setOnClickListener(this);
 
-        button_dateFinal = view.findViewById(R.id.button_search_selectdatefinal);
-        button_dateFinal.setOnClickListener(this);
+        fab_dateFinal = view.findViewById(R.id.fab_calendar2_searchFragment);
+        fab_dateFinal.setOnClickListener(this);
 
         textView_dateBeging = view.findViewById(R.id.textview_search_datebeg);
         textView_dateFinal = view.findViewById(R.id.textview_search_datefinal);
         textView_instanceName = view.findViewById(R.id.textView_fragmentSearch_instanceName);
+
+        spinner_categories = view.findViewById(R.id.spinner_search_category);
 
         progressBar = view.findViewById(R.id.progressBar_searchFragment);
 
@@ -89,6 +99,48 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
         SaldoDB = new DatabaseManager(view.getContext());
 
+        // Set Spinner category data
+
+        // Get categories
+        Cursor categoriesData = SaldoDB.getCategoryAllData();
+
+        // Array List to store the categories names
+        ArrayList<String> categoriesList = new ArrayList<>();
+
+        // Add option: "Todas"
+        categoriesList.add(getString(R.string.fragment_search_category_spinner));
+
+        // Add categories names to categoriesList
+        while (categoriesData.moveToNext()) {
+            categoriesList.add(categoriesData.getString(1));
+        }
+
+        // Create adapter for the spinner of categories
+        spinnerAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, categoriesList);
+        spinner_categories.setAdapter(spinnerAdapter);
+
+        // Set default position
+        spinner_categories.setSelection(0);
+
+        // Set spinner categories onClickListener
+        spinner_categories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String itemSelected = adapterView.getItemAtPosition(i).toString();
+                int categID;
+
+                if (itemSelected.equals(getString(R.string.fragment_search_category_spinner))) {
+                    categID = 0;
+                } else {
+                    categID = Integer.parseInt(SaldoDB.getCategoryId(itemSelected));
+                }
+                categoryIDSelected = categID;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
         return view;
     }
 
@@ -98,42 +150,42 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             case R.id.cbMes:
                 if (!checkBox_monthData.isChecked()) {
                     checkBox_begining.setEnabled(true);
-                    button_dateBegin.setEnabled(true);
+                    fab_dateBegin.setEnabled(true);
 
                     checkBox_final.setEnabled(true);
-                    button_dateFinal.setEnabled(true);
+                    fab_dateFinal.setEnabled(true);
 
                 } else {
                     checkBox_begining.setEnabled(false);
-                    button_dateBegin.setEnabled(false);
+                    fab_dateBegin.setEnabled(false);
 
                     checkBox_final.setEnabled(false);
-                    button_dateFinal.setEnabled(false);
+                    fab_dateFinal.setEnabled(false);
                 }
 
                 break;
 
             case R.id.cbInicio:
                 if (!checkBox_begining.isChecked()) {
-                    button_dateBegin.setEnabled(true);
+                    fab_dateBegin.setEnabled(true);
 
                 } else {
-                    button_dateBegin.setEnabled(false);
+                    fab_dateBegin.setEnabled(false);
                 }
 
                 break;
 
             case R.id.cbFinal:
                 if (!checkBox_final.isChecked()) {
-                    button_dateFinal.setEnabled(true);
+                    fab_dateFinal.setEnabled(true);
 
                 } else {
-                    button_dateFinal.setEnabled(false);
+                    fab_dateFinal.setEnabled(false);
                 }
 
                 break;
 
-            case R.id.button_search_selectdatebeg:
+            case R.id.fab_calendar1_searchFragment:
                 calendar = Calendar.getInstance();
                 intBegDay = calendar.get(Calendar.DAY_OF_MONTH);
                 intBegMonth = calendar.get(Calendar.MONTH);
@@ -152,7 +204,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.button_search_selectdatefinal:
+            case R.id.fab_calendar2_searchFragment:
                 calendar = Calendar.getInstance();
                 intFinDay = calendar.get(Calendar.DAY_OF_MONTH);
                 intFinMonth = calendar.get(Calendar.MONTH);
@@ -171,7 +223,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.buttonBuscar:
+            case R.id.Buscar_searchFragment:
                 checkboxMonthIsChecked = checkBox_monthData.isChecked();
                 checkboxBegIsChecked = checkBox_begining.isChecked();
                 checkboxFinalIsChecked = checkBox_final.isChecked();
@@ -324,58 +376,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
                 new Task(view.getContext()).execute();
 
-//                Cursor resultado;
-//
-//                if (checkBox_monthData.isChecked()) {
-//                    resultado = SaldoDB.getEntryMonthData(MainActivity.idInstance);
-//                } else if ((checkBox_begining.isChecked()) && (!checkBox_final.isChecked())) {
-//                    String finalDate = finYear + "-" + finMonth + "-" + finDay;
-//                    resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate);
-//                } else if ((!checkBox_begining.isChecked()) && (checkBox_final.isChecked())) {
-//                    String begDate = begYear + "-" + begMonth + "-" + begDay;
-//                    resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate);
-//                } else if ((checkBox_begining.isChecked()) && (checkBox_final.isChecked())) {
-//                    resultado = SaldoDB.getEntryAllData(MainActivity.idInstance);
-//                } else {
-//                    String begDate = begYear + "-" + begMonth + "-" + begDay;
-//                    String finalDate = finYear + "-" + finMonth + "-" + finDay;
-//                    resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate);
-//                }
-
-//                if (resultado.getCount() == 0) {
-//                    Toast.makeText(view.getContext(), getString(R.string.toast_searchfragment_nodatafound), Toast.LENGTH_LONG).show();
-//                } else {
-//                    Intent intentSearch = new Intent(view.getContext(), DataSearch.class);
-//
-//                    ArrayList<String> descripciones = new ArrayList<>();
-//                    ArrayList<String> fechas = new ArrayList<>();
-//                    ArrayList<String> horas = new ArrayList<>();
-//                    ArrayList<String> ingresos = new ArrayList<>();
-//                    ArrayList<String> gastos = new ArrayList<>();
-//                    ArrayList<String> ids = new ArrayList<>();
-//                    ArrayList<String> categids = new ArrayList<>();
-//
-//                    while (resultado.moveToNext()) {
-//                        descripciones.add(resultado.getString(7));
-//                        categids.add(resultado.getString(2));
-//                        fechas.add(resultado.getString(3));
-//                        horas.add(resultado.getString(4));
-//                        ingresos.add(resultado.getString(5));
-//                        gastos.add(resultado.getString(6));
-//                        ids.add(resultado.getString(0));
-//                    }
-//
-//                    intentSearch.putStringArrayListExtra("DESCRIPCIONES", descripciones);
-//                    intentSearch.putStringArrayListExtra("FECHAS", fechas);
-//                    intentSearch.putStringArrayListExtra("HORAS", horas);
-//                    intentSearch.putStringArrayListExtra("INGRESOS", ingresos);
-//                    intentSearch.putStringArrayListExtra("GASTOS", gastos);
-//                    intentSearch.putStringArrayListExtra("IDS", ids);
-//                    intentSearch.putStringArrayListExtra("CATEGIDS", categids);
-//
-//                    startActivity(intentSearch);
-//                }
-
                 break;
         }
     }
@@ -391,13 +391,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         @Override
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
-            button_search.setEnabled(false);
+            fab_find.setEnabled(false);
         }
 
         @Override
         protected void onPostExecute(Cursor resultado) {
             progressBar.setVisibility(View.INVISIBLE);
-            button_search.setEnabled(true);
+            fab_find.setEnabled(true);
 
             if (resultado.getCount() == 0) {
                 Toast.makeText(myContext, getString(R.string.toast_searchfragment_nodatafound), Toast.LENGTH_LONG).show();
@@ -439,19 +439,19 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             Cursor resultado;
 
             if (checkboxMonthIsChecked) {
-                resultado = SaldoDB.getEntryMonthData(MainActivity.idInstance);
+                resultado = SaldoDB.getEntryMonthData(MainActivity.idInstance, categoryIDSelected);
             } else if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
                 String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate);
+                resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected);
             } else if ((!checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
                 String begDate = begYear + "-" + begMonth + "-" + begDay;
-                resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate);
-            } else if ((checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
-                resultado = SaldoDB.getEntryAllData(MainActivity.idInstance);
+                resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected);
+            } else if (checkboxBegIsChecked) {
+                resultado = SaldoDB.getEntryAllData(MainActivity.idInstance, categoryIDSelected);
             } else {
                 String begDate = begYear + "-" + begMonth + "-" + begDay;
                 String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate);
+                resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
             }
 
             return resultado;

@@ -54,9 +54,9 @@ public class SaveMoneyFragment extends Fragment {
         textView_instanceName.setText(name);
 
         // Get save money from database
-        int saveBalance = getTotalSaveMoney();
+        long saveBalance = getTotalSaveMoney();
         // Set in text save balance in text view
-        textView_money.setText(Integer.toString(saveBalance));
+        textView_money.setText(Long.toString(saveBalance));
 
         return view;
     }
@@ -66,24 +66,24 @@ public class SaveMoneyFragment extends Fragment {
      *
      * @return total saved money
      */
-    private int getTotalSaveMoney() {
-        ArrayList<Integer> payments;
-        ArrayList<Integer> withdrawalls;
+    private long getTotalSaveMoney() {
+        ArrayList<Long> payments;
+        ArrayList<Long> withdrawalls;
 
         payments = db.getSaveAllPayment(idInstance);
         withdrawalls = db.getSaveAllWithdrawal(idInstance);
 
-        int totalPayment = 0;
-        int totalWithdrawall = 0;
+        long totalPayment = 0;
+        long totalWithdrawall = 0;
 
-        for (Integer integer1 : payments) {
-            int payment;
+        for (Long integer1 : payments) {
+            long payment;
             payment = integer1;
             totalPayment += payment;
         }
 
-        for (Integer integer2 : withdrawalls) {
-            int withdrawall;
+        for (Long integer2 : withdrawalls) {
+            long withdrawall;
             withdrawall = integer2;
             totalWithdrawall += withdrawall;
         }

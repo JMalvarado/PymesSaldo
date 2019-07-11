@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:orientation="horizontal">
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorWhite"
-            android:textSize="35sp" />
+            android:textSize="25sp" />
 
     </LinearLayout>
 
@@ -36,21 +36,47 @@
         android:padding="20dip"
         tools:ignore="LabelFor" />
 
-    <Button
-        android:id="@+id/button_editProfile_edit"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickEditProfile"
-        android:text="@string/editProfile_button_editarNegocio" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Ingreso_editProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:backgroundTint="@android:color/white"
+            android:onClick="onClickEditProfile"
+            android:src="@drawable/ic_check_64"
+            app:backgroundTint="@android:color/darker_gray"
+            app:rippleColor="@color/colorPrimary" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/cancel_editProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:backgroundTint="@android:color/white"
+            android:onClick="onClickEditProfile"
+            android:src="@drawable/ic_cancel_64"
+            app:backgroundTint="@android:color/darker_gray"
+            app:rippleColor="@color/colorRed" />
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_editProfile_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@android:color/darker_gray"
-        android:src="@drawable/ic_delete"
-        app:backgroundTint="@color/colorPrimary"
+        android:onClick="onClickEditProfile"
+        android:src="@drawable/ic_delete_64"
+        app:backgroundTint="@android:color/darker_gray"
         app:rippleColor="@color/colorPrimary" />
 
 </LinearLayout>

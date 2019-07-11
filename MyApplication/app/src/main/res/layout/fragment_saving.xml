@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".activities.fragments.SavingFragment">
 
@@ -24,7 +25,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginRight="16dp"
             android:autofillHints=""
             android:hint="@string/fragment_saving_radioButton_abono"
@@ -42,7 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginRight="16dp"
             android:autofillHints=""
             android:enabled="false"
@@ -53,8 +52,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="?android:attr/listDivider" />
 
     </RadioGroup>
@@ -64,14 +63,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/button_addSaving_date"
-            android:layout_width="70dp"
-            android:layout_height="45dp"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_calendar_addSavingFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/addentry_button_textFecha" />
+            android:backgroundTint="@android:color/white"
+            android:elevation="0dp"
+            android:src="@drawable/ic_calendar_64"
+            app:backgroundTint="@android:color/darker_gray"
+            app:elevation="0dp"
+            app:rippleColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/textView_addSaving_date"
@@ -86,14 +90,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/button_addSaving_time"
-            android:layout_width="70dp"
-            android:layout_height="45dp"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_clock_addSavingFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/addentry_button_textHora" />
+            android:backgroundTint="@android:color/white"
+            android:elevation="0dp"
+            android:src="@drawable/ic_clock_64"
+            app:backgroundTint="@android:color/darker_gray"
+            app:elevation="0dp"
+            app:rippleColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/textView_addSaving_time"
@@ -106,15 +115,38 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:background="?android:attr/listDivider" />
 
-    <Button
-        android:id="@+id/IngresoSaving"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/addentry_button_textIngresar" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Ingreso_saving"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:backgroundTint="@android:color/white"
+            android:src="@drawable/ic_check_64"
+            app:backgroundTint="@android:color/darker_gray"
+            app:rippleColor="@color/colorPrimary" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/cancel_saving"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:backgroundTint="@android:color/white"
+            android:src="@drawable/ic_cancel_64"
+            app:backgroundTint="@android:color/darker_gray"
+            app:rippleColor="@color/colorRed" />
+
+    </LinearLayout>
 
 </LinearLayout>

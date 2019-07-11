@@ -23,8 +23,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
     // Components view
     private EditText editText_profileName;
-    private Button button_edit;
-    private FloatingActionButton fab_delete;
     private TextView textView_instanceName;
 
     // Database instance / Global variables
@@ -40,8 +38,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         // Initialize components view
         editText_profileName = findViewById(R.id.editText_editProfile_name);
-        button_edit = findViewById(R.id.button_editProfile_edit);
-        fab_delete = findViewById(R.id.fab_editProfile_delete);
         textView_instanceName = findViewById(R.id.textView_editProfile_instanceName);
 
         // Set instance name as title
@@ -61,10 +57,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
         // Options for the floating action button
         options = new CharSequence[]{getString(R.string.alert_optSi), getString(R.string.alert_optNo)};
+    }
 
-        fab_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
+    public void onClickEditProfile(final View view) {
+
+        switch (view.getId()) {
+            case R.id.fab_editProfile_delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setCancelable(false);
                 builder.setTitle(getString(R.string.alert_title_deleteProfile));
@@ -102,41 +100,48 @@ public class EditProfileActivity extends AppCompatActivity {
                     }
                 });
                 builder.show();
-            }
-        });
-    }
 
-    public void onClickEditProfile(View view) {
-        if (editText_profileName.getText().toString().equals("")) {
-            Toast.makeText(this, R.string.toast_addprofileactivity_noname, Toast.LENGTH_LONG).show();
-        } else {
-            Cursor instances = db.getInstancesAllData();
-            if (instances.getCount() > 0) {
-                String name = editText_profileName.getText().toString();
-                while (instances.moveToNext()) {
-                    if (name.equals(instances.getString(1))) {
-                        Toast.makeText(this, R.string.activity_add_profile_msg_samename, Toast.LENGTH_LONG).show();
-                        return;
+                break;
+
+            case R.id.Ingreso_editProfile:
+                if (editText_profileName.getText().toString().equals("")) {
+                    Toast.makeText(this, R.string.toast_addprofileactivity_noname, Toast.LENGTH_LONG).show();
+                } else {
+                    Cursor instances = db.getInstancesAllData();
+                    if (instances.getCount() > 0) {
+                        String name = editText_profileName.getText().toString();
+                        while (instances.moveToNext()) {
+                            if (name.equals(instances.getString(1))) {
+                                Toast.makeText(this, R.string.activity_add_profile_msg_samename, Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                        }
                     }
+
+                    db.editInstance(idInstance, editText_profileName.getText().toString());
+
+                    // Get new default profile
+                    String itemName = editText_profileName.getText().toString();
+
+                    // Set new default profile
+                    // Store the instance as default
+                    SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("NAME", itemName);
+                    editor.apply();
+
+                    editText_profileName.setText("");
+
+                    Intent mainActivityIntent = new Intent(this, MainActivity.class);
+                    startActivity(mainActivityIntent);
                 }
-            }
 
-            db.editInstance(idInstance, editText_profileName.getText().toString());
+                break;
 
-            // Get new default profile
-            String itemName = editText_profileName.getText().toString();
+            case R.id.cancel_editProfile:
+                onBackPressed();
 
-            // Set new default profile
-            // Store the instance as default
-            SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("NAME", itemName);
-            editor.apply();
-
-            editText_profileName.setText("");
-
-            Intent mainActivityIntent = new Intent(this, MainActivity.class);
-            startActivity(mainActivityIntent);
+                break;
         }
     }
 }

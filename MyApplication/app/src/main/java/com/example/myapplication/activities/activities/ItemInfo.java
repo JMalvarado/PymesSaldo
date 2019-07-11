@@ -109,23 +109,23 @@ public class ItemInfo extends AppCompatActivity {
     }
 
     private void search() {
-
         Cursor resultado;
+        int categoryId = SearchFragment.categoryIDSelected;
 
         if (SearchFragment.checkboxMonthIsChecked) {
-            resultado = SaldoDB.getEntryMonthData(MainActivity.idInstance);
+            resultado = SaldoDB.getEntryMonthData(MainActivity.idInstance, categoryId);
         } else if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked)) {
             String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-            resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate);
+            resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, categoryId);
         } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
             String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.finDay;
-            resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate);
+            resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, categoryId);
         } else if (SearchFragment.checkboxBegIsChecked) {
-            resultado = SaldoDB.getEntryAllData(MainActivity.idInstance);
+            resultado = SaldoDB.getEntryAllData(MainActivity.idInstance, categoryId);
         } else {
             String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
             String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-            resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate);
+            resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryId);
         }
 
         if (resultado.getCount() == 0) {

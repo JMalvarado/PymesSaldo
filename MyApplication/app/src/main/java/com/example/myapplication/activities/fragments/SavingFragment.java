@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -40,9 +41,10 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
     private RadioGroup radioGroup_addSavingMov;
     private RadioButton radioButton_payment;
     private RadioButton radioButton_withdrawal;
-    private Button button_enter;
-    private Button button_addDateSaving;
-    private Button button_addTimeSaving;
+    private FloatingActionButton button_enter;
+    private FloatingActionButton button_cancel;
+    private FloatingActionButton fab_addDateSaving;
+    private FloatingActionButton fab_addTimeSaving;
     private TextView textView_date;
     private TextView textView_time;
     private EditText editText_payment;
@@ -74,14 +76,17 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
         radioButton_withdrawal = view.findViewById(R.id.radioButton_fragmentSaving_withdrawal);
         radioButton_withdrawal.setOnClickListener(this);
 
-        button_addDateSaving = view.findViewById(R.id.button_addSaving_date);
-        button_addDateSaving.setOnClickListener(this);
+        fab_addDateSaving = view.findViewById(R.id.fab_calendar_addSavingFragment);
+        fab_addDateSaving.setOnClickListener(this);
 
-        button_addTimeSaving = view.findViewById(R.id.button_addSaving_time);
-        button_addTimeSaving.setOnClickListener(this);
+        fab_addTimeSaving = view.findViewById(R.id.fab_clock_addSavingFragment);
+        fab_addTimeSaving.setOnClickListener(this);
 
-        button_enter = view.findViewById(R.id.IngresoSaving);
+        button_enter = view.findViewById(R.id.Ingreso_saving);
         button_enter.setOnClickListener(this);
+
+        button_cancel = view.findViewById(R.id.cancel_saving);
+        button_cancel.setOnClickListener(this);
 
         // Database instance
         SaldoDB = new DatabaseManager(view.getContext());
@@ -128,7 +133,7 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.button_addSaving_date:
+            case R.id.fab_calendar_addSavingFragment:
                 Calendar calendar = Calendar.getInstance();
                 int dayPick = calendar.get(Calendar.DAY_OF_MONTH);
                 int monthPick = calendar.get(Calendar.MONTH);
@@ -216,7 +221,7 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.button_addSaving_time:
+            case R.id.fab_clock_addSavingFragment:
                 Calendar timepick = Calendar.getInstance();
                 int hourPick = timepick.get(Calendar.HOUR_OF_DAY);
                 int minutesPick = timepick.get(Calendar.MINUTE);
@@ -301,7 +306,7 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.IngresoSaving:
+            case R.id.Ingreso_saving:
                 // Check if there is blank spaces
                 if ((editText_payment.getText().toString().equals("")) && (editText_withdrawal.getText().toString().equals(""))) {
                     showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_nodata));
@@ -309,14 +314,14 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
                 }
 
                 // Main data to enter in database
-                int inData = 0;
-                String type = "A";
+                long inData;
+                String type;
 
                 if (radioGroup_addSavingMov.getCheckedRadioButtonId() == R.id.radioButton_fragmentSaving_payment) {
-                    inData = Integer.parseInt(editText_payment.getText().toString());
+                    inData = Long.parseLong(editText_payment.getText().toString());
                     type = "A";
                 } else {
-                    inData = Integer.parseInt(editText_withdrawal.getText().toString());
+                    inData = Long.parseLong(editText_withdrawal.getText().toString());
                     type = "R";
                 }
 
@@ -358,6 +363,10 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
                 // Show time in format HH:MM
                 textView_time.setText(timeToShow);
 
+                break;
+
+            case R.id.cancel_saving:
+                Objects.requireNonNull(getActivity()).onBackPressed();
                 break;
         }
     }

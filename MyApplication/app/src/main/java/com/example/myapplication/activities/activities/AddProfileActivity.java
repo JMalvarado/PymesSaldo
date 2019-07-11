@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,7 +18,6 @@ public class AddProfileActivity extends AppCompatActivity {
 
     // View components
     EditText et_name;
-    Button btn_instance;
 
     // Database instance
     DatabaseManager db;
@@ -34,7 +32,6 @@ public class AddProfileActivity extends AppCompatActivity {
 
         // Initialize views
         et_name = findViewById(R.id.edittext_addprofile_name);
-        btn_instance = findViewById(R.id.button_addprofile_addinstance);
 
         // Initialize db manager instance
         db = new DatabaseManager(this);
@@ -62,7 +59,7 @@ public class AddProfileActivity extends AppCompatActivity {
      */
     public void onClickAddProfile(View view) {
         switch (view.getId()) {
-            case R.id.button_addprofile_addinstance:
+            case R.id.Ingreso_addProfileActivity:
                 if (et_name.getText().toString().equals("")) {
                     Toast.makeText(this, R.string.toast_addprofileactivity_noname, Toast.LENGTH_LONG).show();
                 } else {
@@ -99,6 +96,11 @@ public class AddProfileActivity extends AppCompatActivity {
                     Intent mainActivityIntent = new Intent(this, MainActivity.class);
                     startActivity(mainActivityIntent);
                 }
+
+                break;
+
+            case R.id.cancel_addProfileActivity:
+                onBackPressed();
 
                 break;
         }

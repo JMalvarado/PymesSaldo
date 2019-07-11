@@ -20,6 +20,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,14 +44,17 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
 
     // View components
     private EditText editText_profit;
-    private EditText editText_spend;
     private EditText editText_description;
     private TextView textView_date;
     private TextView textView_time;
+    private RadioGroup radioGroup_addMov;
+    private RadioButton radioButton_in;
+    private RadioButton radioButton_spend;
     //private TextView textView_instanceName;
-    private Button button_in;
-    private Button button_addDate;
-    private Button button_addTime;
+    private FloatingActionButton fab_in;
+    private FloatingActionButton fab_cancel;
+    private FloatingActionButton fab_addDate;
+    private FloatingActionButton fab_addTime;
     private Spinner spinner_categories;
 
     // Global variables
@@ -57,7 +63,7 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
     private String date;
     private String time;
     private String category_id;
-    ArrayAdapter<String> spinnerAdapter;
+    private ArrayAdapter<String> spinnerAdapter;
 
     // Database instance
     private DatabaseManager SaldoDB;
@@ -69,17 +75,23 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_add_mov, container, false);
 
         // Initialize components
-        button_in = view.findViewById(R.id.Ingreso);
-        button_in.setOnClickListener(this);
+        fab_in = view.findViewById(R.id.Ingreso_addMov);
+        fab_in.setOnClickListener(this);
+        fab_cancel = view.findViewById(R.id.cancel_addMov);
+        fab_cancel.setOnClickListener(this);
         editText_profit = view.findViewById(R.id.etIngreso);
-        editText_spend = view.findViewById(R.id.etGasto);
         editText_description = view.findViewById(R.id.etdescripcion);
         textView_date = view.findViewById(R.id.textView_addEntry_date);
         textView_time = view.findViewById(R.id.textView_addEntry_time);
-        button_addDate = view.findViewById(R.id.button_addEntry_date);
-        button_addDate.setOnClickListener(this);
-        button_addTime = view.findViewById(R.id.button_addEntry_time);
-        button_addTime.setOnClickListener(this);
+        fab_addDate = view.findViewById(R.id.fab_calendar_addMovFragment);
+        fab_addDate.setOnClickListener(this);
+        fab_addTime = view.findViewById(R.id.fab_clock_addMovFragment);
+        fab_addTime.setOnClickListener(this);
+        radioGroup_addMov = view.findViewById(R.id.radioGroup_addMov);
+        radioButton_in = view.findViewById(R.id.radioButton_fragmentAddMov_Ingreso);
+        radioButton_in.setOnClickListener(this);
+        radioButton_spend = view.findViewById(R.id.radioButton_fragmentAddMov_Gasto);
+        radioButton_spend.setOnClickListener(this);
         //textView_instanceName = view.findViewById(R.id.textView_addEntry_instanceName);
 
         // Database instance
@@ -247,29 +259,24 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        String IngresoVar = editText_profit.getText().toString();
-        String GastoVar = editText_spend.getText().toString();
+        String montoStr = editText_profit.getText().toString();
 
-        int IngresoVarint;
-        int GastoVarint;
+        long ingresoInt;
+        long gastoInt;
 
         switch (view.getId()) {
-            case R.id.Ingreso:
+            case R.id.Ingreso_addMov:
                 // Set 0 to blank spaces
-                if (IngresoVar.equals("")) {
-                    IngresoVarint = 0;
+                if (radioGroup_addMov.getCheckedRadioButtonId() == R.id.radioButton_fragmentAddMov_Gasto) {
+                    ingresoInt = 0;
+                    gastoInt = Long.parseLong(montoStr);
                 } else {
-                    IngresoVarint = Integer.parseInt(IngresoVar);
-                }
-
-                if (GastoVar.equals("")) {
-                    GastoVarint = 0;
-                } else {
-                    GastoVarint = Integer.parseInt(GastoVar);
+                    ingresoInt = Long.parseLong(montoStr);
+                    gastoInt = 0;
                 }
 
                 // Verify blank spaces
-                if ((editText_profit.getText().toString().equals("")) && (editText_spend.getText().toString().equals(""))) {
+                if ((editText_profit.getText().toString().equals(""))) {
                     showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_nodata));
                     break;
                 }
@@ -285,7 +292,7 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
                 SharedPreferences prefs = Objects.requireNonNull(getActivity()).getSharedPreferences("instance", Context.MODE_PRIVATE);
                 String id = prefs.getString("ID", null);
 
-                boolean isResult = SaldoDB.addEntry(date, time, GastoVarint, IngresoVarint, descripcion, id, category_id);
+                boolean isResult = SaldoDB.addEntry(date, time, gastoInt, ingresoInt, descripcion, id, category_id);
 
                 // Check result
                 if (isResult) {
@@ -294,7 +301,6 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(view.getContext(), getString(R.string.toast_addEntryActivity_noSuccesAdd), Toast.LENGTH_LONG).show();
                 }
                 editText_profit.setText("");
-                editText_spend.setText("");
                 editText_description.setText("");
 
                 // Set date now in the textView
@@ -320,7 +326,11 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.button_addEntry_date:
+            case R.id.cancel_addMov:
+                Objects.requireNonNull(getActivity()).onBackPressed();
+                break;
+
+            case R.id.fab_calendar_addMovFragment:
                 Calendar calendar = Calendar.getInstance();
                 int dayPick = calendar.get(Calendar.DAY_OF_MONTH);
                 int monthPick = calendar.get(Calendar.MONTH);
@@ -408,7 +418,7 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.button_addEntry_time:
+            case R.id.fab_clock_addMovFragment:
                 Calendar timepick = Calendar.getInstance();
                 int hourPick = timepick.get(Calendar.HOUR_OF_DAY);
                 int minutesPick = timepick.get(Calendar.MINUTE);

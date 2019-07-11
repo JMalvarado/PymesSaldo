@@ -30,6 +30,7 @@
     <string name="activity_edit_entry_textView_profile">Estado financiero:</string>
 
     <string name="fragment_search_period_title">Periodo:</string>
+    <string name="fragment_search_period_title_all">Todo</string>
     <string name="fragment_search_textview_filtro">Filtro:</string>
     <string name="fragment_search_textview_inicio">Inicio</string>
     <string name="fragment_search_textview_dia">Dia</string>
@@ -48,10 +49,13 @@
     <string name="fragment_saving_radioButton_abono">Abono</string>
     <string name="fragment_saving_radioButton_retiro">Retiro</string>
     <string name="fragment_saveMoney_textView_ahorro">Tienes ahorrado:</string>
+    <string name="fragment_search_category_spinner">Todas</string>
+    <string name="fragment_addMov_radiobttn_Ingreso">Ingreso</string>
+    <string name="fragment_addMov_radiobttn_Gasto">Gasto</string>
 
     <string name="iteminfo_textView_gasto">Gasto:</string>
     <string name="iteminfo_textView_ingreso">Ingreso:</string>
-    <string name="addentry_textView_hintIngreso">Ingreso</string>
+    <string name="addentry_textView_hintIngreso">Monto</string>
     <string name="addentry_textView_hintGasto">Gasto</string>
     <string name="addentry_textView_hintDescr">Descripcion</string>
     <string name="header_textView_spinnerTitle">ESTADO FINANCIERO</string>
@@ -64,7 +68,7 @@
     <string name="navHeader_imageButton_descr_addProfile">Add profile</string>
     <string name="dataList_imageButton_decr_edit">Edit entry</string>
     <string name="dataList_imageButton_decr_delete">Delete entry</string>
-    <string name="dataList_textView_ingr">Ingreso:</string>
+    <string name="dataList_textView_ingr">Monto:</string>
     <string name="dataList_textView_gast">Gasto:</string>
     <string name="dataList_textView_categ">Categoría:</string>
     <string name="activity_addEntry_addCategory_spinner">Agregar…</string>

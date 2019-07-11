@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/linearLayout_fragmentSearch_title"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:orientation="horizontal">
@@ -20,33 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorWhite"
-            android:textSize="35sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout_fragmentSearch_filtroTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvTitBusq"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/fragment_search_textview_filtro"
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="25sp" />
-    </LinearLayout>
 
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        android:backgroundTint="@color/colorPrimaryDark" />
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -63,6 +39,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/activity_add_entry_textView_category"
+                        android:textSize="18sp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_search_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="16dp"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:theme="@style/spinner_style" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="7dp"
+                    android:background="?android:attr/listDivider" />
 
                 <CheckBox
                     android:id="@+id/cbMes"
@@ -100,19 +113,27 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/border"
                     android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/button_search_selectdatebeg"
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fab_calendar1_searchFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/fragment_search_button_datebeg" />
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:backgroundTint="@android:color/white"
+                        android:elevation="0dp"
+                        android:src="@drawable/ic_calendar_64"
+                        app:backgroundTint="@android:color/darker_gray"
+                        app:elevation="0dp"
+                        app:rippleColor="@color/colorPrimary" />
 
                     <TextView
                         android:id="@+id/textview_search_datebeg"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:gravity="center" />
@@ -147,19 +168,27 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/border"
                     android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/button_search_selectdatefinal"
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fab_calendar2_searchFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/fragment_search_button_datefinal" />
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:backgroundTint="@android:color/white"
+                        android:elevation="0dp"
+                        android:src="@drawable/ic_calendar_64"
+                        app:backgroundTint="@android:color/darker_gray"
+                        app:elevation="0dp"
+                        app:rippleColor="@color/colorPrimary" />
 
                     <TextView
                         android:id="@+id/textview_search_datefinal"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:gravity="center" />
@@ -177,14 +206,19 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/buttonBuscar"
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/Buscar_searchFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/fragment_search_button_buscar" />
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@android:color/white"
+                        android:src="@drawable/ic_find_64"
+                        app:backgroundTint="@android:color/darker_gray"
+                        app:rippleColor="@color/colorPrimary" />
                 </LinearLayout>
 
                 <ProgressBar

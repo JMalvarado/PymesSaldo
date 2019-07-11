@@ -9,12 +9,12 @@
 
         <item
             android:id="@+id/nav_explore"
-            android:icon="@drawable/ic_search"
+            android:icon="@drawable/ic_explore_64"
             android:title="@string/nav_explore" />
 
         <item
             android:id="@+id/nav_month_balance"
-            android:icon="@drawable/ic_balance"
+            android:icon="@drawable/ic_graph_64"
             android:title="@string/nav_month_balance" />
 
         <item
@@ -29,7 +29,7 @@
 
         <item
             android:id="@+id/nav_exit"
-            android:icon="@drawable/ic_exit"
+            android:icon="@drawable/ic_exit_64"
             android:title="@string/nav_exit" />
     </group>
 

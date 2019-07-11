@@ -2,9 +2,12 @@ package com.example.myapplication.activities.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.myapplication.R;
 
 import java.util.ArrayList;
 
@@ -125,7 +128,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param instance_id
      * @return
      */
-    public boolean addEntry(String Date, String hora, int gasto, int ingreso, String descripcion, String instance_id, String categ_id) {
+    public boolean addEntry(String Date, String hora, long gasto, long ingreso, String descripcion, String instance_id, String categ_id) {
 
         SQLiteDatabase db = this.getWritableDatabase(); //Obtiene la instancia de base de datos para ingresar datos.
 
@@ -181,6 +184,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     /**
      * Add new saving data to table "Ahorro"
+     *
      * @param instanceID
      * @param value
      * @param date
@@ -188,7 +192,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param type
      * @return
      */
-    public boolean addSaving(String instanceID, int value, String date, String time, String type) {
+    public boolean addSaving(String instanceID, long value, String date, String time, String type) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -310,19 +314,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param Instancias_ID ID of the current instance
      * @return
      */
-    public ArrayList<Integer> getEntryGastos(String Instancias_ID) {
+    public ArrayList<Long> getEntryGastos(String Instancias_ID) {
         //valores a usar.
-        int gasto;
+        long gasto;
 
         //lista a retornar
 
-        ArrayList<Integer> gastos = new ArrayList<>();
+        ArrayList<Long> gastos = new ArrayList<>();
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            gasto = consulta.getInt(6);
+            gasto = consulta.getLong(6);
             gastos.add(gasto);
         }
 
@@ -334,19 +338,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
      *
      * @return
      */
-    public ArrayList<Integer> getEntryIngresos(String Instancias_ID) {
+    public ArrayList<Long> getEntryIngresos(String Instancias_ID) {
         //valores a usar.
-        int ingreso;
+        long ingreso;
 
         //lista a retornar
 
-        ArrayList<Integer> ingresos = new ArrayList<>();
+        ArrayList<Long> ingresos = new ArrayList<>();
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            ingreso = consulta.getInt(5);
+            ingreso = consulta.getLong(5);
             ingresos.add(ingreso);
         }
 
@@ -358,20 +362,20 @@ public class DatabaseManager extends SQLiteOpenHelper {
      *
      * @return
      */
-    public ArrayList<Integer> getEntryCurrentMonthIngresos(String Instancias_ID) {
+    public ArrayList<Long> getEntryCurrentMonthIngresos(String Instancias_ID) {
         //valores a usar.
-        int ingreso;
+        long ingreso;
 
         //lista a retornar
 
-        ArrayList<Integer> ingresos = new ArrayList<>();
+        ArrayList<Long> ingresos = new ArrayList<>();
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
                         "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            ingreso = consulta.getInt(5);
+            ingreso = consulta.getLong(5);
             ingresos.add(ingreso);
         }
 
@@ -383,20 +387,20 @@ public class DatabaseManager extends SQLiteOpenHelper {
      *
      * @return
      */
-    public ArrayList<Integer> getEntryInMonthYearIngresos(String Instancias_ID, String month, String year) {
+    public ArrayList<Long> getEntryInMonthYearIngresos(String Instancias_ID, String month, String year) {
         //valores a usar.
-        int ingreso;
+        long ingreso;
 
         //lista a retornar
 
-        ArrayList<Integer> ingresos = new ArrayList<>();
+        ArrayList<Long> ingresos = new ArrayList<>();
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
                         "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            ingreso = consulta.getInt(5);
+            ingreso = consulta.getLong(5);
             ingresos.add(ingreso);
         }
 
@@ -408,20 +412,20 @@ public class DatabaseManager extends SQLiteOpenHelper {
      *
      * @return
      */
-    public ArrayList<Integer> getEntryCurrentMonthGastos(String Instancias_ID) {
+    public ArrayList<Long> getEntryCurrentMonthGastos(String Instancias_ID) {
         //valores a usar.
-        int gasto;
+        long gasto;
 
         //lista a retornar
 
-        ArrayList<Integer> gastos = new ArrayList<>();
+        ArrayList<Long> gastos = new ArrayList<>();
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
                         "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            gasto = consulta.getInt(6);
+            gasto = consulta.getLong(6);
             gastos.add(gasto);
         }
 
@@ -433,20 +437,20 @@ public class DatabaseManager extends SQLiteOpenHelper {
      *
      * @return
      */
-    public ArrayList<Integer> getEntryInMonthYearGastos(String Instancias_ID, String month, String year) {
+    public ArrayList<Long> getEntryInMonthYearGastos(String Instancias_ID, String month, String year) {
         //valores a usar.
-        int gasto;
+        long gasto;
 
         //lista a retornar
 
-        ArrayList<Integer> gastos = new ArrayList<>();
+        ArrayList<Long> gastos = new ArrayList<>();
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
                         "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            gasto = consulta.getInt(6);
+            gasto = consulta.getLong(6);
             gastos.add(gasto);
         }
 
@@ -458,9 +462,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
      *
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryAllData(String Instancias_ID) {
+    public Cursor getEntryAllData(String Instancias_ID, int category) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+        }
+
         return resultado;
     }
 
@@ -469,10 +480,18 @@ public class DatabaseManager extends SQLiteOpenHelper {
      *
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryMonthData(String Instancias_ID) {
+    public Cursor getEntryMonthData(String Instancias_ID, int category) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
-                "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
+                    "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
+                    "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+        }
+
         return resultado;
     }
 
@@ -482,9 +501,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param finalDate
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryDataFromBegToDate(String Instancias_ID, String finalDate) {
+    public Cursor getEntryDataFromBegToDate(String Instancias_ID, String finalDate, int category) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' AND Instancias_ID=" + Instancias_ID, null);
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                    "AND Instancias_ID=" + Instancias_ID, null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                    "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+        }
         return resultado;
     }
 
@@ -494,9 +521,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param beginDate
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryDataFromDateToToday(String Instancias_ID, String beginDate) {
+    public Cursor getEntryDataFromDateToToday(String Instancias_ID, String beginDate, int category) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' AND Instancias_ID=" + Instancias_ID, null);
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                    "AND Instancias_ID=" + Instancias_ID, null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                    "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+        }
         return resultado;
     }
 
@@ -507,9 +542,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param finalDate
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryDataInDate(String Instancias_ID, String beginDate, String finalDate) {
+    public Cursor getEntryDataInDate(String Instancias_ID, String beginDate, String finalDate, int category) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID, null);
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                    "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID, null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                    "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+        }
         return resultado;
     }
 
@@ -518,19 +561,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
      *
      * @return
      */
-    public ArrayList<Integer> getSaveAllPayment(String Instancias_ID) {
+    public ArrayList<Long> getSaveAllPayment(String Instancias_ID) {
         //valores a usar.
-        int abono;
+        long abono;
 
         //lista a retornar
 
-        ArrayList<Integer> abonos = new ArrayList<>();
+        ArrayList<Long> abonos = new ArrayList<>();
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA4_NOMBRE + " WHERE Tipo='A' AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            abono = consulta.getInt(2);
+            abono = consulta.getLong(2);
             abonos.add(abono);
         }
 
@@ -542,19 +585,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
      *
      * @return
      */
-    public ArrayList<Integer> getSaveAllWithdrawal(String Instancias_ID) {
+    public ArrayList<Long> getSaveAllWithdrawal(String Instancias_ID) {
         //valores a usar.
-        int retiro;
+        long retiro;
 
         //lista a retornar
 
-        ArrayList<Integer> retiros = new ArrayList<>();
+        ArrayList<Long> retiros = new ArrayList<>();
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA4_NOMBRE + " WHERE Tipo='R' AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
-            retiro = consulta.getInt(2);
+            retiro = consulta.getLong(2);
             retiros.add(retiro);
         }
 
