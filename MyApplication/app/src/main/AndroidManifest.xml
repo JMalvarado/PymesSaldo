@@ -19,9 +19,6 @@
             android:name=".activities.activities.AddEntryActivity"
             android:label="@string/addEntry_name" />
         <activity
-            android:name=".activities.activities.ItemInfo"
-            android:label="@string/itemInfo_name" />
-        <activity
             android:name=".activities.activities.DataSearch"
             android:label="@string/dataSearch_name" />
         <activity

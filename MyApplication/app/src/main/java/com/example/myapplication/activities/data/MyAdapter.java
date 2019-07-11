@@ -207,16 +207,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         protected Cursor doInBackground(String... strings) {
             Cursor resultado;
 
-            if (SearchFragment.checkboxMonthIsChecked) {
+            if (SearchFragment.radioButtonMonthIsChecked) {
                 resultado = SaldoDB.getEntryMonthData(MainActivity.idInstance, SearchFragment.categoryIDSelected);
-            } else if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked)) {
-                String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected);
-            } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
-                String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
-                resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected);
-            } else if (SearchFragment.checkboxBegIsChecked) {
-                resultado = SaldoDB.getEntryAllData(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+            } else if (SearchFragment.radioButtonDatesIsChecked) {
+                if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked)) {
+                    String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
+                    resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected);
+                } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
+                    String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
+                    resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected);
+                } else if (SearchFragment.checkboxBegIsChecked) {
+                    resultado = SaldoDB.getEntryAllData(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+                } else {
+                    String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
+                    String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
+                    resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                }
             } else {
                 String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
                 String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;

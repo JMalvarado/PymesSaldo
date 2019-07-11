@@ -74,7 +74,7 @@ public class DataSearch extends AppCompatActivity {
         categIds = getIntent().getStringArrayListExtra("CATEGIDS");
 
         // Get range date for period
-        if (SearchFragment.checkboxMonthIsChecked) {
+        if (SearchFragment.radioButtonMonthIsChecked) {
             // Set month and year in text view
             String monthAndYear;
 

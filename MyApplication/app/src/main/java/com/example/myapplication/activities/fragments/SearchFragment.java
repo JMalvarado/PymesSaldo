@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +40,9 @@ import java.util.Objects;
 public class SearchFragment extends Fragment implements View.OnClickListener {
 
     // View components
-    private CheckBox checkBox_monthData, checkBox_begining, checkBox_final, checkBox_period;
+    private RadioGroup radioGroup_filter;
+    private RadioButton radioButton_period, radioButton_month, radioButton_dates;
+    private CheckBox checkBox_begining, checkBox_final;
     private FloatingActionButton fab_dateBegin, fab_dateFinal;
     private FloatingActionButton fab_find;
     private ProgressBar progressBar;
@@ -48,7 +52,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     // Global variables
     public static String begDay, begMonth, begYear, finDay, finMonth, finYear, period, actualMonth;
     private static int intBegDay, intBegMonth, intBegYear, intFinDay, intFinMonth, intFinYear;
-    public static boolean checkboxMonthIsChecked, checkboxBegIsChecked, checkboxFinalIsChecked, checkboxPeriodIsChecked;
+    public static boolean radioButtonMonthIsChecked, checkboxBegIsChecked, checkboxFinalIsChecked, radioButtonPeriodIsChecked, radioButtonDatesIsChecked;
     public static int categoryIDSelected;
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
@@ -67,8 +71,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         Objects.requireNonNull(getActivity()).setTitle(getString(R.string.search_name));
 
         // Initialize view componnents and click listeners
-        checkBox_monthData = view.findViewById(R.id.cbMes);
-        checkBox_monthData.setOnClickListener(this);
+        radioGroup_filter = view.findViewById(R.id.radioGroup_fragmmentSearch_filter);
+
+        radioButton_month = view.findViewById(R.id.radioButton_mes);
+        radioButton_month.setOnClickListener(this);
+
+        radioButton_dates = view.findViewById(R.id.radioButton_porfecha);
+        radioButton_dates.setOnClickListener(this);
 
         checkBox_begining = view.findViewById(R.id.cbInicio);
         checkBox_begining.setOnClickListener(this);
@@ -76,8 +85,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         checkBox_final = view.findViewById(R.id.cbFinal);
         checkBox_final.setOnClickListener(this);
 
-        checkBox_period = view.findViewById(R.id.cbPeriodo);
-        checkBox_period.setOnClickListener(this);
+        radioButton_period = view.findViewById(R.id.radioButton_periodo);
+        radioButton_period.setOnClickListener(this);
 
         fab_find = view.findViewById(R.id.Buscar_searchFragment);
         fab_find.setOnClickListener(this);
@@ -108,17 +117,22 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         period = prefs.getString("PERIOD", null);
         assert period != null;
         if (period.equals("0")) {
-            checkBox_period.setEnabled(false);
+            radioButton_period.setEnabled(false);
+            radioButton_month.setChecked(true);
+
+            checkBox_begining.setEnabled(false);
+            fab_dateBegin.setEnabled(false);
+
+            checkBox_final.setEnabled(false);
+            fab_dateFinal.setEnabled(false);
         } else {
-            checkBox_period.setEnabled(true);
-            checkBox_period.setChecked(true);
+            radioButton_period.setEnabled(true);
+            radioButton_period.setChecked(true);
             textView_period.setText(new StringBuilder().append("( ").
                     append(getString(R.string.fragment_search_period_period_header)).
                     append(" ").
                     append(period).
                     append(" )").toString());
-
-            checkBox_monthData.setEnabled(false);
 
             checkBox_begining.setEnabled(false);
             fab_dateBegin.setEnabled(false);
@@ -175,43 +189,30 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.cbPeriodo:
-                if (!checkBox_period.isChecked()) {
-                    checkBox_monthData.setEnabled(true);
+            case R.id.radioButton_periodo:
+                checkBox_begining.setEnabled(false);
+                fab_dateBegin.setEnabled(false);
 
-                    checkBox_begining.setEnabled(true);
-                    fab_dateBegin.setEnabled(true);
-
-                    checkBox_final.setEnabled(true);
-                    fab_dateFinal.setEnabled(true);
-
-                } else {
-                    checkBox_monthData.setEnabled(false);
-
-                    checkBox_begining.setEnabled(false);
-                    fab_dateBegin.setEnabled(false);
-
-                    checkBox_final.setEnabled(false);
-                    fab_dateFinal.setEnabled(false);
-                }
+                checkBox_final.setEnabled(false);
+                fab_dateFinal.setEnabled(false);
 
                 break;
 
-            case R.id.cbMes:
-                if (!checkBox_monthData.isChecked()) {
-                    checkBox_begining.setEnabled(true);
-                    fab_dateBegin.setEnabled(true);
+            case R.id.radioButton_mes:
+                checkBox_begining.setEnabled(false);
+                fab_dateBegin.setEnabled(false);
 
-                    checkBox_final.setEnabled(true);
-                    fab_dateFinal.setEnabled(true);
+                checkBox_final.setEnabled(false);
+                fab_dateFinal.setEnabled(false);
 
-                } else {
-                    checkBox_begining.setEnabled(false);
-                    fab_dateBegin.setEnabled(false);
+                break;
 
-                    checkBox_final.setEnabled(false);
-                    fab_dateFinal.setEnabled(false);
-                }
+            case R.id.radioButton_porfecha:
+                checkBox_begining.setEnabled(true);
+                fab_dateBegin.setEnabled(true);
+
+                checkBox_final.setEnabled(true);
+                fab_dateFinal.setEnabled(true);
 
                 break;
 
@@ -274,12 +275,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.Buscar_searchFragment:
-                checkboxMonthIsChecked = checkBox_monthData.isChecked();
+                radioButtonMonthIsChecked = radioGroup_filter.getCheckedRadioButtonId() == R.id.radioButton_mes;
                 checkboxBegIsChecked = checkBox_begining.isChecked();
                 checkboxFinalIsChecked = checkBox_final.isChecked();
-                checkboxPeriodIsChecked = checkBox_period.isChecked();
+                radioButtonPeriodIsChecked = radioGroup_filter.getCheckedRadioButtonId() == R.id.radioButton_periodo;
+                radioButtonDatesIsChecked = radioGroup_filter.getCheckedRadioButtonId() == R.id.radioButton_porfecha;
 
-                if (checkBox_period.isChecked()) {
+                if (radioGroup_filter.getCheckedRadioButtonId() == R.id.radioButton_periodo) {
                     // Cast day with 1 digit to 2
                     switch (period) {
                         case "1":
@@ -330,7 +332,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                             begMonth = "12";
                             begYear = Integer.toString(Integer.parseInt(year) - 1);
                         } else {
-                            begMonth = Integer.toString(Integer.parseInt(month)-1);
+                            begMonth = Integer.toString(Integer.parseInt(month) - 1);
                             switch (begMonth) {
                                 case "1":
                                     begMonth = "01";
@@ -413,9 +415,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                         begYear = year;
                     }
 
-                } else {
-                    if ((!checkBox_begining.isChecked()) && (!checkBox_monthData.isChecked())) {
-                        if ((textView_dateBeging.getText().toString().equals("")) && (!checkBox_monthData.isChecked())) {
+                } else if (radioGroup_filter.getCheckedRadioButtonId() == R.id.radioButton_porfecha) {
+                    if (!checkBox_begining.isChecked()) {
+                        if (textView_dateBeging.getText().toString().equals("")) {
                             Toast.makeText(view.getContext(), getString(R.string.toast_searchfragment_nodata), Toast.LENGTH_LONG).show();
                             break;
                         }
@@ -487,8 +489,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                         }
                     }
 
-                    if ((!checkBox_final.isChecked()) && (!checkBox_monthData.isChecked())) {
-                        if ((textView_dateFinal.getText().toString().equals("")) && (!checkBox_monthData.isChecked())) {
+                    if (!checkBox_final.isChecked()) {
+                        if (textView_dateFinal.getText().toString().equals("")) {
                             Toast.makeText(view.getContext(), getString(R.string.toast_searchfragment_nodata), Toast.LENGTH_LONG).show();
                             break;
                         }
@@ -625,16 +627,22 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         protected Cursor doInBackground(String... strings) {
             Cursor resultado;
 
-            if (checkboxMonthIsChecked) {
+            if (radioButtonMonthIsChecked) {
                 resultado = SaldoDB.getEntryMonthData(MainActivity.idInstance, categoryIDSelected);
-            } else if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
-                String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected);
-            } else if ((!checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
-                String begDate = begYear + "-" + begMonth + "-" + begDay;
-                resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected);
-            } else if (checkboxBegIsChecked) {
-                resultado = SaldoDB.getEntryAllData(MainActivity.idInstance, categoryIDSelected);
+            } else if (radioButtonDatesIsChecked) {
+                if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
+                    String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                    resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected);
+                } else if ((!checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
+                    String begDate = begYear + "-" + begMonth + "-" + begDay;
+                    resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected);
+                } else if (checkboxBegIsChecked) {
+                    resultado = SaldoDB.getEntryAllData(MainActivity.idInstance, categoryIDSelected);
+                } else {
+                    String begDate = begYear + "-" + begMonth + "-" + begDay;
+                    String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                    resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                }
             } else {
                 String begDate = begYear + "-" + begMonth + "-" + begDay;
                 String finalDate = finYear + "-" + finMonth + "-" + finDay;

@@ -77,49 +77,99 @@
                     android:layout_marginTop="7dp"
                     android:background="?android:attr/listDivider" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                <RadioGroup
+                    android:id="@+id/radioGroup_fragmmentSearch_filter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <CheckBox
-                        android:id="@+id/cbPeriodo"
+                    <RadioButton
+                        android:id="@+id/radioButton_periodo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="16dp"
                         android:text="@string/fragment_search_period_checkboxTitle" />
 
                     <TextView
                         android:id="@+id/textView_fragmentSearch_period"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center" />
+                        android:layout_marginStart="25dp" />
 
-                </LinearLayout>
+                    <View
+                        android:id="@+id/divider4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="7dp"
+                        android:background="?android:attr/listDivider" />
 
-                <View
+                    <RadioButton
+                        android:id="@+id/radioButton_mes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/fragment_search_checkbox_saldoalmes" />
+
+                    <View
+                        android:id="@+id/divider3"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="7dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton_porfecha"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/fragment_search_dates_radioButtonTitle" />
+
+                </RadioGroup>
+
+                <!--<LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    &lt;!&ndash;<CheckBox
+                        android:id="@+id/cbPeriodo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/fragment_search_period_checkboxTitle" />&ndash;&gt;
+
+                    &lt;!&ndash;<TextView
+                        android:id="@+id/textView_fragmentSearch_period"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />&ndash;&gt;
+
+                </LinearLayout>-->
+
+                <!--<View
                     android:id="@+id/divider4"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="7dp"
-                    android:background="?android:attr/listDivider" />
+                    android:background="?android:attr/listDivider" />-->
 
-                <CheckBox
+                <!--<CheckBox
                     android:id="@+id/cbMes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
-                    android:text="@string/fragment_search_checkbox_saldoalmes" />
+                    android:text="@string/fragment_search_checkbox_saldoalmes" />-->
 
-                <View
+                <!--<View
                     android:id="@+id/divider3"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="7dp"
-                    android:background="?android:attr/listDivider" />
+                    android:background="?android:attr/listDivider" />-->
 
                 <TextView
                     android:id="@+id/tvIcicBusq"
@@ -168,13 +218,6 @@
                         android:gravity="center" />
 
                 </LinearLayout>
-
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="7dp"
-                    android:background="?android:attr/listDivider" />
 
                 <TextView
                     android:id="@+id/tvFinalBusq"

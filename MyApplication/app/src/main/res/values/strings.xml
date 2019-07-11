@@ -37,6 +37,7 @@
     <string name="fragment_search_period_period_header">Día de corte:</string>
     <string name="fragment_search_period_title">Periodo:</string>
     <string name="fragment_search_period_checkboxTitle">Periodo definido</string>
+    <string name="fragment_search_dates_radioButtonTitle">Por fecha</string>
     <string name="fragment_search_period_title_all">Todo</string>
     <string name="fragment_search_textview_filtro">Filtro:</string>
     <string name="fragment_search_textview_inicio">Inicio</string>
