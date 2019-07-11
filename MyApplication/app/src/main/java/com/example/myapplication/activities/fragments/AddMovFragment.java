@@ -101,11 +101,11 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
         dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
 
         // Set date now in the textView
-        String DateNow;
+        String dateNow;
         LocalDateTime now = LocalDateTime.now();
-        DateNow = dtf.format(now);
+        dateNow = dtf.format(now);
         // Store in format YY-MM-DD
-        date = DateNow;
+        date = dateNow;
         // Show date in format DD-MM-YY
         String dateToShow;
         String year = date.substring(0, 4);
@@ -304,11 +304,11 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
                 editText_description.setText("");
 
                 // Set date now in the textView
-                String DateNow;
+                String dateNow;
                 LocalDateTime now = LocalDateTime.now();
-                DateNow = dtf.format(now);
+                dateNow = dtf.format(now);
                 // Store in format YYYY-MM-DD
-                date = DateNow;
+                date = dateNow;
                 // Show date in format DD-MM-YYYY
                 String dateToShow;
                 String year = date.substring(0, 4);

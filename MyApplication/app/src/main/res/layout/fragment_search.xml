@@ -71,6 +71,35 @@
                 </LinearLayout>
 
                 <View
+                    android:id="@+id/divider5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="7dp"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cbPeriodo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/fragment_search_period_checkboxTitle" />
+
+                    <TextView
+                        android:id="@+id/textView_fragmentSearch_period"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+
+                </LinearLayout>
+
+                <View
                     android:id="@+id/divider4"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"

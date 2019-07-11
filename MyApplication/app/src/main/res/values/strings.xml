@@ -24,12 +24,19 @@
     <string name="month_December">Diciembre</string>
 
     <string name="activity_add_profile_hint_nombre">Nombre del estado</string>
+    <string name="activity_addprofile_categoryInitial">Saldo inicial</string>
+    <string name="activity_add_profile_hint_period">Día del mes</string>
+    <string name="activity_add_profile_hint_saldoInicial">Saldo inicial</string>
     <string name="activity_add_profile_button_ingresar">Agregar</string>
     <string name="activity_add_profile_msg_samename">El estado ya existe</string>
     <string name="activity_add_entry_textView_category">Categoría:</string>
     <string name="activity_edit_entry_textView_profile">Estado financiero:</string>
+    <string name="activity_add_profile_switch_agregarSaldoInicial">Agregar saldo inicial</string>
+    <string name="activity_add_profile_switch_periodo">Agregar periodo definido</string>
 
+    <string name="fragment_search_period_period_header">Día de corte:</string>
     <string name="fragment_search_period_title">Periodo:</string>
+    <string name="fragment_search_period_checkboxTitle">Periodo definido</string>
     <string name="fragment_search_period_title_all">Todo</string>
     <string name="fragment_search_textview_filtro">Filtro:</string>
     <string name="fragment_search_textview_inicio">Inicio</string>
@@ -78,6 +85,8 @@
     <string name="addEntryViewPagerAdapter_title2">Ahorro</string>
 
     <!-- Toast, snack bar and alerts -->
+    <string name="toast_addprofileactivity_noinitialprofit">Por favor ingrese un saldo inicial</string>
+    <string name="toast_addprofileactivity_noperiod">Por favor ingrese un día para el periodo</string>
     <string name="toast_addprofileactivity_noname">Por favor ingrese un nombre</string>
     <string name="toast_searchfragment_nodata">Por favor seleccione las fechas deseadas</string>
     <string name="toast_searchfragment_yeargreaterthan">El año inicial debe ser menor al final</string>

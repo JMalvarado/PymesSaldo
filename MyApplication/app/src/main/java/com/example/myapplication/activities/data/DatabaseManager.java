@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     private static final String DATABASE_NAME = "Saldos.db";
 
     //tabla1
@@ -31,6 +31,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final String TABLA2_NOMBRE = "Instancias";
     //columnas
     private static final String Col_Nombre = "Nombre";
+    private static final String Col_Periodo = "Periodo";
 
     //tabla3
     private static final String TABLA3_NOMBRE = "Categorias";
@@ -62,7 +63,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
         // Create table for instances
         sqLiteDatabase.execSQL("create table " + TABLA2_NOMBRE + " " +
                 "(Instancias_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "Nombre TEXT)");
+                "Nombre TEXT," +
+                "Periodo INTEGER)");
 
         // Create table for categories
         sqLiteDatabase.execSQL("create table " + TABLA3_NOMBRE + " " +
@@ -171,11 +173,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param name
      * @return
      */
-    public boolean addInstance(String name) {
+    public boolean addInstance(String name, int period) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(Col_Nombre, name);
+        contentValues.put(Col_Periodo, period);
 
         long resultado = db.insert(TABLA2_NOMBRE, null, contentValues);
 
@@ -247,6 +250,24 @@ public class DatabaseManager extends SQLiteOpenHelper {
         }
 
         return id;
+    }
+
+    /**
+     * Get period day from instance table
+     * @param name
+     * @return
+     */
+    public int getInstancePeriod(String name) {
+        Cursor consulta = this.getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLA2_NOMBRE + " WHERE Nombre='" + name + "'", null);
+
+        int period = 0;
+
+        while (consulta.moveToNext()) {
+            period = consulta.getInt(2);
+        }
+
+        return period;
     }
 
     /**
@@ -666,12 +687,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param name
      * @return
      */
-    public boolean editInstance(String instance_ID, String name) {
+    public boolean editInstance(String instance_ID, String name, int period) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("Instancias_ID", instance_ID);
         contentValues.put(Col_Nombre, name);
+        contentValues.put(Col_Periodo, period);
 
         db.update(TABLA2_NOMBRE, contentValues, "Instancias_ID=?", new String[]{instance_ID});
 

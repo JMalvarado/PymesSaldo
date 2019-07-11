@@ -180,12 +180,14 @@ public class MainActivity extends AppCompatActivity
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     String name = adapterView.getItemAtPosition(i).toString();
                     String id = db.getInstanceId(name);
+                    String period = Integer.toString(db.getInstancePeriod(name));
 
                     // Store the instance as default
                     SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("NAME", name);
                     editor.putString("ID", id);
+                    editor.putString("PERIOD", period);
                     editor.apply();
 
                     idInstance = id;
