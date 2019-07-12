@@ -17,6 +17,7 @@ import com.example.myapplication.activities.data.DatabaseManager;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class BalancePeriodFragment extends Fragment {
@@ -65,15 +66,81 @@ public class BalancePeriodFragment extends Fragment {
         String date = getPeriod(period);
         textView_date.setText(date);
 
+        // Set dates for check ingresos and gastos
+        String dateBegin = begYear + "-" + begMonth + "-" + begDay;
+        String dateFinal = finYear + "-" + finMonth + "-" + finDay;
+
+        String periodBalance = getPeriodBalance(dateBegin, dateFinal);
+        String profit = Long.toString(getTotalProfit(dateBegin, dateFinal));
+        String spend = Long.toString(getTotalSpend(dateBegin, dateFinal));
+
+        // Set data in text views
+        textView_profit.setText(profit);
+        textView_spend.setText(spend);
+        textView_balance.setText(periodBalance);
+
         return view;
     }
 
     /**
+     * Get integer with the total profit of the month
+     *
+     * @return total profit
+     */
+    private long getTotalProfit(String dateBeg, String dateFin) {
+        ArrayList<Long> profit = db.getEntryInDateIngresos(idInstance, dateBeg, dateFin);
+
+        long totalProfit = 0;
+
+        for (Long integer1 : profit) {
+            long ing;
+            ing = integer1;
+            totalProfit += ing;
+        }
+
+        return totalProfit;
+    }
+
+    /**
+     * Get integer with the total spend of the month
+     *
+     * @return spend
+     */
+    private long getTotalSpend(String dateBeg, String dateFin) {
+        ArrayList<Long> spend = db.getEntryInDateGastos(idInstance, dateBeg, dateFin);
+
+        long totalSpend = 0;
+
+        for (Long integer1 : spend) {
+            long gas;
+            gas = integer1;
+            totalSpend += gas;
+        }
+
+        return totalSpend;
+    }
+
+    /**
+     * Get String with the balance (totalProfit - totalSpend) of current the month
+     *
+     * @return balance
+     */
+    private String getPeriodBalance(String dateBeg, String dateFin) {
+        long totalProfit = getTotalProfit(dateBeg, dateFin);
+        long totalSpend = getTotalSpend(dateBeg, dateFin);
+
+        long balance = totalProfit - totalSpend;
+
+        return Long.toString(balance);
+    }
+
+    /**
      * Get the dates range with the given period day
+     *
      * @param period day of month from instance
      * @return String with the complete range of dates
      */
-    private String getPeriod (String period) {
+    private String getPeriod(String period) {
         // Cast day with 1 digit to 2
         switch (period) {
             case "1":

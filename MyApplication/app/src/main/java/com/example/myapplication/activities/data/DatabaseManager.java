@@ -381,19 +381,44 @@ public class DatabaseManager extends SQLiteOpenHelper {
     /**
      * Get the data from column ingresos in the actual month
      *
-     * @return
+     * @return List with the ingreso data
      */
     public ArrayList<Long> getEntryCurrentMonthIngresos(String Instancias_ID) {
-        //valores a usar.
+        // Value
         long ingreso;
 
-        //lista a retornar
-
+        // List to return
         ArrayList<Long> ingresos = new ArrayList<>();
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
                         "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
+
+        while (consulta.moveToNext()) {
+            ingreso = consulta.getLong(5);
+            ingresos.add(ingreso);
+        }
+
+        return ingresos;
+    }
+
+    /**
+     * Get ingresos data from table Saldos between two given dates
+     *
+     * @param beginDate Begin date
+     * @param finalDate Final date
+     * @return List with the ingreso data
+     */
+    public ArrayList<Long> getEntryInDateIngresos(String Instancias_ID, String beginDate, String finalDate) {
+        // Value
+        long ingreso;
+
+        // List to return
+        ArrayList<Long> ingresos = new ArrayList<>();
+
+        Cursor consulta = this.getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
             ingreso = consulta.getLong(5);
@@ -444,6 +469,32 @@ public class DatabaseManager extends SQLiteOpenHelper {
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
                         "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID, null);
+
+        while (consulta.moveToNext()) {
+            gasto = consulta.getLong(6);
+            gastos.add(gasto);
+        }
+
+        return gastos;
+    }
+
+    /**
+     * Get gastos data from table Saldos between two given dates
+     *
+     * @param beginDate Begin date
+     * @param finalDate Final date
+     * @return List with the gasto data
+     */
+    public ArrayList<Long> getEntryInDateGastos(String Instancias_ID, String beginDate, String finalDate) {
+        // Value
+        long gasto;
+
+        // List to return
+        ArrayList<Long> gastos = new ArrayList<>();
+
+        Cursor consulta = this.getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID, null);
 
         while (consulta.moveToNext()) {
             gasto = consulta.getLong(6);
