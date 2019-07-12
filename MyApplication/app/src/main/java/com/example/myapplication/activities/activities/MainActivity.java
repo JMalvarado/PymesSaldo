@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.fragments.BalanceFragment;
+import com.example.myapplication.activities.fragments.BalancePeriodFragment;
 import com.example.myapplication.activities.fragments.SaveMoneyFragment;
 import com.example.myapplication.activities.fragments.SearchFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -199,6 +200,17 @@ public class MainActivity extends AppCompatActivity
 
                     // Set title head text
                     tv_navheader_title.setText(name);
+
+                    // Check if there is defined period to enable nav item period balance
+                    Menu menuNav = navigationView.getMenu();
+                    MenuItem navItemPeriodBalance = menuNav.findItem(R.id.nav_period_balance);
+                    // Set state for period option
+                    assert period != null;
+                    if (period.equals("0")) {
+                        navItemPeriodBalance.setEnabled(false);
+                    } else {
+                        navItemPeriodBalance.setEnabled(true);
+                    }
                 }
 
                 @Override
@@ -226,6 +238,18 @@ public class MainActivity extends AppCompatActivity
             // Get and show the default fragment
             BalanceFragment balanceFragment = new BalanceFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, balanceFragment).commit();
+
+            // Check if there is defined period to enable nav item period balance
+            Menu menuNav = navigationView.getMenu();
+            MenuItem navItemPeriodBalance = menuNav.findItem(R.id.nav_period_balance);
+            // Set state for period option
+            String period = prefs.getString("PERIOD", null);
+            assert period != null;
+            if (period.equals("0")) {
+                navItemPeriodBalance.setEnabled(false);
+            } else {
+                navItemPeriodBalance.setEnabled(true);
+            }
         }
     }
 
@@ -270,14 +294,14 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_month_balance) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new BalanceFragment()).commit();
-
         } else if (id == R.id.nav_explore) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new SearchFragment()).commit();
-
         } else if (id == R.id.nav_exit) {
             onExit();
         } else if (id == R.id.nav_money_save) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new SaveMoneyFragment()).commit();
+        } else if (id == R.id.nav_period_balance) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new BalancePeriodFragment()).commit();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

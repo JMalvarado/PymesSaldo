@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -49,6 +49,8 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
     private TextView textView_time;
     private EditText editText_payment;
     private EditText editText_withdrawal;
+    private CheckBox checkBox_addSpend;
+    private CheckBox checkBox_addProfit;
 
     // Global variables
     private DateTimeFormatter dtf;
@@ -64,6 +66,9 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_saving, container, false);
 
         // Initialize Components view
+        checkBox_addSpend = view.findViewById(R.id.checkbox_fragment_saving_addSpend);
+        checkBox_addProfit = view.findViewById(R.id.checkbox_fragment_saving_addProfit);
+
         radioGroup_addSavingMov = view.findViewById(R.id.radioGroup_addSavingMov);
         textView_date = view.findViewById(R.id.textView_addSaving_date);
         textView_time = view.findViewById(R.id.textView_addSaving_time);
@@ -124,12 +129,20 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
             case R.id.radioButton_fragmentSaving_payment:
                 editText_withdrawal.setEnabled(false);
                 editText_payment.setEnabled(true);
+                checkBox_addProfit.setEnabled(false);
+                checkBox_addSpend.setEnabled(true);
+                checkBox_addProfit.setChecked(false);
+                editText_withdrawal.setText("");
 
                 break;
 
             case R.id.radioButton_fragmentSaving_withdrawal:
                 editText_payment.setEnabled(false);
                 editText_withdrawal.setEnabled(true);
+                checkBox_addProfit.setEnabled(true);
+                checkBox_addSpend.setEnabled(false);
+                checkBox_addSpend.setChecked(false);
+                editText_payment.setText("");
 
                 break;
 
@@ -334,34 +347,52 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
 
                 // Check result
                 if (isResult) {
+                    // Check add as a profit or spend option
+                    if (checkBox_addSpend.isChecked()) {
+                        long spend = Long.parseLong(editText_payment.getText().toString());
+                        long in = 0;
+                        String categoryId = "1";
+                        String description = getString(R.string.fragment_saving_addSpend_description);
+
+                        SaldoDB.addEntry(date, time, spend, in, description, id, categoryId);
+                    } else if (checkBox_addProfit.isChecked()) {
+                        long spend = 0;
+                        long in = Long.parseLong(editText_withdrawal.getText().toString());
+                        String categoryId = "1";
+                        String description = getString(R.string.fragment_saving_addProfit_description);
+
+                        SaldoDB.addEntry(date, time, spend, in, description, id, categoryId);
+                    }
+
                     Toast.makeText(view.getContext(), getString(R.string.toast_addEntryActivity_succesAdd), Toast.LENGTH_LONG).show();
+
+                    editText_payment.setText("");
+                    editText_withdrawal.setText("");
+
+                    // Set date now in the textView
+                    String DateNow;
+                    LocalDateTime now = LocalDateTime.now();
+                    DateNow = dtf.format(now);
+                    // Store in format YY-MM-DD
+                    date = DateNow;
+                    // Show date in format DD-MM-YY
+                    String dateToShow;
+                    String year = date.substring(0, 4);
+                    String month = date.substring(5, 7);
+                    String day = date.substring(8, 10);
+                    String sepearator = "-";
+                    dateToShow = day + sepearator + month + sepearator + year;
+                    textView_date.setText(dateToShow);
+
+                    // Store time in format HH:MM:SS.SSSS
+                    time = java.time.LocalTime.now().toString();
+                    String timeToShow = time.substring(0, 5);
+                    // Show time in format HH:MM
+                    textView_time.setText(timeToShow);
+
                 } else {
                     Toast.makeText(view.getContext(), getString(R.string.toast_addEntryActivity_noSuccesAdd), Toast.LENGTH_LONG).show();
                 }
-
-                editText_payment.setText("");
-                editText_withdrawal.setText("");
-
-                // Set date now in the textView
-                String DateNow;
-                LocalDateTime now = LocalDateTime.now();
-                DateNow = dtf.format(now);
-                // Store in format YY-MM-DD
-                date = DateNow;
-                // Show date in format DD-MM-YY
-                String dateToShow;
-                String year = date.substring(0, 4);
-                String month = date.substring(5, 7);
-                String day = date.substring(8, 10);
-                String sepearator = "-";
-                dateToShow = day + sepearator + month + sepearator + year;
-                textView_date.setText(dateToShow);
-
-                // Store time in format HH:MM:SS.SSSS
-                time = java.time.LocalTime.now().toString();
-                String timeToShow = time.substring(0, 5);
-                // Show time in format HH:MM
-                textView_time.setText(timeToShow);
 
                 break;
 
@@ -372,7 +403,7 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void showMessage(String titulo, String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         builder.setCancelable(true);
         builder.setTitle(titulo);
         builder.setMessage(mensaje);

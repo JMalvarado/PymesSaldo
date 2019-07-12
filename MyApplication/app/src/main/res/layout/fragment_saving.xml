@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".activities.fragments.SavingFragment">
 
     <RadioGroup
         android:id="@+id/radioGroup_addSavingMov"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:layout_height="wrap_content">
 
         <RadioButton
             android:id="@+id/radioButton_fragmentSaving_payment"
@@ -31,6 +30,13 @@
             android:inputType="number"
             android:padding="15dip" />
 
+        <CheckBox
+            android:id="@+id/checkbox_fragment_saving_addSpend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/fragment_saving_checkbox_addSpend" />
+
         <RadioButton
             android:id="@+id/radioButton_fragmentSaving_withdrawal"
             android:layout_width="wrap_content"
@@ -48,6 +54,13 @@
             android:hint="@string/fragment_saving_radioButton_retiro"
             android:inputType="number"
             android:padding="15dip" />
+
+        <CheckBox
+            android:id="@+id/checkbox_fragment_saving_addProfit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/fragment_saving_checkbox_addProfit" />
 
         <View
             android:layout_width="match_parent"

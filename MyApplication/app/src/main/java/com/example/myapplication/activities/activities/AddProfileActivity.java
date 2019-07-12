@@ -2,6 +2,7 @@ package com.example.myapplication.activities.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,14 +10,16 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.data.InputFilterMinMax;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,6 +32,8 @@ public class AddProfileActivity extends AppCompatActivity {
     private EditText editText_period;
     private Switch switch_addInitialProfit;
     private Switch switch_addPeriod;
+    private ImageButton imageButton_help_initialProfit;
+    private ImageButton imageButton_help_period;
 
     // Database instance
     DatabaseManager db;
@@ -47,6 +52,8 @@ public class AddProfileActivity extends AppCompatActivity {
         editText_period = findViewById(R.id.edittext_addprofile_period);
         switch_addInitialProfit = findViewById(R.id.switch_addProfile_addInitialProfit);
         switch_addPeriod = findViewById(R.id.switch_addProfile_addPeriod);
+        imageButton_help_initialProfit = findViewById(R.id.imageButton_add_profile_help_saldoinicial);
+        imageButton_help_period = findViewById(R.id.imageButton_add_profile_help_periodo);
 
         // Initialize db manager instance
         db = new DatabaseManager(this);
@@ -77,6 +84,57 @@ public class AddProfileActivity extends AppCompatActivity {
      */
     public void onClickAddProfile(View view) {
         switch (view.getId()) {
+            case R.id.imageButton_add_profile_help_saldoinicial:
+                // Constant
+                final Dialog dialogHelpInitialProfit = new Dialog(AddProfileActivity.this);
+
+                // Set custom layout to dialog help
+                dialogHelpInitialProfit.setContentView(R.layout.dialog_info);
+                dialogHelpInitialProfit.setTitle(getString(R.string.dialogInfo_title_help));
+
+                // Dialog help
+                TextView textView_help = dialogHelpInitialProfit.findViewById(R.id.textView_dialogInfo_description);
+                FloatingActionButton fab_dismiss_help = dialogHelpInitialProfit.findViewById(R.id.fab_dialogInfo_dismiss);
+
+                // Add text
+                textView_help.setText(getString(R.string.dialogInfo_content_help_initialProfit));
+
+                fab_dismiss_help.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogHelpInitialProfit.dismiss();
+                    }
+                });
+
+                dialogHelpInitialProfit.show();
+
+                break;
+
+            case R.id.imageButton_add_profile_help_periodo:
+                // Constant
+                final Dialog dialogHelpPeriod = new Dialog(AddProfileActivity.this);
+
+                // Set custom layout to dialog help
+                dialogHelpPeriod.setContentView(R.layout.dialog_info);
+                dialogHelpPeriod.setTitle(getString(R.string.dialogInfo_title_help));
+
+                textView_help = dialogHelpPeriod.findViewById(R.id.textView_dialogInfo_description);
+                fab_dismiss_help = dialogHelpPeriod.findViewById(R.id.fab_dialogInfo_dismiss);
+
+                // Add text
+                textView_help.setText(getString(R.string.dialogInfo_content_help_period));
+
+                fab_dismiss_help.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogHelpPeriod.dismiss();
+                    }
+                });
+
+                dialogHelpPeriod.show();
+
+                break;
+
             case R.id.switch_addProfile_addPeriod:
                 if (switch_addPeriod.isChecked()) {
                     editText_period.setEnabled(true);

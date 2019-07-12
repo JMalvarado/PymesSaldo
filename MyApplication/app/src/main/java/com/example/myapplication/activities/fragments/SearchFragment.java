@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
@@ -50,7 +49,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private Spinner spinner_categories;
 
     // Global variables
-    public static String begDay, begMonth, begYear, finDay, finMonth, finYear, period, actualMonth;
+    public static String begDay, begMonth, begYear, finDay, finMonth, finYear, period;
     private static int intBegDay, intBegMonth, intBegYear, intFinDay, intFinMonth, intFinYear;
     public static boolean radioButtonMonthIsChecked, checkboxBegIsChecked, checkboxFinalIsChecked, radioButtonPeriodIsChecked, radioButtonDatesIsChecked;
     public static int categoryIDSelected;

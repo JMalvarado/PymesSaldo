@@ -20,14 +20,34 @@
         android:importantForAutofill="no"
         android:inputType="text" />
 
-    <Switch
-        android:id="@+id/switch_addProfile_addInitialProfit"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="40dp"
-        android:onClick="onClickAddProfile"
-        android:text="@string/activity_add_profile_switch_agregarSaldoInicial" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Switch
+            android:id="@+id/switch_addProfile_addInitialProfit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickAddProfile"
+            android:text="@string/activity_add_profile_switch_agregarSaldoInicial" />
+
+        <ImageButton
+            android:id="@+id/imageButton_add_profile_help_saldoinicial"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/roundcorner"
+            android:contentDescription="@string/activity_add_profile_helpButton_initialprofit_descr"
+            android:onClick="onClickAddProfile"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_info_100" />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/edittext_addprofile_initialProfit"
@@ -42,14 +62,34 @@
         android:inputType="number"
         tools:ignore="LabelFor" />
 
-    <Switch
-        android:id="@+id/switch_addProfile_addPeriod"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="40dp"
-        android:onClick="onClickAddProfile"
-        android:text="@string/activity_add_profile_switch_periodo" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Switch
+            android:id="@+id/switch_addProfile_addPeriod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickAddProfile"
+            android:text="@string/activity_add_profile_switch_periodo" />
+
+        <ImageButton
+            android:id="@+id/imageButton_add_profile_help_periodo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/roundcorner"
+            android:contentDescription="@string/activity_add_profile_helpButton_initialprofit_descr"
+            android:onClick="onClickAddProfile"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_info_100" />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/edittext_addprofile_period"

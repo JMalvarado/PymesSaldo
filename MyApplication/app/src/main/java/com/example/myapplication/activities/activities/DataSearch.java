@@ -100,7 +100,7 @@ public class DataSearch extends AppCompatActivity {
                     append(getString(R.string.fragment_search_period_title)).append(" ").
                     append(monthAndYear).toString());
 
-        } else if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked)) {
+        } else if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked) && (SearchFragment.radioButtonDatesIsChecked)) {
             // Initial date
             String dateTmp = fechas.get(0);
             // Set on format DD-MM-YYYY
@@ -119,7 +119,7 @@ public class DataSearch extends AppCompatActivity {
                     append(getString(R.string.fragment_search_period_title)).append(" ").
                     append(dateInit).append(" - ").append(dateFin).toString());
 
-        } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
+        } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked) && (SearchFragment.radioButtonDatesIsChecked)) {
             // Initial date
             String year = SearchFragment.begYear;
             String month = SearchFragment.begMonth;
@@ -138,7 +138,7 @@ public class DataSearch extends AppCompatActivity {
                     append(getString(R.string.fragment_search_period_title)).
                     append(" ").append(dateInit).append(" - ").append(dateFin).toString());
 
-        } else if ((SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
+        } else if ((SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked) && (SearchFragment.radioButtonDatesIsChecked)) {
             textView_periodTitle.setText(new StringBuilder().
                     append(getString(R.string.fragment_search_period_title)).
                     append(" ").append(getString(R.string.fragment_search_period_title_all)).toString());

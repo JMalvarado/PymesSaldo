@@ -5,6 +5,7 @@
     <string name="dataSearch_name">Lista de movimientos</string>
     <string name="addProfile_name">Agregar estado financiero</string>
     <string name="balance_name">Balance del mes</string>
+    <string name="balance_period_name">Balance del periodo</string>
     <string name="save_name">Ahorro</string>
     <string name="search_name">Explorar</string>
     <string name="editEntry_name">Editar movimiento</string>
@@ -33,6 +34,8 @@
     <string name="activity_edit_entry_textView_profile">Estado financiero:</string>
     <string name="activity_add_profile_switch_agregarSaldoInicial">Agregar saldo inicial</string>
     <string name="activity_add_profile_switch_periodo">Agregar periodo definido</string>
+    <string name="activity_add_profile_helpButton_initialprofit_descr">Descripcion de la funcion del boton saldo inicial</string>
+    <string name="activity_add_profile_helpButton_period_descr">Descripcion de la funcion del boton perido definido</string>
 
     <string name="fragment_search_period_period_header">Día de corte:</string>
     <string name="fragment_search_period_title">Periodo:</string>
@@ -56,6 +59,10 @@
     <string name="fragment_balance_textView_gastos">Gastos:</string>
     <string name="fragment_saving_radioButton_abono">Abono</string>
     <string name="fragment_saving_radioButton_retiro">Retiro</string>
+    <string name="fragment_saving_checkbox_addSpend">Agregar como GASTO en balance general</string>
+    <string name="fragment_saving_checkbox_addProfit">Agregar como INGRESO en balance general</string>
+    <string name="fragment_saving_addSpend_description">Abono a ahorro</string>
+    <string name="fragment_saving_addProfit_description">Retiro de ahorro</string>
     <string name="fragment_saveMoney_textView_ahorro">Tienes ahorrado:</string>
     <string name="fragment_search_category_spinner">Todas</string>
     <string name="fragment_addMov_radiobttn_Ingreso">Ingreso</string>
@@ -107,6 +114,11 @@
     <string name="alert_optNo">No</string>
     <string name="alert_title_deleteProfile">¿Desea eliminar el estado?</string>
     <string name="alert_title_deleteData">¿Desea eliminar el dato?</string>
+    <string name="dialogInfo_imageView_image">info Image</string>
+    <string name="dialogInfo_button_dismiss_text">Cerrar</string>
+    <string name="dialogInfo_title_help">Info</string>
+    <string name="dialogInfo_content_help_initialProfit">Añade un ingreso inicial para el estado financiero</string>
+    <string name="dialogInfo_content_help_period">Añade un día de mes como inicio y final de periodo o fecha de corte. Usado en las búsquedas. Ejemplo: usado como día límite o de corte en las tarjetas de crédito</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -116,9 +128,13 @@
     <string name="nav_add_entry">Agregar entrada</string>
     <string name="nav_explore">Explorar movimientos</string>
     <string name="nav_month_balance">Balance del mes</string>
+    <string name="nav_period_balance">Balance del periodo definido</string>
     <string name="nav_money_save">Ahorro</string>
     <string name="nav_add_profile">Agregar estado financiero</string>
     <string name="nav_conf_profile">Configurar estado</string>
     <string name="nav_exit">Salir</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
