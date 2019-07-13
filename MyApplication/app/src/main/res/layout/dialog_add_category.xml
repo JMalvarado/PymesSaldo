@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
     <EditText
         android:id="@+id/dialogLayoutAddCategory_editText_categoryName"
@@ -12,5 +14,16 @@
         android:autofillHints=""
         android:inputType="text"
         tools:ignore="LabelFor" />
+
+    <ImageButton
+        android:id="@+id/imageButton_addCategory_addIcon"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/roundcornerbrownlight"
+        android:padding="7dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/baseline_add_photo_alternate_black_48dp" />
 
 </LinearLayout>

@@ -88,9 +88,13 @@
     <string name="dataList_textView_categ">Categoría:</string>
     <string name="activity_addEntry_addCategory_spinner">Agregar…</string>
     <string name="mainActivity_addCategory_others">Otros</string>
+    <string name="mainActivity_addCategory_transfer">Transferencia</string>
+    <string name="mainActivity_addCategory_saving">Ahorro</string>
     <string name="mainActivity_addEntry_lastBalance">Remanente de: </string>
     <string name="addEntryViewPagerAdapter_title1">Movimiento</string>
     <string name="addEntryViewPagerAdapter_title2">Ahorro</string>
+    <string name="customSpinnerCategories_imageView_descr">Imagen</string>
+
 
     <!-- Toast, snack bar and alerts -->
     <string name="toast_addprofileactivity_noinitialprofit">Por favor ingrese un saldo inicial</string>
@@ -103,6 +107,7 @@
     <string name="toast_addEntryActivity_noSuccesAdd">Error al ingresar dato</string>
     <string name="toast_addEntryActivity_alertAddCateg_Canceled">Cancelado</string>
     <string name="toast_addEntryActivity_alertAddCateg_existCategory">La categoría ya existe</string>
+    <string name="toast_addEntryActivity_alertAddCateg_noicon">Icono no seleccionado. Operación cancelada</string>
     <string name="snack_mainActivity_exit">Presione Salir</string>
     <string name="alert_title">Alerta</string>
     <string name="alert_addEntryActivity_nodata">Por favor complete todos los espacios</string>

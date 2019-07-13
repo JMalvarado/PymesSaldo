@@ -57,7 +57,7 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
     private String strDay, strMonth, strYear, strHour, strMinute;
     private String date;
     private String time;
-    private DatabaseManager SaldoDB;
+    private DatabaseManager db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,7 +94,7 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
         button_cancel.setOnClickListener(this);
 
         // Database instance
-        SaldoDB = new DatabaseManager(view.getContext());
+        db = new DatabaseManager(view.getContext());
 
         // Set date format
         dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
@@ -343,7 +343,7 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
                 String id = prefs.getString("ID", null);
 
                 // Add data to database
-                boolean isResult = SaldoDB.addSaving(id, inData, date, time, type);
+                boolean isResult = db.addSaving(id, inData, date, time, type);
 
                 // Check result
                 if (isResult) {
@@ -351,17 +351,17 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
                     if (checkBox_addSpend.isChecked()) {
                         long spend = Long.parseLong(editText_payment.getText().toString());
                         long in = 0;
-                        String categoryId = "1";
+                        String categoryId = "3";
                         String description = getString(R.string.fragment_saving_addSpend_description);
 
-                        SaldoDB.addEntry(date, time, spend, in, description, id, categoryId);
+                        db.addEntry(date, time, spend, in, description, id, categoryId);
                     } else if (checkBox_addProfit.isChecked()) {
                         long spend = 0;
                         long in = Long.parseLong(editText_withdrawal.getText().toString());
-                        String categoryId = "1";
+                        String categoryId = "3";
                         String description = getString(R.string.fragment_saving_addProfit_description);
 
-                        SaldoDB.addEntry(date, time, spend, in, description, id, categoryId);
+                        db.addEntry(date, time, spend, in, description, id, categoryId);
                     }
 
                     Toast.makeText(view.getContext(), getString(R.string.toast_addEntryActivity_succesAdd), Toast.LENGTH_LONG).show();

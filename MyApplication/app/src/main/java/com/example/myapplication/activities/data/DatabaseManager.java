@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 11;
     private static final String DATABASE_NAME = "Saldos.db";
 
     //tabla1
@@ -37,6 +37,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final String TABLA3_NOMBRE = "Categorias";
     //columnas
     private static final String Col_NombreCateg = "Nombre";
+    private static final String Col_Icono = "Icono";
 
     //tabla4
     private static final String TABLA4_NOMBRE = "Ahorro";
@@ -69,7 +70,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
         // Create table for categories
         sqLiteDatabase.execSQL("create table " + TABLA3_NOMBRE + " " +
                 "(Categorias_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "Nombre TEXT)");
+                "Nombre TEXT," +
+                "Icono TEXT)");
 
         // Create table for entries
         sqLiteDatabase.execSQL("create table " + TABLA1_NOMBRE + " " +
@@ -153,14 +155,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
     /**
      * Add a category to table Categorias
      *
-     * @param name
-     * @return
+     * @param name category name
+     * @param icon icon name
+     * @return process state
      */
-    public boolean addCategory(String name) {
+    public boolean addCategory(String name, String icon) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(Col_NombreCateg, name);
+        contentValues.put(Col_Icono, icon);
 
         long resultado = db.insert(TABLA3_NOMBRE, null, contentValues);
 
@@ -318,6 +322,23 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return name;
     }
 
+    /**
+     * Get the category icon name
+     * @param name category's name
+     * @return icon's name
+     */
+    public String getCategoryIconName(String name) {
+        Cursor consulta = this.getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLA3_NOMBRE + " WHERE Nombre='" + name + "'", null);
+
+        String icon = "";
+
+        while (consulta.moveToNext()) {
+            icon = consulta.getString(2);
+        }
+
+        return icon;
+    }
 
     /**
      * Get all the data from table Categorias
@@ -713,7 +734,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param inst_ID
      * @return
      */
-    public boolean editEntryData(String id, String date, String hora, String ingreso, String gasto, String descr, String inst_ID, String new_inst_ID, String categ_ID) {
+    public boolean editEntryData(String id, String date, String hora, long ingreso, long gasto, String descr, String inst_ID, String new_inst_ID, String categ_ID) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();

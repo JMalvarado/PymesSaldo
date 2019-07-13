@@ -27,6 +27,8 @@ import android.widget.Toast;
 import com.example.myapplication.*;
 import com.example.myapplication.activities.activities.DataSearch;
 import com.example.myapplication.activities.activities.MainActivity;
+import com.example.myapplication.activities.data.CustomAdapter;
+import com.example.myapplication.activities.data.CustomItems;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -58,7 +60,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private ArrayAdapter<String> spinnerAdapter;
 
     // Database manager instance
-    private DatabaseManager SaldoDB;
+    private DatabaseManager db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -110,7 +112,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         String name = prefs.getString("NAME", null);
         textView_instanceName.setText(name);
 
-        SaldoDB = new DatabaseManager(view.getContext());
+        db = new DatabaseManager(view.getContext());
 
         // Set state for period option
         period = prefs.getString("PERIOD", null);
@@ -143,22 +145,29 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         // Set Spinner category data
 
         // Get categories
-        Cursor categoriesData = SaldoDB.getCategoryAllData();
+        Cursor categoriesData = db.getCategoryAllData();
 
         // Array List to store the categories names
-        ArrayList<String> categoriesList = new ArrayList<>();
+       // ArrayList<String> categoriesList = new ArrayList<>();
+        ArrayList<CustomItems> categoriesList = new ArrayList<>();
 
         // Add option: "Todas"
-        categoriesList.add(getString(R.string.fragment_search_category_spinner));
+        //categoriesList.add(getString(R.string.fragment_search_category_spinner));
+        categoriesList.add(new CustomItems(getString(R.string.fragment_search_category_spinner), R.drawable.ic_categories_64));
 
         // Add categories names to categoriesList
         while (categoriesData.moveToNext()) {
-            categoriesList.add(categoriesData.getString(1));
+            String categName = categoriesData.getString(1);
+            String categIcon = categoriesData.getString(2);
+            int categIconId = getResources().getIdentifier(categIcon, "drawable", view.getContext().getPackageName());
+            categoriesList.add(new CustomItems(categName, categIconId));
         }
 
         // Create adapter for the spinner of categories
-        spinnerAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, categoriesList);
-        spinner_categories.setAdapter(spinnerAdapter);
+        //spinnerAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, categoriesList);
+        //spinner_categories.setAdapter(spinnerAdapter);
+        CustomAdapter customAdapter = new CustomAdapter(view.getContext(), categoriesList);
+        spinner_categories.setAdapter(customAdapter);
 
         // Set default position
         spinner_categories.setSelection(0);
@@ -167,13 +176,15 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         spinner_categories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String itemSelected = adapterView.getItemAtPosition(i).toString();
+                //String itemSelected = adapterView.getItemAtPosition(i).toString();
                 int categID;
+                CustomItems items = (CustomItems) adapterView.getSelectedItem();
+                String category_name = items.getSpinnerText();
 
-                if (itemSelected.equals(getString(R.string.fragment_search_category_spinner))) {
+                if (category_name.equals(getString(R.string.fragment_search_category_spinner))) {
                     categID = 0;
                 } else {
-                    categID = Integer.parseInt(SaldoDB.getCategoryId(itemSelected));
+                    categID = Integer.parseInt(db.getCategoryId(category_name));
                 }
                 categoryIDSelected = categID;
             }
@@ -627,25 +638,25 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             Cursor resultado;
 
             if (radioButtonMonthIsChecked) {
-                resultado = SaldoDB.getEntryMonthData(MainActivity.idInstance, categoryIDSelected);
+                resultado = db.getEntryMonthData(MainActivity.idInstance, categoryIDSelected);
             } else if (radioButtonDatesIsChecked) {
                 if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
                     String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                    resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected);
+                    resultado = db.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected);
                 } else if ((!checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
                     String begDate = begYear + "-" + begMonth + "-" + begDay;
-                    resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected);
+                    resultado = db.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected);
                 } else if (checkboxBegIsChecked) {
-                    resultado = SaldoDB.getEntryAllData(MainActivity.idInstance, categoryIDSelected);
+                    resultado = db.getEntryAllData(MainActivity.idInstance, categoryIDSelected);
                 } else {
                     String begDate = begYear + "-" + begMonth + "-" + begDay;
                     String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                    resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                    resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
                 }
             } else {
                 String begDate = begYear + "-" + begMonth + "-" + begDay;
                 String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
             }
 
             return resultado;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.example.myapplication.R;
@@ -15,6 +16,7 @@ import com.example.myapplication.activities.fragments.SearchFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.view.Gravity;
 import android.view.View;
 
 import androidx.core.view.GravityCompat;
@@ -30,6 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -95,7 +98,9 @@ public class MainActivity extends AppCompatActivity
         Cursor instancesData = db.getInstancesAllData();
         if (instancesData.getCount() == 0) {
             // Add default categories
-            db.addCategory(getString(R.string.mainActivity_addCategory_others));
+            db.addCategory(getString(R.string.mainActivity_addCategory_others), "ic_questionmark_100");
+            db.addCategory(getString(R.string.mainActivity_addCategory_transfer), "ic_moneyflow_100");
+            db.addCategory(getString(R.string.mainActivity_addCategory_saving), "ic_pigmoney_100");
 
             Intent intentAddProfile = new Intent(this, AddProfileActivity.class);
             intentAddProfile.putExtra("IS_NEW_USER", true);
@@ -157,7 +162,18 @@ public class MainActivity extends AppCompatActivity
 
             // Create adapter for the spinner of profiles
             ArrayAdapter<String> spinnerAdapter;
-            spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, profilesList);
+            spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_items_theme, profilesList){
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    TextView textView = (TextView) super.getView(position, convertView, parent);
+
+                    textView.setTextColor(Color.BLACK);
+                    textView.setTextSize(20);
+                    textView.setGravity(Gravity.CENTER);
+
+                    return textView;
+                }
+            };
             spinner_instances.setAdapter(spinnerAdapter);
 
             // Set text title and id with shared preference

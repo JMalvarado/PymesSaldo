@@ -2,6 +2,7 @@ package com.example.myapplication.activities.fragments;
 
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,9 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -28,6 +30,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activities.activities.AddProfileActivity;
+import com.example.myapplication.activities.data.CustomAdapter;
+import com.example.myapplication.activities.data.CustomItems;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -50,7 +55,6 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
     private RadioGroup radioGroup_addMov;
     private RadioButton radioButton_in;
     private RadioButton radioButton_spend;
-    //private TextView textView_instanceName;
     private FloatingActionButton fab_in;
     private FloatingActionButton fab_cancel;
     private FloatingActionButton fab_addDate;
@@ -63,10 +67,11 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
     private String date;
     private String time;
     private String category_id;
+    private String icName;
     private ArrayAdapter<String> spinnerAdapter;
 
     // Database instance
-    private DatabaseManager SaldoDB;
+    private DatabaseManager db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,10 +97,9 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
         radioButton_in.setOnClickListener(this);
         radioButton_spend = view.findViewById(R.id.radioButton_fragmentAddMov_Gasto);
         radioButton_spend.setOnClickListener(this);
-        //textView_instanceName = view.findViewById(R.id.textView_addEntry_instanceName);
 
         // Database instance
-        SaldoDB = new DatabaseManager(view.getContext());
+        db = new DatabaseManager(view.getContext());
 
         // Set date format
         dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
@@ -121,31 +125,32 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
         // Show time in format HH:MM
         textView_time.setText(timeToShow);
 
-        // Set instance name as title
-        //SharedPreferences prefs = Objects.requireNonNull(getActivity()).getSharedPreferences("instance", Context.MODE_PRIVATE);
-        //String name = prefs.getString("NAME", null);
-        //textView_instanceName.setText(name);
-
         // Set Spinner category data
         spinner_categories = view.findViewById(R.id.spinner_addEntry_category);
 
         // Get categories
-        Cursor categoriesData = SaldoDB.getCategoryAllData();
+        Cursor categoriesData = db.getCategoryAllData();
 
-        // Array List to store the categories names
-        ArrayList<String> categoriesList = new ArrayList<>();
+        // Array List to store the categories
+        //ArrayList<String> categoriesList = new ArrayList<>();
+        ArrayList<CustomItems> categoriesList = new ArrayList<>();
 
         // Add categories names to categoriesList
         while (categoriesData.moveToNext()) {
-            categoriesList.add(categoriesData.getString(1));
+            String categName = categoriesData.getString(1);
+            String categIcon = categoriesData.getString(2);
+            int categIconId = getResources().getIdentifier(categIcon, "drawable", view.getContext().getPackageName());
+            categoriesList.add(new CustomItems(categName, categIconId));
         }
 
         // Add option: "Agregar..." category
-        categoriesList.add(getString(R.string.activity_addEntry_addCategory_spinner));
+        categoriesList.add(new CustomItems(getString(R.string.activity_addEntry_addCategory_spinner), R.drawable.ic_addblack_64));
 
         // Create adapter for the spinner of categories
-        spinnerAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, categoriesList);
-        spinner_categories.setAdapter(spinnerAdapter);
+        //spinnerAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, categoriesList);
+        //spinner_categories.setAdapter(spinnerAdapter);
+        CustomAdapter customAdapter = new CustomAdapter(view.getContext(), categoriesList);
+        spinner_categories.setAdapter(customAdapter);
 
         // Set default position
         spinner_categories.setSelection(0);
@@ -154,14 +159,15 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
         spinner_categories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String category_name = adapterView.getItemAtPosition(i).toString();
+                CustomItems items = (CustomItems) adapterView.getSelectedItem();
+                String category_name = items.getSpinnerText();
 
                 if (category_name.equals(getString(R.string.activity_addEntry_addCategory_spinner))) {
                     // if category_name = Add...
                     openDialog();
                 } else {
                     // else, get category id with the given name
-                    category_id = SaldoDB.getCategoryId(category_name);
+                    category_id = db.getCategoryId(category_name);
                 }
             }
 
@@ -177,15 +183,767 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
      * Alert dialog to add category
      */
     private void openDialog() {
+        // Set icon name empty
+        icName = "";
+
         // Inflate layout
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View subView = inflater.inflate(R.layout.dialog_add_category, null);
 
         // Initialize edit Text for category name
         final EditText editText_categoryName = subView.findViewById(R.id.dialogLayoutAddCategory_editText_categoryName);
+        final ImageButton imageButton_addIcon = subView.findViewById(R.id.imageButton_addCategory_addIcon);
+        final Context contextImgBttn = imageButton_addIcon.getContext();
+
+        // Icon selector button click listener
+        imageButton_addIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialogIcCategories = new Dialog(Objects.requireNonNull(getContext()));
+
+                // Set custom layout to dialog help
+                dialogIcCategories.setContentView(R.layout.dialog_add_icon);
+                dialogIcCategories.setTitle(getString(R.string.dialogInfo_title_help));
+
+                // Initialize imageViews of category icons
+                final ImageView imageView_ic_amazon = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_amazon);
+                final ImageView imageView_ic_bankbuilding = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_bankbuilding);
+                final ImageView imageView_ic_barbershop = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_barbershop);
+                final ImageView imageView_ic_beachball = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_beachball);
+                final ImageView imageView_ic_bill = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_bill);
+                final ImageView imageView_ic_book = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_book);
+                final ImageView imageView_ic_borrowmonew = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_borrowmoney);
+                final ImageView imageView_ic_box = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_box);
+                final ImageView imageView_ic_cellphone = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_cellphone);
+                final ImageView imageView_ic_deposit = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_deposit);
+                final ImageView imageView_ic_documents = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_documents);
+                final ImageView imageView_ic_dogbone = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_dogbone);
+                final ImageView imageView_ic_donation = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_donation);
+                final ImageView imageView_ic_dvdlogo = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_dvdlogo);
+                final ImageView imageView_ic_email = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_email);
+                final ImageView imageView_ic_entertainnent = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_entertainment);
+                final ImageView imageView_ic_envelope = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_envelope);
+                final ImageView imageView_ic_food = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_food);
+                final ImageView imageView_ic_fuelstation = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_fuelstation);
+                final ImageView imageView_ic_garage = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_garage);
+                final ImageView imageView_ic_gift = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_gift);
+                final ImageView imageView_ic_givenkey = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_givenkey);
+                final ImageView imageView_ic_glassandfork = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_glassandfork);
+                final ImageView imageView_ic_graduationhat = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_graduationhat);
+                final ImageView imageView_ic_gym = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_gym);
+                final ImageView imageView_ic_hand = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_hand);
+                final ImageView imageView_ic_health = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_health);
+                final ImageView imageView_ic_homephone = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_homephone);
+                final ImageView imageView_ic_hotelfivestars = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_hotelfivestars);
+                final ImageView imageView_ic_house = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_house);
+                final ImageView imageView_ic_ingredients = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_ingredients);
+                final ImageView imageView_ic_laundry = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_laundry);
+                final ImageView imageView_ic_lightbulb = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_lightbulb);
+                final ImageView imageView_ic_moneyflow = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_moneyflow);
+                final ImageView imageView_ic_moneyquery = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_moneyquery);
+                final ImageView imageView_ic_moneytransfer = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_moneytransfer);
+                final ImageView imageView_ic_moviefilm = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_moviefilm);
+                final ImageView imageView_ic_moving = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_moving);
+                final ImageView imageView_ic_movingstock = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_movingstock);
+                final ImageView imageView_ic_onecoin = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_onecoin);
+                final ImageView imageView_ic_peoplegroup = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_peoplegroup);
+                final ImageView imageView_ic_pigmoney = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_pigmoney);
+                final ImageView imageView_ic_pizza = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_pizza);
+                final ImageView imageView_ic_pokecoins = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_pokecoins);
+                final ImageView imageView_ic_questionmark = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_questionmark);
+                final ImageView imageView_ic_rentacar = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_rentacar);
+                final ImageView imageView_ic_restaurantbuilding = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_restaurantbuilding);
+                final ImageView imageView_ic_roster = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_roster);
+                final ImageView imageView_ic_rubberstamp = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_rubberstamp);
+                final ImageView imageView_ic_sale = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_sale);
+                final ImageView imageView_ic_security = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_security);
+                final ImageView imageView_ic_sell = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_sell);
+                final ImageView imageView_ic_shirt = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_shirt);
+                final ImageView imageView_ic_sleeping = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_sleeping);
+                final ImageView imageView_ic_stapler = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_stapler);
+                final ImageView imageView_ic_suv = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_suv);
+                final ImageView imageView_ic_transport = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_transport);
+                final ImageView imageView_ic_trash = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_trash);
+                final ImageView imageView_ic_travelworld = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_travelworld);
+                final ImageView imageView_ic_twoheart = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_twoheart);
+                final ImageView imageView_ic_videogamecontroller = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_videogamecontroller);
+                final ImageView imageView_ic_waterdrop = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_waterdrop);
+                final ImageView imageView_ic_wifi = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_wifi);
+                final ImageView imageView_ic_camera = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_camera);
+                final ImageView imageView_ic_marihuana = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_marihuana);
+                final ImageView imageView_ic_painthouse = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_painthouse);
+                final ImageView imageView_ic_painting = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_painting);
+                final ImageView imageView_ic_partyballoons = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_partyballoons);
+                final ImageView imageView_ic_pcportatil = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_pcportatil);
+                final ImageView imageView_ic_toolsmaint = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_toolsmaint);
+                final ImageView imageView_ic_tv = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_tv);
+
+                // image views click listener
+                imageView_ic_amazon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_amazon_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_bankbuilding.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_bankbuilding_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_barbershop.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_barbershop_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_beachball.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_beachball_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_bill.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_bill_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_book.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_book_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_borrowmonew.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_borrowmoney_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_box.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_box_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_cellphone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_cellphone_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_deposit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_deposit_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_documents.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_documents_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_dogbone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_dogbone_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_donation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_donation_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_dvdlogo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_dvdlogo_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_email.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_email_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_entertainnent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_entertainment_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_envelope.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_envelope_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_food.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_food_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_fuelstation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_fuelstation_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_garage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_garage_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_gift.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_gift_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_givenkey.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_givenkey_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_glassandfork.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_glassandfork_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_graduationhat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_graduationhat_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_gym.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_gym_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_hand.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_hand_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_health.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_health_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_homephone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_homephone_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_hotelfivestars.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_hotelfivestars_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_house.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_house_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_ingredients.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_ingredients_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_laundry.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_laundry_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_lightbulb.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_lightbulb_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_moneyflow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_moneyflow_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_moneyquery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_moneyquery_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_moneytransfer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_moneytransfer_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_moviefilm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_moviefilm_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_moving.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_moving_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_movingstock.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_movingstock_100";
+
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_onecoin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_onecoin_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_peoplegroup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_peoplegroup_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_pigmoney.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_pigmoney_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_pizza.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_pizza_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_pokecoins.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_pokecoins_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_questionmark.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_questionmark_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_rentacar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_rentacar_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_restaurantbuilding.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_restaurantbuilding_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_roster.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_roster_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_rubberstamp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_rubberstamp_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_sale.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_sale_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_security.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_security_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_sell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_sell_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_shirt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_shirt_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_sleeping.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_sleeping_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_stapler.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_stapler_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_suv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_suv_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_transport.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_transport_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_trash.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_trash_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_travelworld.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_travelworld_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_twoheart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_twoheart_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_videogamecontroller.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_videogamecontroller_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_waterdrop.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_waterdrop_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_wifi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_wifi_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_camera_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_marihuana.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_marihuana_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_painthouse.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_painthouse_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_painting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_painting_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_partyballoons.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_partyballoons_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_pcportatil.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_pcportatil_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_toolsmaint.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_toolsmaint_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_tv_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+
+                dialogIcCategories.show();
+            }
+        });
 
         // Alert dialog build
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         builder.setTitle(getString(R.string.alert_title_addCategory));
         builder.setMessage(getString(R.string.alert_mssg_addCategory));
         builder.setView(subView);
@@ -195,41 +953,51 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
         builder.setPositiveButton(getString(R.string.alert_positiveBttn_addCategory), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Add category to data base
-                if (!editText_categoryName.getText().toString().equals("")) {
-                    // check if the category exist
-                    Cursor cursorNames = SaldoDB.getCategoryAllData();
-                    boolean isExistCategory = false;
-                    while (cursorNames.moveToNext()) {
-                        if (cursorNames.getString(1).equals(editText_categoryName.getText().toString())) {
-                            isExistCategory = true;
-                            break;
-                        }
-                    }
-                    if (isExistCategory) {
-                        Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_existCategory), Toast.LENGTH_LONG).show();
-                    } else {
-                        SaldoDB.addCategory(editText_categoryName.getText().toString());
-                    }
+                // Check if there is icon selected
+                if (icName.equals("")) {
+                    Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_noicon), Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
+                    // Add category to data base
+                    if (!editText_categoryName.getText().toString().equals("")) {
+                        // check if the category exist
+                        Cursor cursorNames = db.getCategoryAllData();
+                        boolean isExistCategory = false;
+                        while (cursorNames.moveToNext()) {
+                            if (cursorNames.getString(1).equals(editText_categoryName.getText().toString())) {
+                                isExistCategory = true;
+                                break;
+                            }
+                        }
+                        if (isExistCategory) {
+                            Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_existCategory), Toast.LENGTH_LONG).show();
+                        } else {
+                            db.addCategory(editText_categoryName.getText().toString(), icName);
+                        }
+                    } else {
+                        Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
+                    }
                 }
+
                 // Get categories
-                Cursor categoriesData = SaldoDB.getCategoryAllData();
+                Cursor categoriesData = db.getCategoryAllData();
 
                 // Array List to store the categories names
-                ArrayList<String> categoriesList = new ArrayList<>();
+                //ArrayList<String> categoriesList = new ArrayList<>();
+                ArrayList<CustomItems> categoriesList = new ArrayList<>();
 
                 // Add categories names to categoriesList
                 while (categoriesData.moveToNext()) {
-                    categoriesList.add(categoriesData.getString(1));
+                    String categName = categoriesData.getString(1);
+                    String categIcon = categoriesData.getString(2);
+                    int categIconId = getResources().getIdentifier(categIcon, "drawable", getContext().getPackageName());
+                    categoriesList.add(new CustomItems(categName, categIconId));
                 }
 
                 // Add option: "Agregar..." category
-                categoriesList.add(getString(R.string.activity_addEntry_addCategory_spinner));
+                categoriesList.add(new CustomItems(getString(R.string.activity_addEntry_addCategory_spinner), R.drawable.ic_addblack_64));
                 // Create adapter for the spinner of categories
-                spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categoriesList);
-                spinner_categories.setAdapter(spinnerAdapter);
+                CustomAdapter customAdapter = new CustomAdapter(getContext(), categoriesList);
+                spinner_categories.setAdapter(customAdapter);
                 // Set default position
                 spinner_categories.setSelection(categoriesList.size() - 2);
             }
@@ -250,7 +1018,7 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
     }
 
     private void showMessage(String titulo, String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         builder.setCancelable(true);
         builder.setTitle(titulo);
         builder.setMessage(mensaje);
@@ -292,7 +1060,7 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
                 SharedPreferences prefs = Objects.requireNonNull(getActivity()).getSharedPreferences("instance", Context.MODE_PRIVATE);
                 String id = prefs.getString("ID", null);
 
-                boolean isResult = SaldoDB.addEntry(date, time, gastoInt, ingresoInt, descripcion, id, category_id);
+                boolean isResult = db.addEntry(date, time, gastoInt, ingresoInt, descripcion, id, category_id);
 
                 // Check result
                 if (isResult) {

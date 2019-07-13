@@ -65,7 +65,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/border"
+        android:background="@drawable/roundcornerbrownlight"
         android:orientation="vertical">
 
         <TextView
@@ -82,9 +82,7 @@
             android:layout_height="45dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="16dp"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:theme="@style/spinner_style" />
+            android:layout_marginEnd="16dp" />
 
     </LinearLayout>
 
