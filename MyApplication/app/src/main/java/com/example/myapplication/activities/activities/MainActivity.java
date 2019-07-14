@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // Components view
-    private ImageButton imageButton_addProfile;
-    private ImageButton imageButton_confProfile;
+    private FloatingActionButton fab_addProfile;
+    private FloatingActionButton fab_confProfile;
 
     // Variables
     public static String idInstance;
@@ -152,8 +152,8 @@ public class MainActivity extends AppCompatActivity
             // Instantiate text view, spinner and buttons for the header of the drawer
             final TextView tv_navheader_title = navHeader.findViewById(R.id.textview_navheadermain_title);
             Spinner spinner_instances = navHeader.findViewById(R.id.spinner_navHeader_profiles);
-            imageButton_addProfile = navHeader.findViewById(R.id.imageButton_navHeader_addProfile);
-            imageButton_confProfile = navHeader.findViewById(R.id.imageButton_navHeader_confProfile);
+            fab_addProfile = navHeader.findViewById(R.id.fab_navHeader_addProfile);
+            fab_confProfile = navHeader.findViewById(R.id.fab_navHeader_confProfile);
 
             // Add profiles names to profilesList
             while (instancesData.moveToNext()) {
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity
             });
 
             // Set clickListener for the add and edit profile buttons
-            imageButton_addProfile.setOnClickListener(new View.OnClickListener() {
+            fab_addProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent addProfileIntent = new Intent(view.getContext(), AddProfileActivity.class);
@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity
                 }
             });
 
-            imageButton_confProfile.setOnClickListener(new View.OnClickListener() {
+            fab_confProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent editProfileIntent = new Intent(view.getContext(), EditProfileActivity.class);

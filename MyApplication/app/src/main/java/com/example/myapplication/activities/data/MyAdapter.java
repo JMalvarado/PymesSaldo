@@ -22,6 +22,7 @@ import com.example.myapplication.activities.activities.DataSearch;
 import com.example.myapplication.activities.activities.EditEntryActivity;
 import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.fragments.SearchFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private List<ListData> listData;
     private Context context;
-    private DatabaseManager SaldoDB;
+    private DatabaseManager db;
 
     public MyAdapter(List<ListData> listData, Context context) {
         this.listData = listData;
@@ -50,7 +51,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
         final ListData data = listData.get(i);
 
-        SaldoDB = new DatabaseManager(context);
+        db = new DatabaseManager(context);
 
         // Show time in format HH:MM
         String realTime = data.getHora().substring(0, 5);
@@ -77,9 +78,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             myViewHolder.imageView_item.setImageResource(R.drawable.ic_in_96);
         }
 
-        myViewHolder.tvCategory.setText(SaldoDB.getCategoryName(data.getCategId()));
+        myViewHolder.tvCategory.setText(db.getCategoryName(data.getCategId()));
 
-        myViewHolder.imBttnEdit.setOnClickListener(new View.OnClickListener() {
+        // Get and set category icon
+        String categoryIcName = db.getCategoryIconName(db.getCategoryName(data.getCategId()));
+        int imageID = context.getResources().getIdentifier(categoryIcName, "drawable", context.getPackageName());
+        myViewHolder.imageView_ic.setImageResource(imageID);
+
+        myViewHolder.fab_dit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent editIntent = new Intent(view.getContext(), EditEntryActivity.class);
@@ -98,7 +104,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         final CharSequence[] opciones;
         opciones = new CharSequence[]{context.getResources().getString(R.string.alert_optSi), context.getResources().getString(R.string.alert_optNo)};
 
-        myViewHolder.imBttnDelete.setOnClickListener(new View.OnClickListener() {
+        myViewHolder.fab_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
@@ -109,7 +115,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                SaldoDB.deleteEntryData(MainActivity.idInstance, data.getId());
+                                db.deleteEntryData(MainActivity.idInstance, data.getId());
                                 //search();
                                 new Task().execute();
                                 break;
@@ -131,9 +137,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageButton imBttnEdit;
-        public ImageButton imBttnDelete;
+        public FloatingActionButton fab_dit;
+        public FloatingActionButton fab_delete;
         public ImageView imageView_item;
+        public ImageView imageView_ic;
         public TextView tvDescr;
         public TextView tvFecha;
         public TextView tvHora;
@@ -150,9 +157,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             tvProfit = itemView.findViewById(R.id.textView_dataList_ingr);
             linearLayout_data = itemView.findViewById(R.id.linearLayout_data);
             tvCategory = itemView.findViewById(R.id.textView_dataList_category);
-            imBttnEdit = itemView.findViewById(R.id.imageButton_dataList_edit);
-            imBttnDelete = itemView.findViewById(R.id.imageButton_dataList_delete);
+            fab_dit = itemView.findViewById(R.id.fab_dataList_edit);
+            fab_delete = itemView.findViewById(R.id.fab_dataList_delete);
             imageView_item = itemView.findViewById(R.id.imageView_dataList_item);
+            imageView_ic = itemView.findViewById(R.id.imageView_dataList_ic);
         }
     }
 
@@ -208,25 +216,25 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             Cursor resultado;
 
             if (SearchFragment.radioButtonMonthIsChecked) {
-                resultado = SaldoDB.getEntryMonthData(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+                resultado = db.getEntryMonthData(MainActivity.idInstance, SearchFragment.categoryIDSelected);
             } else if (SearchFragment.radioButtonDatesIsChecked) {
                 if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked)) {
                     String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                    resultado = SaldoDB.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected);
+                    resultado = db.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected);
                 } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
                     String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
-                    resultado = SaldoDB.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected);
+                    resultado = db.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected);
                 } else if (SearchFragment.checkboxBegIsChecked) {
-                    resultado = SaldoDB.getEntryAllData(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+                    resultado = db.getEntryAllData(MainActivity.idInstance, SearchFragment.categoryIDSelected);
                 } else {
                     String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
                     String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                    resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                    resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
                 }
             } else {
                 String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
                 String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                resultado = SaldoDB.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
             }
 
             return resultado;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
@@ -44,28 +45,30 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/imageButton_navHeader_confProfile"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="16dp"
-            android:adjustViewBounds="true"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:contentDescription="@string/navHeader_imageButton_decr_editProfile"
-            android:padding="15dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_edit_64" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_navHeader_confProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@android:color/darker_gray"
+            android:elevation="0dp"
+            android:src="@drawable/ic_edit_64"
+            app:backgroundTint="@android:color/darker_gray"
+            app:elevation="0dp"
+            app:rippleColor="@color/colorPrimary" />
 
-        <ImageButton
-            android:id="@+id/imageButton_navHeader_addProfile"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:contentDescription="@string/navHeader_imageButton_descr_addProfile"
-            android:padding="15dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_add_64" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_navHeader_addProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@android:color/darker_gray"
+            android:elevation="0dp"
+            android:src="@drawable/ic_add_64"
+            app:backgroundTint="@android:color/darker_gray"
+            app:elevation="0dp"
+            app:rippleColor="@color/colorPrimary" />
 
     </LinearLayout>
 
@@ -74,6 +77,6 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/spinner_rect"/>
+        android:background="@drawable/spinner_rect" />
 
 </LinearLayout>
