@@ -11,6 +11,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.fragments.BalanceFragment;
 import com.example.myapplication.activities.fragments.BalancePeriodFragment;
+import com.example.myapplication.activities.fragments.CategoriesFragment;
 import com.example.myapplication.activities.fragments.SaveMoneyFragment;
 import com.example.myapplication.activities.fragments.SearchFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,7 +36,6 @@ import android.view.Menu;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -98,9 +98,12 @@ public class MainActivity extends AppCompatActivity
         Cursor instancesData = db.getInstancesAllData();
         if (instancesData.getCount() == 0) {
             // Add default categories
-            db.addCategory(getString(R.string.mainActivity_addCategory_others), "ic_questionmark_100");
-            db.addCategory(getString(R.string.mainActivity_addCategory_transfer), "ic_moneyflow_100");
-            db.addCategory(getString(R.string.mainActivity_addCategory_saving), "ic_pigmoney_100");
+            Cursor categories = db.getCategoryAllData();
+            if(categories.getCount() == 0) {
+                db.addCategory(getString(R.string.mainActivity_addCategory_others), "ic_questionmark_100");
+                db.addCategory(getString(R.string.mainActivity_addCategory_transfer), "ic_moneyflow_100");
+                db.addCategory(getString(R.string.mainActivity_addCategory_saving), "ic_pigmoney_100");
+            }
 
             Intent intentAddProfile = new Intent(this, AddProfileActivity.class);
             intentAddProfile.putExtra("IS_NEW_USER", true);
@@ -318,6 +321,8 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new SaveMoneyFragment()).commit();
         } else if (id == R.id.nav_period_balance) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new BalancePeriodFragment()).commit();
+        } else if (id == R.id.nav_categories) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new CategoriesFragment()).commit();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

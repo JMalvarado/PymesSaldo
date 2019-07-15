@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.data.InputFilterMinMax;
+import com.example.myapplication.activities.fragments.CategoriesFragment;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -33,7 +34,6 @@ public class EditProfileActivity extends AppCompatActivity {
     String nameInstance;
     String idInstance;
     String periodInstance;
-    CharSequence[] options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +68,6 @@ public class EditProfileActivity extends AppCompatActivity {
             editText_period.setEnabled(true);
         }
 
-        // Options for the floating action button
-        options = new CharSequence[]{getString(R.string.alert_optSi), getString(R.string.alert_optNo)};
-
         // Set filter for period edit text
         editText_period.setFilters(new InputFilter[]{new InputFilterMinMax(1, 28)});
     }
@@ -82,16 +79,25 @@ public class EditProfileActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setCancelable(false);
                 builder.setTitle(getString(R.string.alert_title_deleteProfile));
-                builder.setItems(options, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
+                builder.setMessage(R.string.alert_msg_deleteData);
+                builder.setPositiveButton(getResources().getString(R.string.alert_optSi),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
                                 // Delete Data
                                 db.deleteInstance(idInstance);
 
                                 // Get new default profile
                                 Cursor cursor = db.getInstancesAllData();
+
+                                if (cursor.getCount() == 0) {
+                                    Intent mainActvityIntent = new Intent(view.getContext(), MainActivity.class);
+                                    startActivity(mainActvityIntent);
+
+                                    dialogInterface.cancel();
+                                    return;
+                                }
+
                                 cursor.moveToNext();
                                 String itemId = cursor.getString(0);
                                 String itemName = cursor.getString(1);
@@ -109,14 +115,17 @@ public class EditProfileActivity extends AppCompatActivity {
                                 // Start main activity
                                 Intent mainActivityIntent = new Intent(view.getContext(), MainActivity.class);
                                 startActivity(mainActivityIntent);
+                            }
+                        });
 
-                                break;
+                builder.setNegativeButton(getResources().getString(R.string.alert_optNo),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
 
-                            case 1:
-                                break;
-                        }
-                    }
-                });
                 builder.show();
 
                 break;

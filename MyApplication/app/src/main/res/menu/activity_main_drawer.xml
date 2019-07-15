@@ -23,6 +23,11 @@
             android:title="@string/nav_period_balance" />
 
         <item
+            android:id="@+id/nav_categories"
+            android:icon="@drawable/ic_categories_64"
+            android:title="@string/nav_categories" />
+
+        <item
             android:id="@+id/nav_money_save"
             android:icon="@drawable/ic_money_box_64"
             android:title="@string/nav_money_save" />

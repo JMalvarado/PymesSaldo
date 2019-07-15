@@ -17,7 +17,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/fragment_saving_radioButton_abono" />
+            android:text="@string/fragment_saving_radioButton_abono"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/etIngresoAbonoAhorro"
@@ -41,7 +43,9 @@
             android:id="@+id/radioButton_fragmentSaving_withdrawal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fragment_saving_radioButton_retiro" />
+            android:text="@string/fragment_saving_radioButton_retiro"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/etIngresoRetiroAhorro"

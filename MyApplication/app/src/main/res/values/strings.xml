@@ -67,6 +67,8 @@
     <string name="fragment_search_category_spinner">Todas</string>
     <string name="fragment_addMov_radiobttn_Ingreso">Ingreso</string>
     <string name="fragment_addMov_radiobttn_Gasto">Gasto</string>
+    <string name="fragment_categories_textView_nodata">No hay categorías para mostrar</string>
+    <string name="fragment_categories_imageButton_add_descr">Agregar categoría</string>
 
     <string name="iteminfo_textView_gasto">Gasto:</string>
     <string name="iteminfo_textView_ingreso">Ingreso:</string>
@@ -113,17 +115,19 @@
     <string name="alert_addEntryActivity_nodata">Por favor complete todos los espacios</string>
     <string name="alert_title_addCategory">Categoría</string>
     <string name="alert_mssg_addCategory">Nueva categoría</string>
+    <string name="alert_mssg_editCategory">Editar categoría</string>
     <string name="alert_positiveBttn_addCategory">OK</string>
     <string name="alert_negativeBttn_addCategory">Cancelar</string>
     <string name="alert_optSi">Si</string>
     <string name="alert_optNo">No</string>
     <string name="alert_title_deleteProfile">¿Desea eliminar el estado?</string>
     <string name="alert_title_deleteData">¿Desea eliminar el dato?</string>
+    <string name="alert_msg_deleteData">Esto eliminará todos sus movimientos correspondientes</string>
     <string name="dialogInfo_imageView_image">info Image</string>
     <string name="dialogInfo_button_dismiss_text">Cerrar</string>
     <string name="dialogInfo_title_help">Info</string>
     <string name="dialogInfo_content_help_initialProfit">Añade un ingreso inicial para el estado financiero</string>
-    <string name="dialogInfo_content_help_period">Añade un día de mes como inicio y final de periodo o fecha de corte. Usado en las búsquedas. Ejemplo: usado como día límite o de corte en las tarjetas de crédito</string>
+    <string name="dialogInfo_content_help_period">Añade un día de mes como rango de periodo o fecha de corte. Ejemplo: Día de corte en las tarjetas de crédito</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -134,12 +138,10 @@
     <string name="nav_explore">Explorar movimientos</string>
     <string name="nav_month_balance">Balance del mes</string>
     <string name="nav_period_balance">Balance del periodo definido</string>
+    <string name="nav_categories">Categorías</string>
     <string name="nav_money_save">Ahorro</string>
     <string name="nav_add_profile">Agregar estado financiero</string>
     <string name="nav_conf_profile">Configurar estado</string>
     <string name="nav_exit">Salir</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

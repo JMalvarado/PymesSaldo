@@ -99,10 +99,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@android:color/darker_gray"
+        android:backgroundTint="@color/colorWhite"
         android:onClick="onClickEditProfile"
-        android:src="@drawable/ic_delete_64"
-        app:backgroundTint="@android:color/darker_gray"
-        app:rippleColor="@color/colorPrimary" />
+        android:src="@drawable/ic_deletered_100"
+        app:backgroundTint="@color/colorWhite"
+        app:borderWidth="0dp"
+        app:elevation="0dp"
+        app:rippleColor="@color/colorRed" />
 
 </LinearLayout>

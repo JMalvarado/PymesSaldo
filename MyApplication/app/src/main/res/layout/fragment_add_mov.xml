@@ -18,13 +18,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/fragment_addMov_radiobttn_Ingreso" />
+            android:text="@string/fragment_addMov_radiobttn_Ingreso"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <RadioButton
             android:id="@+id/radioButton_fragmentAddMov_Gasto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fragment_addMov_radiobttn_Gasto" />
+            android:text="@string/fragment_addMov_radiobttn_Gasto"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </RadioGroup>
 

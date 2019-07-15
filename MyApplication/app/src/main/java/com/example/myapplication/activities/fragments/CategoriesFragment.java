@@ -1,9 +1,7 @@
 package com.example.myapplication.activities.fragments;
 
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -12,168 +10,119 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activities.data.AdapterCategory;
 import com.example.myapplication.activities.data.CustomAdapter;
 import com.example.myapplication.activities.data.CustomItems;
 import com.example.myapplication.activities.data.DatabaseManager;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.myapplication.activities.data.ListDataCategory;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class AddMovFragment extends Fragment implements View.OnClickListener {
+public class CategoriesFragment extends Fragment implements View.OnClickListener {
 
-    // View components
-    private EditText editText_profit;
-    private EditText editText_description;
-    private TextView textView_date;
-    private TextView textView_time;
-    private RadioGroup radioGroup_addMov;
-    private RadioButton radioButton_in;
-    private RadioButton radioButton_spend;
-    private FloatingActionButton fab_in;
-    private FloatingActionButton fab_cancel;
-    private FloatingActionButton fab_addDate;
-    private FloatingActionButton fab_addTime;
-    private Spinner spinner_categories;
+    // Cmponents view
+    private RecyclerView rvList;
+    private RecyclerView.Adapter rvAdapter;
+    private TextView textView_instanceName;
+    private TextView textView_nodata;
+    private ImageButton imageButton_addCategory;
 
     // Global variables
-    private DateTimeFormatter dtf;
-    private String strDay, strMonth, strYear, strHour, strMinute;
-    private String date;
-    private String time;
-    private String category_id;
+    private List<ListDataCategory> listItems;
+    private ArrayList<String> ids;
+    private ArrayList<String> icons;
+    private ArrayList<String> names;
     private String icName;
-
-    // Database instance
+    // Database manager instance
     private DatabaseManager db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_add_mov, container, false);
+        View view = inflater.inflate(R.layout.fragment_categories, container, false);
 
-        // Initialize components
-        fab_in = view.findViewById(R.id.Ingreso_addMov);
-        fab_in.setOnClickListener(this);
-        fab_cancel = view.findViewById(R.id.cancel_addMov);
-        fab_cancel.setOnClickListener(this);
-        editText_profit = view.findViewById(R.id.etIngreso);
-        editText_description = view.findViewById(R.id.etdescripcion);
-        textView_date = view.findViewById(R.id.textView_addEntry_date);
-        textView_time = view.findViewById(R.id.textView_addEntry_time);
-        fab_addDate = view.findViewById(R.id.fab_calendar_addMovFragment);
-        fab_addDate.setOnClickListener(this);
-        fab_addTime = view.findViewById(R.id.fab_clock_addMovFragment);
-        fab_addTime.setOnClickListener(this);
-        radioGroup_addMov = view.findViewById(R.id.radioGroup_addMov);
-        radioButton_in = view.findViewById(R.id.radioButton_fragmentAddMov_Ingreso);
-        radioButton_in.setOnClickListener(this);
-        radioButton_spend = view.findViewById(R.id.radioButton_fragmentAddMov_Gasto);
-        radioButton_spend.setOnClickListener(this);
-
-        // Database instance
+        // Initialize db
         db = new DatabaseManager(view.getContext());
 
-        // Set date format
-        dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+        // Initialize view componnents and click listeners
+        textView_instanceName = view.findViewById(R.id.textView_fragmentCategories_instanceName);
+        textView_nodata = view.findViewById(R.id.textView_fragmentCategories_nodata);
+        imageButton_addCategory = view.findViewById(R.id.imageButton_categories_add);
+        imageButton_addCategory.setOnClickListener(this);
 
-        // Set date now in the textView
-        String dateNow;
-        LocalDateTime now = LocalDateTime.now();
-        dateNow = dtf.format(now);
-        // Store in format YY-MM-DD
-        date = dateNow;
-        // Show date in format DD-MM-YY
-        String dateToShow;
-        String year = date.substring(0, 4);
-        String month = date.substring(5, 7);
-        String day = date.substring(8, 10);
-        String sepearator = "-";
-        dateToShow = day + sepearator + month + sepearator + year;
-        textView_date.setText(dateToShow);
+        // Set toolbar title
+        Objects.requireNonNull(getActivity()).setTitle(getString(R.string.search_name));
 
-        // Store time in format HH:MM:SS.SSSS
-        time = java.time.LocalTime.now().toString();
-        String timeToShow = time.substring(0, 5);
-        // Show time in format HH:MM
-        textView_time.setText(timeToShow);
+        // Set instance name as title
+        SharedPreferences prefs = getActivity().getSharedPreferences("instance", Context.MODE_PRIVATE);
+        String instanceName = prefs.getString("NAME", null);
+        textView_instanceName.setText(instanceName);
 
-        // Set Spinner category data
-        spinner_categories = view.findViewById(R.id.spinner_addEntry_category);
-
-        // Get categories
-        Cursor categoriesData = db.getCategoryAllData();
-
-        // Array List to store the categories
-        ArrayList<CustomItems> categoriesList = new ArrayList<>();
-
-        // Add categories names to categoriesList
-        while (categoriesData.moveToNext()) {
-            String categName = categoriesData.getString(1);
-            String categIcon = categoriesData.getString(2);
-            int categIconId = getResources().getIdentifier(categIcon, "drawable", view.getContext().getPackageName());
-            categoriesList.add(new CustomItems(categName, categIconId));
+        // Set recycler view component
+        rvList = view.findViewById(R.id.categoriesRecyclerView);
+        rvList.setHasFixedSize(true);
+        rvList.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        // List of data
+        listItems = new ArrayList<>();
+        ids = new ArrayList<>();
+        icons = new ArrayList<>();
+        names = new ArrayList<>();
+        // Get categories data from db
+        Cursor result = db.getCategoryAllData();
+        // Check categories count
+        if (result.getCount() == 0) {
+            textView_nodata.setVisibility(View.VISIBLE);
+        } else {
+            textView_nodata.setVisibility(View.GONE);
+            while (result.moveToNext()) {
+                ids.add(result.getString(0));
+                names.add(result.getString(1));
+                icons.add(result.getString(2));
+            }
         }
 
-        // Add option: "Agregar..." category
-        categoriesList.add(new CustomItems(getString(R.string.activity_addEntry_addCategory_spinner), R.drawable.ic_addblack_64));
+        for (int i = 0; i < names.size(); i++) {
+            assert icons != null;
+            ListDataCategory listData = new ListDataCategory(
+                    ids.get(i),
+                    names.get(i),
+                    icons.get(i)
+            );
 
-        // Create adapter for the spinner of categories
-        CustomAdapter customAdapter = new CustomAdapter(view.getContext(), categoriesList);
-        spinner_categories.setAdapter(customAdapter);
+            listItems.add(listData);
+        }
 
-        // Set default position
-        spinner_categories.setSelection(0);
-
-        // Set spinner categories onClickListener
-        spinner_categories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                CustomItems items = (CustomItems) adapterView.getSelectedItem();
-                String category_name = items.getSpinnerText();
-
-                if (category_name.equals(getString(R.string.activity_addEntry_addCategory_spinner))) {
-                    // if category_name = Add...
-                    openDialog();
-                } else {
-                    // else, get category id with the given name
-                    category_id = db.getCategoryId(category_name);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-
-        // Set ingreso-gasto radio buttons default checked
-        radioButton_spend.setChecked(true);
+        rvAdapter = new AdapterCategory(listItems, getContext(), getActivity());
+        rvList.setAdapter(rvAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.imageButton_categories_add:
+                // if category_name = Add...
+                openDialog();
+
+                break;
+        }
     }
 
     /**
@@ -1120,33 +1069,13 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
                             Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_existCategory), Toast.LENGTH_LONG).show();
                         } else {
                             db.addCategory(editText_categoryName.getText().toString(), icName);
+                            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().
+                                    replace(R.id.content_main_layout, new CategoriesFragment()).commit();
                         }
                     } else {
                         Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
                     }
                 }
-
-                // Get categories
-                Cursor categoriesData = db.getCategoryAllData();
-
-                // Array List to store the categories names
-                ArrayList<CustomItems> categoriesList = new ArrayList<>();
-
-                // Add categories names to categoriesList
-                while (categoriesData.moveToNext()) {
-                    String categName = categoriesData.getString(1);
-                    String categIcon = categoriesData.getString(2);
-                    int categIconId = getResources().getIdentifier(categIcon, "drawable", Objects.requireNonNull(getContext()).getPackageName());
-                    categoriesList.add(new CustomItems(categName, categIconId));
-                }
-
-                // Add option: "Agregar..." category
-                categoriesList.add(new CustomItems(getString(R.string.activity_addEntry_addCategory_spinner), R.drawable.ic_addblack_64));
-                // Create adapter for the spinner of categories
-                CustomAdapter customAdapter = new CustomAdapter(getContext(), categoriesList);
-                spinner_categories.setAdapter(customAdapter);
-                // Set default position
-                spinner_categories.setSelection(categoriesList.size() - 2);
             }
         });
 
@@ -1154,268 +1083,9 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
         builder.setNegativeButton(getString(R.string.alert_negativeBttn_addCategory), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
-
-                // Set default position
-                spinner_categories.setSelection(0);
             }
         });
 
         builder.show();
-    }
-
-    private void showMessage(String titulo, String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-        builder.setCancelable(true);
-        builder.setTitle(titulo);
-        builder.setMessage(mensaje);
-        builder.show();
-    }
-
-    @Override
-    public void onClick(View view) {
-        String montoStr = editText_profit.getText().toString();
-
-        long ingresoInt;
-        long gastoInt;
-
-        switch (view.getId()) {
-            case R.id.Ingreso_addMov:
-                // Verify blank spaces
-                if ((editText_profit.getText().toString().equals(""))) {
-                    showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_nodata));
-                    break;
-                }
-                if (editText_description.getText().toString().equals("")) {
-                    showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_nodata));
-                    break;
-                }
-
-                // Set 0 to blank spaces
-                if (radioGroup_addMov.getCheckedRadioButtonId() == R.id.radioButton_fragmentAddMov_Gasto) {
-                    ingresoInt = 0;
-                    gastoInt = Long.parseLong(montoStr);
-                } else {
-                    ingresoInt = Long.parseLong(montoStr);
-                    gastoInt = 0;
-                }
-
-                String descripcion = editText_description.getText().toString();
-
-                // Get id instance
-                SharedPreferences prefs = Objects.requireNonNull(getActivity()).getSharedPreferences("instance", Context.MODE_PRIVATE);
-                String id = prefs.getString("ID", null);
-
-                boolean isResult = db.addEntry(date, time, gastoInt, ingresoInt, descripcion, id, category_id);
-
-                // Check result
-                if (isResult) {
-                    Toast.makeText(view.getContext(), getString(R.string.toast_addEntryActivity_succesAdd), Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(view.getContext(), getString(R.string.toast_addEntryActivity_noSuccesAdd), Toast.LENGTH_LONG).show();
-                }
-                editText_profit.setText("");
-                editText_description.setText("");
-
-                // Set date now in the textView
-                String dateNow;
-                LocalDateTime now = LocalDateTime.now();
-                dateNow = dtf.format(now);
-                // Store in format YYYY-MM-DD
-                date = dateNow;
-                // Show date in format DD-MM-YYYY
-                String dateToShow;
-                String year = date.substring(0, 4);
-                String month = date.substring(5, 7);
-                String day = date.substring(8, 10);
-                String sepearator = "-";
-                dateToShow = day + sepearator + month + sepearator + year;
-                textView_date.setText(dateToShow);
-
-                // Store time in format HH:MM:SS.SSSS
-                time = java.time.LocalTime.now().toString();
-                String timeToShow = time.substring(0, 5);
-                // Show time in format HH:MM
-                textView_time.setText(timeToShow);
-
-                break;
-
-            case R.id.cancel_addMov:
-                Objects.requireNonNull(getActivity()).onBackPressed();
-                break;
-
-            case R.id.fab_calendar_addMovFragment:
-                Calendar calendar = Calendar.getInstance();
-                int dayPick = calendar.get(Calendar.DAY_OF_MONTH);
-                int monthPick = calendar.get(Calendar.MONTH);
-                int yearPick = calendar.get(Calendar.YEAR);
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        strDay = Integer.toString(i2);
-                        strMonth = Integer.toString(i1 + 1);
-                        strYear = Integer.toString(i);
-
-                        // Cast day with 1 digit to 2
-                        switch (strDay) {
-                            case "1":
-                                strDay = "01";
-                                break;
-                            case "2":
-                                strDay = "02";
-                                break;
-                            case "3":
-                                strDay = "03";
-                                break;
-                            case "4":
-                                strDay = "04";
-                                break;
-                            case "5":
-                                strDay = "05";
-                                break;
-                            case "6":
-                                strDay = "06";
-                                break;
-                            case "7":
-                                strDay = "07";
-                                break;
-                            case "8":
-                                strDay = "08";
-                                break;
-                            case "9":
-                                strDay = "09";
-                                break;
-                            default:
-                                break;
-                        }
-
-                        // Cast month with 1 digit to 2
-                        switch (strMonth) {
-                            case "1":
-                                strMonth = "01";
-                                break;
-                            case "2":
-                                strMonth = "02";
-                                break;
-                            case "3":
-                                strMonth = "03";
-                                break;
-                            case "4":
-                                strMonth = "04";
-                                break;
-                            case "5":
-                                strMonth = "05";
-                                break;
-                            case "6":
-                                strMonth = "06";
-                                break;
-                            case "7":
-                                strMonth = "07";
-                                break;
-                            case "8":
-                                strMonth = "08";
-                                break;
-                            case "9":
-                                strMonth = "09";
-                                break;
-                            default:
-                                break;
-                        }
-                        // Show in format DD-MM-YY
-                        textView_date.setText(new StringBuilder().append(strDay).append("-").append(strMonth).append("-").append(strYear).toString());
-                        // Store in format YY-MM-DD
-                        date = new StringBuilder().append(strYear).append("-").append(strMonth).append("-").append(strDay).toString();
-                    }
-                }, yearPick, monthPick, dayPick);
-                datePickerDialog.show();
-
-                break;
-
-            case R.id.fab_clock_addMovFragment:
-                Calendar timepick = Calendar.getInstance();
-                int hourPick = timepick.get(Calendar.HOUR_OF_DAY);
-                int minutesPick = timepick.get(Calendar.MINUTE);
-
-                TimePickerDialog timePickerDialog = new TimePickerDialog(view.getContext(), new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                        strHour = Integer.toString(i);
-                        strMinute = Integer.toString(i1);
-
-                        // Cast hour with 1 digit to 2
-                        switch (strHour) {
-                            case "1":
-                                strHour = "01";
-                                break;
-                            case "2":
-                                strHour = "02";
-                                break;
-                            case "3":
-                                strHour = "03";
-                                break;
-                            case "4":
-                                strHour = "04";
-                                break;
-                            case "5":
-                                strHour = "05";
-                                break;
-                            case "6":
-                                strHour = "06";
-                                break;
-                            case "7":
-                                strHour = "07";
-                                break;
-                            case "8":
-                                strHour = "08";
-                                break;
-                            case "9":
-                                strHour = "09";
-                                break;
-                            default:
-                                break;
-                        }
-
-                        // Cast minute with 1 digit to 2
-                        switch (strMinute) {
-                            case "1":
-                                strMinute = "01";
-                                break;
-                            case "2":
-                                strMinute = "02";
-                                break;
-                            case "3":
-                                strMinute = "03";
-                                break;
-                            case "4":
-                                strMinute = "04";
-                                break;
-                            case "5":
-                                strMinute = "05";
-                                break;
-                            case "6":
-                                strMinute = "06";
-                                break;
-                            case "7":
-                                strMinute = "07";
-                                break;
-                            case "8":
-                                strMinute = "08";
-                                break;
-                            case "9":
-                                strMinute = "09";
-                                break;
-                            default:
-                                break;
-                        }
-
-                        textView_time.setText(new StringBuilder().append(strHour).append(":").append(strMinute).toString());
-                        time = new StringBuilder().append(strHour).append(":").append(strMinute).append(":00.000").toString();
-                    }
-                }, hourPick, minutesPick, false);
-                timePickerDialog.show();
-
-                break;
-        }
     }
 }

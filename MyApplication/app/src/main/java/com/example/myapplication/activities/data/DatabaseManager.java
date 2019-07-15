@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 12;
+    private static final int DATABASE_VERSION = 13;
     private static final String DATABASE_NAME = "Saldos.db";
 
     //tabla1
@@ -258,6 +258,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     /**
      * Get period day from instance table
+     *
      * @param name
      * @return
      */
@@ -324,6 +325,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     /**
      * Get the category icon name
+     *
      * @param name category's name
      * @return icon's name
      */
@@ -720,8 +722,23 @@ public class DatabaseManager extends SQLiteOpenHelper {
      */
     public Integer deleteInstance(String Instancias_ID) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLA2_NOMBRE, "Instancias_Id=?", new String[]{Instancias_ID});
+        return db.delete(TABLA2_NOMBRE, "Instancias_ID=?", new String[]{Instancias_ID});
     }
+
+    /**
+     * Delete a row from table categorias give by the category_id
+     *
+     * @param id
+     * @return
+     */
+    public Integer deleteCategory(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLA3_NOMBRE, "Categorias_ID=?", new String[]{id});
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Update methods
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Edit an entry with the given id and instancia id
@@ -768,6 +785,25 @@ public class DatabaseManager extends SQLiteOpenHelper {
         contentValues.put(Col_Periodo, period);
 
         db.update(TABLA2_NOMBRE, contentValues, "Instancias_ID=?", new String[]{instance_ID});
+
+        return true;
+    }
+
+    /**
+     * Edit a category with the given category id
+     *
+     * @param category_ID
+     * @return
+     */
+    public boolean editCategory(String category_ID, String name, String icon) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Categorias_ID", category_ID);
+        contentValues.put(Col_NombreCateg, name);
+        contentValues.put(Col_Icono, icon);
+
+        db.update(TABLA3_NOMBRE, contentValues, "Categorias_ID=?", new String[]{category_ID});
 
         return true;
     }

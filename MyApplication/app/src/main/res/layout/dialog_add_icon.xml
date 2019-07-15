@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:columnCount="4"
-                android:rowCount="18">
+                android:rowCount="22">
 
                 <ImageView
                     android:id="@+id/imageView_dialogAddIcon_amazon"
@@ -732,6 +732,156 @@
                     android:background="@drawable/roundcornerbrownlight"
                     android:contentDescription="@string/dialogInfo_imageView_image"
                     android:src="@drawable/ic_tv_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_ac"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_ac_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_baby"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_baby_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_beer"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_beer_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_casino"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_casino_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_cigarette"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_cigarette_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_coupon"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_coupon_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_creditcard"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_creditcard_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_cycling"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_cycling_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_electronic"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_electronic_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_guns"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_guns_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_gunsstore"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_gunsstore_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_lottery"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_lottery_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_makeup"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_makeup_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_refund"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_refund_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_shoppingbag"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_shoppingbag_100" />
 
             </GridLayout>
 

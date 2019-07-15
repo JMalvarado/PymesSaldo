@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -116,7 +115,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                         switch (which) {
                             case 0:
                                 db.deleteEntryData(MainActivity.idInstance, data.getId());
-                                //search();
                                 new Task().execute();
                                 break;
 

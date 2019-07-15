@@ -83,7 +83,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="@string/fragment_search_period_checkboxTitle" />
+                        android:text="@string/fragment_search_period_checkboxTitle"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textView_fragmentSearch_period"
@@ -104,7 +106,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="10dp"
-                        android:text="@string/fragment_search_checkbox_saldoalmes" />
+                        android:text="@string/fragment_search_checkbox_saldoalmes"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                     <View
                         android:id="@+id/divider3"
@@ -119,7 +123,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="10dp"
-                        android:text="@string/fragment_search_dates_radioButtonTitle" />
+                        android:text="@string/fragment_search_dates_radioButtonTitle"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                 </RadioGroup>
 

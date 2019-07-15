@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.activities.EditProfileActivity"
+            android:theme="@style/myTheme"
             android:label="@string/editProfile_name" />
         <activity
             android:name=".activities.activities.EditEntryActivity"

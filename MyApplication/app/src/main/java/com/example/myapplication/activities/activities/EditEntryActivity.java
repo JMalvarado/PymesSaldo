@@ -67,7 +67,6 @@ public class EditEntryActivity extends AppCompatActivity {
     private String id_inst;
     private String new_id_inst;
     private int spinner_DefaultPosition = 0;
-    private ArrayAdapter<String> spinnerAdapter;
     private ArrayAdapter<String> spinnerAdapterProfiles;
 
     @Override
@@ -99,7 +98,6 @@ public class EditEntryActivity extends AppCompatActivity {
         Cursor categoriesData = db.getCategoryAllData();
 
         // Array List to store the categories names
-        //ArrayList<String> categoriesList = new ArrayList<>();
         ArrayList<CustomItems> categoriesList = new ArrayList<>();
 
         // Add categories names to categoriesList
@@ -111,11 +109,8 @@ public class EditEntryActivity extends AppCompatActivity {
         }
 
         // Add option: "Agregar..." category
-        //categoriesList.add(getString(R.string.activity_addEntry_addCategory_spinner));
         categoriesList.add(new CustomItems(getString(R.string.activity_addEntry_addCategory_spinner), R.drawable.ic_addblack_64));
         // Create adapter for the spinner of categories
-        //spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesList);
-        //spinner_categories.setAdapter(spinnerAdapter);
         CustomAdapter customAdapter = new CustomAdapter(this, categoriesList);
         spinner_categories.setAdapter(customAdapter);
 
@@ -329,6 +324,21 @@ public class EditEntryActivity extends AppCompatActivity {
                 final ImageView imageView_ic_pcportatil = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_pcportatil);
                 final ImageView imageView_ic_toolsmaint = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_toolsmaint);
                 final ImageView imageView_ic_tv = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_tv);
+                final ImageView imageView_ic_ac = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_ac);
+                final ImageView imageView_ic_baby = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_baby);
+                final ImageView imageView_ic_beer = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_beer);
+                final ImageView imageView_ic_casino = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_casino);
+                final ImageView imageView_ic_cigarette = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_cigarette);
+                final ImageView imageView_ic_coupon = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_coupon);
+                final ImageView imageView_ic_creditcard = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_creditcard);
+                final ImageView imageView_ic_cycling = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_cycling);
+                final ImageView imageView_ic_electronic = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_electronic);
+                final ImageView imageView_ic_guns = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_guns);
+                final ImageView imageView_ic_gunsstore = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_gunsstore);
+                final ImageView imageView_ic_lottery = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_lottery);
+                final ImageView imageView_ic_makeup = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_makeup);
+                final ImageView imageView_ic_refund = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_refund);
+                final ImageView imageView_ic_shoppingbag = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_shoppingbag);
 
                 // image views click listener
                 imageView_ic_amazon.setOnClickListener(new View.OnClickListener() {
@@ -984,6 +994,141 @@ public class EditEntryActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         icName = "ic_tv_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_ac.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_ac_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_baby.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_baby_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_beer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_beer_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_casino.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_casino_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_cigarette.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_cigarette_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_coupon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_coupon_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_creditcard.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_creditcard_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_cycling.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_cycling_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_electronic.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_electronic_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_guns.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_guns_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_gunsstore.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_gunsstore_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_lottery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_lottery_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_makeup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_makeup_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_refund.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_refund_100";
+                        int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                        imageButton_addIcon.setImageResource(imageID);
+                        dialogIcCategories.dismiss();
+                    }
+                });
+                imageView_ic_shoppingbag.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        icName = "ic_shoppingbag_100";
                         int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
                         imageButton_addIcon.setImageResource(imageID);
                         dialogIcCategories.dismiss();

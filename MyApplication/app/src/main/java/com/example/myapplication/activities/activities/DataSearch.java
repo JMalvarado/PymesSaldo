@@ -52,6 +52,7 @@ public class DataSearch extends AppCompatActivity {
         String name = prefs.getString("NAME", null);
         textView_instanceName.setText(name);
 
+        // Set recycler view component
         rvList = findViewById(R.id.dataRecyclerView);
         rvList.setHasFixedSize(true);
         rvList.setLayoutManager(new LinearLayoutManager(this));
