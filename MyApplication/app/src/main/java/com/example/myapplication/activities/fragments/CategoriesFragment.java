@@ -1052,29 +1052,29 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
             public void onClick(DialogInterface dialogInterface, int i) {
                 // Check if there is icon selected
                 if (icName.equals("")) {
-                    Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_noicon), Toast.LENGTH_LONG).show();
-                } else {
-                    // Add category to data base
-                    if (!editText_categoryName.getText().toString().equals("")) {
-                        // check if the category exist
-                        Cursor cursorNames = db.getCategoryAllData();
-                        boolean isExistCategory = false;
-                        while (cursorNames.moveToNext()) {
-                            if (cursorNames.getString(1).equals(editText_categoryName.getText().toString())) {
-                                isExistCategory = true;
-                                break;
-                            }
+                    icName = "ic_questionmark_100";
+                    //Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_noicon), Toast.LENGTH_LONG).show();
+                }
+                // Add category to data base
+                if (!editText_categoryName.getText().toString().equals("")) {
+                    // check if the category exist
+                    Cursor cursorNames = db.getCategoryAllData();
+                    boolean isExistCategory = false;
+                    while (cursorNames.moveToNext()) {
+                        if (cursorNames.getString(1).equals(editText_categoryName.getText().toString())) {
+                            isExistCategory = true;
+                            break;
                         }
-                        if (isExistCategory) {
-                            Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_existCategory), Toast.LENGTH_LONG).show();
-                        } else {
-                            db.addCategory(editText_categoryName.getText().toString(), icName);
-                            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().
-                                    replace(R.id.content_main_layout, new CategoriesFragment()).commit();
-                        }
-                    } else {
-                        Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
                     }
+                    if (isExistCategory) {
+                        Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_existCategory), Toast.LENGTH_LONG).show();
+                    } else {
+                        db.addCategory(editText_categoryName.getText().toString(), icName);
+                        Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().
+                                replace(R.id.content_main_layout, new CategoriesFragment()).commit();
+                    }
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
                 }
             }
         });

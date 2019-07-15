@@ -233,6 +233,9 @@ public class EditEntryActivity extends AppCompatActivity {
      * Alert dialog to add category
      */
     private void openDialog() {
+        // Initialize default icName
+        icName = "";
+
         // Inflate layout
         LayoutInflater inflater = LayoutInflater.from(EditEntryActivity.this);
         View subView = inflater.inflate(R.layout.dialog_add_category, null);
@@ -1150,6 +1153,10 @@ public class EditEntryActivity extends AppCompatActivity {
         builder.setPositiveButton(getString(R.string.alert_positiveBttn_addCategory), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                // Check if theres no icon selected. If true: set default icon
+                if (icName.equals("")) {
+                    icName = "ic_questionmark_100";
+                }
                 // Add category to data base
                 if (!editText_categoryName.getText().toString().equals("")) {
                     // check if the category exist

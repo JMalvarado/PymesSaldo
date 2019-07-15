@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 13;
+    private static final int DATABASE_VERSION = 14;
     private static final String DATABASE_NAME = "Saldos.db";
 
     //tabla1
@@ -50,8 +50,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     //constructor
     public DatabaseManager(Context context) {
-
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        db.execSQL("PRAGMA foreign_keys=ON");
+        super.onOpen(db);
     }
 
     /**
