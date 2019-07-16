@@ -156,99 +156,104 @@
 
                 </RadioGroup>
 
-                <TextView
-                    android:id="@+id/tvIcicBusq"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="7dp"
-                    android:text="@string/fragment_search_textview_inicio" />
-
-                <CheckBox
-                    android:id="@+id/cbInicio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/fragment_search_checkbox_principio" />
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fab_calendar1_searchFragment"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:backgroundTint="@android:color/white"
-                        android:elevation="0dp"
-                        android:src="@drawable/ic_calendar_64"
-                        app:backgroundTint="@android:color/darker_gray"
-                        app:elevation="0dp"
-                        app:rippleColor="@color/colorPrimary" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/textview_search_datebeg"
-                        android:layout_width="90dp"
+                        <TextView
+                            android:id="@+id/tvIcicBusq"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="7dp"
+                            android:text="@string/fragment_search_textview_inicio" />
+
+                        <CheckBox
+                            android:id="@+id/cbInicio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/fragment_search_checkbox_principio" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_calendar1_searchFragment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:backgroundTint="@android:color/white"
+                            android:elevation="0dp"
+                            android:src="@drawable/ic_calendar_64"
+                            app:backgroundTint="@android:color/darker_gray"
+                            app:elevation="0dp"
+                            app:rippleColor="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/textview_search_datebeg"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <LinearLayout
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:gravity="center" />
+                        android:orientation="vertical">
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/tvFinalBusq"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="7dp"
+                            android:text="@string/fragment_search_textview_final" />
 
-                <TextView
-                    android:id="@+id/tvFinalBusq"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="7dp"
-                    android:text="@string/fragment_search_textview_final" />
+                        <CheckBox
+                            android:id="@+id/cbFinal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/fragment_search_checkox_hastahoy" />
 
-                <CheckBox
-                    android:id="@+id/cbFinal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/fragment_search_checkox_hastahoy" />
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_calendar2_searchFragment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:backgroundTint="@android:color/white"
+                            android:elevation="0dp"
+                            android:src="@drawable/ic_calendar_64"
+                            app:backgroundTint="@android:color/darker_gray"
+                            app:elevation="0dp"
+                            app:rippleColor="@color/colorPrimary" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/textview_search_datefinal"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center" />
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fab_calendar2_searchFragment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:backgroundTint="@android:color/white"
-                        android:elevation="0dp"
-                        android:src="@drawable/ic_calendar_64"
-                        app:backgroundTint="@android:color/darker_gray"
-                        app:elevation="0dp"
-                        app:rippleColor="@color/colorPrimary" />
-
-                    <TextView
-                        android:id="@+id/textview_search_datefinal"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:gravity="center" />
+                    </LinearLayout>
 
                 </LinearLayout>
 

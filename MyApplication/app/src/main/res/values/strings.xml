@@ -41,7 +41,7 @@
     <string name="fragment_search_textView_type_spinner">Tipo de movimiento</string>
     <string name="fragment_search_period_title">Periodo:</string>
     <string name="fragment_search_period_checkboxTitle">Periodo definido</string>
-    <string name="fragment_search_dates_radioButtonTitle">Por fecha</string>
+    <string name="fragment_search_dates_radioButtonTitle">Por periodo</string>
     <string name="fragment_search_period_title_all">Todo</string>
     <string name="fragment_search_textview_filtro">Filtro:</string>
     <string name="fragment_search_textview_inicio">Inicio</string>
