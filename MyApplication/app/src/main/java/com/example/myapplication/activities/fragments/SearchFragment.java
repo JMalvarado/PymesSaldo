@@ -1,15 +1,18 @@
 package com.example.myapplication.activities.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,19 +52,21 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private ProgressBar progressBar;
     private TextView textView_dateBeging, textView_dateFinal, textView_instanceName, textView_period;
     private Spinner spinner_categories;
+    private Spinner spinner_type;
 
     // Global variables
-    public static String begDay, begMonth, begYear, finDay, finMonth, finYear, period;
-    private static int intBegDay, intBegMonth, intBegYear, intFinDay, intFinMonth, intFinYear;
+    public static String begDay, begMonth, begYear, finDay, finMonth, finYear, period, type;
+    public static int intBegDay, intBegMonth, intBegYear, intFinDay, intFinMonth, intFinYear;
     public static boolean radioButtonMonthIsChecked, checkboxBegIsChecked, checkboxFinalIsChecked, radioButtonPeriodIsChecked, radioButtonDatesIsChecked;
     public static int categoryIDSelected;
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
-    private ArrayAdapter<String> spinnerAdapter;
+    private ArrayAdapter<String> spinnerAdapterType;
 
     // Database manager instance
     private DatabaseManager db;
 
+    @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,6 +109,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         textView_period = view.findViewById(R.id.textView_fragmentSearch_period);
 
         spinner_categories = view.findViewById(R.id.spinner_search_category);
+        spinner_type = view.findViewById(R.id.spinner_search_type);
 
         progressBar = view.findViewById(R.id.progressBar_searchFragment);
 
@@ -137,9 +143,12 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
             checkBox_begining.setEnabled(false);
             fab_dateBegin.setEnabled(false);
+            fab_dateBegin.setVisibility(View.GONE);
 
             checkBox_final.setEnabled(false);
             fab_dateFinal.setEnabled(false);
+            fab_dateFinal.setVisibility(View.GONE);
+
         }
 
         // Set Spinner category data
@@ -148,7 +157,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         Cursor categoriesData = db.getCategoryAllData();
 
         // Array List to store the categories names
-       // ArrayList<String> categoriesList = new ArrayList<>();
+        // ArrayList<String> categoriesList = new ArrayList<>();
         ArrayList<CustomItems> categoriesList = new ArrayList<>();
 
         // Add option: "Todas"
@@ -193,45 +202,102 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+
+        // Set items on spinner mov type
+        // Array List to store the type names
+        ArrayList<String> typeList = new ArrayList<>();
+        typeList.add(getString(R.string.fragment_search_type_spinner_all));
+        typeList.add(getString(R.string.fragment_search_type_spinner_profit));
+        typeList.add(getString(R.string.fragment_search_type_spinner_spend));
+
+        // Create adapter for the spinner of profiles
+        spinnerAdapterType = new ArrayAdapter<String>(view.getContext(), R.layout.spinner_items_theme_blacktext, typeList) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                TextView textView = (TextView) super.getView(position, convertView, parent);
+
+                textView.setTextColor(Color.BLACK);
+                textView.setTextSize(20);
+                textView.setGravity(Gravity.CENTER);
+
+                return textView;
+            }
+        };
+        spinner_type.setAdapter(spinnerAdapterType);
+
+        // Set spinner type onClickListener
+        spinner_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                type = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
         return view;
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.radioButton_periodo:
                 checkBox_begining.setEnabled(false);
                 fab_dateBegin.setEnabled(false);
+                fab_dateBegin.setVisibility(View.GONE);
 
                 checkBox_final.setEnabled(false);
                 fab_dateFinal.setEnabled(false);
+                fab_dateFinal.setVisibility(View.GONE);
+
+                checkBox_begining.setChecked(false);
+                checkBox_final.setChecked(false);
+
+                textView_dateBeging.setText("");
+                textView_dateFinal.setText("");
 
                 break;
 
             case R.id.radioButton_mes:
                 checkBox_begining.setEnabled(false);
                 fab_dateBegin.setEnabled(false);
+                fab_dateBegin.setVisibility(View.GONE);
 
                 checkBox_final.setEnabled(false);
                 fab_dateFinal.setEnabled(false);
+                fab_dateFinal.setVisibility(View.GONE);
+
+                checkBox_begining.setChecked(false);
+                checkBox_final.setChecked(false);
+
+                textView_dateBeging.setText("");
+                textView_dateFinal.setText("");
 
                 break;
 
             case R.id.radioButton_porfecha:
                 checkBox_begining.setEnabled(true);
                 fab_dateBegin.setEnabled(true);
+                fab_dateBegin.setVisibility(View.VISIBLE);
 
                 checkBox_final.setEnabled(true);
                 fab_dateFinal.setEnabled(true);
+                fab_dateFinal.setVisibility(View.VISIBLE);
 
                 break;
 
             case R.id.cbInicio:
                 if (!checkBox_begining.isChecked()) {
                     fab_dateBegin.setEnabled(true);
+                    fab_dateBegin.setVisibility(View.VISIBLE);
 
                 } else {
                     fab_dateBegin.setEnabled(false);
+                    fab_dateBegin.setVisibility(View.GONE);
+                    textView_dateBeging.setText("");
                 }
 
                 break;
@@ -239,9 +305,12 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             case R.id.cbFinal:
                 if (!checkBox_final.isChecked()) {
                     fab_dateFinal.setEnabled(true);
+                    fab_dateFinal.setVisibility(View.VISIBLE);
 
                 } else {
                     fab_dateFinal.setEnabled(false);
+                    fab_dateFinal.setVisibility(View.GONE);
+                    textView_dateFinal.setText("");
                 }
 
                 break;
@@ -637,26 +706,72 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         protected Cursor doInBackground(String... strings) {
             Cursor resultado;
 
-            if (radioButtonMonthIsChecked) {
-                resultado = db.getEntryMonthData(MainActivity.idInstance, categoryIDSelected);
-            } else if (radioButtonDatesIsChecked) {
-                if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
-                    String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                    resultado = db.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected);
-                } else if ((!checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
-                    String begDate = begYear + "-" + begMonth + "-" + begDay;
-                    resultado = db.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected);
-                } else if (checkboxBegIsChecked) {
-                    resultado = db.getEntryAllData(MainActivity.idInstance, categoryIDSelected);
+            if (type.equals(getResources().getString(R.string.fragment_search_type_spinner_all))) {
+                if (radioButtonMonthIsChecked) {
+                    resultado = db.getEntryMonthData(MainActivity.idInstance, categoryIDSelected);
+                } else if (radioButtonDatesIsChecked) {
+                    if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
+                        String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                        resultado = db.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected);
+                    } else if ((!checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
+                        String begDate = begYear + "-" + begMonth + "-" + begDay;
+                        resultado = db.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected);
+                    } else if (checkboxBegIsChecked) {
+                        resultado = db.getEntryAllData(MainActivity.idInstance, categoryIDSelected);
+                    } else {
+                        String begDate = begYear + "-" + begMonth + "-" + begDay;
+                        String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                        resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                    }
                 } else {
                     String begDate = begYear + "-" + begMonth + "-" + begDay;
                     String finalDate = finYear + "-" + finMonth + "-" + finDay;
                     resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
                 }
+            } else if (type.equals(getResources().getString(R.string.fragment_search_type_spinner_profit))) {
+                if (radioButtonMonthIsChecked) {
+                    resultado = db.getEntryMonthProfit(MainActivity.idInstance, categoryIDSelected);
+                } else if (radioButtonDatesIsChecked) {
+                    if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
+                        String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                        resultado = db.getEntryProfitFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected);
+                    } else if ((!checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
+                        String begDate = begYear + "-" + begMonth + "-" + begDay;
+                        resultado = db.getEntryProfitFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected);
+                    } else if (checkboxBegIsChecked) {
+                        resultado = db.getEntryAllProfit(MainActivity.idInstance, categoryIDSelected);
+                    } else {
+                        String begDate = begYear + "-" + begMonth + "-" + begDay;
+                        String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                        resultado = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                    }
+                } else {
+                    String begDate = begYear + "-" + begMonth + "-" + begDay;
+                    String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                    resultado = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                }
             } else {
-                String begDate = begYear + "-" + begMonth + "-" + begDay;
-                String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                if (radioButtonMonthIsChecked) {
+                    resultado = db.getEntryMonthSpend(MainActivity.idInstance, categoryIDSelected);
+                } else if (radioButtonDatesIsChecked) {
+                    if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
+                        String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                        resultado = db.getEntrySpendFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected);
+                    } else if ((!checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
+                        String begDate = begYear + "-" + begMonth + "-" + begDay;
+                        resultado = db.getEntrySpendFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected);
+                    } else if (checkboxBegIsChecked) {
+                        resultado = db.getEntryAllSpend(MainActivity.idInstance, categoryIDSelected);
+                    } else {
+                        String begDate = begYear + "-" + begMonth + "-" + begDay;
+                        String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                        resultado = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                    }
+                } else {
+                    String begDate = begYear + "-" + begMonth + "-" + begDay;
+                    String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                    resultado = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                }
             }
 
             return resultado;

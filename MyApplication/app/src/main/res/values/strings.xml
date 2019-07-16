@@ -38,6 +38,7 @@
     <string name="activity_add_profile_helpButton_period_descr">Descripcion de la funcion del boton perido definido</string>
 
     <string name="fragment_search_period_period_header">Día de corte:</string>
+    <string name="fragment_search_textView_type_spinner">Tipo de movimiento</string>
     <string name="fragment_search_period_title">Periodo:</string>
     <string name="fragment_search_period_checkboxTitle">Periodo definido</string>
     <string name="fragment_search_dates_radioButtonTitle">Por fecha</string>
@@ -65,6 +66,9 @@
     <string name="fragment_saving_addProfit_description">Retiro de ahorro</string>
     <string name="fragment_saveMoney_textView_ahorro">Tienes ahorrado:</string>
     <string name="fragment_search_category_spinner">Todas</string>
+    <string name="fragment_search_type_spinner_all">Todo</string>
+    <string name="fragment_search_type_spinner_profit">Ingresos</string>
+    <string name="fragment_search_type_spinner_spend">Gastos</string>
     <string name="fragment_addMov_radiobttn_Ingreso">Ingreso</string>
     <string name="fragment_addMov_radiobttn_Gasto">Gasto</string>
     <string name="fragment_categories_textView_nodata">No hay categorías para mostrar</string>

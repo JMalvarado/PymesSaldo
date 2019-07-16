@@ -51,6 +51,33 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/roundcornerbrownlight"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/fragment_search_textView_type_spinner"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinner_search_type"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/colorPrimaryDark" />
+
+    </LinearLayout>
+
     <View
         android:id="@+id/divider5"
         android:layout_width="match_parent"

@@ -107,8 +107,10 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
         String transCat = context.getResources().getString(R.string.mainActivity_addCategory_transfer);
         if ((data.getName().equals(othersCat)) || (data.getName().equals(savingCat)) || (data.getName().equals(transCat))) {
             myViewHolder.fab_delete.setVisibility(View.GONE);
+            myViewHolder.fab_dit.setVisibility(View.GONE);
         } else {
             myViewHolder.fab_delete.setVisibility(View.VISIBLE);
+            myViewHolder.fab_dit.setVisibility(View.VISIBLE);
 
         }
     }

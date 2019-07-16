@@ -2,12 +2,9 @@ package com.example.myapplication.activities.data;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.example.myapplication.R;
 
 import java.util.ArrayList;
 
@@ -576,6 +573,42 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     /**
+     * Get all the profit data from table Saldos
+     *
+     * @return Cursor with all the information in all the columns
+     */
+    public Cursor getEntryAllProfit(String Instancias_ID, int category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+        }
+
+        return resultado;
+    }
+
+    /**
+     * Get all the spend data from table Saldos
+     *
+     * @return Cursor with all the information in all the columns
+     */
+    public Cursor getEntryAllSpend(String Instancias_ID, int category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
+        }
+
+        return resultado;
+    }
+
+    /**
      * Get the data from table Saldos in the actual month
      *
      * @return Cursor with all the information in all the columns
@@ -590,6 +623,46 @@ public class DatabaseManager extends SQLiteOpenHelper {
         } else {
             resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
                     "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+        }
+
+        return resultado;
+    }
+
+    /**
+     * Get the profit data from table Saldos in the actual month
+     *
+     * @return Cursor with all the information in all the columns
+     */
+    public Cursor getEntryMonthProfit(String Instancias_ID, int category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
+                    "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
+                    "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+        }
+
+        return resultado;
+    }
+
+    /**
+     * Get the spend data from table Saldos in the actual month
+     *
+     * @return Cursor with all the information in all the columns
+     */
+    public Cursor getEntryMonthSpend(String Instancias_ID, int category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
+                    "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)=strftime('%Y',date('now')) " +
+                    "AND strftime('%m',Fecha)=strftime('%m',date('now')) AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
         }
 
         return resultado;
@@ -616,6 +689,46 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     /**
+     * Get the profit data from table Saldos from beginning to a given date
+     *
+     * @param finalDate
+     * @return Cursor with all the information in all the columns
+     */
+    public Cursor getEntryProfitFromBegToDate(String Instancias_ID, String finalDate, int category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                    "AND Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                    "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+        }
+        return resultado;
+    }
+
+    /**
+     * Get the spend data from table Saldos from beginning to a given date
+     *
+     * @param finalDate
+     * @return Cursor with all the information in all the columns
+     */
+    public Cursor getEntrySpendFromBegToDate(String Instancias_ID, String finalDate, int category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                    "AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                    "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
+        }
+        return resultado;
+    }
+
+    /**
      * Get all the data from table Saldos from a given date to the end of times
      *
      * @param beginDate
@@ -631,6 +744,46 @@ public class DatabaseManager extends SQLiteOpenHelper {
         } else {
             resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
                     "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+        }
+        return resultado;
+    }
+
+    /**
+     * Get all the profit data from table Saldos from a given date to the end of times
+     *
+     * @param beginDate
+     * @return Cursor with all the information in all the columns
+     */
+    public Cursor getEntryProfitFromDateToToday(String Instancias_ID, String beginDate, int category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                    "AND Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                    "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+        }
+        return resultado;
+    }
+
+    /**
+     * Get all the spend data from table Saldos from a given date to the end of times
+     *
+     * @param beginDate
+     * @return Cursor with all the information in all the columns
+     */
+    public Cursor getEntrySpendFromDateToToday(String Instancias_ID, String beginDate, int category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                    "AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                    "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
         }
         return resultado;
     }
@@ -652,6 +805,48 @@ public class DatabaseManager extends SQLiteOpenHelper {
         } else {
             resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
                     "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+        }
+        return resultado;
+    }
+
+    /**
+     * Get all the profit data from table Saldos between two given dates
+     *
+     * @param beginDate
+     * @param finalDate
+     * @return Cursor with all the information in all the columns
+     */
+    public Cursor getEntryProfitInDate(String Instancias_ID, String beginDate, String finalDate, int category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                    "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                    "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+        }
+        return resultado;
+    }
+
+    /**
+     * Get all the spend data from table Saldos between two given dates
+     *
+     * @param beginDate
+     * @param finalDate
+     * @return Cursor with all the information in all the columns
+     */
+    public Cursor getEntrySpendInDate(String Instancias_ID, String beginDate, String finalDate, int category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                    "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                    "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
         }
         return resultado;
     }

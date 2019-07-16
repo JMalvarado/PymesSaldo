@@ -11,9 +11,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -34,7 +37,6 @@ import com.example.myapplication.activities.data.DatabaseManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Objects;
 
 public class EditEntryActivity extends AppCompatActivity {
 
@@ -153,7 +155,18 @@ public class EditEntryActivity extends AppCompatActivity {
         }
 
         // Create adapter for the spinner of profiles
-        spinnerAdapterProfiles = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, profilesList);
+        spinnerAdapterProfiles = new ArrayAdapter<String>(this, R.layout.spinner_items_theme_blacktext, profilesList) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                TextView textView = (TextView) super.getView(position, convertView, parent);
+
+                textView.setTextColor(Color.BLACK);
+                textView.setTextSize(20);
+                textView.setGravity(Gravity.CENTER);
+
+                return textView;
+            }
+        };
         spinner_profiles.setAdapter(spinnerAdapterProfiles);
 
         // Set spinner profiles onClickListener

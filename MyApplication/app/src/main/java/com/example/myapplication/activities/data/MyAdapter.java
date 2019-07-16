@@ -213,26 +213,72 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         protected Cursor doInBackground(String... strings) {
             Cursor resultado;
 
-            if (SearchFragment.radioButtonMonthIsChecked) {
-                resultado = db.getEntryMonthData(MainActivity.idInstance, SearchFragment.categoryIDSelected);
-            } else if (SearchFragment.radioButtonDatesIsChecked) {
-                if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked)) {
-                    String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                    resultado = db.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected);
-                } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
-                    String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
-                    resultado = db.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected);
-                } else if (SearchFragment.checkboxBegIsChecked) {
-                    resultado = db.getEntryAllData(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+            if (SearchFragment.type.equals(context.getResources().getString(R.string.fragment_search_type_spinner_all))) {
+                if (SearchFragment.radioButtonMonthIsChecked) {
+                    resultado = db.getEntryMonthData(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+                } else if (SearchFragment.radioButtonDatesIsChecked) {
+                    if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked)) {
+                        String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
+                        resultado = db.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected);
+                    } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
+                        String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
+                        resultado = db.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected);
+                    } else if (SearchFragment.checkboxBegIsChecked) {
+                        resultado = db.getEntryAllData(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+                    } else {
+                        String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
+                        String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
+                        resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                    }
                 } else {
                     String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
                     String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
                     resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
                 }
+            } else if (SearchFragment.type.equals(context.getResources().getString(R.string.fragment_search_type_spinner_profit))) {
+                if (SearchFragment.radioButtonMonthIsChecked) {
+                    resultado = db.getEntryMonthProfit(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+                } else if (SearchFragment.radioButtonDatesIsChecked) {
+                    if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked)) {
+                        String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
+                        resultado = db.getEntryProfitFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected);
+                    } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
+                        String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
+                        resultado = db.getEntryProfitFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected);
+                    } else if (SearchFragment.checkboxBegIsChecked) {
+                        resultado = db.getEntryAllProfit(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+                    } else {
+                        String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
+                        String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
+                        resultado = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                    }
+                } else {
+                    String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
+                    String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
+                    resultado = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                }
             } else {
-                String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
-                String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                if (SearchFragment.radioButtonMonthIsChecked) {
+                    resultado = db.getEntryMonthSpend(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+                } else if (SearchFragment.radioButtonDatesIsChecked) {
+                    if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked)) {
+                        String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
+                        resultado = db.getEntrySpendFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected);
+                    } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
+                        String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
+                        resultado = db.getEntrySpendFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected);
+                    } else if (SearchFragment.checkboxBegIsChecked) {
+                        resultado = db.getEntryAllSpend(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+                    } else {
+                        String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
+                        String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
+                        resultado = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                    }
+                } else {
+                    String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
+                    String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
+                    resultado = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                }
             }
 
             return resultado;
