@@ -148,7 +148,35 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             checkBox_final.setEnabled(false);
             fab_dateFinal.setEnabled(false);
             fab_dateFinal.setVisibility(View.GONE);
+        }
 
+        // If there is default period previously selelcted, set that period
+        // Get the shared preferences period of instance
+        SharedPreferences prefsPeriod = getActivity().getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
+        String periodDates = prefsPeriod.getString(MainActivity.idInstance, null);
+        if (periodDates!=null) {
+            // Get date components
+            begDay = periodDates.substring(0,2);
+            begMonth = periodDates.substring(3,5);
+            begYear = periodDates.substring(6,10);
+            finDay = periodDates.substring(11,13);
+            finMonth = periodDates.substring(14,16);
+            finYear = periodDates.substring(17,21);
+
+            // Set text views with the default period
+            String begPeriodDate = periodDates.substring(0, 10);
+            String finPeriodDate = periodDates.substring(11, 21);
+
+            radioButton_dates.setChecked(true);
+            checkBox_begining.setEnabled(true);
+            fab_dateBegin.setEnabled(true);
+            fab_dateBegin.setVisibility(View.VISIBLE);
+            checkBox_final.setEnabled(true);
+            fab_dateFinal.setEnabled(true);
+            fab_dateFinal.setVisibility(View.VISIBLE);
+
+            textView_dateBeging.setText(begPeriodDate);
+            textView_dateFinal.setText(finPeriodDate);
         }
 
         // Set Spinner category data
@@ -721,6 +749,15 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     } else {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                        String begDatePeriodDefault = begDay + "-" + begMonth + "-"+ begYear;
+                        String finDatePeriodDefault = finDay + "-" + finMonth + "-"+ finYear;
+                        // Store the instance custom period default
+                        SharedPreferences prefsPeriod = Objects.requireNonNull(getActivity()).getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefsPeriod.edit();
+                        String defaultPeriod = begDatePeriodDefault+"/"+finDatePeriodDefault;
+                        editor.putString(MainActivity.idInstance, defaultPeriod);
+                        editor.apply();
+                        // DB process
                         resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
                     }
                 } else {
@@ -743,6 +780,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     } else {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                        // Store the instance custom period default
+                        SharedPreferences prefsPeriod = Objects.requireNonNull(getActivity()).getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefsPeriod.edit();
+                        String defaultPeriod = begDate+"/"+finalDate;
+                        editor.putString(MainActivity.idInstance, defaultPeriod);
+                        editor.apply();
+                        // DB process
                         resultado = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
                     }
                 } else {
@@ -765,6 +809,14 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     } else {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                        // Store the instance custom period default
+                        SharedPreferences prefsPeriod = Objects.requireNonNull(getActivity()).
+                                getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefsPeriod.edit();
+                        String defaultPeriod = begDate+"/"+finalDate;
+                        editor.putString(MainActivity.idInstance, defaultPeriod);
+                        editor.apply();
+                        // DB process
                         resultado = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
                     }
                 } else {

@@ -3,10 +3,7 @@ package com.example.myapplication.activities.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +13,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.activities.data.AddEntryViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.Objects;
 
 public class AddEntryActivity extends AppCompatActivity {
 

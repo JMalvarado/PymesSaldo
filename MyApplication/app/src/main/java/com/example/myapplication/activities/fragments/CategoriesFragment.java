@@ -24,8 +24,6 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.AdapterCategory;
-import com.example.myapplication.activities.data.CustomAdapter;
-import com.example.myapplication.activities.data.CustomItems;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.data.ListDataCategory;
 

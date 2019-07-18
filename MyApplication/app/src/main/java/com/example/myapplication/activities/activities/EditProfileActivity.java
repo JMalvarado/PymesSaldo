@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.data.InputFilterMinMax;
-import com.example.myapplication.activities.fragments.CategoriesFragment;
 
 public class EditProfileActivity extends AppCompatActivity {
 
