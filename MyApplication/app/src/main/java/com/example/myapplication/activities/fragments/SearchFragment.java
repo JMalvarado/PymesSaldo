@@ -780,10 +780,12 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     } else {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                        String begDatePeriodDefault = begDay + "-" + begMonth + "-"+ begYear;
+                        String finDatePeriodDefault = finDay + "-" + finMonth + "-"+ finYear;
                         // Store the instance custom period default
                         SharedPreferences prefsPeriod = Objects.requireNonNull(getActivity()).getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = prefsPeriod.edit();
-                        String defaultPeriod = begDate+"/"+finalDate;
+                        String defaultPeriod = begDatePeriodDefault+"/"+finDatePeriodDefault;
                         editor.putString(MainActivity.idInstance, defaultPeriod);
                         editor.apply();
                         // DB process
@@ -809,11 +811,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     } else {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
+                        String begDatePeriodDefault = begDay + "-" + begMonth + "-"+ begYear;
+                        String finDatePeriodDefault = finDay + "-" + finMonth + "-"+ finYear;
                         // Store the instance custom period default
                         SharedPreferences prefsPeriod = Objects.requireNonNull(getActivity()).
                                 getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = prefsPeriod.edit();
-                        String defaultPeriod = begDate+"/"+finalDate;
+                        String defaultPeriod = begDatePeriodDefault+"/"+finDatePeriodDefault;
                         editor.putString(MainActivity.idInstance, defaultPeriod);
                         editor.apply();
                         // DB process
