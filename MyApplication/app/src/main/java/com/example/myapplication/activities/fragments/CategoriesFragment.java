@@ -65,7 +65,7 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
         imageButton_addCategory.setOnClickListener(this);
 
         // Set toolbar title
-        Objects.requireNonNull(getActivity()).setTitle(getString(R.string.search_name));
+        Objects.requireNonNull(getActivity()).setTitle(getString(R.string.categories_name));
 
         // Set instance name as title
         SharedPreferences prefs = getActivity().getSharedPreferences("instance", Context.MODE_PRIVATE);

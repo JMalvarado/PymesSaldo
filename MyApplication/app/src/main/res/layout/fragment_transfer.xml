@@ -1,49 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".activities.fragments.AddMovFragment">
-
-    <RadioGroup
-        android:id="@+id/radioGroup_addMov"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:id="@+id/radioButton_fragmentAddMov_Ingreso"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/fragment_addMov_radiobttn_Ingreso"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <RadioButton
-            android:id="@+id/radioButton_fragmentAddMov_Gasto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fragment_addMov_radiobttn_Gasto"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-    </RadioGroup>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="?android:attr/listDivider" />
+    tools:context=".activities.fragments.TransferFragment">
 
     <EditText
-        android:id="@+id/etIngreso"
+        android:id="@+id/editText_transfer_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="16dp"
         android:autofillHints=""
         android:hint="@string/addentry_textView_hintIngreso"
@@ -51,7 +20,7 @@
         android:padding="15dip" />
 
     <EditText
-        android:id="@+id/etdescripcion"
+        android:id="@+id/editText_transfer_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -66,7 +35,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/roundcornerbrownlight"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/fragment_transfer_textview_from"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinner_transfer_fromInstance"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/roundcornerbrownlight"
@@ -77,11 +71,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="5dp"
-            android:text="@string/activity_add_entry_textView_category"
+            android:text="@string/fragment_transfer_textview_to"
             android:textSize="18sp" />
 
         <Spinner
-            android:id="@+id/spinner_addEntry_category"
+            android:id="@+id/spinner_transfer_toInstance"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginStart="16dp"
@@ -96,7 +90,7 @@
         android:orientation="horizontal">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_calendar_addMovFragment"
+            android:id="@+id/fab_transfer_addDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -110,7 +104,7 @@
             app:rippleColor="@color/colorPrimary" />
 
         <TextView
-            android:id="@+id/textView_addEntry_date"
+            android:id="@+id/textView_transfer_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
@@ -123,7 +117,7 @@
         android:orientation="horizontal">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_clock_addMovFragment"
+            android:id="@+id/fab_transfer_addTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -137,7 +131,7 @@
             app:rippleColor="@color/colorPrimary" />
 
         <TextView
-            android:id="@+id/textView_addEntry_time"
+            android:id="@+id/textView_transfer_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
@@ -151,7 +145,7 @@
         android:orientation="horizontal">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/Ingreso_addMov"
+            android:id="@+id/fab_transfer_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -162,7 +156,7 @@
             app:rippleColor="@color/colorPrimary" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/cancel_addMov"
+            android:id="@+id/fab_transfer_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

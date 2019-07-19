@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.myapplication.R;
 import com.example.myapplication.activities.fragments.AddMovFragment;
 import com.example.myapplication.activities.fragments.SavingFragment;
+import com.example.myapplication.activities.fragments.TransferFragment;
 
 public class AddEntryViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -32,6 +33,11 @@ public class AddEntryViewPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 fragment = new SavingFragment();
                 break;
+
+            case 2:
+                fragment = new TransferFragment();
+                break;
+
         }
 
         return fragment;
@@ -39,7 +45,7 @@ public class AddEntryViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Nullable
@@ -53,6 +59,10 @@ public class AddEntryViewPagerAdapter extends FragmentPagerAdapter {
 
             case 1:
                 title = context.getResources().getString(R.string.addEntryViewPagerAdapter_title2);
+                break;
+
+            case 2:
+                title = context.getResources().getString(R.string.addEntryViewPagerAdapter_title3);
                 break;
         }
         return title;

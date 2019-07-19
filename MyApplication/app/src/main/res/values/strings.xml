@@ -8,6 +8,7 @@
     <string name="balance_period_name">Balance del periodo</string>
     <string name="save_name">Ahorro</string>
     <string name="search_name">Explorar</string>
+    <string name="categories_name">Categorías</string>
     <string name="editEntry_name">Editar movimiento</string>
     <string name="editProfile_name">Editar estado financiero</string>
 
@@ -73,6 +74,8 @@
     <string name="fragment_addMov_radiobttn_Gasto">Gasto</string>
     <string name="fragment_categories_textView_nodata">No hay categorías para mostrar</string>
     <string name="fragment_categories_imageButton_add_descr">Agregar categoría</string>
+    <string name="fragment_transfer_textview_from">Desde:</string>
+    <string name="fragment_transfer_textview_to">Hacia:</string>
 
     <string name="iteminfo_textView_gasto">Gasto:</string>
     <string name="iteminfo_textView_ingreso">Ingreso:</string>
@@ -99,6 +102,7 @@
     <string name="mainActivity_addEntry_lastBalance">Remanente de: </string>
     <string name="addEntryViewPagerAdapter_title1">Movimiento</string>
     <string name="addEntryViewPagerAdapter_title2">Ahorro</string>
+    <string name="addEntryViewPagerAdapter_title3">Transferencia</string>
     <string name="customSpinnerCategories_imageView_descr">Imagen</string>
 
 

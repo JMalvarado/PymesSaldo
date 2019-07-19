@@ -40,9 +40,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class AddMovFragment extends Fragment implements View.OnClickListener {
 
     // View components
@@ -1243,6 +1240,7 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
 
             case R.id.cancel_addMov:
                 Objects.requireNonNull(getActivity()).onBackPressed();
+
                 break;
 
             case R.id.fab_calendar_addMovFragment:
