@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
@@ -85,14 +87,20 @@ public class BalanceFragment extends Fragment {
         // Get data
         // Global variables
         String balance = getMonthBalance();
-        String ingr = Long.toString(getTotalProfit());
-        String gast = Long.toString(getTotalSpend());
+        String profit = Long.toString(getTotalProfit());
+        String spend = Long.toString(getTotalSpend());
 
-
+        // Format
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator(' ');
+        DecimalFormat df = new DecimalFormat("###,###", symbols);
+        String balanceDf = df.format(Long.parseLong(balance));
+        String profitDf = df.format(Long.parseLong(profit));
+        String spendDf = df.format(Long.parseLong(spend));
         // Set balance, profit asn spend on textView
-        textView_balance.setText(balance);
-        textView_profit.setText(ingr);
-        textView_spend.setText(gast);
+        textView_balance.setText(balanceDf);
+        textView_profit.setText(profitDf);
+        textView_spend.setText(spendDf);
 
         // Set text color
         if (Long.parseLong(balance) < 0) {

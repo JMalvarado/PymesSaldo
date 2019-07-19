@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -74,10 +76,17 @@ public class BalancePeriodFragment extends Fragment {
         String profit = Long.toString(getTotalProfit(dateBegin, dateFinal));
         String spend = Long.toString(getTotalSpend(dateBegin, dateFinal));
 
+        // Format
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator(' ');
+        DecimalFormat df = new DecimalFormat("###,###", symbols);
+        String balanceDf = df.format(Long.parseLong(periodBalance));
+        String profitDf = df.format(Long.parseLong(profit));
+        String spendDf = df.format(Long.parseLong(spend));
         // Set data in text views
-        textView_profit.setText(profit);
-        textView_spend.setText(spend);
-        textView_balance.setText(periodBalance);
+        textView_profit.setText(profitDf);
+        textView_spend.setText(spendDf);
+        textView_balance.setText(balanceDf);
 
         return view;
     }

@@ -23,6 +23,8 @@ import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.fragments.SearchFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,13 +69,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         myViewHolder.tvFecha.setText(dateToShow);
         myViewHolder.tvHora.setText(realTime);
 
+        // Set mount data in text view
         float mountIngInt = Float.parseFloat(data.getIngreso());
-
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator(' ');
+        DecimalFormat df = new DecimalFormat("###,###", symbols);
+        String mount;
         if (mountIngInt == 0) {
-            myViewHolder.tvProfit.setText(data.getGasto());
+            mount = df.format(Long.parseLong(data.getGasto()));
+            myViewHolder.tvProfit.setText(mount);
             myViewHolder.imageView_item.setImageResource(R.drawable.ic_out_96);
         } else {
-            myViewHolder.tvProfit.setText(data.getIngreso());
+            mount = df.format(Long.parseLong(data.getIngreso()));
+            myViewHolder.tvProfit.setText(mount);
             myViewHolder.imageView_item.setImageResource(R.drawable.ic_in_96);
         }
 
