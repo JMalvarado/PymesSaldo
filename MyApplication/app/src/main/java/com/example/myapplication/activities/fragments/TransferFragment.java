@@ -187,8 +187,8 @@ public class TransferFragment extends Fragment implements View.OnClickListener {
             case R.id.fab_transfer_in:
                 String montoStr = editText_mount.getText().toString();
 
-                long ingresoInt;
-                long gastoInt;
+                double ingresoInt;
+                double gastoInt;
 
                 // Verify blank spaces
                 if ((editText_mount.getText().toString().equals(""))) {
@@ -204,11 +204,11 @@ public class TransferFragment extends Fragment implements View.OnClickListener {
 
                 // Add "ingreso" to "to" instance
                 gastoInt = 0;
-                ingresoInt = Long.parseLong(montoStr);
+                ingresoInt = Double.parseDouble(montoStr);
                 boolean isResult1 = db.addEntry(date, time, gastoInt, ingresoInt, descripcion, toInstanceId, "2");
 
                 // Add "gasto" to "from" instance
-                gastoInt = Long.parseLong(montoStr);
+                gastoInt = Double.parseDouble(montoStr);
                 ingresoInt =0;
                 boolean isResult2 = db.addEntry(date, time, gastoInt, ingresoInt, descripcion, fromInstanceId, "2");
 

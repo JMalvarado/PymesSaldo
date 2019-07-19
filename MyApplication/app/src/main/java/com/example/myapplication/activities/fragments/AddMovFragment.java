@@ -1174,8 +1174,8 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         String montoStr = editText_profit.getText().toString();
 
-        long ingresoInt;
-        long gastoInt;
+        double ingresoInt;
+        double gastoInt;
 
         switch (view.getId()) {
             case R.id.Ingreso_addMov:
@@ -1192,9 +1192,9 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
                 // Set 0 to blank spaces
                 if (radioGroup_addMov.getCheckedRadioButtonId() == R.id.radioButton_fragmentAddMov_Gasto) {
                     ingresoInt = 0;
-                    gastoInt = Long.parseLong(montoStr);
+                    gastoInt = Double.parseDouble(montoStr);
                 } else {
-                    ingresoInt = Long.parseLong(montoStr);
+                    ingresoInt = Double.parseDouble(montoStr);
                     gastoInt = 0;
                 }
 

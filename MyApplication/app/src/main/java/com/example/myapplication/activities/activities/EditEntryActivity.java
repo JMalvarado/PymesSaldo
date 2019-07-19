@@ -1408,15 +1408,15 @@ public class EditEntryActivity extends AppCompatActivity {
 
             case R.id.Ingreso_editMov:
                 String montoStr = editText_profit.getText().toString();
-                long ingresoInt;
-                long gastoInt;
+                double ingresoInt;
+                double gastoInt;
 
                 // Set 0 to blank spaces
                 if (radioButton_spend.isChecked()) {
                     ingresoInt = 0;
-                    gastoInt = Long.parseLong(montoStr);
+                    gastoInt = Double.parseDouble(montoStr);
                 } else {
-                    ingresoInt = Long.parseLong(montoStr);
+                    ingresoInt = Double.parseDouble(montoStr);
                     gastoInt = 0;
                 }
 

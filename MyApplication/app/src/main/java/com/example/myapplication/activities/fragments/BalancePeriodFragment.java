@@ -73,16 +73,16 @@ public class BalancePeriodFragment extends Fragment {
         String dateFinal = finYear + "-" + finMonth + "-" + finDay;
 
         String periodBalance = getPeriodBalance(dateBegin, dateFinal);
-        String profit = Long.toString(getTotalProfit(dateBegin, dateFinal));
-        String spend = Long.toString(getTotalSpend(dateBegin, dateFinal));
+        String profit = Double.toString(getTotalProfit(dateBegin, dateFinal));
+        String spend = Double.toString(getTotalSpend(dateBegin, dateFinal));
 
         // Format
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setGroupingSeparator(' ');
-        DecimalFormat df = new DecimalFormat("###,###", symbols);
-        String balanceDf = df.format(Long.parseLong(periodBalance));
-        String profitDf = df.format(Long.parseLong(profit));
-        String spendDf = df.format(Long.parseLong(spend));
+        DecimalFormat df = new DecimalFormat("###,###.##", symbols);
+        String balanceDf = df.format(Double.parseDouble(periodBalance));
+        String profitDf = df.format(Double.parseDouble(profit));
+        String spendDf = df.format(Double.parseDouble(spend));
         // Set data in text views
         textView_profit.setText(profitDf);
         textView_spend.setText(spendDf);
@@ -96,13 +96,13 @@ public class BalancePeriodFragment extends Fragment {
      *
      * @return total profit
      */
-    private long getTotalProfit(String dateBeg, String dateFin) {
-        ArrayList<Long> profit = db.getEntryInDateIngresos(idInstance, dateBeg, dateFin);
+    private double getTotalProfit(String dateBeg, String dateFin) {
+        ArrayList<Double> profit = db.getEntryInDateIngresos(idInstance, dateBeg, dateFin);
 
-        long totalProfit = 0;
+        double totalProfit = 0;
 
-        for (Long integer1 : profit) {
-            long ing;
+        for (Double integer1 : profit) {
+            double ing;
             ing = integer1;
             totalProfit += ing;
         }
@@ -115,13 +115,13 @@ public class BalancePeriodFragment extends Fragment {
      *
      * @return spend
      */
-    private long getTotalSpend(String dateBeg, String dateFin) {
-        ArrayList<Long> spend = db.getEntryInDateGastos(idInstance, dateBeg, dateFin);
+    private double getTotalSpend(String dateBeg, String dateFin) {
+        ArrayList<Double> spend = db.getEntryInDateGastos(idInstance, dateBeg, dateFin);
 
-        long totalSpend = 0;
+        double totalSpend = 0;
 
-        for (Long integer1 : spend) {
-            long gas;
+        for (Double integer1 : spend) {
+            double gas;
             gas = integer1;
             totalSpend += gas;
         }
@@ -135,12 +135,12 @@ public class BalancePeriodFragment extends Fragment {
      * @return balance
      */
     private String getPeriodBalance(String dateBeg, String dateFin) {
-        long totalProfit = getTotalProfit(dateBeg, dateFin);
-        long totalSpend = getTotalSpend(dateBeg, dateFin);
+        double totalProfit = getTotalProfit(dateBeg, dateFin);
+        double totalSpend = getTotalSpend(dateBeg, dateFin);
 
-        long balance = totalProfit - totalSpend;
+        double balance = totalProfit - totalSpend;
 
-        return Long.toString(balance);
+        return Double.toString(balance);
     }
 
     /**

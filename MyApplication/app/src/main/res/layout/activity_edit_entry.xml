@@ -68,7 +68,7 @@
                     android:layout_marginRight="16dp"
                     android:autofillHints=""
                     android:hint="@string/addentry_textView_hintIngreso"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:padding="15dip" />
 
                 <EditText

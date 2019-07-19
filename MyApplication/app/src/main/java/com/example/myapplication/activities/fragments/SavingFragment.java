@@ -327,14 +327,14 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
                 }
 
                 // Main data to enter in database
-                long inData;
+                double inData;
                 String type;
 
                 if (radioGroup_addSavingMov.getCheckedRadioButtonId() == R.id.radioButton_fragmentSaving_payment) {
-                    inData = Long.parseLong(editText_payment.getText().toString());
+                    inData = Double.parseDouble(editText_payment.getText().toString());
                     type = "A";
                 } else {
-                    inData = Long.parseLong(editText_withdrawal.getText().toString());
+                    inData = Double.parseDouble(editText_withdrawal.getText().toString());
                     type = "R";
                 }
 
@@ -349,15 +349,15 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
                 if (isResult) {
                     // Check add as a profit or spend option
                     if (checkBox_addSpend.isChecked()) {
-                        long spend = Long.parseLong(editText_payment.getText().toString());
-                        long in = 0;
+                        double spend = Double.parseDouble(editText_payment.getText().toString());
+                        double in = 0;
                         String categoryId = "3";
                         String description = getString(R.string.fragment_saving_addSpend_description);
 
                         db.addEntry(date, time, spend, in, description, id, categoryId);
                     } else if (checkBox_addProfit.isChecked()) {
-                        long spend = 0;
-                        long in = Long.parseLong(editText_withdrawal.getText().toString());
+                        double spend = 0;
+                        double in = Double.parseDouble(editText_withdrawal.getText().toString());
                         String categoryId = "3";
                         String description = getString(R.string.fragment_saving_addProfit_description);
 

@@ -713,8 +713,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     categids.add(resultado.getString(2));
                     fechas.add(resultado.getString(3));
                     horas.add(resultado.getString(4));
-                    ingresos.add(resultado.getString(5));
-                    gastos.add(resultado.getString(6));
+                    ingresos.add(Double.toString(resultado.getDouble(5)));
+                    gastos.add(Double.toString(resultado.getDouble(6)));
                     ids.add(resultado.getString(0));
                 }
 

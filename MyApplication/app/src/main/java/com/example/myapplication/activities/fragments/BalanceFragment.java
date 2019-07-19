@@ -87,25 +87,25 @@ public class BalanceFragment extends Fragment {
         // Get data
         // Global variables
         String balance = getMonthBalance();
-        String profit = Long.toString(getTotalProfit());
-        String spend = Long.toString(getTotalSpend());
+        String profit = Double.toString(getTotalProfit());
+        String spend = Double.toString(getTotalSpend());
 
         // Format
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setGroupingSeparator(' ');
-        DecimalFormat df = new DecimalFormat("###,###", symbols);
-        String balanceDf = df.format(Long.parseLong(balance));
-        String profitDf = df.format(Long.parseLong(profit));
-        String spendDf = df.format(Long.parseLong(spend));
+        DecimalFormat df = new DecimalFormat("###,###.##", symbols);
+        String balanceDf = df.format(Double.parseDouble(balance));
+        String profitDf = df.format(Double.parseDouble(profit));
+        String spendDf = df.format(Double.parseDouble(spend));
         // Set balance, profit asn spend on textView
         textView_balance.setText(balanceDf);
         textView_profit.setText(profitDf);
         textView_spend.setText(spendDf);
 
         // Set text color
-        if (Long.parseLong(balance) < 0) {
+        if (Double.parseDouble(balance) < 0) {
             textView_balance.setTextColor(Color.RED);
-        } else if (Long.parseLong(balance) == 0) {
+        } else if (Double.parseDouble(balance) == 0) {
             textView_balance.setTextColor(Color.BLACK);
         } else {
             textView_balance.setTextColor(Color.GREEN);
@@ -119,13 +119,13 @@ public class BalanceFragment extends Fragment {
      *
      * @return total profit
      */
-    private long getTotalProfit() {
-        ArrayList<Long> profit = db.getEntryCurrentMonthIngresos(idInstance);
+    private double getTotalProfit() {
+        ArrayList<Double> profit = db.getEntryCurrentMonthIngresos(idInstance);
 
-        long totalProfit = 0;
+        double totalProfit = 0;
 
-        for (Long integer1 : profit) {
-            long ing;
+        for (Double integer1 : profit) {
+            double ing;
             ing = integer1;
             totalProfit += ing;
         }
@@ -138,13 +138,13 @@ public class BalanceFragment extends Fragment {
      *
      * @return spend
      */
-    private long getTotalSpend() {
-        ArrayList<Long> spend = db.getEntryCurrentMonthGastos(idInstance);
+    private double getTotalSpend() {
+        ArrayList<Double> spend = db.getEntryCurrentMonthGastos(idInstance);
 
-        long totalSpend = 0;
+        double totalSpend = 0;
 
-        for (Long integer1 : spend) {
-            long gas;
+        for (Double integer1 : spend) {
+            double gas;
             gas = integer1;
             totalSpend += gas;
         }
@@ -158,11 +158,11 @@ public class BalanceFragment extends Fragment {
      * @return balance
      */
     private String getMonthBalance() {
-        long totalProfit = getTotalProfit();
-        long totalSpend = getTotalSpend();
+        double totalProfit = getTotalProfit();
+        double totalSpend = getTotalSpend();
 
-        long balance = totalProfit - totalSpend;
+        double balance = totalProfit - totalSpend;
 
-        return Long.toString(balance);
+        return Double.toString(balance);
     }
 }

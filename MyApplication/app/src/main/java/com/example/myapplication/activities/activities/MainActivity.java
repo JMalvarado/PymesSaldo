@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity
                 if ((!spMonth.equals(currentMonth)) || (!spYear.equals(currentYear))) {
                     // Verify if the balance is positive
                     String balance = getInMonthYearBalance(spMonth, spYear);
-                    long intBalance = Long.parseLong(balance);
+                    double intBalance = Double.parseDouble(balance);
                     if (intBalance > 0) {
                         // Get current date
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
@@ -357,13 +357,13 @@ public class MainActivity extends AppCompatActivity
      *
      * @return total profit
      */
-    private long getTotalProfit(String month, String year) {
-        ArrayList<Long> profit = db.getEntryInMonthYearIngresos(idInstance, month, year);
+    private double getTotalProfit(String month, String year) {
+        ArrayList<Double> profit = db.getEntryInMonthYearIngresos(idInstance, month, year);
 
-        long totalProfit = 0;
+        double totalProfit = 0;
 
-        for (Long integer1 : profit) {
-            long ing;
+        for (Double integer1 : profit) {
+            double ing;
             ing = integer1;
             totalProfit += ing;
         }
@@ -376,13 +376,13 @@ public class MainActivity extends AppCompatActivity
      *
      * @return spend
      */
-    private long getTotalSpend(String month, String year) {
-        ArrayList<Long> spend = db.getEntryInMonthYearGastos(idInstance, month, year);
+    private double getTotalSpend(String month, String year) {
+        ArrayList<Double> spend = db.getEntryInMonthYearGastos(idInstance, month, year);
 
-        long totalSpend = 0;
+        double totalSpend = 0;
 
-        for (Long integer1 : spend) {
-            long gas;
+        for (Double integer1 : spend) {
+            double gas;
             gas = integer1;
             totalSpend += gas;
         }
@@ -396,11 +396,11 @@ public class MainActivity extends AppCompatActivity
      * @return balance
      */
     private String getInMonthYearBalance(String month, String year) {
-        long totalProfit = getTotalProfit(month, year);
-        long totalSpend = getTotalSpend(month, year);
+        double totalProfit = getTotalProfit(month, year);
+        double totalSpend = getTotalSpend(month, year);
 
-        long balance = totalProfit - totalSpend;
+        double balance = totalProfit - totalSpend;
 
-        return Long.toString(balance);
+        return Double.toString(balance);
     }
 }

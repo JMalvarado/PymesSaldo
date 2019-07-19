@@ -70,17 +70,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         myViewHolder.tvHora.setText(realTime);
 
         // Set mount data in text view
-        float mountIngInt = Float.parseFloat(data.getIngreso());
+        double mountIngInt = Double.parseDouble(data.getIngreso());
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setGroupingSeparator(' ');
-        DecimalFormat df = new DecimalFormat("###,###", symbols);
+        DecimalFormat df = new DecimalFormat("###,###.##", symbols);
         String mount;
         if (mountIngInt == 0) {
-            mount = df.format(Long.parseLong(data.getGasto()));
+            mount = df.format(Double.parseDouble(data.getGasto()));
             myViewHolder.tvProfit.setText(mount);
             myViewHolder.imageView_item.setImageResource(R.drawable.ic_out_96);
         } else {
-            mount = df.format(Long.parseLong(data.getIngreso()));
+            mount = df.format(Double.parseDouble(data.getIngreso()));
             myViewHolder.tvProfit.setText(mount);
             myViewHolder.imageView_item.setImageResource(R.drawable.ic_in_96);
         }

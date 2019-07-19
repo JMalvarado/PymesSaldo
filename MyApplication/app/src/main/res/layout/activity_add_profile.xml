@@ -59,7 +59,7 @@
         android:enabled="false"
         android:gravity="center_horizontal"
         android:importantForAutofill="no"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         tools:ignore="LabelFor" />
 
     <LinearLayout

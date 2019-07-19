@@ -1,6 +1,7 @@
 package com.example.myapplication.activities.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -32,6 +35,7 @@ public class SaveMoneyFragment extends Fragment {
     private String idInstance;
     private DatabaseManager db;
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,9 +58,17 @@ public class SaveMoneyFragment extends Fragment {
         textView_instanceName.setText(name);
 
         // Get save money from database
-        long saveBalance = getTotalSaveMoney();
+        double saveBalance = getTotalSaveMoney();
+
         // Set in text save balance in text view
-        textView_money.setText(Long.toString(saveBalance));
+
+        // Format
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator(' ');
+        DecimalFormat df = new DecimalFormat("###,###.##", symbols);
+        String balanceDf = df.format(saveBalance);
+        // Set saving balance text view
+        textView_money.setText(balanceDf);
 
         return view;
     }
@@ -66,24 +78,24 @@ public class SaveMoneyFragment extends Fragment {
      *
      * @return total saved money
      */
-    private long getTotalSaveMoney() {
-        ArrayList<Long> payments;
-        ArrayList<Long> withdrawalls;
+    private double getTotalSaveMoney() {
+        ArrayList<Double> payments;
+        ArrayList<Double> withdrawalls;
 
         payments = db.getSaveAllPayment(idInstance);
         withdrawalls = db.getSaveAllWithdrawal(idInstance);
 
-        long totalPayment = 0;
-        long totalWithdrawall = 0;
+        double totalPayment = 0;
+        double totalWithdrawall = 0;
 
-        for (Long integer1 : payments) {
-            long payment;
+        for (Double integer1 : payments) {
+            double payment;
             payment = integer1;
             totalPayment += payment;
         }
 
-        for (Long integer2 : withdrawalls) {
-            long withdrawall;
+        for (Double integer2 : withdrawalls) {
+            double withdrawall;
             withdrawall = integer2;
             totalWithdrawall += withdrawall;
         }

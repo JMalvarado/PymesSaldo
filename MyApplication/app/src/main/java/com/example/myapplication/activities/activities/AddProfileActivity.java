@@ -191,8 +191,8 @@ public class AddProfileActivity extends AppCompatActivity {
 
                     // Add initial profit
                     if (switch_addInitialProfit.isChecked()) {
-                        long spend = 0;
-                        long in = Long.parseLong(editText_initialProfit.getText().toString());
+                        double spend = 0;
+                        double in = Double.parseDouble(editText_initialProfit.getText().toString());
                         String categoryId = "1";
                         String description = getString(R.string.activity_addprofile_categoryInitial);
                         // Date now
