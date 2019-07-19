@@ -22,22 +22,31 @@
 
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_margin="25dp"
-        android:text="@string/fragment_saveMoney_textView_ahorro"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textColor="@color/colorPrimary" />
+        android:layout_margin="10dp"
+        android:background="@drawable/border_shadow"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="8dp">
 
-    <TextView
-        android:id="@+id/textView_fragmentSaveMoney_money"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:gravity="center"/>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:contentDescription="@string/imageview_descr"
+            android:src="@drawable/ic_pigmoney_100" />
+
+        <TextView
+            android:id="@+id/textView_fragmentSaveMoney_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/colorBlueDark" />
+
+    </LinearLayout>
 
 </LinearLayout>

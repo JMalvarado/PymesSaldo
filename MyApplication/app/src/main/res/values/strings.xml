@@ -104,6 +104,7 @@
     <string name="addEntryViewPagerAdapter_title2">Ahorro</string>
     <string name="addEntryViewPagerAdapter_title3">Transferencia</string>
     <string name="customSpinnerCategories_imageView_descr">Imagen</string>
+    <string name="imageview_descr">imageview balance</string>
 
 
     <!-- Toast, snack bar and alerts -->

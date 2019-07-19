@@ -3,6 +3,7 @@ package com.example.myapplication.activities.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -87,6 +88,15 @@ public class BalancePeriodFragment extends Fragment {
         textView_profit.setText(profitDf);
         textView_spend.setText(spendDf);
         textView_balance.setText(balanceDf);
+
+        // Set text color
+        if (Double.parseDouble(periodBalance) < 0) {
+            textView_balance.setTextColor(Color.RED);
+        } else if (Double.parseDouble(periodBalance) == 0) {
+            textView_balance.setTextColor(Color.BLACK);
+        } else {
+            textView_balance.setTextColor(Color.GREEN);
+        }
 
         return view;
     }

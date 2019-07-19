@@ -8,6 +8,7 @@
     <color name="colorBrownGrayLight">#726763</color>
     <color name="colorPink">#EEC795</color>
     <color name="colorWhite">#FEFFFF</color>
+    <color name="colorWhiteMint">#CADADA</color>
     <color name="colorBlack">#000000</color>
     <color name="colorPrimaryTransparent">#C473AC98</color>
 </resources>

@@ -308,10 +308,12 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
             case R.id.radioButton_porfecha:
                 checkBox_begining.setEnabled(true);
+                checkBox_begining.setChecked(false);
                 fab_dateBegin.setEnabled(true);
                 fab_dateBegin.setVisibility(View.VISIBLE);
 
                 checkBox_final.setEnabled(true);
+                checkBox_final.setChecked(false);
                 fab_dateFinal.setEnabled(true);
                 fab_dateFinal.setVisibility(View.VISIBLE);
 
