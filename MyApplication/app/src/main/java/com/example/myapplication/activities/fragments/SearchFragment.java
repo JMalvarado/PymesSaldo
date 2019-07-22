@@ -129,9 +129,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
             checkBox_begining.setEnabled(false);
             fab_dateBegin.setEnabled(false);
+            fab_dateBegin.setVisibility(View.GONE);
 
             checkBox_final.setEnabled(false);
             fab_dateFinal.setEnabled(false);
+            fab_dateFinal.setVisibility(View.GONE);
         } else {
             radioButton_period.setEnabled(true);
             radioButton_period.setChecked(true);

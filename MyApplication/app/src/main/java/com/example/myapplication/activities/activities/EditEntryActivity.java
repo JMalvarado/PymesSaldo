@@ -196,7 +196,7 @@ public class EditEntryActivity extends AppCompatActivity {
         idCateg = getIntent().getStringExtra("CATEG");
 
         // Set actual data on views and variables
-        if (ingreso.equals("0")) {
+        if (ingreso.equals("0.0")) {
             radioButton_spend.setChecked(true);
             editText_profit.setText(gasto);
         } else {
@@ -1334,6 +1334,9 @@ public class EditEntryActivity extends AppCompatActivity {
 
                         // Cast hour with 1 digit to 2
                         switch (strHour) {
+                            case "0":
+                                strHour = "00";
+                                break;
                             case "1":
                                 strHour = "01";
                                 break;
@@ -1367,6 +1370,9 @@ public class EditEntryActivity extends AppCompatActivity {
 
                         // Cast minute with 1 digit to 2
                         switch (strMinute) {
+                            case "0":
+                                strMinute = "00";
+                                break;
                             case "1":
                                 strMinute = "01";
                                 break;

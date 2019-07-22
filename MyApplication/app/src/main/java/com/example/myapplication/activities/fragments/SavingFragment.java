@@ -247,6 +247,9 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
 
                         // Cast hour with 1 digit to 2
                         switch (strHour) {
+                            case "0":
+                                strHour = "00";
+                                break;
                             case "1":
                                 strHour = "01";
                                 break;
@@ -280,6 +283,9 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
 
                         // Cast minute with 1 digit to 2
                         switch (strMinute) {
+                            case "0":
+                                strMinute = "00";
+                                break;
                             case "1":
                                 strMinute = "01";
                                 break;
