@@ -243,6 +243,8 @@ public class TransferFragment extends Fragment implements View.OnClickListener {
                 // Show time in format HH:MM
                 textView_time.setText(timeToShow);
 
+                Objects.requireNonNull(getActivity()).onBackPressed();
+
                 break;
 
             case R.id.fab_transfer_cancel:

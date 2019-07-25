@@ -400,6 +400,8 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(view.getContext(), getString(R.string.toast_addEntryActivity_noSuccesAdd), Toast.LENGTH_LONG).show();
                 }
 
+                Objects.requireNonNull(getActivity()).onBackPressed();
+
                 break;
 
             case R.id.cancel_saving:

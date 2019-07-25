@@ -78,11 +78,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         if (mountIngInt == 0) {
             mount = df.format(Double.parseDouble(data.getGasto()));
             myViewHolder.tvProfit.setText(mount);
-            myViewHolder.imageView_item.setImageResource(R.drawable.ic_out_96);
+            myViewHolder.imageView_item.setImageResource(R.drawable.ic_spendred_48);
         } else {
             mount = df.format(Double.parseDouble(data.getIngreso()));
             myViewHolder.tvProfit.setText(mount);
-            myViewHolder.imageView_item.setImageResource(R.drawable.ic_in_96);
+            myViewHolder.imageView_item.setImageResource(R.drawable.ic_profitgreen_48);
         }
 
         myViewHolder.tvCategory.setText(db.getCategoryName(data.getCategId()));

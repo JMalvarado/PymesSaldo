@@ -1236,6 +1236,8 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
                 // Show time in format HH:MM
                 textView_time.setText(timeToShow);
 
+                Objects.requireNonNull(getActivity()).onBackPressed();
+
                 break;
 
             case R.id.cancel_addMov:
