@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity
                         // Get id instance
                         String id = prefs.getString("ID", null);
 
-                        String newEntryDescription = getString(R.string.mainActivity_addEntry_lastBalance) + spMonth + "-" + spYear;
+                        String newEntryDescription = getString(R.string.mainActivity_addEntry_lastBalance) + spMonth + ", " + spYear;
                         db.addEntry(dateNow, timeNow, 0, intBalance, newEntryDescription, id, "1");
                     }
                 }

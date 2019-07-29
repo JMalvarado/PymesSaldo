@@ -293,7 +293,7 @@ public class BalancePeriodFragment extends Fragment {
             begYear = year;
         }
 
-        return begDay + "-" + begMonth + "-" + begYear + " -- " + finDay + "-" + finMonth + "-" + finYear;
+        return begDay + "-" + begMonth + "-" + begYear + "    -    " + finDay + "-" + finMonth + "-" + finYear;
     }
 
 }

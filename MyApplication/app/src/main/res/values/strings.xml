@@ -33,8 +33,8 @@
     <string name="activity_add_profile_msg_samename">El estado ya existe</string>
     <string name="activity_add_entry_textView_category">Categoría:</string>
     <string name="activity_edit_entry_textView_profile">Estado financiero:</string>
-    <string name="activity_add_profile_switch_agregarSaldoInicial">Agregar saldo inicial</string>
-    <string name="activity_add_profile_switch_periodo">Agregar periodo definido</string>
+    <string name="activity_add_profile_switch_agregarSaldoInicial">Saldo inicial</string>
+    <string name="activity_add_profile_switch_periodo">Ciclo definido</string>
     <string name="activity_add_profile_helpButton_initialprofit_descr">Descripcion de la funcion del boton saldo inicial</string>
     <string name="activity_add_profile_helpButton_period_descr">Descripcion de la funcion del boton perido definido</string>
 
@@ -136,7 +136,7 @@
     <string name="dialogInfo_button_dismiss_text">Cerrar</string>
     <string name="dialogInfo_title_help">Info</string>
     <string name="dialogInfo_content_help_initialProfit">Añade un ingreso inicial para el estado financiero</string>
-    <string name="dialogInfo_content_help_period">Añade un día de mes como rango de periodo o fecha de corte. Ejemplo: Día de corte en las tarjetas de crédito</string>
+    <string name="dialogInfo_content_help_period">Añade un día de mes como ciclo o fecha de corte. Ejemplo: Día de corte en las tarjetas de crédito</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>

@@ -68,7 +68,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
         // Set filter for period edit text
-        editText_period.setFilters(new InputFilter[]{new InputFilterMinMax(1, 28)});
+        editText_period.setFilters(new InputFilter[]{new InputFilterMinMax(1, 31)});
     }
 
     public void onClickEditProfile(final View view) {

@@ -15,6 +15,8 @@ import com.example.myapplication.activities.data.ListData;
 import com.example.myapplication.activities.data.MyAdapter;
 import com.example.myapplication.activities.fragments.SearchFragment;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -26,6 +28,9 @@ public class DataSearch extends AppCompatActivity {
     private RecyclerView.Adapter rvAdapter;
     private TextView textView_instanceName;
     private TextView textView_periodTitle;
+    private TextView textView_profit;
+    private TextView textView_spend;
+    private TextView textView_balance;
 
     // Global variables
     private List<ListData> listItems;
@@ -46,6 +51,9 @@ public class DataSearch extends AppCompatActivity {
         // Initialize view components
         textView_instanceName = findViewById(R.id.textView_dataSearch_instanceName);
         textView_periodTitle = findViewById(R.id.tvTitPeriodoLista);
+        textView_profit = findViewById(R.id.textview_activitydatasearch_profit);
+        textView_spend = findViewById(R.id.textview_activitydatasearch_spend);
+        textView_balance = findViewById(R.id.textview_activitydatasearch_balance);
 
         // Set instance name as title
         SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
@@ -97,9 +105,7 @@ public class DataSearch extends AppCompatActivity {
             String year = Integer.toString(calendar.get(Calendar.YEAR));
             monthAndYear = month + ", " + year;
 
-            textView_periodTitle.setText(new StringBuilder().
-                    append(getString(R.string.fragment_search_period_title)).append(" ").
-                    append(monthAndYear).toString());
+            textView_periodTitle.setText(monthAndYear);
 
         } else if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked) && (SearchFragment.radioButtonDatesIsChecked)) {
             // Initial date
@@ -116,9 +122,8 @@ public class DataSearch extends AppCompatActivity {
             day = SearchFragment.finDay;
             String dateFin = day + sepearator + month + sepearator + year;
 
-            textView_periodTitle.setText(new StringBuilder().
-                    append(getString(R.string.fragment_search_period_title)).append(" ").
-                    append(dateInit).append(" - ").append(dateFin).toString());
+            textView_periodTitle.setText(new StringBuilder()
+                    .append(dateInit).append("    -    ").append(dateFin).toString());
 
         } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked) && (SearchFragment.radioButtonDatesIsChecked)) {
             // Initial date
@@ -135,14 +140,12 @@ public class DataSearch extends AppCompatActivity {
             day = dateTmp.substring(8, 10);
             String dateFin = day + sepearator + month + sepearator + year;
 
-            textView_periodTitle.setText(new StringBuilder().
-                    append(getString(R.string.fragment_search_period_title)).
-                    append(" ").append(dateInit).append(" - ").append(dateFin).toString());
+            textView_periodTitle.setText(new StringBuilder()
+                    .append(dateInit).append("    -    ").append(dateFin).toString());
 
         } else if ((SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked) && (SearchFragment.radioButtonDatesIsChecked)) {
-            textView_periodTitle.setText(new StringBuilder().
-                    append(getString(R.string.fragment_search_period_title)).
-                    append(" ").append(getString(R.string.fragment_search_period_title_all)).toString());
+            textView_periodTitle.setText(new StringBuilder()
+                    .append(getString(R.string.fragment_search_period_title_all)).toString());
         } else {
             // Initial date
             String year = SearchFragment.begYear;
@@ -156,14 +159,18 @@ public class DataSearch extends AppCompatActivity {
             day = SearchFragment.finDay;
             String dateFin = day + sepearator + month + sepearator + year;
 
-            textView_periodTitle.setText(new StringBuilder().
-                    append(getString(R.string.fragment_search_period_title)).append(" ").
-                    append(dateInit).append(" - ").append(dateFin).toString());
+            textView_periodTitle.setText(new StringBuilder()
+                    .append(dateInit).append("    -    ").append(dateFin).toString());
         }
 
+        // Get entries data and calculate total profit, spend and balance
+        double totalProfit = 0;
+        double totalSpend = 0;
+        double totalBalance = 0;
         for (int i = 0; i < descripciones.size(); i++) {
             assert ids != null;
             assert categIds != null;
+            //Set List Data object with entry data
             ListData listData = new ListData(
                     descripciones.get(i),
                     fechas.get(i),
@@ -175,7 +182,28 @@ public class DataSearch extends AppCompatActivity {
             );
 
             listItems.add(listData);
+
+            // Add profit and spend
+            double profitTmp = Double.parseDouble(ingresos.get(i));
+            double spendTmp = Double.parseDouble(gastos.get(i));
+            totalProfit += profitTmp;
+            totalSpend += spendTmp;
         }
+
+        // Set total profit, spend and balance data in text views
+        // Calculate balance
+        totalBalance = totalProfit-totalSpend;
+        // Format
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator(' ');
+        DecimalFormat df = new DecimalFormat("###,###.##", symbols);
+        String balanceDf = df.format(totalBalance);
+        String profitDf = df.format(totalProfit);
+        String spendDf = df.format(totalSpend);
+        // Set balance, profit and spend on textView
+        textView_balance.setText(balanceDf);
+        textView_profit.setText(profitDf);
+        textView_spend.setText(spendDf);
 
         rvAdapter = new MyAdapter(listItems, this);
 

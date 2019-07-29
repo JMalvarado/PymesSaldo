@@ -35,7 +35,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
-                        android:layout_margin="10dp"/>
+                        android:layout_margin="10dp" />
 
                     <ImageView
                         android:id="@+id/imageView_dataList_ic"
@@ -61,7 +61,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/colorPrimaryDark" />
+                        android:textColor="@color/colorBlack"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvListFecha"
