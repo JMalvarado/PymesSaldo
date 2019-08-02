@@ -189,11 +189,19 @@ public class AddProfileActivity extends AppCompatActivity {
                     // Id
                     String id = db.getInstanceId(name);
 
+                    // Add default categories
+                    Cursor categories = db.getCategoriesByInstance(id);
+                    if (categories.getCount() == 0) {
+                        db.addCategory(getString(R.string.mainActivity_addCategory_others), "ic_questionmark_100", id);
+                        db.addCategory(getString(R.string.mainActivity_addCategory_transfer), "ic_moneyflow_100", id);
+                        db.addCategory(getString(R.string.mainActivity_addCategory_saving), "ic_pigmoney_100", id);
+                    }
+
                     // Add initial profit
                     if (switch_addInitialProfit.isChecked()) {
                         double spend = 0;
                         double in = Double.parseDouble(editText_initialProfit.getText().toString());
-                        String categoryId = "1";
+                        String categoryId = db.getCategoryId(getString(R.string.mainActivity_addCategory_others), id);
                         String description = getString(R.string.activity_addprofile_categoryInitial);
                         // Date now
                         String dateNow;

@@ -59,6 +59,8 @@
     <string name="fragment_balance_textView_titleBalance">El balance para el mes en curso es</string>
     <string name="fragment_balance_textView_ingresos">Ingresos:</string>
     <string name="fragment_balance_textView_gastos">Gastos:</string>
+    <string name="fragment_balance_textView_actualbalance">Balance</string>
+    <string name="fragment_balance_textView_balanceplusrem">Balance + Remanentes</string>
     <string name="fragment_saving_radioButton_abono">Abono</string>
     <string name="fragment_saving_radioButton_retiro">Retiro</string>
     <string name="fragment_saving_checkbox_addSpend">Agregar como GASTO en balance general</string>
@@ -146,7 +148,7 @@
     <string name="nav_add_entry">Agregar entrada</string>
     <string name="nav_explore">Explorar movimientos</string>
     <string name="nav_month_balance">Balance del mes</string>
-    <string name="nav_period_balance">Balance del periodo definido</string>
+    <string name="nav_period_balance">Balance del ciclo definido</string>
     <string name="nav_categories">Categorías</string>
     <string name="nav_money_save">Ahorro</string>
     <string name="nav_add_profile">Agregar estado financiero</string>

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.data.AdapterCategory;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.data.ListDataCategory;
@@ -82,7 +83,7 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
         icons = new ArrayList<>();
         names = new ArrayList<>();
         // Get categories data from db
-        Cursor result = db.getCategoryAllData();
+        Cursor result = db.getCategoriesByInstance(MainActivity.idInstance);
         // Check categories count
         if (result.getCount() == 0) {
             textView_nodata.setVisibility(View.VISIBLE);
@@ -122,6 +123,8 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
                 break;
         }
     }
+
+
 
     /**
      * Alert dialog to add category
@@ -1056,7 +1059,7 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
                 // Add category to data base
                 if (!editText_categoryName.getText().toString().equals("")) {
                     // check if the category exist
-                    Cursor cursorNames = db.getCategoryAllData();
+                    Cursor cursorNames = db.getCategoriesByInstance(MainActivity.idInstance);
                     boolean isExistCategory = false;
                     while (cursorNames.moveToNext()) {
                         if (cursorNames.getString(1).equals(editText_categoryName.getText().toString())) {
@@ -1067,7 +1070,7 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
                     if (isExistCategory) {
                         Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_existCategory), Toast.LENGTH_LONG).show();
                     } else {
-                        db.addCategory(editText_categoryName.getText().toString(), icName);
+                        db.addCategory(editText_categoryName.getText().toString(), icName, MainActivity.idInstance);
                         Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().
                                 replace(R.id.content_main_layout, new CategoriesFragment()).commit();
                     }

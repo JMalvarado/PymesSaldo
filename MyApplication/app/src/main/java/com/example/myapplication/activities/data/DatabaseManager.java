@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 18;
     private static final String DATABASE_NAME = "Saldos.db";
 
     //tabla1
@@ -33,6 +33,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     //tabla3
     private static final String TABLA3_NOMBRE = "Categorias";
     //columnas
+    private static final String Col_InstIDCateg = "Instancias_ID";
     private static final String Col_NombreCateg = "Nombre";
     private static final String Col_Icono = "Icono";
 
@@ -73,7 +74,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("create table " + TABLA3_NOMBRE + " " +
                 "(Categorias_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "Nombre TEXT," +
-                "Icono TEXT)");
+                "Icono TEXT," +
+                "Instancias_ID INTEGER," +
+                "FOREIGN KEY (Instancias_ID) REFERENCES Instancias (Instancias_ID) " +
+                "ON DELETE CASCADE ON UPDATE NO ACTION)");
 
         // Create table for entries
         sqLiteDatabase.execSQL("create table " + TABLA1_NOMBRE + " " +
@@ -161,10 +165,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param icon icon name
      * @return process state
      */
-    public boolean addCategory(String name, String icon) {
+    public boolean addCategory(String name, String icon, String instance_id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
+        contentValues.put(Col_InstIDCateg, instance_id);
         contentValues.put(Col_NombreCateg, name);
         contentValues.put(Col_Icono, icon);
 
@@ -293,9 +298,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param name
      * @return
      */
-    public String getCategoryId(String name) {
+    public String getCategoryId(String name, String instance_id) {
         Cursor consulta = this.getReadableDatabase().rawQuery(
-                "SELECT * FROM " + TABLA3_NOMBRE + " WHERE Nombre='" + name + "'", null);
+                "SELECT * FROM " + TABLA3_NOMBRE + " WHERE Nombre='" + name + "' " +
+                        "AND Instancias_ID="+instance_id, null);
 
         String id = "";
 
@@ -312,9 +318,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param id
      * @return
      */
-    public String getCategoryName(String id) {
+    public String getCategoryName(String id, String instance_id) {
         Cursor consulta = this.getReadableDatabase().rawQuery(
-                "SELECT * FROM " + TABLA3_NOMBRE + " WHERE Categorias_ID='" + id + "'", null);
+                "SELECT * FROM " + TABLA3_NOMBRE + " WHERE Categorias_ID='" + id + "' " +
+                        "AND Instancias_ID="+instance_id, null);
 
         String name = "";
 
@@ -331,9 +338,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param name category's name
      * @return icon's name
      */
-    public String getCategoryIconName(String name) {
+    public String getCategoryIconName(String name, String instance_id) {
         Cursor consulta = this.getReadableDatabase().rawQuery(
-                "SELECT * FROM " + TABLA3_NOMBRE + " WHERE Nombre='" + name + "'", null);
+                "SELECT * FROM " + TABLA3_NOMBRE + " WHERE Nombre='" + name + "' " +
+                        "AND Instancias_ID="+instance_id, null);
 
         String icon = "";
 
@@ -352,6 +360,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public Cursor getCategoryAllData() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLA3_NOMBRE, null);
+    }
+
+    /**
+     * Get al the categories of specific instance
+     * @param instance_id
+     * @return
+     */
+    public Cursor getCategoriesByInstance(String instance_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLA3_NOMBRE +
+                " WHERE Instancias_ID="+instance_id, null);
     }
 
     /**
@@ -931,9 +950,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param id
      * @return
      */
-    public Integer deleteCategory(String id) {
+    public Integer deleteCategory(String id, String instance_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLA3_NOMBRE, "Categorias_ID=?", new String[]{id});
+        return db.delete(TABLA3_NOMBRE, "Categorias_ID=? AND Instancias_ID=?", new String[]{id, instance_id});
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -995,15 +1014,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @param category_ID
      * @return
      */
-    public boolean editCategory(String category_ID, String name, String icon) {
+    public boolean editCategory(String category_ID, String name, String icon, String instance_id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("Categorias_ID", category_ID);
         contentValues.put(Col_NombreCateg, name);
         contentValues.put(Col_Icono, icon);
+        contentValues.put(Col_InstIDCateg, instance_id);
 
-        db.update(TABLA3_NOMBRE, contentValues, "Categorias_ID=?", new String[]{category_ID});
+        db.update(TABLA3_NOMBRE, contentValues, "Categorias_ID=? AND Instancias_ID=?", new String[]{category_ID, instance_id});
 
         return true;
     }

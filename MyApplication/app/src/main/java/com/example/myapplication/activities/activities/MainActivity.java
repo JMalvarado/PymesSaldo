@@ -31,6 +31,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.view.Menu;
 import android.view.ViewGroup;
@@ -39,8 +40,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -53,6 +52,8 @@ public class MainActivity extends AppCompatActivity
 
     // Variables
     public static String idInstance;
+    private Fragment fragment = null;
+    private NavigationView navigationView;
 
     // Database instance
     public DatabaseManager db;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity
 
         // Initialize Navigation drawer view components
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        final NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         View navHeader = navigationView.getHeaderView(0);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -92,63 +93,20 @@ public class MainActivity extends AppCompatActivity
         // Instance of the Database Manager
         db = new DatabaseManager(this);
 
+        // Get shared preferences of instance
+        SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+        String name = prefs.getString("NAME", null);
+        idInstance = prefs.getString("ID", null);
+
 
         /* Make an initial query to verify if there is any instance created.
            If not, show the activity to create a profile. */
         Cursor instancesData = db.getInstancesAllData();
         if (instancesData.getCount() == 0) {
-            // Add default categories
-            Cursor categories = db.getCategoryAllData();
-            if(categories.getCount() == 0) {
-                db.addCategory(getString(R.string.mainActivity_addCategory_others), "ic_questionmark_100");
-                db.addCategory(getString(R.string.mainActivity_addCategory_transfer), "ic_moneyflow_100");
-                db.addCategory(getString(R.string.mainActivity_addCategory_saving), "ic_pigmoney_100");
-            }
-
             Intent intentAddProfile = new Intent(this, AddProfileActivity.class);
             intentAddProfile.putExtra("IS_NEW_USER", true);
             startActivity(intentAddProfile);
         } else {
-            /* Verify the actual month, if it change, add the previous positive
-               balance as a profit in the actual month */
-
-            // Get the current year and month
-            Calendar calendar = Calendar.getInstance();
-            String currentMonth = Integer.toString(calendar.get(Calendar.MONTH) + 1);
-            String currentYear = Integer.toString(calendar.get(Calendar.YEAR));
-
-            // Get the shared preferences month and year
-            SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
-            String spMonth = prefs.getString("LASTMONTH", null);
-            String spYear = prefs.getString("LASTYEAR", null);
-
-            // Verify not null data
-            if ((spMonth != null) && (spYear != null)) {
-                // Compare month and year
-                if ((!spMonth.equals(currentMonth)) || (!spYear.equals(currentYear))) {
-                    // Verify if the balance is positive
-                    String balance = getInMonthYearBalance(spMonth, spYear);
-                    double intBalance = Double.parseDouble(balance);
-                    if (intBalance > 0) {
-                        // Get current date
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
-                        String dateNow;
-                        LocalDateTime now = LocalDateTime.now();
-                        dateNow = dtf.format(now);
-
-                        // Get current time
-                        String timeNow = java.time.LocalTime.now().toString();
-
-                        // Get id instance
-                        String id = prefs.getString("ID", null);
-
-                        String newEntryDescription = getString(R.string.mainActivity_addEntry_lastBalance) + spMonth + ", " + spYear;
-                        db.addEntry(dateNow, timeNow, 0, intBalance, newEntryDescription, id, "1");
-                    }
-                }
-            }
-
-
             // Array List to store the profiles names
             ArrayList<String> profilesList = new ArrayList<>();
 
@@ -165,7 +123,7 @@ public class MainActivity extends AppCompatActivity
 
             // Create adapter for the spinner of profiles
             ArrayAdapter<String> spinnerAdapter;
-            spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_items_theme, profilesList){
+            spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_items_theme, profilesList) {
                 @Override
                 public View getView(int position, View convertView, ViewGroup parent) {
                     TextView textView = (TextView) super.getView(position, convertView, parent);
@@ -180,9 +138,6 @@ public class MainActivity extends AppCompatActivity
             spinner_instances.setAdapter(spinnerAdapter);
 
             // Set text title and id with shared preference
-            prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
-            String name = prefs.getString("NAME", null);
-            idInstance = prefs.getString("ID", null);
             tv_navheader_title.setText(name);
 
             int spinner_DefaultPosition = 0;
@@ -256,6 +211,7 @@ public class MainActivity extends AppCompatActivity
 
             // Get and show the default fragment
             BalanceFragment balanceFragment = new BalanceFragment();
+            fragment = balanceFragment;
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, balanceFragment).commit();
 
             // Check if there is defined period to enable nav item period balance
@@ -278,15 +234,32 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            Snackbar.make(findViewById(R.id.drawer_layout), getString(R.string.snack_mainActivity_exit), Snackbar.LENGTH_LONG)
-                    .setAction("Salir", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            onExit();
-                        }
-                    })
-                    .show();
+            if (fragment != null) {
+                if (fragment instanceof BalanceFragment) {
+                    Snackbar.make(findViewById(R.id.drawer_layout), getString(R.string.snack_mainActivity_exit), Snackbar.LENGTH_LONG)
+                            .setAction("Salir", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    onExit();
+                                }
+                            })
+                            .show();
+                } else {
+                    showHomeFragment();
+                }
+            } else {
+                onExit();
+            }
         }
+    }
+
+    /**
+     * Show Balance fragment
+     */
+    private void showHomeFragment() {
+        fragment = new BalanceFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new BalanceFragment()).commit();
+        navigationView.getMenu().getItem(1).setChecked(true);
     }
 
     @Override
@@ -312,16 +285,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_month_balance) {
+            fragment = new BalanceFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new BalanceFragment()).commit();
         } else if (id == R.id.nav_explore) {
+            fragment = new SearchFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new SearchFragment()).commit();
         } else if (id == R.id.nav_exit) {
             onExit();
         } else if (id == R.id.nav_money_save) {
+            fragment = new SaveMoneyFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new SaveMoneyFragment()).commit();
         } else if (id == R.id.nav_period_balance) {
+            fragment = new BalancePeriodFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new BalancePeriodFragment()).commit();
         } else if (id == R.id.nav_categories) {
+            fragment = new CategoriesFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new CategoriesFragment()).commit();
         }
 
@@ -350,57 +328,5 @@ public class MainActivity extends AppCompatActivity
         intentSalir.addCategory(Intent.CATEGORY_HOME);
         intentSalir.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intentSalir);
-    }
-
-    /**
-     * Get integer with the total profit of the given month and year
-     *
-     * @return total profit
-     */
-    private double getTotalProfit(String month, String year) {
-        ArrayList<Double> profit = db.getEntryInMonthYearIngresos(idInstance, month, year);
-
-        double totalProfit = 0;
-
-        for (Double integer1 : profit) {
-            double ing;
-            ing = integer1;
-            totalProfit += ing;
-        }
-
-        return totalProfit;
-    }
-
-    /**
-     * Get integer with the total spend of the given month and year
-     *
-     * @return spend
-     */
-    private double getTotalSpend(String month, String year) {
-        ArrayList<Double> spend = db.getEntryInMonthYearGastos(idInstance, month, year);
-
-        double totalSpend = 0;
-
-        for (Double integer1 : spend) {
-            double gas;
-            gas = integer1;
-            totalSpend += gas;
-        }
-
-        return totalSpend;
-    }
-
-    /**
-     * Get String with the balance (totalProfit - totalSpend) of the given month and year
-     *
-     * @return balance
-     */
-    private String getInMonthYearBalance(String month, String year) {
-        double totalProfit = getTotalProfit(month, year);
-        double totalSpend = getTotalSpend(month, year);
-
-        double balance = totalProfit - totalSpend;
-
-        return Double.toString(balance);
     }
 }

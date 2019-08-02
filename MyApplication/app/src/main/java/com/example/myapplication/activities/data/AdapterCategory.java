@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.fragments.CategoriesFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -79,7 +80,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                db.deleteCategory(data.getId());
+                                db.deleteCategory(data.getId(), MainActivity.idInstance);
 
                                 activity.getSupportFragmentManager().beginTransaction().
                                         replace(R.id.content_main_layout, new CategoriesFragment()).commit();
@@ -1051,7 +1052,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // Add category to data base
                         if ((!editText_categoryName.getText().toString().equals("")) && (!icName.equals(""))) {
-                            db.editCategory(categoryId, editText_categoryName.getText().toString(), icName);
+                            db.editCategory(categoryId, editText_categoryName.getText().toString(), icName, MainActivity.idInstance);
 
                             activity.getSupportFragmentManager().beginTransaction().
                                     replace(R.id.content_main_layout, new CategoriesFragment()).commit();

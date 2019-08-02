@@ -26,6 +26,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.data.CustomItems;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -202,15 +203,19 @@ public class TransferFragment extends Fragment implements View.OnClickListener {
 
                 String descripcion = editText_description.getText().toString();
 
+                // Category id "from" instance
+                String categoryIdFrom = db.getCategoryId(getString(R.string.mainActivity_addCategory_transfer), fromInstanceId);
+                String categoryIdTo = db.getCategoryId(getString(R.string.mainActivity_addCategory_transfer), toInstanceId);
+
                 // Add "ingreso" to "to" instance
                 gastoInt = 0;
                 ingresoInt = Double.parseDouble(montoStr);
-                boolean isResult1 = db.addEntry(date, time, gastoInt, ingresoInt, descripcion, toInstanceId, "2");
+                boolean isResult1 = db.addEntry(date, time, gastoInt, ingresoInt, descripcion, toInstanceId, categoryIdTo);
 
                 // Add "gasto" to "from" instance
                 gastoInt = Double.parseDouble(montoStr);
                 ingresoInt =0;
-                boolean isResult2 = db.addEntry(date, time, gastoInt, ingresoInt, descripcion, fromInstanceId, "2");
+                boolean isResult2 = db.addEntry(date, time, gastoInt, ingresoInt, descripcion, fromInstanceId, categoryIdFrom);
 
                 // Check result
                 if (isResult1 && isResult2) {

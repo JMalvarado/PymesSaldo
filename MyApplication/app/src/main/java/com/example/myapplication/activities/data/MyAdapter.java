@@ -85,10 +85,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             myViewHolder.imageView_item.setImageResource(R.drawable.ic_profitgreen_48);
         }
 
-        myViewHolder.tvCategory.setText(db.getCategoryName(data.getCategId()));
+        myViewHolder.tvCategory.setText(db.getCategoryName(data.getCategId(), MainActivity.idInstance));
 
         // Get and set category icon
-        String categoryIcName = db.getCategoryIconName(db.getCategoryName(data.getCategId()));
+        String categoryIcName = db.getCategoryIconName(db.getCategoryName(data.getCategId(), MainActivity.idInstance), MainActivity.idInstance);
         int imageID = context.getResources().getIdentifier(categoryIcName, "drawable", context.getPackageName());
         myViewHolder.imageView_ic.setImageResource(imageID);
 

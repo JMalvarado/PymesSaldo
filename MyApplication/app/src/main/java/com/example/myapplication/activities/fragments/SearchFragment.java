@@ -152,7 +152,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             fab_dateFinal.setVisibility(View.GONE);
         }
 
-        // If there is default period previously selelcted, set that period
+        // If there is default period previously selected, set that period
         // Get the shared preferences period of instance
         SharedPreferences prefsPeriod = getActivity().getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
         String periodDates = prefsPeriod.getString(MainActivity.idInstance, null);
@@ -184,7 +184,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         // Set Spinner category data
 
         // Get categories
-        Cursor categoriesData = db.getCategoryAllData();
+        Cursor categoriesData = db.getCategoriesByInstance(MainActivity.idInstance);
 
         // Array List to store the categories names
         // ArrayList<String> categoriesList = new ArrayList<>();
@@ -223,7 +223,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 if (category_name.equals(getString(R.string.fragment_search_category_spinner))) {
                     categID = 0;
                 } else {
-                    categID = Integer.parseInt(db.getCategoryId(category_name));
+                    categID = Integer.parseInt(db.getCategoryId(category_name, MainActivity.idInstance));
                 }
                 categoryIDSelected = categID;
             }
@@ -309,15 +309,44 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.radioButton_porfecha:
-                checkBox_begining.setEnabled(true);
-                checkBox_begining.setChecked(false);
-                fab_dateBegin.setEnabled(true);
-                fab_dateBegin.setVisibility(View.VISIBLE);
+                // If there is default period previously selected, set that period
+                // Get the shared preferences period of instance
+                SharedPreferences prefsPeriod = Objects.requireNonNull(getActivity()).getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
+                String periodDates = prefsPeriod.getString(MainActivity.idInstance, null);
+                if (periodDates!=null) {
+                    // Get date components
+                    begDay = periodDates.substring(0,2);
+                    begMonth = periodDates.substring(3,5);
+                    begYear = periodDates.substring(6,10);
+                    finDay = periodDates.substring(11,13);
+                    finMonth = periodDates.substring(14,16);
+                    finYear = periodDates.substring(17,21);
 
-                checkBox_final.setEnabled(true);
-                checkBox_final.setChecked(false);
-                fab_dateFinal.setEnabled(true);
-                fab_dateFinal.setVisibility(View.VISIBLE);
+                    // Set text views with the default period
+                    String begPeriodDate = periodDates.substring(0, 10);
+                    String finPeriodDate = periodDates.substring(11, 21);
+
+                    radioButton_dates.setChecked(true);
+                    checkBox_begining.setEnabled(true);
+                    fab_dateBegin.setEnabled(true);
+                    fab_dateBegin.setVisibility(View.VISIBLE);
+                    checkBox_final.setEnabled(true);
+                    fab_dateFinal.setEnabled(true);
+                    fab_dateFinal.setVisibility(View.VISIBLE);
+
+                    textView_dateBeging.setText(begPeriodDate);
+                    textView_dateFinal.setText(finPeriodDate);
+                } else {
+                    checkBox_begining.setEnabled(true);
+                    checkBox_begining.setChecked(false);
+                    fab_dateBegin.setEnabled(true);
+                    fab_dateBegin.setVisibility(View.VISIBLE);
+
+                    checkBox_final.setEnabled(true);
+                    checkBox_final.setChecked(false);
+                    fab_dateFinal.setEnabled(true);
+                    fab_dateFinal.setVisibility(View.VISIBLE);
+                }
 
                 break;
 
@@ -756,7 +785,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                         String begDatePeriodDefault = begDay + "-" + begMonth + "-"+ begYear;
                         String finDatePeriodDefault = finDay + "-" + finMonth + "-"+ finYear;
                         // Store the instance custom period default
-                        SharedPreferences prefsPeriod = Objects.requireNonNull(getActivity()).getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
+                        SharedPreferences prefsPeriod = Objects.requireNonNull(getActivity()).
+                                getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = prefsPeriod.edit();
                         String defaultPeriod = begDatePeriodDefault+"/"+finDatePeriodDefault;
                         editor.putString(MainActivity.idInstance, defaultPeriod);

@@ -23,6 +23,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -357,15 +358,17 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
                     if (checkBox_addSpend.isChecked()) {
                         double spend = Double.parseDouble(editText_payment.getText().toString());
                         double in = 0;
-                        String categoryId = "3";
                         String description = getString(R.string.fragment_saving_addSpend_description);
+                        // Category id
+                        String categoryId = db.getCategoryId(getString(R.string.mainActivity_addCategory_saving), MainActivity.idInstance);
 
                         db.addEntry(date, time, spend, in, description, id, categoryId);
                     } else if (checkBox_addProfit.isChecked()) {
                         double spend = 0;
                         double in = Double.parseDouble(editText_withdrawal.getText().toString());
-                        String categoryId = "3";
                         String description = getString(R.string.fragment_saving_addProfit_description);
+                        // Category id
+                        String categoryId = db.getCategoryId(getString(R.string.mainActivity_addCategory_saving), MainActivity.idInstance);
 
                         db.addEntry(date, time, spend, in, description, id, categoryId);
                     }

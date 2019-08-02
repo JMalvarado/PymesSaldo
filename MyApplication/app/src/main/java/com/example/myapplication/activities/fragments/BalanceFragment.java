@@ -17,6 +17,8 @@ import com.example.myapplication.activities.data.DatabaseManager;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
@@ -26,6 +28,8 @@ public class BalanceFragment extends Fragment {
 
     // Instantiate view components
     private TextView textView_balance;
+    private TextView textView_rem;
+    private TextView textView_balanceplusrem;
     private TextView textView_instanceName;
     private TextView textView_profit;
     private TextView textView_spend;
@@ -50,6 +54,8 @@ public class BalanceFragment extends Fragment {
 
         // Initialize view components
         textView_balance = view.findViewById(R.id.textView_balance);
+        textView_rem = view.findViewById(R.id.textView_balanceprev);
+        textView_balanceplusrem = view.findViewById(R.id.textView_balanceplusrem);
         textView_instanceName = view.findViewById(R.id.textView_fragmentBalance_instanceName);
         textView_profit = view.findViewById(R.id.textView_fragmentBalance_insgresos);
         textView_spend = view.findViewById(R.id.textView_fragmentBalance_gastos);
@@ -84,11 +90,68 @@ public class BalanceFragment extends Fragment {
 
         textView_date.setText(monthAndYear);
 
+        // Get actual month with 2 digits
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+        String dateNow;
+        LocalDateTime now = LocalDateTime.now();
+        dateNow = dtf.format(now);
+        String monthtwodigits = dateNow.substring(5, 7);
+
         // Get data
-        // Global variables
-        String balance = getMonthBalance();
-        String profit = Double.toString(getTotalProfit());
-        String spend = Double.toString(getTotalSpend());
+        // actual month
+        String balance = getMonthBalance(monthtwodigits, year);
+        String profit = Double.toString(getTotalProfit(monthtwodigits, year));
+        String spend = Double.toString(getTotalSpend(monthtwodigits, year));
+
+        // Get previous month
+        String monthprev;
+        String yearprev;
+        // Check if actual month is January, if true: then the previous month must be december
+        if (monthtwodigits.equals("01")) {
+            monthprev = "12";
+            yearprev = Integer.toString(Integer.parseInt(year) - 1);
+        } else {
+            monthprev = Integer.toString(Integer.parseInt(monthtwodigits) - 1);
+            switch (monthprev) {
+                case "1":
+                    monthprev = "01";
+                    break;
+                case "2":
+                    monthprev = "02";
+                    break;
+                case "3":
+                    monthprev = "03";
+                    break;
+                case "4":
+                    monthprev = "04";
+                    break;
+                case "5":
+                    monthprev = "05";
+                    break;
+                case "6":
+                    monthprev = "06";
+                    break;
+                case "7":
+                    monthprev = "07";
+                    break;
+                case "8":
+                    monthprev = "08";
+                    break;
+                case "9":
+                    monthprev = "09";
+                    break;
+                default:
+                    break;
+            }
+            yearprev = year;
+        }
+
+        // Previous balance (remnants)
+        String balanceprev = getMonthBalance(monthprev, yearprev);
+
+        // Calc total balance
+        double totalBalanceDoub = Double.parseDouble(balance) + Double.parseDouble(balanceprev);
+        String totalBalance = Double.toHexString(totalBalanceDoub);
 
         // Format
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -97,10 +160,14 @@ public class BalanceFragment extends Fragment {
         String balanceDf = df.format(Double.parseDouble(balance));
         String profitDf = df.format(Double.parseDouble(profit));
         String spendDf = df.format(Double.parseDouble(spend));
+        String balanceprevDf = df.format(Double.parseDouble(balanceprev));
+        String balanceplusremDf = df.format(Double.parseDouble(totalBalance));
         // Set balance, profit asn spend on textView
         textView_balance.setText(balanceDf);
         textView_profit.setText(profitDf);
         textView_spend.setText(spendDf);
+        textView_rem.setText(balanceprevDf);
+        textView_balanceplusrem.setText(balanceplusremDf);
 
         // Set text color
         if (Double.parseDouble(balance) < 0) {
@@ -111,6 +178,14 @@ public class BalanceFragment extends Fragment {
             textView_balance.setTextColor(Color.GREEN);
         }
 
+        if (Double.parseDouble(totalBalance) < 0) {
+            textView_balanceplusrem.setTextColor(Color.RED);
+        } else if (Double.parseDouble(totalBalance) == 0) {
+            textView_balanceplusrem.setTextColor(Color.BLACK);
+        } else {
+            textView_balanceplusrem.setTextColor(Color.GREEN);
+        }
+
         return view;
     }
 
@@ -119,8 +194,8 @@ public class BalanceFragment extends Fragment {
      *
      * @return total profit
      */
-    private double getTotalProfit() {
-        ArrayList<Double> profit = db.getEntryCurrentMonthIngresos(idInstance);
+    private double getTotalProfit(String month, String year) {
+        ArrayList<Double> profit = db.getEntryInMonthYearIngresos(idInstance, month, year);
 
         double totalProfit = 0;
 
@@ -138,8 +213,8 @@ public class BalanceFragment extends Fragment {
      *
      * @return spend
      */
-    private double getTotalSpend() {
-        ArrayList<Double> spend = db.getEntryCurrentMonthGastos(idInstance);
+    private double getTotalSpend(String month, String year) {
+        ArrayList<Double> spend = db.getEntryInMonthYearGastos(idInstance, month, year);
 
         double totalSpend = 0;
 
@@ -157,9 +232,9 @@ public class BalanceFragment extends Fragment {
      *
      * @return balance
      */
-    private String getMonthBalance() {
-        double totalProfit = getTotalProfit();
-        double totalSpend = getTotalSpend();
+    private String getMonthBalance(String month, String year) {
+        double totalProfit = getTotalProfit(month, year);
+        double totalSpend = getTotalSpend(month, year);
 
         double balance = totalProfit - totalSpend;
 

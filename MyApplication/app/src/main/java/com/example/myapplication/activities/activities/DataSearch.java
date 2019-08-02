@@ -166,7 +166,7 @@ public class DataSearch extends AppCompatActivity {
         // Get entries data and calculate total profit, spend and balance
         double totalProfit = 0;
         double totalSpend = 0;
-        double totalBalance = 0;
+        double totalBalance;
         for (int i = 0; i < descripciones.size(); i++) {
             assert ids != null;
             assert categIds != null;

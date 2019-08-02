@@ -29,6 +29,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.data.CustomAdapter;
 import com.example.myapplication.activities.data.CustomItems;
 import com.example.myapplication.activities.data.DatabaseManager;
@@ -123,7 +124,7 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
         spinner_categories = view.findViewById(R.id.spinner_addEntry_category);
 
         // Get categories
-        Cursor categoriesData = db.getCategoryAllData();
+        Cursor categoriesData = db.getCategoriesByInstance(MainActivity.idInstance);
 
         // Array List to store the categories
         ArrayList<CustomItems> categoriesList = new ArrayList<>();
@@ -158,7 +159,7 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
                     openDialog();
                 } else {
                     // else, get category id with the given name
-                    category_id = db.getCategoryId(category_name);
+                    category_id = db.getCategoryId(category_name, MainActivity.idInstance);
                 }
             }
 
@@ -1107,7 +1108,7 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
                 // Add category to data base
                 if (!editText_categoryName.getText().toString().equals("")) {
                     // check if the category exist
-                    Cursor cursorNames = db.getCategoryAllData();
+                    Cursor cursorNames = db.getCategoriesByInstance(MainActivity.idInstance);
                     boolean isExistCategory = false;
                     while (cursorNames.moveToNext()) {
                         if (cursorNames.getString(1).equals(editText_categoryName.getText().toString())) {
@@ -1118,14 +1119,14 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
                     if (isExistCategory) {
                         Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_existCategory), Toast.LENGTH_LONG).show();
                     } else {
-                        db.addCategory(editText_categoryName.getText().toString(), icName);
+                        db.addCategory(editText_categoryName.getText().toString(), icName, MainActivity.idInstance);
                     }
                 } else {
                     Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
                 }
 
                 // Get categories
-                Cursor categoriesData = db.getCategoryAllData();
+                Cursor categoriesData = db.getCategoriesByInstance(MainActivity.idInstance);
 
                 // Array List to store the categories names
                 ArrayList<CustomItems> categoriesList = new ArrayList<>();
