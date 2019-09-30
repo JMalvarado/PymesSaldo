@@ -12,6 +12,7 @@ import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.fragments.BalanceFragment;
 import com.example.myapplication.activities.fragments.BalancePeriodFragment;
 import com.example.myapplication.activities.fragments.CategoriesFragment;
+import com.example.myapplication.activities.fragments.ReportCategFragment;
 import com.example.myapplication.activities.fragments.SaveMoneyFragment;
 import com.example.myapplication.activities.fragments.SearchFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -301,8 +302,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_categories) {
             fragment = new CategoriesFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new CategoriesFragment()).commit();
+        } else if (id == R.id.nav_report_categ) {
+            fragment = new CategoriesFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new ReportCategFragment()).commit();
         }
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

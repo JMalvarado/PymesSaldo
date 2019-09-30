@@ -76,6 +76,7 @@
     <string name="fragment_addMov_radiobttn_Gasto">Gasto</string>
     <string name="fragment_categories_textView_nodata">No hay categorías para mostrar</string>
     <string name="fragment_categories_imageButton_add_descr">Agregar categoría</string>
+    <string name="fragment_reportCategories_datearrow_descr">Flecha de hasta</string>
     <string name="fragment_transfer_textview_from">Desde:</string>
     <string name="fragment_transfer_textview_to">Hacia:</string>
 
@@ -104,6 +105,8 @@
     <string name="mainActivity_addEntry_lastBalance">Remanente de: </string>
     <string name="addEntryViewPagerAdapter_title1">Movimiento</string>
     <string name="addEntryViewPagerAdapter_title2">Ahorro</string>
+    <string name="reportViewCategPagerAdapter_title1">Ingreso</string>
+    <string name="reportCategViewPagerAdapter_title2">Gasto</string>
     <string name="addEntryViewPagerAdapter_title3">Transferencia</string>
     <string name="customSpinnerCategories_imageView_descr">Imagen</string>
     <string name="imageview_descr">imageview balance</string>
@@ -151,8 +154,12 @@
     <string name="nav_period_balance">Balance del ciclo definido</string>
     <string name="nav_categories">Categorías</string>
     <string name="nav_money_save">Ahorro</string>
+    <string name="nav_report_categ">Reporte</string>
     <string name="nav_add_profile">Agregar estado financiero</string>
     <string name="nav_conf_profile">Configurar estado</string>
     <string name="nav_exit">Salir</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
