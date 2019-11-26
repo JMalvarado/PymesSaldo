@@ -11,6 +11,9 @@ import com.example.myapplication.R;
 import com.example.myapplication.activities.fragments.ReportProfitFragment;
 import com.example.myapplication.activities.fragments.SavingFragment;
 
+/**
+ * Adapter for tabs in report fragment
+ */
 public class ReportCategViewPagerAdapter extends FragmentPagerAdapter {
 
     private Context context;

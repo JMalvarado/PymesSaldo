@@ -1,5 +1,8 @@
 package com.example.myapplication.activities.data;
 
+/**
+ * List data for card view of items in search activity
+ */
 public class ListData {
 
     private String descr;

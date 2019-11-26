@@ -1,5 +1,8 @@
 package com.example.myapplication.activities.data;
 
+/**
+ * List data for card view of items in categories fragment
+ */
 public class ListDataCategory {
 
     private String id;

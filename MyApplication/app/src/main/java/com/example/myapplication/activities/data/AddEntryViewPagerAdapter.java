@@ -12,6 +12,9 @@ import com.example.myapplication.activities.fragments.AddMovFragment;
 import com.example.myapplication.activities.fragments.SavingFragment;
 import com.example.myapplication.activities.fragments.TransferFragment;
 
+/**
+ * Adapter for tabs in add entry activity
+ */
 public class AddEntryViewPagerAdapter extends FragmentPagerAdapter {
 
     private Context context;

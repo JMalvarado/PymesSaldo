@@ -95,6 +95,7 @@
     <string name="navHeader_imageButton_descr_addProfile">Add profile</string>
     <string name="dataList_imageButton_decr_edit">Edit entry</string>
     <string name="dataList_imageButton_decr_delete">Delete entry</string>
+    <string name="datalist_imageview_decr_imagecategory">Image view for categor list</string>
     <string name="dataList_textView_ingr">Monto:</string>
     <string name="dataList_textView_gast">Gasto:</string>
     <string name="dataList_textView_categ">Categoría:</string>
@@ -150,7 +151,7 @@
     <!-- Navigation Drawer Menu -->
     <string name="nav_add_entry">Agregar entrada</string>
     <string name="nav_explore">Explorar movimientos</string>
-    <string name="nav_month_balance">Balance del mes</string>
+    <string name="nav_month_balance">Balance general</string>
     <string name="nav_period_balance">Balance del ciclo definido</string>
     <string name="nav_categories">Categorías</string>
     <string name="nav_money_save">Ahorro</string>

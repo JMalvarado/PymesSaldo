@@ -3,6 +3,9 @@ package com.example.myapplication.activities.data;
 import android.text.InputFilter;
 import android.text.Spanned;
 
+/**
+ * Class to filter the numbers input values in text view
+ */
 public class InputFilterMinMax implements InputFilter {
 
     private int min, max;
@@ -24,7 +27,7 @@ public class InputFilterMinMax implements InputFilter {
             if (isInRange(min, max, input)) {
                 return null;
             }
-        } catch (NumberFormatException nfe) {
+        } catch (NumberFormatException ignored) {
 
         }
         return "";

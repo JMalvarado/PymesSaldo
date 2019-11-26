@@ -26,6 +26,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
+/**
+ * Adapter for card view in categories fragment
+ */
 public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyViewHolder> {
 
     private List<ListDataCategory> listData;
@@ -62,7 +65,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
         int imageID = context.getResources().getIdentifier(ic, "drawable", context.getPackageName());
         myViewHolder.imageView_ic.setImageResource(imageID);
 
-        myViewHolder.fab_dit.setOnClickListener(new View.OnClickListener() {
+        myViewHolder.fab_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openDialog(data.getId(), data.getName(), data.getIc());
@@ -105,10 +108,10 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
         String transCat = context.getResources().getString(R.string.mainActivity_addCategory_transfer);
         if ((data.getName().equals(othersCat)) || (data.getName().equals(savingCat)) || (data.getName().equals(transCat))) {
             myViewHolder.fab_delete.setVisibility(View.GONE);
-            myViewHolder.fab_dit.setVisibility(View.GONE);
+            myViewHolder.fab_edit.setVisibility(View.GONE);
         } else {
             myViewHolder.fab_delete.setVisibility(View.VISIBLE);
-            myViewHolder.fab_dit.setVisibility(View.VISIBLE);
+            myViewHolder.fab_edit.setVisibility(View.VISIBLE);
 
         }
     }
@@ -1076,7 +1079,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public FloatingActionButton fab_dit;
+        public FloatingActionButton fab_edit;
         public FloatingActionButton fab_delete;
         public ImageView imageView_ic;
         public TextView textView_name;
@@ -1086,7 +1089,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
             super(itemView);
 
             linearLayout_data = itemView.findViewById(R.id.linearLayout_dataCategories);
-            fab_dit = itemView.findViewById(R.id.fab_categoryList_edit);
+            fab_edit = itemView.findViewById(R.id.fab_categoryList_edit);
             fab_delete = itemView.findViewById(R.id.fab_categoryList_delete);
             imageView_ic = itemView.findViewById(R.id.imageView_categoryList_ic);
             textView_name = itemView.findViewById(R.id.textView_categoryList_name);

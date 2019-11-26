@@ -35,7 +35,8 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
-                        android:layout_margin="10dp" />
+                        android:layout_margin="10dp"
+                        android:contentDescription="@string/datalist_imageview_decr_imagecategory" />
 
                     <ImageView
                         android:id="@+id/imageView_dataList_ic"
@@ -96,7 +97,6 @@
                             android:id="@+id/textView_dataList_ingr"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="10000"
                             android:textColor="@color/colorBlueDark"
                             android:textSize="25sp"
                             android:textStyle="bold" />
