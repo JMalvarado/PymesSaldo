@@ -23,7 +23,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="Alimentos"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/colorBlack"
                 android:textStyle="bold" />
@@ -33,7 +32,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="10 000"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/colorBlueDark" />
 
@@ -55,10 +53,9 @@
                     android:id="@+id/textView_reportList_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorBlueDark"
                     android:textAppearance="@style/TextAppearance.AppCompat.Button"
-                    android:text="94%" />
+                    android:textColor="@color/colorBlueDark"
+                    android:textStyle="bold|italic" />
 
             </LinearLayout>
 

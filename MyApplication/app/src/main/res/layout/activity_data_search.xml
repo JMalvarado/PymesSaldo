@@ -111,7 +111,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:contentDescription="@string/imageview_descr"
-                android:src="@drawable/ic_balancemoney_48" />
+                android:src="@drawable/ic_equal_100" />
 
             <TextView
                 android:id="@+id/textview_activitydatasearch_balance"

@@ -32,6 +32,7 @@ public class ReportCategFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_report_categ, container, false);
 
+        // Assign layout views variables
         textView_instanceName = view.findViewById(R.id.textView_fragmentReportCateg_instanceName);
         viewPager = view.findViewById(R.id.viewPager_reportCateg);
         tabLayout = view.findViewById(R.id.tabLayout_reportCateg);
@@ -41,10 +42,11 @@ public class ReportCategFragment extends Fragment {
         String name = prefs.getString("NAME", null);
         textView_instanceName.setText(name);
 
-        // initialize viewPager Adapter
+        // Initialize and assign viewPager Adapter
         viewPagerAdapter = new ReportCategViewPagerAdapter(getFragmentManager(), view.getContext());
         viewPager.setAdapter(viewPagerAdapter);
 
+        // Initialize and assign tab layout
         tabLayout.setupWithViewPager(viewPager);
 
         return view;

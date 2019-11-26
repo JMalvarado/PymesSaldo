@@ -59,7 +59,7 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
         // Initialize db
         db = new DatabaseManager(view.getContext());
 
-        // Initialize view componnents and click listeners
+        // Initialize view components and click listeners
         textView_instanceName = view.findViewById(R.id.textView_fragmentCategories_instanceName);
         textView_nodata = view.findViewById(R.id.textView_fragmentCategories_nodata);
         imageButton_addCategory = view.findViewById(R.id.imageButton_categories_add);
@@ -123,8 +123,6 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
                 break;
         }
     }
-
-
 
     /**
      * Alert dialog to add category

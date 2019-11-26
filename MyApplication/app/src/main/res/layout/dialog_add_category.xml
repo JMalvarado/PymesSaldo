@@ -22,6 +22,7 @@
         android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
         android:background="@drawable/roundcornerbrownlight"
+        android:contentDescription="@string/datalist_imageview_decr_imagecategory"
         android:padding="7dp"
         android:scaleType="centerInside"
         android:src="@drawable/baseline_add_photo_alternate_black_48dp" />

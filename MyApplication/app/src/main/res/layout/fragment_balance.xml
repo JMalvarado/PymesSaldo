@@ -69,8 +69,8 @@
 
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:contentDescription="@string/imageview_descr"
             android:src="@drawable/ic_profitgreen_48" />
 
@@ -96,8 +96,8 @@
         android:padding="8dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:contentDescription="@string/imageview_descr"
             android:src="@drawable/ic_spendred_48" />
 
@@ -123,10 +123,10 @@
         android:padding="8dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:contentDescription="@string/imageview_descr"
-            android:src="@drawable/ic_balancemoney_48" />
+            android:src="@drawable/ic_equal_100" />
 
         <TextView
             android:id="@+id/textView_balance"
@@ -169,8 +169,8 @@
         android:padding="8dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:contentDescription="@string/imageview_descr"
             android:src="@drawable/ic_balanceprev_48" />
 
@@ -197,10 +197,10 @@
         android:padding="8dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:contentDescription="@string/imageview_descr"
-            android:src="@drawable/ic_balancemoney_48" />
+            android:src="@drawable/ic_equal_100" />
 
         <TextView
             android:id="@+id/textView_balanceplusrem"

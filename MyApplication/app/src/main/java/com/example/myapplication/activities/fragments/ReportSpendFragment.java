@@ -13,12 +13,6 @@ import com.example.myapplication.R;
 
 public class ReportSpendFragment extends Fragment {
 
-
-    public ReportSpendFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

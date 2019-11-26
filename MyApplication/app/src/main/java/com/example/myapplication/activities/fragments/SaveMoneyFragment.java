@@ -21,10 +21,6 @@ import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Objects;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SaveMoneyFragment extends Fragment {
 
     // View components
@@ -100,6 +96,6 @@ public class SaveMoneyFragment extends Fragment {
             totalWithdrawall += withdrawall;
         }
 
-        return totalPayment-totalWithdrawall;
+        return totalPayment - totalWithdrawall;
     }
 }

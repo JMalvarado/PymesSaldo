@@ -23,10 +23,112 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.20"
+            android:orientation="vertical"
+            android:paddingTop="5dp">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_calendar_addMovFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@android:color/holo_green_light"
+                android:elevation="0dp"
+                android:src="@drawable/ic_calendar_64"
+                app:backgroundTint="@android:color/darker_gray"
+                app:elevation="0dp"
+                app:fabSize="mini"
+                app:rippleColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/textView_addEntry_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="9999-89-89" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.20"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/fragment_reportCategories_datearrow_descr"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arrowto_100" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:orientation="vertical"
+            android:paddingTop="5dp">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_clock_addMovFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@android:color/holo_red_light"
+                android:elevation="0dp"
+                android:src="@drawable/ic_calendar_64"
+                app:backgroundTint="@android:color/darker_gray"
+                app:elevation="0dp"
+                app:fabSize="mini"
+                app:rippleColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/textView_addEntry_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="9999-89-89" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:background="?android:attr/listDivider" />
+
+        <ImageButton
+            android:id="@+id/imageButton_fragmentReportCategory_download"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_weight="0.20"
+            android:adjustViewBounds="true"
+            android:background="@drawable/roundcornerbrownlight"
+            android:contentDescription="@string/fragmentReport_imageButton_decr_download"
+            android:padding="7dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_download_48" />
+
+    </LinearLayout>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout_reportCateg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
@@ -34,12 +136,13 @@
         app:tabIndicatorHeight="2dp"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/colorPink"
-        app:tabTextAppearance="@style/tabLayout_textStyle"
+        app:tabTextAppearance="@style/TabTitleReduceSize"
         app:tabTextColor="@color/colorWhite" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager_reportCateg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>

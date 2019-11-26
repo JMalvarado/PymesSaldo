@@ -79,6 +79,7 @@
     <string name="fragment_reportCategories_datearrow_descr">Flecha de hasta</string>
     <string name="fragment_transfer_textview_from">Desde:</string>
     <string name="fragment_transfer_textview_to">Hacia:</string>
+    <string name="fragment_reportCategories_textview_dnterDate">Ingrese las fechas arriba</string>
 
     <string name="iteminfo_textView_gasto">Gasto:</string>
     <string name="iteminfo_textView_ingreso">Ingreso:</string>
@@ -95,6 +96,8 @@
     <string name="navHeader_imageButton_descr_addProfile">Add profile</string>
     <string name="dataList_imageButton_decr_edit">Edit entry</string>
     <string name="dataList_imageButton_decr_delete">Delete entry</string>
+    <string name="fragmentReport_imageButton_decr_download">Download</string>
+    <string name="dialogAddCategory_imageButton_decr_selectIcon">Select icon</string>
     <string name="datalist_imageview_decr_imagecategory">Image view for categor list</string>
     <string name="dataList_textView_ingr">Monto:</string>
     <string name="dataList_textView_gast">Gasto:</string>
@@ -108,6 +111,7 @@
     <string name="addEntryViewPagerAdapter_title2">Ahorro</string>
     <string name="reportViewCategPagerAdapter_title1">Ingreso</string>
     <string name="reportCategViewPagerAdapter_title2">Gasto</string>
+    <string name="reportCategViewPagerAdapter_title3">Gráficas</string>
     <string name="addEntryViewPagerAdapter_title3">Transferencia</string>
     <string name="customSpinnerCategories_imageView_descr">Imagen</string>
     <string name="imageview_descr">imageview balance</string>
@@ -159,8 +163,5 @@
     <string name="nav_add_profile">Agregar estado financiero</string>
     <string name="nav_conf_profile">Configurar estado</string>
     <string name="nav_exit">Salir</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

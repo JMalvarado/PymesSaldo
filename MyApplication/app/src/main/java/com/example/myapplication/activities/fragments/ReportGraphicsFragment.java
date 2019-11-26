@@ -11,14 +11,13 @@ import android.view.ViewGroup;
 
 import com.example.myapplication.R;
 
-public class ReportProfitFragment extends Fragment {
+public class ReportGraphicsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_report_profit, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_report_graphics, container, false);
         return view;
     }
 

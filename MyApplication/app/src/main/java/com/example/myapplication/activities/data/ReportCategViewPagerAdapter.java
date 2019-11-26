@@ -6,15 +6,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activities.fragments.ReportGraphicsFragment;
 import com.example.myapplication.activities.fragments.ReportProfitFragment;
-import com.example.myapplication.activities.fragments.SavingFragment;
+import com.example.myapplication.activities.fragments.ReportSpendFragment;
 
 /**
  * Adapter for tabs in report fragment
  */
-public class ReportCategViewPagerAdapter extends FragmentPagerAdapter {
+public class ReportCategViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private Context context;
 
@@ -33,7 +35,11 @@ public class ReportCategViewPagerAdapter extends FragmentPagerAdapter {
                 break;
 
             case 1:
-                fragment = new SavingFragment();
+                fragment = new ReportSpendFragment();
+                break;
+
+            case 2:
+                fragment = new ReportGraphicsFragment();
                 break;
         }
 
@@ -42,7 +48,7 @@ public class ReportCategViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Nullable
@@ -57,6 +63,9 @@ public class ReportCategViewPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 title = context.getResources().getString(R.string.reportCategViewPagerAdapter_title2);
                 break;
+
+            case 2:
+                title = context.getResources().getString(R.string.reportCategViewPagerAdapter_title3);
         }
         return title;
     }
