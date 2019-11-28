@@ -7,6 +7,7 @@
     <string name="balance_name">Balance del mes</string>
     <string name="balance_period_name">Balance del periodo</string>
     <string name="save_name">Ahorro</string>
+    <string name="report_name">Reporte</string>
     <string name="search_name">Explorar</string>
     <string name="categories_name">Categorías</string>
     <string name="editEntry_name">Editar movimiento</string>
@@ -79,7 +80,7 @@
     <string name="fragment_reportCategories_datearrow_descr">Flecha de hasta</string>
     <string name="fragment_transfer_textview_from">Desde:</string>
     <string name="fragment_transfer_textview_to">Hacia:</string>
-    <string name="fragment_reportCategories_textview_dnterDate">Ingrese las fechas arriba</string>
+    <string name="fragment_reportCategories_textview_dnterDate">Ingrese el periodo arriba</string>
 
     <string name="iteminfo_textView_gasto">Gasto:</string>
     <string name="iteminfo_textView_ingreso">Ingreso:</string>

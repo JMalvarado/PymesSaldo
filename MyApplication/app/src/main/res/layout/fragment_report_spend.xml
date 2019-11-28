@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reportSpend_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:gravity="center"
     tools:context="com.example.myapplication.activities.fragments.ReportSpendFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/fragment_reportCategories_textview_dnterDate"
+        android:textColor="@color/colorGrayLight"
+        android:visibility="visible" />
+
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="hi2" />
+        android:visibility="gone" />
 
-</LinearLayout>
+</RelativeLayout>

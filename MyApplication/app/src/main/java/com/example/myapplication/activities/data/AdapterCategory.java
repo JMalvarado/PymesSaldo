@@ -43,7 +43,6 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
         this.activity = activity;
     }
 
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -102,7 +101,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
             }
         });
 
-        // Check if is a default category. If true: disable delete button
+        // Check if is a default category. If true: disable delete and edit buttons
         String othersCat = context.getResources().getString(R.string.mainActivity_addCategory_others);
         String savingCat = context.getResources().getString(R.string.mainActivity_addCategory_saving);
         String transCat = context.getResources().getString(R.string.mainActivity_addCategory_transfer);
@@ -1077,15 +1076,15 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
     }
 
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public FloatingActionButton fab_edit;
-        public FloatingActionButton fab_delete;
-        public ImageView imageView_ic;
-        public TextView textView_name;
-        public LinearLayout linearLayout_data;
+        FloatingActionButton fab_edit;
+        FloatingActionButton fab_delete;
+        ImageView imageView_ic;
+        TextView textView_name;
+        LinearLayout linearLayout_data;
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             linearLayout_data = itemView.findViewById(R.id.linearLayout_dataCategories);

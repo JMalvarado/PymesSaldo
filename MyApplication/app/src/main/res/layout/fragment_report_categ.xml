@@ -40,7 +40,7 @@
             android:paddingTop="5dp">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_calendar_addMovFragment"
+                android:id="@+id/fab_calendarBegin_reportFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -55,11 +55,11 @@
                 app:rippleColor="@color/colorPrimary" />
 
             <TextView
-                android:id="@+id/textView_addEntry_date"
+                android:id="@+id/textView_reportFragment_dateBegin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="9999-89-89" />
+                android:textColor="@color/colorBlack" />
 
         </LinearLayout>
 
@@ -82,7 +82,7 @@
             android:paddingTop="5dp">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_clock_addMovFragment"
+                android:id="@+id/fab_calendarFinal_reportFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -97,11 +97,11 @@
                 app:rippleColor="@color/colorPrimary" />
 
             <TextView
-                android:id="@+id/textView_addEntry_time"
+                android:id="@+id/textView_reportFragment_dateFinal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="9999-89-89" />
+                android:textColor="@color/colorBlack" />
 
         </LinearLayout>
 
@@ -112,7 +112,7 @@
             android:background="?android:attr/listDivider" />
 
         <ImageButton
-            android:id="@+id/imageButton_fragmentReportCategory_download"
+            android:id="@+id/imageButton_fragmentReport_download"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_weight="0.20"

@@ -202,7 +202,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="5dp"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:textColor="@color/colorBlack" />
 
                     </LinearLayout>
 
@@ -252,7 +253,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="5dp"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:textColor="@color/colorBlack" />
 
                     </LinearLayout>
 
