@@ -92,6 +92,15 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
             String begPeriodDate = reportPeriod.substring(0, 10);
             String finPeriodDate = reportPeriod.substring(11, 21);
 
+            // Set initial value for date variables
+
+            begDay = begPeriodDate.substring(8, 10);
+            begMonth = begPeriodDate.substring(5, 7);
+            begYear = begPeriodDate.substring(0, 4);
+            finDay = finPeriodDate.substring(8, 10);
+            finMonth = finPeriodDate.substring(5, 7);
+            finYear = finPeriodDate.substring(0, 4);
+
             textView_dateBegin.setText(begPeriodDate);
             textView_dateFinal.setText(finPeriodDate);
         }
@@ -116,7 +125,7 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
                 datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        textView_dateBegin.setText(new StringBuilder().append(i2).append("-").append(i1 + 1).append("-").append(i).toString());
+                        textView_dateBegin.setText(new StringBuilder().append(i).append("-").append(i1 + 1).append("-").append(i2).toString());
                         begDay = Integer.toString(i2);
                         begMonth = Integer.toString(i1 + 1);
                         begYear = Integer.toString(i);
@@ -141,7 +150,7 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
                 datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        textView_dateFinal.setText(new StringBuilder().append(i2).append("-").append(i1 + 1).append("-").append(i).toString());
+                        textView_dateFinal.setText(new StringBuilder().append(i).append("-").append(i1 + 1).append("-").append(i2).toString());
                         finDay = Integer.toString(i2);
                         finMonth = Integer.toString(i1 + 1);
                         finYear = Integer.toString(i);
@@ -168,8 +177,138 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
      * Store the instance custom period for the report fragment in a shared preference
      */
     private void storeDefaultPeriod() {
-        String begDatePeriodDefault = begDay + "-" + begMonth + "-" + begYear;
-        String finDatePeriodDefault = finDay + "-" + finMonth + "-" + finYear;
+        // Cast begin day with 1 digit to 2
+        switch (begDay) {
+            case "1":
+                begDay = "01";
+                break;
+            case "2":
+                begDay = "02";
+                break;
+            case "3":
+                begDay = "03";
+                break;
+            case "4":
+                begDay = "04";
+                break;
+            case "5":
+                begDay = "05";
+                break;
+            case "6":
+                begDay = "06";
+                break;
+            case "7":
+                begDay = "07";
+                break;
+            case "8":
+                begDay = "08";
+                break;
+            case "9":
+                begDay = "09";
+                break;
+        }
+
+        // Cast begin month with 1 digit to 2
+        switch (begMonth) {
+            case "1":
+                begMonth = "01";
+                break;
+            case "2":
+                begMonth = "02";
+                break;
+            case "3":
+                begMonth = "03";
+                break;
+            case "4":
+                begMonth = "04";
+                break;
+            case "5":
+                begMonth = "05";
+                break;
+            case "6":
+                begMonth = "06";
+                break;
+            case "7":
+                begMonth = "07";
+                break;
+            case "8":
+                begMonth = "08";
+                break;
+            case "9":
+                begMonth = "09";
+                break;
+            default:
+                break;
+        }
+
+        // Cast Final day with 1 digit to 2
+        switch (finDay) {
+            case "1":
+                finDay = "01";
+                break;
+            case "2":
+                finDay = "02";
+                break;
+            case "3":
+                finDay = "03";
+                break;
+            case "4":
+                finDay = "04";
+                break;
+            case "5":
+                finDay = "05";
+                break;
+            case "6":
+                finDay = "06";
+                break;
+            case "7":
+                finDay = "07";
+                break;
+            case "8":
+                finDay = "08";
+                break;
+            case "9":
+                finDay = "09";
+                break;
+            default:
+                break;
+        }
+
+        // Cast Final month with 1 digit to 2
+        switch (finMonth) {
+            case "1":
+                finMonth = "01";
+                break;
+            case "2":
+                finMonth = "02";
+                break;
+            case "3":
+                finMonth = "03";
+                break;
+            case "4":
+                finMonth = "04";
+                break;
+            case "5":
+                finMonth = "05";
+                break;
+            case "6":
+                finMonth = "06";
+                break;
+            case "7":
+                finMonth = "07";
+                break;
+            case "8":
+                finMonth = "08";
+                break;
+            case "9":
+                finMonth = "09";
+                break;
+            default:
+                break;
+        }
+
+        String begDatePeriodDefault = begYear + "-" + begMonth + "-" + begDay;
+        String finDatePeriodDefault = finYear + "-" + finMonth + "-" + finDay;
         period = begDatePeriodDefault + "/" + finDatePeriodDefault;
 
         SharedPreferences prefsReportPeriod = Objects.requireNonNull(getActivity()).

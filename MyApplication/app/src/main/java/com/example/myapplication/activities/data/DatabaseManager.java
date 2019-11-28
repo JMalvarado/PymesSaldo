@@ -366,7 +366,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     /**
-     * Get al the categories of specific instance
+     * Get all the categories of specific instance
      * @param instance_id
      * @return
      */

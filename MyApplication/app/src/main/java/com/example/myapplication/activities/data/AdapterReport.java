@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 
 /**
@@ -54,14 +56,22 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.MyViewHold
         int imageID = context.getResources().getIdentifier(ic, "drawable", context.getPackageName());
         holder.imageView_reportIc.setImageResource(imageID);
 
-        // Total ammount
-        holder.textView_reportAmmount.setText(data.getAmmount());
+        // Total ammount (Parse amount with properly format)
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator(' ');
+        DecimalFormat df = new DecimalFormat("###,###.##", symbols);
+        String amountStr = df.format(data.getAmount());
+        holder.textView_reportAmount.setText(amountStr);
 
-        // Percentage
-        holder.textView_reportPercentage.setText(data.getPercentage());
+        // Percentage (Parse percentage with properly format: two decimals)
+        DecimalFormat dfPerc = new DecimalFormat(("###.##"));
+        String percentage = dfPerc.format(data.getPercentage());
+        String percentageComplete = percentage.concat(" %");
+        holder.textView_reportPercentage.setText(percentageComplete);
 
-        // Precentage in progress bar
-        holder.progressBar_reportPercentage.setProgress(data.getPercentage());
+        // Precentage in progress bar (Round the percentage value to nearest integer)
+        int progressInt = (int) Math.round(data.getPercentage());
+        holder.progressBar_reportPercentage.setProgress(progressInt);
     }
 
     @Override
@@ -72,7 +82,7 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.MyViewHold
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView_reportCategName;
-        TextView textView_reportAmmount;
+        TextView textView_reportAmount;
         TextView textView_reportPercentage;
         ImageView imageView_reportIc;
         ProgressBar progressBar_reportPercentage;
@@ -81,7 +91,7 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.MyViewHold
             super(itemView);
 
             textView_reportCategName = itemView.findViewById(R.id.textView_reportList_categName);
-            textView_reportAmmount = itemView.findViewById(R.id.textView_reportList_ammount);
+            textView_reportAmount = itemView.findViewById(R.id.textView_reportList_amount);
             textView_reportPercentage = itemView.findViewById(R.id.textView_reportList_percentage);
             imageView_reportIc = itemView.findViewById(R.id.imageView_reportList_ic);
             progressBar_reportPercentage = itemView.findViewById(R.id.progressBar_reportList_percentage);

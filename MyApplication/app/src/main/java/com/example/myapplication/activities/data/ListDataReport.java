@@ -7,15 +7,15 @@ public class ListDataReport {
 
     private String id;
     private String name;
-    private int percentage;
-    private int ammount;
+    private double percentage;
+    private double amount;
     private String ic;
 
-    public ListDataReport(String id, String name, int percentage, int ammount, String ic) {
+    public ListDataReport(String id, String name, double percentage, double amount, String ic) {
         this.id = id;
         this.name = name;
         this.percentage = percentage;
-        this.ammount = ammount;
+        this.amount = amount;
         this.ic = ic;
     }
 
@@ -31,11 +31,11 @@ public class ListDataReport {
         return ic;
     }
 
-    public int getPercentage() {
+    public double getPercentage() {
         return percentage;
     }
 
-    public int getAmmount() {
-        return ammount;
+    public double getAmount() {
+        return amount;
     }
 }
