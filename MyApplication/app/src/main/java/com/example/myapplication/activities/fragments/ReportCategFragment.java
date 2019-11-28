@@ -69,6 +69,9 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
         imageButton_download = view.findViewById(R.id.imageButton_fragmentReport_download);
         imageButton_download.setOnClickListener(this);
 
+        // Hide FAB add entry from screen
+        MainActivity.fab_addEntry.hide();
+
         // Set instance name as title
         SharedPreferences prefs = Objects.requireNonNull(getActivity()).getSharedPreferences("instance", Context.MODE_PRIVATE);
         String name = prefs.getString("NAME", null);
@@ -318,21 +321,11 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
         editor.apply();
 
         // Refresh layouts
-        FragmentTransaction ft1 = Objects.requireNonNull(getFragmentManager()).beginTransaction();
-        ft1.detach(new ReportProfitFragment()).attach(new ReportProfitFragment()).commit();
+        // Initialize and assign viewPager Adapter
+        viewPagerAdapter = new ReportCategViewPagerAdapter(getFragmentManager(), getContext());
+        viewPager.setAdapter(viewPagerAdapter);
 
-        FragmentTransaction ft2 = Objects.requireNonNull(getFragmentManager()).beginTransaction();
-        ft2.detach(new ReportSpendFragment()).attach(new ReportSpendFragment()).commit();
-
-        FragmentTransaction ft3 = Objects.requireNonNull(getFragmentManager()).beginTransaction();
-        ft3.detach(new ReportGraphicsFragment()).attach(new ReportGraphicsFragment()).commit();
-
-
-//        Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().
-//                replace(R.id.reportProfit_layout, new ReportProfitFragment()).commit();
-//        Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().
-//                replace(R.id.reportSpend_layout, new ReportSpendFragment()).commit();
-//        Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().
-//                replace(R.id.reportGraphic_layout, new ReportGraphicsFragment()).commit();
+        // Initialize and assign tab layout
+        tabLayout.setupWithViewPager(viewPager);
     }
 }

@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     // Components view
     private FloatingActionButton fab_addProfile;
     private FloatingActionButton fab_confProfile;
+    static public FloatingActionButton fab_addEntry;
 
     // Variables
     public static String idInstance;
@@ -69,10 +70,10 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         // Initialize floating button view
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab_addEntry = findViewById(R.id.fab);
 
         // Floating Button action
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab_addEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Add entry

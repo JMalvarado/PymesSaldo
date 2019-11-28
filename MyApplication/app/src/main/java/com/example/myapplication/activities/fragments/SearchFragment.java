@@ -113,6 +113,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
         progressBar = view.findViewById(R.id.progressBar_searchFragment);
 
+        // Show FAB add entry from screen
+        MainActivity.fab_addEntry.show();
+
         // Set instance name as title
         SharedPreferences prefs = getActivity().getSharedPreferences("instance", Context.MODE_PRIVATE);
         String name = prefs.getString("NAME", null);

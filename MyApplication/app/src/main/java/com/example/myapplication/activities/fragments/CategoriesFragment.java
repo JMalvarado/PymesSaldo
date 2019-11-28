@@ -65,6 +65,9 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
         imageButton_addCategory = view.findViewById(R.id.imageButton_categories_add);
         imageButton_addCategory.setOnClickListener(this);
 
+        // Show FAB add entry from screen
+        MainActivity.fab_addEntry.show();
+
         // Set toolbar title
         Objects.requireNonNull(getActivity()).setTitle(getString(R.string.categories_name));
 

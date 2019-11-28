@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.data.DatabaseManager;
 
 import java.text.DecimalFormat;
@@ -46,6 +47,9 @@ public class SaveMoneyFragment extends Fragment {
 
         textView_money = view.findViewById(R.id.textView_fragmentSaveMoney_money);
         textView_instanceName = view.findViewById(R.id.textView_fragmentSaveMoney_instanceName);
+
+        // Show FAB add entry from screen
+        MainActivity.fab_addEntry.show();
 
         // Set instance name as title
         SharedPreferences prefs = Objects.requireNonNull(getActivity()).getSharedPreferences("instance", Context.MODE_PRIVATE);

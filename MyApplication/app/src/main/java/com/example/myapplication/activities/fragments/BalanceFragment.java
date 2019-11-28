@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.data.DatabaseManager;
 
 import java.text.DecimalFormat;
@@ -60,6 +61,9 @@ public class BalanceFragment extends Fragment {
         textView_profit = view.findViewById(R.id.textView_fragmentBalance_insgresos);
         textView_spend = view.findViewById(R.id.textView_fragmentBalance_gastos);
         textView_date = view.findViewById(R.id.textView_fragmentBalance_date);
+
+        // Show FAB add entry from screen
+        MainActivity.fab_addEntry.show();
 
         // Set instance name as title
         SharedPreferences prefs = getActivity().getSharedPreferences("instance", Context.MODE_PRIVATE);

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.data.DatabaseManager;
 
 import java.text.DecimalFormat;
@@ -55,6 +56,9 @@ public class BalancePeriodFragment extends Fragment {
         textView_profit = view.findViewById(R.id.textView_fragmentBalancePeriod_ingresos);
         textView_spend = view.findViewById(R.id.textView_fragmentBalancePeriod_gastos);
         textView_date = view.findViewById(R.id.textView_fragmentBalancePeriod_period);
+
+        // Show FAB add entry from screen
+        MainActivity.fab_addEntry.show();
 
         // Set instance name as title
         SharedPreferences prefs = getActivity().getSharedPreferences("instance", Context.MODE_PRIVATE);
