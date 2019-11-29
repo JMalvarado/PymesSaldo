@@ -130,6 +130,11 @@
     <string name="toast_addEntryActivity_alertAddCateg_Canceled">Cancelado</string>
     <string name="toast_addEntryActivity_alertAddCateg_existCategory">La categoría ya existe</string>
     <string name="toast_addEntryActivity_alertAddCateg_noicon">Icono no seleccionado. Operación cancelada</string>
+    <string name="toast_balanceFragment_info_profit">Ingresos</string>
+    <string name="toast_balanceFragment_info_spend">Gastos</string>
+    <string name="toast_balanceFragment_info_equal">Balance</string>
+    <string name="toast_balanceFragment_info_remanents">Remanentes del mes anterior</string>
+    <string name="toast_balanceFragment_info_equalPlusRemanents">Balance más remanentes</string>
     <string name="snack_mainActivity_exit">Presione Salir</string>
     <string name="alert_title">Alerta</string>
     <string name="alert_addEntryActivity_nodata">Por favor complete todos los espacios</string>

@@ -22,6 +22,7 @@ import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.data.ListDataReport;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -144,6 +145,9 @@ public class ReportProfitFragment extends Fragment {
 
             list_profitReport.add(listDataReport);
         }
+
+        // Sort List in descending mode by percentage
+        list_profitReport.sort(Comparator.comparing(ListDataReport::getPercentage).reversed());
 
         // Set Adapter to recycler view
         adapter_profitReport = new AdapterReport(list_profitReport, getContext(), getActivity());

@@ -7,10 +7,13 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.activities.MainActivity;
@@ -35,6 +38,11 @@ public class BalanceFragment extends Fragment {
     private TextView textView_profit;
     private TextView textView_spend;
     private TextView textView_date;
+    private LinearLayout layout_profit;
+    private LinearLayout layout_spend;
+    private LinearLayout layout_equal;
+    private LinearLayout layout_remanents;
+    private LinearLayout layout_equalPlusRemanents;
 
     // Global variables
     private String idInstance;
@@ -45,7 +53,7 @@ public class BalanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_balance, container, false);
+        final View view = inflater.inflate(R.layout.fragment_balance, container, false);
 
         // Initialize db manager instance
         db = new DatabaseManager(view.getContext());
@@ -61,6 +69,43 @@ public class BalanceFragment extends Fragment {
         textView_profit = view.findViewById(R.id.textView_fragmentBalance_insgresos);
         textView_spend = view.findViewById(R.id.textView_fragmentBalance_gastos);
         textView_date = view.findViewById(R.id.textView_fragmentBalance_date);
+        layout_profit = view.findViewById(R.id.layout_fragmentbalance_profit);
+        layout_spend = view.findViewById(R.id.layout_fragmentbalance_spend);
+        layout_equal = view.findViewById(R.id.layout_fragmentbalance_equalBalance);
+        layout_remanents = view.findViewById(R.id.layout_fragmentbalance_remanents);
+        layout_equalPlusRemanents = view.findViewById(R.id.layout_fragmentbalance_equalBalancePlusRemanents);
+
+        // Info Click Listeners for layouts
+        layout_profit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_profit), Toast.LENGTH_SHORT).show();
+            }
+        });
+        layout_spend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_spend), Toast.LENGTH_SHORT).show();
+            }
+        });
+        layout_equal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_equal), Toast.LENGTH_SHORT).show();
+            }
+        });
+        layout_remanents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_remanents), Toast.LENGTH_SHORT).show();
+            }
+        });
+        layout_equalPlusRemanents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_equalPlusRemanents), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Show FAB add entry from screen
         MainActivity.fab_addEntry.show();
@@ -90,7 +135,7 @@ public class BalanceFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         String month = monthNames[calendar.get(Calendar.MONTH)];
         String year = Integer.toString(calendar.get(Calendar.YEAR));
-        monthAndYear = month+", "+year;
+        monthAndYear = month + ", " + year;
 
         textView_date.setText(monthAndYear);
 

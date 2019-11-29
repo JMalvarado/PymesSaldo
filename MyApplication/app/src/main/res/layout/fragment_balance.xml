@@ -57,6 +57,7 @@
         android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/layout_fragmentbalance_profit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -85,6 +86,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_fragmentbalance_spend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -112,6 +114,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_fragmentbalance_equalBalance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -158,6 +161,7 @@
         android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/layout_fragmentbalance_remanents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -186,6 +190,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_fragmentbalance_equalBalancePlusRemanents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

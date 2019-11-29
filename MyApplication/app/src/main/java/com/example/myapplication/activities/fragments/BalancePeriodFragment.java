@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.activities.MainActivity;
@@ -32,6 +34,9 @@ public class BalancePeriodFragment extends Fragment {
     private TextView textView_profit;
     private TextView textView_spend;
     private TextView textView_date;
+    private LinearLayout layout_profit;
+    private LinearLayout layout_spend;
+    private LinearLayout layout_equal;
 
     // Global variables
     private String idInstance, begDay, begMonth, begYear, finDay, finMonth, finYear, period;
@@ -42,7 +47,7 @@ public class BalancePeriodFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_balance_period, container, false);
+        final View view = inflater.inflate(R.layout.fragment_balance_period, container, false);
 
         // Initialize db manager instance
         db = new DatabaseManager(view.getContext());
@@ -56,6 +61,29 @@ public class BalancePeriodFragment extends Fragment {
         textView_profit = view.findViewById(R.id.textView_fragmentBalancePeriod_ingresos);
         textView_spend = view.findViewById(R.id.textView_fragmentBalancePeriod_gastos);
         textView_date = view.findViewById(R.id.textView_fragmentBalancePeriod_period);
+        layout_profit = view.findViewById(R.id.layout_fragmentbalanceperiod_profit);
+        layout_spend = view.findViewById(R.id.layout_fragmentbalanceperiod_spend);
+        layout_equal = view.findViewById(R.id.layout_fragmentbalanceperiod_balance);
+
+        // Info Click Listeners for layouts
+        layout_profit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_profit), Toast.LENGTH_SHORT).show();
+            }
+        });
+        layout_spend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_spend), Toast.LENGTH_SHORT).show();
+            }
+        });
+        layout_equal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_equal), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Show FAB add entry from screen
         MainActivity.fab_addEntry.show();
