@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:columnCount="4"
-                android:rowCount="22">
+                android:rowCount="26">
 
                 <ImageView
                     android:id="@+id/imageView_dialogAddIcon_amazon"
@@ -651,7 +651,7 @@
                     android:layout_margin="15dp"
                     android:background="@drawable/roundcornerbrownlight"
                     android:contentDescription="@string/dialogInfo_imageView_image"
-                    android:src="@drawable/ic_wifi_100" />
+                    android:src="@drawable/ic_wifilogo_100" />
 
                 <ImageView
                     android:id="@+id/imageView_dialogAddIcon_camera"
@@ -661,7 +661,7 @@
                     android:layout_margin="15dp"
                     android:background="@drawable/roundcornerbrownlight"
                     android:contentDescription="@string/dialogInfo_imageView_image"
-                    android:src="@drawable/ic_camera_100" />
+                    android:src="@drawable/ic_photocamera_100" />
 
                 <ImageView
                     android:id="@+id/imageView_dialogAddIcon_marihuana"
@@ -882,6 +882,156 @@
                     android:background="@drawable/roundcornerbrownlight"
                     android:contentDescription="@string/dialogInfo_imageView_image"
                     android:src="@drawable/ic_shoppingbag_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_battery"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_battery_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_bicycle"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_bicycle_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_cloud"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_cloud_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_family"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_family_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_gas"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_gas_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_insurance"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_insurance_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_internet"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_internet_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_jewelry"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_jewelry_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_motorcycle"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_motorcycle_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_multimedia"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_multimedia_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_network"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_network_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_photocamera"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_photocamera_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_plug"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_plug_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_recycle"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_recycle_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_wifilogo"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_wifilogo_100" />
 
             </GridLayout>
 

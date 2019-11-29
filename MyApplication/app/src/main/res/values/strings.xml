@@ -7,7 +7,7 @@
     <string name="balance_name">Balance del mes</string>
     <string name="balance_period_name">Balance del periodo</string>
     <string name="save_name">Ahorro</string>
-    <string name="report_name">Reporte</string>
+    <string name="report_name">Reporte por categorías</string>
     <string name="search_name">Explorar</string>
     <string name="categories_name">Categorías</string>
     <string name="editEntry_name">Editar movimiento</string>
@@ -165,7 +165,7 @@
     <string name="nav_period_balance">Balance del ciclo definido</string>
     <string name="nav_categories">Categorías</string>
     <string name="nav_money_save">Ahorro</string>
-    <string name="nav_report_categ">Reporte</string>
+    <string name="nav_report_categ">Reporte por categorías</string>
     <string name="nav_add_profile">Agregar estado financiero</string>
     <string name="nav_conf_profile">Configurar estado</string>
     <string name="nav_exit">Salir</string>

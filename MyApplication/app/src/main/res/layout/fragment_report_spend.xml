@@ -8,6 +8,7 @@
     tools:context="com.example.myapplication.activities.fragments.ReportSpendFragment">
 
     <TextView
+        android:id="@+id/textView_reportSpendFragment_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -15,9 +16,10 @@
         android:textColor="@color/colorGrayLight"
         android:visibility="visible" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_reportSpendFragment_spendList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
 </RelativeLayout>

@@ -61,7 +61,6 @@ public class EditEntryActivity extends AppCompatActivity {
     private String fecha;
     private String hora;
     private String idCateg;
-    private String icName;
     private DatabaseManager db;
     private String strDay, strMonth, strYear, strHour, strMinute;
     private String date;

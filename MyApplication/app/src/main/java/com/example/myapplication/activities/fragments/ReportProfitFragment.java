@@ -97,7 +97,6 @@ public class ReportProfitFragment extends Fragment {
         ArrayList<String> categoriesNames = new ArrayList<>();
         ArrayList<String> categoriesIc = new ArrayList<>();
         ArrayList<Double> categoriesTotalAmount = new ArrayList<>();
-        ArrayList<Double> categoriesPercentage = new ArrayList<>();
         while (categories.moveToNext()) {
             double totalAmount = 0;
             String categId = categories.getString(0);

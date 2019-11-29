@@ -7,13 +7,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -125,18 +123,15 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
                 intBegMonth = calendar.get(Calendar.MONTH);
                 intBegYear = calendar.get(Calendar.YEAR);
 
-                datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        textView_dateBegin.setText(new StringBuilder().append(i).append("-").append(i1 + 1).append("-").append(i2).toString());
-                        begDay = Integer.toString(i2);
-                        begMonth = Integer.toString(i1 + 1);
-                        begYear = Integer.toString(i);
+                datePickerDialog = new DatePickerDialog(v.getContext(), (datePicker, i, i1, i2) -> {
+                    textView_dateBegin.setText(new StringBuilder().append(i).append("-").append(i1 + 1).append("-").append(i2).toString());
+                    begDay = Integer.toString(i2);
+                    begMonth = Integer.toString(i1 + 1);
+                    begYear = Integer.toString(i);
 
-                        // Verify if there is a selected date in both blank spaces
-                        if (!textView_dateFinal.getText().toString().equals("")) {
-                            storeDefaultPeriod();
-                        }
+                    // Verify if there is a selected date in both blank spaces
+                    if (!textView_dateFinal.getText().toString().equals("")) {
+                        storeDefaultPeriod();
                     }
                 }, intBegYear, intBegMonth, intBegDay);
                 datePickerDialog.show();
@@ -150,19 +145,16 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
                 intFinMonth = calendar.get(Calendar.MONTH);
                 intFinYear = calendar.get(Calendar.YEAR);
 
-                datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        textView_dateFinal.setText(new StringBuilder().append(i).append("-").append(i1 + 1).append("-").append(i2).toString());
-                        finDay = Integer.toString(i2);
-                        finMonth = Integer.toString(i1 + 1);
-                        finYear = Integer.toString(i);
+                datePickerDialog = new DatePickerDialog(v.getContext(), (datePicker, i, i1, i2) -> {
+                    textView_dateFinal.setText(new StringBuilder().append(i).append("-").append(i1 + 1).append("-").append(i2).toString());
+                    finDay = Integer.toString(i2);
+                    finMonth = Integer.toString(i1 + 1);
+                    finYear = Integer.toString(i);
 
-                        // Verify if there is a selected date in both blank spaces
-                        if (!textView_dateBegin.getText().toString().equals("")) {
-                            // Store period in shared preference
-                            storeDefaultPeriod();
-                        }
+                    // Verify if there is a selected date in both blank spaces
+                    if (!textView_dateBegin.getText().toString().equals("")) {
+                        // Store period in shared preference
+                        storeDefaultPeriod();
                     }
                 }, intFinYear, intFinMonth, intFinDay);
                 datePickerDialog.show();
