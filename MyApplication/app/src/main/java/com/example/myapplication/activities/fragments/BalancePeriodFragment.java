@@ -66,24 +66,9 @@ public class BalancePeriodFragment extends Fragment {
         layout_equal = view.findViewById(R.id.layout_fragmentbalanceperiod_balance);
 
         // Info Click Listeners for layouts
-        layout_profit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_profit), Toast.LENGTH_SHORT).show();
-            }
-        });
-        layout_spend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_spend), Toast.LENGTH_SHORT).show();
-            }
-        });
-        layout_equal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_equal), Toast.LENGTH_SHORT).show();
-            }
-        });
+        layout_profit.setOnClickListener(v -> Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_profit), Toast.LENGTH_SHORT).show());
+        layout_spend.setOnClickListener(v -> Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_spend), Toast.LENGTH_SHORT).show());
+        layout_equal.setOnClickListener(v -> Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_equal), Toast.LENGTH_SHORT).show());
 
         // Show FAB add entry from screen
         MainActivity.fab_addEntry.show();

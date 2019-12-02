@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,36 +75,11 @@ public class BalanceFragment extends Fragment {
         layout_equalPlusRemanents = view.findViewById(R.id.layout_fragmentbalance_equalBalancePlusRemanents);
 
         // Info Click Listeners for layouts
-        layout_profit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_profit), Toast.LENGTH_SHORT).show();
-            }
-        });
-        layout_spend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_spend), Toast.LENGTH_SHORT).show();
-            }
-        });
-        layout_equal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_equal), Toast.LENGTH_SHORT).show();
-            }
-        });
-        layout_remanents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_remanents), Toast.LENGTH_SHORT).show();
-            }
-        });
-        layout_equalPlusRemanents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_equalPlusRemanents), Toast.LENGTH_SHORT).show();
-            }
-        });
+        layout_profit.setOnClickListener(v -> Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_profit), Toast.LENGTH_SHORT).show());
+        layout_spend.setOnClickListener(v -> Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_spend), Toast.LENGTH_SHORT).show());
+        layout_equal.setOnClickListener(v -> Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_equal), Toast.LENGTH_SHORT).show());
+        layout_remanents.setOnClickListener(v -> Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_remanents), Toast.LENGTH_SHORT).show());
+        layout_equalPlusRemanents.setOnClickListener(v -> Toast.makeText(view.getContext(), getString(R.string.toast_balanceFragment_info_equalPlusRemanents), Toast.LENGTH_SHORT).show());
 
         // Show FAB add entry from screen
         MainActivity.fab_addEntry.show();

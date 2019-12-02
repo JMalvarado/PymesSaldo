@@ -31,11 +31,11 @@ public class ReportCategViewPagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                fragment = new ReportProfitFragment();
+                fragment = new ReportSpendFragment();
                 break;
 
             case 1:
-                fragment = new ReportSpendFragment();
+                fragment = new ReportProfitFragment();
                 break;
 
             case 2:
@@ -57,15 +57,15 @@ public class ReportCategViewPagerAdapter extends FragmentStatePagerAdapter {
         String title = "";
         switch (position) {
             case 0:
-                title = context.getResources().getString(R.string.reportViewCategPagerAdapter_title1);
+                title = context.getResources().getString(R.string.reportViewCategPagerAdapter_title2);
                 break;
 
             case 1:
-                title = context.getResources().getString(R.string.reportCategViewPagerAdapter_title2);
+                title = context.getResources().getString(R.string.reportViewCategPagerAdapter_title1);
                 break;
 
             case 2:
-                title = context.getResources().getString(R.string.reportCategViewPagerAdapter_title3);
+                title = context.getResources().getString(R.string.reportViewCategPagerAdapter_title3);
         }
         return title;
     }

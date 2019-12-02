@@ -3,8 +3,6 @@ package com.example.myapplication.activities.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,16 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activities.activities.MainActivity;
-import com.example.myapplication.activities.data.CustomItems;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -214,7 +208,7 @@ public class TransferFragment extends Fragment implements View.OnClickListener {
 
                 // Add "gasto" to "from" instance
                 gastoInt = Double.parseDouble(montoStr);
-                ingresoInt =0;
+                ingresoInt = 0;
                 boolean isResult2 = db.addEntry(date, time, gastoInt, ingresoInt, descripcion, fromInstanceId, categoryIdFrom);
 
                 // Check result
@@ -263,83 +257,80 @@ public class TransferFragment extends Fragment implements View.OnClickListener {
                 int monthPick = calendar.get(Calendar.MONTH);
                 int yearPick = calendar.get(Calendar.YEAR);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        strDay = Integer.toString(i2);
-                        strMonth = Integer.toString(i1 + 1);
-                        strYear = Integer.toString(i);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), (datePicker, i, i1, i2) -> {
+                    strDay = Integer.toString(i2);
+                    strMonth = Integer.toString(i1 + 1);
+                    strYear = Integer.toString(i);
 
-                        // Cast day with 1 digit to 2
-                        switch (strDay) {
-                            case "1":
-                                strDay = "01";
-                                break;
-                            case "2":
-                                strDay = "02";
-                                break;
-                            case "3":
-                                strDay = "03";
-                                break;
-                            case "4":
-                                strDay = "04";
-                                break;
-                            case "5":
-                                strDay = "05";
-                                break;
-                            case "6":
-                                strDay = "06";
-                                break;
-                            case "7":
-                                strDay = "07";
-                                break;
-                            case "8":
-                                strDay = "08";
-                                break;
-                            case "9":
-                                strDay = "09";
-                                break;
-                            default:
-                                break;
-                        }
-
-                        // Cast month with 1 digit to 2
-                        switch (strMonth) {
-                            case "1":
-                                strMonth = "01";
-                                break;
-                            case "2":
-                                strMonth = "02";
-                                break;
-                            case "3":
-                                strMonth = "03";
-                                break;
-                            case "4":
-                                strMonth = "04";
-                                break;
-                            case "5":
-                                strMonth = "05";
-                                break;
-                            case "6":
-                                strMonth = "06";
-                                break;
-                            case "7":
-                                strMonth = "07";
-                                break;
-                            case "8":
-                                strMonth = "08";
-                                break;
-                            case "9":
-                                strMonth = "09";
-                                break;
-                            default:
-                                break;
-                        }
-                        // Show in format DD-MM-YY
-                        textView_date.setText(new StringBuilder().append(strDay).append("-").append(strMonth).append("-").append(strYear).toString());
-                        // Store in format YY-MM-DD
-                        date = new StringBuilder().append(strYear).append("-").append(strMonth).append("-").append(strDay).toString();
+                    // Cast day with 1 digit to 2
+                    switch (strDay) {
+                        case "1":
+                            strDay = "01";
+                            break;
+                        case "2":
+                            strDay = "02";
+                            break;
+                        case "3":
+                            strDay = "03";
+                            break;
+                        case "4":
+                            strDay = "04";
+                            break;
+                        case "5":
+                            strDay = "05";
+                            break;
+                        case "6":
+                            strDay = "06";
+                            break;
+                        case "7":
+                            strDay = "07";
+                            break;
+                        case "8":
+                            strDay = "08";
+                            break;
+                        case "9":
+                            strDay = "09";
+                            break;
+                        default:
+                            break;
                     }
+
+                    // Cast month with 1 digit to 2
+                    switch (strMonth) {
+                        case "1":
+                            strMonth = "01";
+                            break;
+                        case "2":
+                            strMonth = "02";
+                            break;
+                        case "3":
+                            strMonth = "03";
+                            break;
+                        case "4":
+                            strMonth = "04";
+                            break;
+                        case "5":
+                            strMonth = "05";
+                            break;
+                        case "6":
+                            strMonth = "06";
+                            break;
+                        case "7":
+                            strMonth = "07";
+                            break;
+                        case "8":
+                            strMonth = "08";
+                            break;
+                        case "9":
+                            strMonth = "09";
+                            break;
+                        default:
+                            break;
+                    }
+                    // Show in format DD-MM-YY
+                    textView_date.setText(new StringBuilder().append(strDay).append("-").append(strMonth).append("-").append(strYear).toString());
+                    // Store in format YY-MM-DD
+                    date = new StringBuilder().append(strYear).append("-").append(strMonth).append("-").append(strDay).toString();
                 }, yearPick, monthPick, dayPick);
                 datePickerDialog.show();
 
@@ -350,87 +341,84 @@ public class TransferFragment extends Fragment implements View.OnClickListener {
                 int hourPick = timepick.get(Calendar.HOUR_OF_DAY);
                 int minutesPick = timepick.get(Calendar.MINUTE);
 
-                TimePickerDialog timePickerDialog = new TimePickerDialog(view.getContext(), new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                        strHour = Integer.toString(i);
-                        strMinute = Integer.toString(i1);
+                TimePickerDialog timePickerDialog = new TimePickerDialog(view.getContext(), (timePicker, i, i1) -> {
+                    strHour = Integer.toString(i);
+                    strMinute = Integer.toString(i1);
 
-                        // Cast hour with 1 digit to 2
-                        switch (strHour) {
-                            case "0":
-                                strHour = "00";
-                                break;
-                            case "1":
-                                strHour = "01";
-                                break;
-                            case "2":
-                                strHour = "02";
-                                break;
-                            case "3":
-                                strHour = "03";
-                                break;
-                            case "4":
-                                strHour = "04";
-                                break;
-                            case "5":
-                                strHour = "05";
-                                break;
-                            case "6":
-                                strHour = "06";
-                                break;
-                            case "7":
-                                strHour = "07";
-                                break;
-                            case "8":
-                                strHour = "08";
-                                break;
-                            case "9":
-                                strHour = "09";
-                                break;
-                            default:
-                                break;
-                        }
-
-                        // Cast minute with 1 digit to 2
-                        switch (strMinute) {
-                            case "0":
-                                strMinute = "00";
-                                break;
-                            case "1":
-                                strMinute = "01";
-                                break;
-                            case "2":
-                                strMinute = "02";
-                                break;
-                            case "3":
-                                strMinute = "03";
-                                break;
-                            case "4":
-                                strMinute = "04";
-                                break;
-                            case "5":
-                                strMinute = "05";
-                                break;
-                            case "6":
-                                strMinute = "06";
-                                break;
-                            case "7":
-                                strMinute = "07";
-                                break;
-                            case "8":
-                                strMinute = "08";
-                                break;
-                            case "9":
-                                strMinute = "09";
-                                break;
-                            default:
-                                break;
-                        }
-
-                        textView_time.setText(new StringBuilder().append(strHour).append(":").append(strMinute).toString());
-                        time = new StringBuilder().append(strHour).append(":").append(strMinute).append(":00.000").toString();
+                    // Cast hour with 1 digit to 2
+                    switch (strHour) {
+                        case "0":
+                            strHour = "00";
+                            break;
+                        case "1":
+                            strHour = "01";
+                            break;
+                        case "2":
+                            strHour = "02";
+                            break;
+                        case "3":
+                            strHour = "03";
+                            break;
+                        case "4":
+                            strHour = "04";
+                            break;
+                        case "5":
+                            strHour = "05";
+                            break;
+                        case "6":
+                            strHour = "06";
+                            break;
+                        case "7":
+                            strHour = "07";
+                            break;
+                        case "8":
+                            strHour = "08";
+                            break;
+                        case "9":
+                            strHour = "09";
+                            break;
+                        default:
+                            break;
                     }
+
+                    // Cast minute with 1 digit to 2
+                    switch (strMinute) {
+                        case "0":
+                            strMinute = "00";
+                            break;
+                        case "1":
+                            strMinute = "01";
+                            break;
+                        case "2":
+                            strMinute = "02";
+                            break;
+                        case "3":
+                            strMinute = "03";
+                            break;
+                        case "4":
+                            strMinute = "04";
+                            break;
+                        case "5":
+                            strMinute = "05";
+                            break;
+                        case "6":
+                            strMinute = "06";
+                            break;
+                        case "7":
+                            strMinute = "07";
+                            break;
+                        case "8":
+                            strMinute = "08";
+                            break;
+                        case "9":
+                            strMinute = "09";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    textView_time.setText(new StringBuilder().append(strHour).append(":").append(strMinute).toString());
+                    time = new StringBuilder().append(strHour).append(":").append(strMinute).append(":00.000").toString();
                 }, hourPick, minutesPick, false);
                 timePickerDialog.show();
 

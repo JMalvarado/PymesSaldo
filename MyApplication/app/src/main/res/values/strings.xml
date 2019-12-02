@@ -81,6 +81,10 @@
     <string name="fragment_transfer_textview_from">Desde:</string>
     <string name="fragment_transfer_textview_to">Hacia:</string>
     <string name="fragment_reportCategories_textview_dnterDate">Ingrese el periodo arriba</string>
+    <string name="reportGraphicsFragment_spendTitle">Gastos</string>
+    <string name="reportGraphicsFragment_profitTitle">Ingresos</string>
+    <string name="reportGraphicsFragment_profitDescription">Ingresos por categoría (%)</string>
+    <string name="reportGraphicsFragment_spendDescription">Gastos por categoría (%)</string>
 
     <string name="iteminfo_textView_gasto">Gasto:</string>
     <string name="iteminfo_textView_ingreso">Ingreso:</string>
@@ -111,8 +115,8 @@
     <string name="addEntryViewPagerAdapter_title1">Movimiento</string>
     <string name="addEntryViewPagerAdapter_title2">Ahorro</string>
     <string name="reportViewCategPagerAdapter_title1">Ingreso</string>
-    <string name="reportCategViewPagerAdapter_title2">Gasto</string>
-    <string name="reportCategViewPagerAdapter_title3">Gráficas</string>
+    <string name="reportViewCategPagerAdapter_title2">Gasto</string>
+    <string name="reportViewCategPagerAdapter_title3">Gráficas</string>
     <string name="addEntryViewPagerAdapter_title3">Transferencia</string>
     <string name="customSpinnerCategories_imageView_descr">Imagen</string>
     <string name="imageview_descr">imageview balance</string>

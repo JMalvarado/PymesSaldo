@@ -8,16 +8,56 @@
     tools:context="com.example.myapplication.activities.fragments.ReportGraphicsFragment">
 
     <TextView
+        android:id="@+id/textView_reportGraphicsFragment_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/fragment_reportCategories_textview_dnterDate"
         android:textColor="@color/colorGrayLight"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
-    <ListView
+    <LinearLayout
+        android:id="@+id/layout_reportGraphicsFragment_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:id="@+id/layout_reportGraphicsFragment_profitGraphic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/border_shadow"
+            android:gravity="center"
+            android:padding="5dp">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/piechart_reportGraphicsFragment_profitchart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_reportGraphicsFragment_SpendGraphic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/border_shadow"
+            android:gravity="center"
+            android:padding="5dp">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/piechart_reportGraphicsFragment_spendchart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

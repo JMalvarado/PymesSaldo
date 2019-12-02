@@ -61,7 +61,6 @@ public class ReportProfitFragment extends Fragment {
         recyclerView_profitReport.setHasFixedSize(true);
         recyclerView_profitReport.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-
         if (reportPeriod != null) {
             // Hide info textView
             textView_info.setVisibility(View.GONE);
@@ -114,7 +113,7 @@ public class ReportProfitFragment extends Fragment {
             categoriesNames.add(categories.getString(1));
             categoriesTotalAmount.add(totalAmount);
 
-            // Reset porfits Cursor position
+            // Reset profits Cursor position
             profits.moveToPosition(-1);
         }
         categories.moveToPosition(-1);
