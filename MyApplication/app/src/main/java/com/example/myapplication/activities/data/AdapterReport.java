@@ -66,6 +66,9 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.MyViewHold
         // Percentage (Parse percentage with properly format: two decimals)
         DecimalFormat dfPerc = new DecimalFormat(("###.##"));
         String percentage = dfPerc.format(data.getPercentage());
+        if (percentage.equals("NaN")) {
+            percentage = "0";
+        }
         String percentageComplete = percentage.concat(" %");
         holder.textView_reportPercentage.setText(percentageComplete);
 

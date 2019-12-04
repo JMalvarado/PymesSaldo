@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:inputType="text"
+        android:maxLength="12"
         tools:ignore="LabelFor" />
 
     <ImageButton

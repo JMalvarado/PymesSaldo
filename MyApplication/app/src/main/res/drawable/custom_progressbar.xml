@@ -3,21 +3,14 @@
 
     <item android:id="@android:id/background">
         <shape>
-            <gradient
-                android:angle="270"
-                android:centerColor="@color/colorWhite"
-                android:endColor="@color/colorWhiteMint"
-                android:startColor="@color/colorWhiteMint" />
+            <solid android:color="@color/colorGrayLight" />
         </shape>
     </item>
 
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <gradient
-                    android:centerColor="@color/colorOrangeDark"
-                    android:endColor="@color/colorRed"
-                    android:startColor="@color/colorOrangeLight" />
+                <solid android:color="@color/colorBlue" />
             </shape>
         </clip>
     </item>

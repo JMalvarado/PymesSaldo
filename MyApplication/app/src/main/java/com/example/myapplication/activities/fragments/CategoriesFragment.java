@@ -4,7 +4,6 @@ package com.example.myapplication.activities.fragments;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -48,6 +47,7 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
     private ArrayList<String> icons;
     private ArrayList<String> names;
     private String icName;
+    private int categories_count;
     // Database manager instance
     private DatabaseManager db;
 
@@ -88,8 +88,9 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
         names = new ArrayList<>();
         // Get categories data from db
         Cursor result = db.getCategoriesByInstance(MainActivity.idInstance);
+        categories_count = result.getCount();
         // Check categories count
-        if (result.getCount() == 0) {
+        if (categories_count == 0) {
             textView_nodata.setVisibility(View.VISIBLE);
         } else {
             textView_nodata.setVisibility(View.GONE);
@@ -98,6 +99,7 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
                 names.add(result.getString(1));
                 icons.add(result.getString(2));
             }
+            result.moveToPosition(-1);
         }
 
         for (int i = 0; i < names.size(); i++) {
@@ -121,8 +123,13 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageButton_categories_add:
-                // if category_name = Add...
-                openDialog();
+                // Check categories count limit
+                if (categories_count < 25) {
+                    // if category_name = Add...
+                    openDialog();
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_limit), Toast.LENGTH_LONG).show();
+                }
 
                 break;
         }

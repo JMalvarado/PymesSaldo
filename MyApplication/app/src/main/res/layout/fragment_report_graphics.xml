@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/reportGraphic_layout"
     android:layout_width="match_parent"
@@ -16,48 +17,93 @@
         android:textColor="@color/colorGrayLight"
         android:visibility="gone" />
 
-    <LinearLayout
-        android:id="@+id/layout_reportGraphicsFragment_data"
+    <ScrollView
+        android:id="@+id/scrollview_reportGraphicsFragment_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:fillViewport="true"
+        android:isScrollContainer="false"
         android:visibility="visible"
-        android:weightSum="1">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <RelativeLayout
-            android:id="@+id/layout_reportGraphicsFragment_profitGraphic"
+        <LinearLayout
+            android:id="@+id/layout_reportGraphicsFragment_data"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:layout_weight="0.5"
-            android:background="@drawable/border_shadow"
-            android:gravity="center"
-            android:padding="5dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/piechart_reportGraphicsFragment_profitchart"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:background="@drawable/border_shadow"
+                android:orientation="vertical">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/textView_reportGraphicsFragment_titleProfit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
 
-        <RelativeLayout
-            android:id="@+id/layout_reportGraphicsFragment_SpendGraphic"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:layout_weight="0.5"
-            android:background="@drawable/border_shadow"
-            android:gravity="center"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/textView_reportGraphicsFragment_periodProfit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/piechart_reportGraphicsFragment_spendchart"
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/piechart_reportGraphicsFragment_profitchart"
+                    android:layout_width="match_parent"
+                    android:layout_height="450dp"
+                    android:layout_margin="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:background="@drawable/border_shadow"
+                android:orientation="vertical">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/textView_reportGraphicsFragment_titleSpend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/textView_reportGraphicsFragment_periodSpend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/piechart_reportGraphicsFragment_spendchart"
+                    android:layout_width="match_parent"
+                    android:layout_height="450dp"
+                    android:layout_margin="12dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

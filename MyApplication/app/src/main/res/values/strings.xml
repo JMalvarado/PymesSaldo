@@ -78,13 +78,17 @@
     <string name="fragment_categories_textView_nodata">No hay categorías para mostrar</string>
     <string name="fragment_categories_imageButton_add_descr">Agregar categoría</string>
     <string name="fragment_reportCategories_datearrow_descr">Flecha de hasta</string>
+    <string name="fragment_reportCategories_textview_dnterDate">Ingrese el periodo arriba</string>
     <string name="fragment_transfer_textview_from">Desde:</string>
     <string name="fragment_transfer_textview_to">Hacia:</string>
-    <string name="fragment_reportCategories_textview_dnterDate">Ingrese el periodo arriba</string>
     <string name="reportGraphicsFragment_spendTitle">Gastos</string>
     <string name="reportGraphicsFragment_profitTitle">Ingresos</string>
     <string name="reportGraphicsFragment_profitDescription">Ingresos por categoría (%)</string>
     <string name="reportGraphicsFragment_spendDescription">Gastos por categoría (%)</string>
+    <string name="reportGraphicsFragment_periodoTitle_from">Periodo del </string>
+    <string name="reportGraphicsFragment_periodoTitle_to"> al </string>
+    <string name="reportGraphicsFragment_category">Categoría</string>
+    <string name="reportGraphicsFragment_total">Total</string>
 
     <string name="iteminfo_textView_gasto">Gasto:</string>
     <string name="iteminfo_textView_ingreso">Ingreso:</string>
@@ -133,6 +137,7 @@
     <string name="toast_addEntryActivity_noSuccesAdd">Error al ingresar dato</string>
     <string name="toast_addEntryActivity_alertAddCateg_Canceled">Cancelado</string>
     <string name="toast_addEntryActivity_alertAddCateg_existCategory">La categoría ya existe</string>
+    <string name="toast_addEntryActivity_alertAddCateg_limit">El límite de categorías es 25</string>
     <string name="toast_addEntryActivity_alertAddCateg_noicon">Icono no seleccionado. Operación cancelada</string>
     <string name="toast_balanceFragment_info_profit">Ingresos</string>
     <string name="toast_balanceFragment_info_spend">Gastos</string>

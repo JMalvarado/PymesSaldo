@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -140,11 +139,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         } else {
             radioButton_period.setEnabled(true);
             radioButton_period.setChecked(true);
-            textView_period.setText(new StringBuilder().append("( ").
-                    append(getString(R.string.fragment_search_period_period_header)).
-                    append(" ").
-                    append(period).
-                    append(" )").toString());
+            textView_period.setText(String.format("( %s %s )", getString(R.string.fragment_search_period_period_header), period));
 
             checkBox_begining.setEnabled(false);
             fab_dateBegin.setEnabled(false);
@@ -385,14 +380,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 intBegMonth = calendar.get(Calendar.MONTH);
                 intBegYear = calendar.get(Calendar.YEAR);
 
-                datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        textView_dateBeging.setText(new StringBuilder().append(i2).append("-").append(i1 + 1).append("-").append(i).toString());
-                        begDay = Integer.toString(i2);
-                        begMonth = Integer.toString(i1 + 1);
-                        begYear = Integer.toString(i);
-                    }
+                datePickerDialog = new DatePickerDialog(view.getContext(), (datePicker, i, i1, i2) -> {
+                    textView_dateBeging.setText(new StringBuilder().append(i2).append("-").append(i1 + 1).append("-").append(i).toString());
+                    begDay = Integer.toString(i2);
+                    begMonth = Integer.toString(i1 + 1);
+                    begYear = Integer.toString(i);
                 }, intBegYear, intBegMonth, intBegDay);
                 datePickerDialog.show();
 
@@ -404,14 +396,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 intFinMonth = calendar.get(Calendar.MONTH);
                 intFinYear = calendar.get(Calendar.YEAR);
 
-                datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        textView_dateFinal.setText(new StringBuilder().append(i2).append("-").append(i1 + 1).append("-").append(i).toString());
-                        finDay = Integer.toString(i2);
-                        finMonth = Integer.toString(i1 + 1);
-                        finYear = Integer.toString(i);
-                    }
+                datePickerDialog = new DatePickerDialog(view.getContext(), (datePicker, i, i1, i2) -> {
+                    textView_dateFinal.setText(new StringBuilder().append(i2).append("-").append(i1 + 1).append("-").append(i).toString());
+                    finDay = Integer.toString(i2);
+                    finMonth = Integer.toString(i1 + 1);
+                    finYear = Integer.toString(i);
                 }, intFinYear, intFinMonth, intFinDay);
                 datePickerDialog.show();
 

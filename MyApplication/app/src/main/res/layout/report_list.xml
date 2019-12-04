@@ -57,7 +57,7 @@
                     android:id="@+id/progressBar_reportList_percentage"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="8dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="0.90"

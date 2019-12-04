@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,7 +24,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -137,6 +134,7 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
             int categIconId = getResources().getIdentifier(categIcon, "drawable", view.getContext().getPackageName());
             categoriesList.add(new CustomItems(categName, categIconId));
         }
+        categoriesData.moveToPosition(-1);
 
         // Add option: "Agregar..." category
         categoriesList.add(new CustomItems(getString(R.string.activity_addEntry_addCategory_spinner), R.drawable.ic_addblack_64));
@@ -155,9 +153,16 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
                 CustomItems items = (CustomItems) adapterView.getSelectedItem();
                 String category_name = items.getSpinnerText();
 
+                // Get categories data from db
+                Cursor result = db.getCategoriesByInstance(MainActivity.idInstance);
                 if (category_name.equals(getString(R.string.activity_addEntry_addCategory_spinner))) {
-                    // if category_name = Add...
-                    openDialog();
+                    // Check categories count limit
+                    if (result.getCount() < 25) {
+                        // if category_name = Add...
+                        openDialog();
+                    } else {
+                        Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_limit), Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     // else, get category id with the given name
                     category_id = db.getCategoryId(category_name, MainActivity.idInstance);
