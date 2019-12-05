@@ -148,7 +148,7 @@ public class ReportProfitFragment extends Fragment {
         list_profitReport.sort(Comparator.comparing(ListDataReport::getPercentage).reversed());
 
         // Set Adapter to recycler view
-        adapter_profitReport = new AdapterReport(list_profitReport, getContext(), getActivity());
+        adapter_profitReport = new AdapterReport(list_profitReport, getContext(), getActivity(), "I", begDate, finDate);
         recyclerView_profitReport.setAdapter(adapter_profitReport);
     }
 

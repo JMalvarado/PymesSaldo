@@ -80,7 +80,7 @@ public class AddProfileActivity extends AppCompatActivity {
     /**
      * On click actions
      *
-     * @param view
+     * @param view view
      */
     public void onClickAddProfile(View view) {
         switch (view.getId()) {
@@ -99,12 +99,7 @@ public class AddProfileActivity extends AppCompatActivity {
                 // Add text
                 textView_help.setText(getString(R.string.dialogInfo_content_help_initialProfit));
 
-                fab_dismiss_help.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialogHelpInitialProfit.dismiss();
-                    }
-                });
+                fab_dismiss_help.setOnClickListener(view1 -> dialogHelpInitialProfit.dismiss());
 
                 dialogHelpInitialProfit.show();
 
@@ -124,12 +119,7 @@ public class AddProfileActivity extends AppCompatActivity {
                 // Add text
                 textView_help.setText(getString(R.string.dialogInfo_content_help_period));
 
-                fab_dismiss_help.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialogHelpPeriod.dismiss();
-                    }
-                });
+                fab_dismiss_help.setOnClickListener(view12 -> dialogHelpPeriod.dismiss());
 
                 dialogHelpPeriod.show();
 

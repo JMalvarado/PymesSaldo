@@ -262,6 +262,14 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
             final ImageView imageView_ic_recycle = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_recycle);
             final ImageView imageView_ic_wifilogo = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_wifilogo);
 
+            final ImageView imageView_ic_candy = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_candy);
+            final ImageView imageView_ic_gardening = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_gardening);
+            final ImageView imageView_ic_moneygift = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_moneygift);
+            final ImageView imageView_ic_prize = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_prize);
+            final ImageView imageView_ic_rent = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_rent);
+            final ImageView imageView_ic_shovel = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_shovel);
+            final ImageView imageView_ic_sowing = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_sowing);
+
             // image views click listener
             imageView_ic_amazon.setOnClickListener(view1101 -> {
                 icName = "ic_amazon_100";
@@ -884,6 +892,49 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
             });
             imageView_ic_wifilogo.setOnClickListener(view1 -> {
                 icName = "ic_wifilogo_100";
+                int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                imageButton_addIcon.setImageResource(imageID);
+                dialogIcCategories.dismiss();
+            });
+
+            imageView_ic_candy.setOnClickListener(view116 -> {
+                icName = "ic_candy_100";
+                int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                imageButton_addIcon.setImageResource(imageID);
+                dialogIcCategories.dismiss();
+            });
+            imageView_ic_gardening.setOnClickListener(view116 -> {
+                icName = "ic_gardening_100";
+                int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                imageButton_addIcon.setImageResource(imageID);
+                dialogIcCategories.dismiss();
+            });
+            imageView_ic_moneygift.setOnClickListener(view116 -> {
+                icName = "ic_moneygift_100";
+                int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                imageButton_addIcon.setImageResource(imageID);
+                dialogIcCategories.dismiss();
+            });
+            imageView_ic_prize.setOnClickListener(view116 -> {
+                icName = "ic_prize_100";
+                int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                imageButton_addIcon.setImageResource(imageID);
+                dialogIcCategories.dismiss();
+            });
+            imageView_ic_rent.setOnClickListener(view116 -> {
+                icName = "ic_rent_100";
+                int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                imageButton_addIcon.setImageResource(imageID);
+                dialogIcCategories.dismiss();
+            });
+            imageView_ic_shovel.setOnClickListener(view116 -> {
+                icName = "ic_shovel_100";
+                int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
+                imageButton_addIcon.setImageResource(imageID);
+                dialogIcCategories.dismiss();
+            });
+            imageView_ic_sowing.setOnClickListener(view116 -> {
+                icName = "ic_sowing_100";
                 int imageID = contextImgBttn.getResources().getIdentifier(icName, "drawable", contextImgBttn.getPackageName());
                 imageButton_addIcon.setImageResource(imageID);
                 dialogIcCategories.dismiss();

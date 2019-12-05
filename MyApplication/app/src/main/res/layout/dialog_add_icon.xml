@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:columnCount="4"
-                android:rowCount="26">
+                android:rowCount="27">
 
                 <ImageView
                     android:id="@+id/imageView_dialogAddIcon_amazon"
@@ -651,7 +651,7 @@
                     android:layout_margin="15dp"
                     android:background="@drawable/roundcornerbrownlight"
                     android:contentDescription="@string/dialogInfo_imageView_image"
-                    android:src="@drawable/ic_wifilogo_100" />
+                    android:src="@drawable/ic_wifi_100" />
 
                 <ImageView
                     android:id="@+id/imageView_dialogAddIcon_camera"
@@ -1032,6 +1032,76 @@
                     android:background="@drawable/roundcornerbrownlight"
                     android:contentDescription="@string/dialogInfo_imageView_image"
                     android:src="@drawable/ic_wifilogo_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_candy"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_candy_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_gardening"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_gardening_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_moneygift"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_moneygift_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_prize"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_prize_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_rent"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_rent_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_shovel"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_shovel_100" />
+
+                <ImageView
+                    android:id="@+id/imageView_dialogAddIcon_sowing"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/roundcornerbrownlight"
+                    android:contentDescription="@string/dialogInfo_imageView_image"
+                    android:src="@drawable/ic_sowing_100" />
 
             </GridLayout>
 

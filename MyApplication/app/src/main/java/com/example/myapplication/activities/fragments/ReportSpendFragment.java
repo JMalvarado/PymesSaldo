@@ -148,7 +148,7 @@ public class ReportSpendFragment extends Fragment {
         list_spendReport.sort(Comparator.comparing(ListDataReport::getPercentage).reversed());
 
         // Set Adapter to recycler view
-        adapter_spendReport = new AdapterReport(list_spendReport, getContext(), getActivity());
+        adapter_spendReport = new AdapterReport(list_spendReport, getContext(), getActivity(), "G", begDate, finDate);
         recyclerView_spendReport.setAdapter(adapter_spendReport);
     }
 
