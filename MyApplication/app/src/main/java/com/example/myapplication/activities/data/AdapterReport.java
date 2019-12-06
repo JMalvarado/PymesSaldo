@@ -159,7 +159,7 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.MyViewHold
                     String sepearator = "-";
                     date = day + sepearator + month + sepearator + year;
 
-                    String time = profits.getString(4);
+                    String time = profits.getString(4).substring(0, 5);
 
                     Double amountEntry = profits.getDouble(5);
 

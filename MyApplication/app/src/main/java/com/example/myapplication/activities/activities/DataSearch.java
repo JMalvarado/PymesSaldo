@@ -114,34 +114,42 @@ public class DataSearch extends AppCompatActivity {
             String year = dateTmp.substring(0, 4);
             String month = dateTmp.substring(5, 7);
             String day = dateTmp.substring(8, 10);
-            String sepearator = "-";
-            String dateInit = day + sepearator + month + sepearator + year;
+            String separator = "/";
+            String dateInit = day + separator + month + separator + year;
             // Final date
             year = SearchFragment.finYear;
             month = SearchFragment.finMonth;
             day = SearchFragment.finDay;
-            String dateFin = day + sepearator + month + sepearator + year;
+            String dateFin = day + separator + month + separator + year;
 
-            textView_periodTitle.setText(new StringBuilder()
-                    .append(dateInit).append("    -    ").append(dateFin).toString());
+            String periodTitle = getString(R.string.reportGraphicsFragment_periodoTitle_from) + " " +
+                    dateInit + " " +
+                    getString(R.string.reportGraphicsFragment_periodoTitle_to) + " " +
+                    dateFin;
+
+            textView_periodTitle.setText(periodTitle);
 
         } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked) && (SearchFragment.radioButtonDatesIsChecked)) {
             // Initial date
             String year = SearchFragment.begYear;
             String month = SearchFragment.begMonth;
             String day = SearchFragment.begDay;
-            String sepearator = "-";
-            String dateInit = day + sepearator + month + sepearator + year;
+            String separator = "/";
+            String dateInit = day + separator + month + separator + year;
             // Final date
             String dateTmp = fechas.get(fechas.size() - 1);
             // Set on format DD-MM-YYYY
             year = dateTmp.substring(0, 4);
             month = dateTmp.substring(5, 7);
             day = dateTmp.substring(8, 10);
-            String dateFin = day + sepearator + month + sepearator + year;
+            String dateFin = day + separator + month + separator + year;
 
-            textView_periodTitle.setText(new StringBuilder()
-                    .append(dateInit).append("    -    ").append(dateFin).toString());
+            String periodTitle = getString(R.string.reportGraphicsFragment_periodoTitle_from) + " " +
+                    dateInit + " " +
+                    getString(R.string.reportGraphicsFragment_periodoTitle_to) + " " +
+                    dateFin;
+
+            textView_periodTitle.setText(periodTitle);
 
         } else if ((SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked) && (SearchFragment.radioButtonDatesIsChecked)) {
             textView_periodTitle.setText(new StringBuilder()
@@ -151,16 +159,20 @@ public class DataSearch extends AppCompatActivity {
             String year = SearchFragment.begYear;
             String month = SearchFragment.begMonth;
             String day = SearchFragment.begDay;
-            String sepearator = "-";
-            String dateInit = day + sepearator + month + sepearator + year;
+            String separator = "/";
+            String dateInit = day + separator + month + separator + year;
             // Final date
             year = SearchFragment.finYear;
             month = SearchFragment.finMonth;
             day = SearchFragment.finDay;
-            String dateFin = day + sepearator + month + sepearator + year;
+            String dateFin = day + separator + month + separator + year;
 
-            textView_periodTitle.setText(new StringBuilder()
-                    .append(dateInit).append("    -    ").append(dateFin).toString());
+            String periodTitle = getString(R.string.reportGraphicsFragment_periodoTitle_from) + " " +
+                    dateInit + " " +
+                    getString(R.string.reportGraphicsFragment_periodoTitle_to) + " " +
+                    dateFin;
+
+            textView_periodTitle.setText(periodTitle);
         }
 
         // Get entries data and calculate total profit, spend and balance
@@ -192,7 +204,7 @@ public class DataSearch extends AppCompatActivity {
 
         // Set total profit, spend and balance data in text views
         // Calculate balance
-        totalBalance = totalProfit-totalSpend;
+        totalBalance = totalProfit - totalSpend;
         // Format
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setGroupingSeparator(' ');
@@ -202,6 +214,13 @@ public class DataSearch extends AppCompatActivity {
         String spendDf = df.format(totalSpend);
         // Set balance, profit and spend on textView
         textView_balance.setText(balanceDf);
+        if (totalBalance < 0) {
+            textView_balance.setTextColor(this.getColor(R.color.colorRed));
+        } else if (totalBalance > 0) {
+            textView_balance.setTextColor(this.getColor(R.color.colorGreen));
+        } else {
+            textView_balance.setTextColor(this.getColor(R.color.colorBlack));
+        }
         textView_profit.setText(profitDf);
         textView_spend.setText(spendDf);
 

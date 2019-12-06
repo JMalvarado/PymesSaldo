@@ -24,15 +24,20 @@
     <color name="colorBrownGrayLight">#726763</color>
     <color name="colorGrayLight">#FFCCCCCC</color>
     <color name="colorPink">#EEC795</color>
-    <color name="colorWhite">#FEFFFF</color>
+    <color name="colorWhite">#FFFFFF</color>
     <color name="colorWhiteMint">#95CECE</color>
     <color name="colorBlack">#000000</color>
     <color name="colorPrimaryTransparent">#C473AC98</color>
     <color name="colorTurquoiseDark">#008577</color>
     <color name="colorTurquoiseDark2">#00574B</color>
     <color name="colorMagentaDull">#C44271</color>
+    <color name="colorWhiteSplash">#F7F7F7</color>
 
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#C44271</color>
+    <color name="colorPrimary">#DABC48</color>
+    <color name="colorPrimaryDark">#DDDDD9</color>
+    <color name="colorAccent">#850290</color>
+
+    <!--    <color name="colorPrimary">#008577</color>-->
+    <!--    <color name="colorPrimaryDark">#00574B</color>-->
+    <!--    <color name="colorAccent">#C44271</color>-->
 </resources>

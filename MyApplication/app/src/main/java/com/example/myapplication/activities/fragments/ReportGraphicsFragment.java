@@ -4,6 +4,7 @@ package com.example.myapplication.activities.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +39,7 @@ public class ReportGraphicsFragment extends Fragment {
     private PieChart pieChart_profits;
     private PieChart pieChart_spends;
     private ScrollView scrollview_data;
+    private ProgressBar progressBar_graphicProgress;
     private TextView textView_info;
     private TextView textView_titleProfit;
     private TextView textView_titleSpend;
@@ -69,6 +72,7 @@ public class ReportGraphicsFragment extends Fragment {
         textView_periodProfit = view.findViewById(R.id.textView_reportGraphicsFragment_periodProfit);
         textView_periodSpend = view.findViewById(R.id.textView_reportGraphicsFragment_periodSpend);
         scrollview_data = view.findViewById(R.id.scrollview_reportGraphicsFragment_data);
+        progressBar_graphicProgress = view.findViewById(R.id.progressBar_reportGraphicsFragment);
 
         // Set charts options
         Description descriptionProfit = pieChart_profits.getDescription();
@@ -140,7 +144,7 @@ public class ReportGraphicsFragment extends Fragment {
             textView_periodSpend.setText(periodTitle);
 
             // Show graphics
-            showGraphicsReport(begPeriodDate, finPeriodDate);
+            new Task().execute(begPeriodDate, finPeriodDate);
 
             // Show Recycler view
             scrollview_data.setVisibility(View.VISIBLE);
@@ -203,131 +207,148 @@ public class ReportGraphicsFragment extends Fragment {
         return view;
     }
 
-    private void showGraphicsReport(String begDate, String finDate) {
-        // Get Entries from database with period and instance as filter
-        Cursor profits = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finDate, 0);
-        // Get Entries from database with period and instance as filter
-        Cursor spends = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finDate, 0);
+    /**
+     * show data in charts.
+     */
+    private class Task extends AsyncTask<String, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            progressBar_graphicProgress.setVisibility(View.VISIBLE);
+        }
 
-        // Get categories from database with instance as filter
-        Cursor categories = db.getCategoriesByInstance(MainActivity.idInstance);
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressBar_graphicProgress.setVisibility(View.GONE);
 
-        // Process categories
-        ArrayList<String> categoriesNames = new ArrayList<>();
-        ArrayList<Float> categoriesTotalAmountProfits = new ArrayList<>();
-        ArrayList<Float> categoriesTotalAmountSpends = new ArrayList<>();
-        while (categories.moveToNext()) {
-            float totalAmountProfits = 0;
-            float totalAmountSpends = 0;
-            String categId = categories.getString(0);
-            while (profits.moveToNext()) {
-                String profitCategId = profits.getString(2);
-                if (profitCategId.equals(categId)) {
-                    float amount = profits.getFloat(5);
-                    totalAmountProfits += amount;
+            // Create data set
+            PieDataSet pieDataSetProfit = new PieDataSet(percentagesProfitsList, getString(R.string.reportGraphicsFragment_category));
+            pieDataSetProfit.setSliceSpace(2);
+            pieDataSetProfit.setValueTextSize(10);
+
+            PieDataSet pieDataSetSpend = new PieDataSet(percentagesSpendsList, getString(R.string.reportGraphicsFragment_category));
+            pieDataSetSpend.setSliceSpace(2);
+            pieDataSetSpend.setValueTextSize(10);
+
+            // Add colors
+            ArrayList<Integer> chartColors = new ArrayList<>();
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorCyan));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorGrayLight));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorGreen));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorGray));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorMagenta));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorYellow));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorRed));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorOrangeDark));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorPink));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorTurquoiseDark));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorWhiteMint));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorBlue));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorTurquoiseDark2));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorMagentaDull));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorViolet));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorBrown));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorYellowBrown));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorMagentaDark));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorTurquoise));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorBlueLight));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorGreenDull));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorYellowDull));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorPurpleDull));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorTerracottaDull));
+            chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorBrownGrayLight));
+            pieDataSetProfit.setColors(chartColors);
+            pieDataSetSpend.setColors(chartColors);
+
+            // Add legend
+            Legend legendProfit = pieChart_profits.getLegend();
+            legendProfit.setForm(Legend.LegendForm.CIRCLE);
+            legendProfit.setOrientation(Legend.LegendOrientation.VERTICAL);
+            legendProfit.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+            legendProfit.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+
+            Legend legendSpend = pieChart_spends.getLegend();
+            legendSpend.setForm(Legend.LegendForm.CIRCLE);
+            legendSpend.setOrientation(Legend.LegendOrientation.VERTICAL);
+            legendSpend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+            legendSpend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+
+            // Create pie data object
+            PieData pieDataProfit = new PieData(pieDataSetProfit);
+            pieChart_profits.setData(pieDataProfit);
+            pieChart_profits.invalidate();
+
+            PieData pieDataSpend = new PieData(pieDataSetSpend);
+            pieChart_spends.setData(pieDataSpend);
+            pieChart_spends.invalidate();
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            // Get Entries from database with period and instance as filter
+            Cursor profits = db.getEntryProfitInDate(MainActivity.idInstance, strings[0], strings[1], 0);
+            // Get Entries from database with period and instance as filter
+            Cursor spends = db.getEntrySpendInDate(MainActivity.idInstance, strings[0], strings[1], 0);
+
+            // Get categories from database with instance as filter
+            Cursor categories = db.getCategoriesByInstance(MainActivity.idInstance);
+
+            // Process categories
+            ArrayList<String> categoriesNames = new ArrayList<>();
+            ArrayList<Float> categoriesTotalAmountProfits = new ArrayList<>();
+            ArrayList<Float> categoriesTotalAmountSpends = new ArrayList<>();
+            while (categories.moveToNext()) {
+                float totalAmountProfits = 0;
+                float totalAmountSpends = 0;
+                String categId = categories.getString(0);
+                while (profits.moveToNext()) {
+                    String profitCategId = profits.getString(2);
+                    if (profitCategId.equals(categId)) {
+                        float amount = profits.getFloat(5);
+                        totalAmountProfits += amount;
+                    }
                 }
-            }
-            while (spends.moveToNext()) {
-                String spendCategId = spends.getString(2);
-                if (spendCategId.equals(categId)) {
-                    float amount = spends.getFloat(6);
-                    totalAmountSpends += amount;
+                while (spends.moveToNext()) {
+                    String spendCategId = spends.getString(2);
+                    if (spendCategId.equals(categId)) {
+                        float amount = spends.getFloat(6);
+                        totalAmountSpends += amount;
+                    }
                 }
+
+                // Add data in temporal lists
+                categoriesNames.add(categories.getString(1));
+                categoriesTotalAmountProfits.add(totalAmountProfits);
+                categoriesTotalAmountSpends.add(totalAmountSpends);
+
+                // Reset profits and spends Cursor position
+                profits.moveToPosition(-1);
+                spends.moveToPosition(-1);
+            }
+            categories.moveToPosition(-1);
+
+            // Get total amount to calculate percentage
+            float totalProfits = 0;
+            float totalSpends = 0;
+            for (int i = 0; i < categoriesTotalAmountProfits.size(); i++) {
+                totalProfits += categoriesTotalAmountProfits.get(i);
+            }
+            for (int i = 0; i < categoriesTotalAmountSpends.size(); i++) {
+                totalSpends += categoriesTotalAmountSpends.get(i);
+            }
+            // Calculate percentage for each category
+            for (int i = 0; i < categoriesNames.size(); i++) {
+                assert categoriesNames != null;
+                // Calculate percentage
+                float totalAmountCategoryProfits = categoriesTotalAmountProfits.get(i);
+                float totalAmountCategorySpends = categoriesTotalAmountSpends.get(i);
+                float percentageProfits = (totalAmountCategoryProfits * 100) / (totalProfits);
+                float percentageSpends = (totalAmountCategorySpends * 100) / (totalSpends);
+
+                percentagesProfitsList.add(new PieEntry(percentageProfits, categoriesNames.get(i)));
+                percentagesSpendsList.add(new PieEntry(percentageSpends, categoriesNames.get(i)));
             }
 
-            // Add data in temporal lists
-            categoriesNames.add(categories.getString(1));
-            categoriesTotalAmountProfits.add(totalAmountProfits);
-            categoriesTotalAmountSpends.add(totalAmountSpends);
-
-            // Reset profits and spends Cursor position
-            profits.moveToPosition(-1);
-            spends.moveToPosition(-1);
+            return null;
         }
-        categories.moveToPosition(-1);
-
-        // Get total amount to calculate percentage
-        float totalProfits = 0;
-        float totalSpends = 0;
-        for (int i = 0; i < categoriesTotalAmountProfits.size(); i++) {
-            totalProfits += categoriesTotalAmountProfits.get(i);
-        }
-        for (int i = 0; i < categoriesTotalAmountSpends.size(); i++) {
-            totalSpends += categoriesTotalAmountSpends.get(i);
-        }
-        // Calculate percentage for each category
-        for (int i = 0; i < categoriesNames.size(); i++) {
-            assert categoriesNames != null;
-            // Calculate percentage
-            float totalAmountCategoryProfits = categoriesTotalAmountProfits.get(i);
-            float totalAmountCategorySpends = categoriesTotalAmountSpends.get(i);
-            float percentageProfits = (totalAmountCategoryProfits * 100) / (totalProfits);
-            float percentageSpends = (totalAmountCategorySpends * 100) / (totalSpends);
-
-            percentagesProfitsList.add(new PieEntry(percentageProfits, categoriesNames.get(i)));
-            percentagesSpendsList.add(new PieEntry(percentageSpends, categoriesNames.get(i)));
-        }
-
-        // Create data set
-        PieDataSet pieDataSetProfit = new PieDataSet(percentagesProfitsList, getString(R.string.reportGraphicsFragment_category));
-        pieDataSetProfit.setSliceSpace(2);
-        pieDataSetProfit.setValueTextSize(10);
-
-        PieDataSet pieDataSetSpend = new PieDataSet(percentagesSpendsList, getString(R.string.reportGraphicsFragment_category));
-        pieDataSetSpend.setSliceSpace(2);
-        pieDataSetSpend.setValueTextSize(10);
-
-        // Add colors
-        ArrayList<Integer> chartColors = new ArrayList<>();
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorCyan));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorGrayLight));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorGreen));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorGray));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorMagenta));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorYellow));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorRed));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorOrangeDark));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorPink));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorTurquoiseDark));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorWhiteMint));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorBlue));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorTurquoiseDark2));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorMagentaDull));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorViolet));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorBrown));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorYellowBrown));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorMagentaDark));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorTurquoise));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorBlueLight));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorGreenDull));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorYellowDull));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorPurpleDull));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorTerracottaDull));
-        chartColors.add(Objects.requireNonNull(getContext()).getColor(R.color.colorBrownGrayLight));
-        pieDataSetProfit.setColors(chartColors);
-        pieDataSetSpend.setColors(chartColors);
-
-        // Add legend
-        Legend legendProfit = pieChart_profits.getLegend();
-        legendProfit.setForm(Legend.LegendForm.CIRCLE);
-        legendProfit.setOrientation(Legend.LegendOrientation.VERTICAL);
-        legendProfit.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        legendProfit.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-
-        Legend legendSpend = pieChart_spends.getLegend();
-        legendSpend.setForm(Legend.LegendForm.CIRCLE);
-        legendSpend.setOrientation(Legend.LegendOrientation.VERTICAL);
-        legendSpend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        legendSpend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-
-        // Create pie data object
-        PieData pieDataProfit = new PieData(pieDataSetProfit);
-        pieChart_profits.setData(pieDataProfit);
-        pieChart_profits.invalidate();
-
-        PieData pieDataSpend = new PieData(pieDataSetSpend);
-        pieChart_spends.setData(pieDataSpend);
-        pieChart_spends.invalidate();
     }
-
 }

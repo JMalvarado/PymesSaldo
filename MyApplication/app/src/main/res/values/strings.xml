@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PYMES Saldo</string>
+    <string name="app_name">NED-Cuentas</string>
     <string name="addEntry_name">Agregar movimiento</string>
     <string name="itemInfo_name">Datos</string>
     <string name="dataSearch_name">Lista de movimientos</string>
@@ -95,7 +95,7 @@
     <string name="addentry_textView_hintIngreso">Monto</string>
     <string name="addentry_textView_hintGasto">Gasto</string>
     <string name="addentry_textView_hintDescr">Descripcion</string>
-    <string name="header_textView_spinnerTitle">ESTADO FINANCIERO</string>
+    <string name="header_textView_spinnerTitle">Estado Financiero</string>
     <string name="addentry_button_textIngresar">Ingresar</string>
     <string name="addentry_button_textFecha">Fecha</string>
     <string name="addentry_button_textHora">Hora</string>

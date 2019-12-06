@@ -18,6 +18,7 @@ import com.example.myapplication.activities.fragments.SearchFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -73,13 +74,10 @@ public class MainActivity extends AppCompatActivity
         fab_addEntry = findViewById(R.id.fab);
 
         // Floating Button action
-        fab_addEntry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Add entry
-                Intent addEntryIntent = new Intent(view.getContext(), AddEntryActivity.class);
-                startActivity(addEntryIntent);
-            }
+        fab_addEntry.setOnClickListener(view -> {
+            // Add entry
+            Intent addEntryIntent = new Intent(view.getContext(), AddEntryActivity.class);
+            startActivity(addEntryIntent);
         });
 
         // Initialize Navigation drawer view components
@@ -195,20 +193,14 @@ public class MainActivity extends AppCompatActivity
             });
 
             // Set clickListener for the add and edit profile buttons
-            fab_addProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent addProfileIntent = new Intent(view.getContext(), AddProfileActivity.class);
-                    startActivity(addProfileIntent);
-                }
+            fab_addProfile.setOnClickListener(view -> {
+                Intent addProfileIntent = new Intent(view.getContext(), AddProfileActivity.class);
+                startActivity(addProfileIntent);
             });
 
-            fab_confProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent editProfileIntent = new Intent(view.getContext(), EditProfileActivity.class);
-                    startActivity(editProfileIntent);
-                }
+            fab_confProfile.setOnClickListener(view -> {
+                Intent editProfileIntent = new Intent(view.getContext(), EditProfileActivity.class);
+                startActivity(editProfileIntent);
             });
 
             // Get and show the default fragment
@@ -239,12 +231,7 @@ public class MainActivity extends AppCompatActivity
             if (fragment != null) {
                 if (fragment instanceof BalanceFragment) {
                     Snackbar.make(findViewById(R.id.drawer_layout), getString(R.string.snack_mainActivity_exit), Snackbar.LENGTH_LONG)
-                            .setAction("Salir", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    onExit();
-                                }
-                            })
+                            .setAction("Salir", v -> onExit())
                             .show();
                 } else {
                     showHomeFragment();

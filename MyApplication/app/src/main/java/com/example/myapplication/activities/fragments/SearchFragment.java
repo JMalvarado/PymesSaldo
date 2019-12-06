@@ -75,6 +75,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         // Set toolbar title
         Objects.requireNonNull(getActivity()).setTitle(getString(R.string.search_name));
 
+
         // Initialize view componnents and click listeners
         radioGroup_filter = view.findViewById(R.id.radioGroup_fragmmentSearch_filter);
 

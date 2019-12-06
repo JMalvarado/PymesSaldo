@@ -4,6 +4,7 @@ package com.example.myapplication.activities.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -32,6 +34,7 @@ public class ReportProfitFragment extends Fragment {
     // Cmponents view
     private RecyclerView recyclerView_profitReport;
     private RecyclerView.Adapter adapter_profitReport;
+    ProgressBar progressBar_profitProgress;
     private TextView textView_info;
 
     // Others
@@ -56,6 +59,7 @@ public class ReportProfitFragment extends Fragment {
 
         // Set components
         textView_info = view.findViewById(R.id.textView_reportProfitFragment_info);
+        progressBar_profitProgress = view.findViewById(R.id.progressBar_reportProfitFragment);
         // Set recycler view component
         recyclerView_profitReport = view.findViewById(R.id.recyclerView_reportProfitFragment_profitList);
         recyclerView_profitReport.setHasFixedSize(true);
@@ -68,7 +72,7 @@ public class ReportProfitFragment extends Fragment {
             // Get the default period.
             String begPeriodDate = reportPeriod.substring(0, 10);
             String finPeriodDate = reportPeriod.substring(11, 21);
-            showProfitsReport(begPeriodDate, finPeriodDate);
+            new Task().execute(begPeriodDate, finPeriodDate);
 
             // Show Recycler view
             recyclerView_profitReport.setVisibility(View.VISIBLE);
@@ -84,72 +88,88 @@ public class ReportProfitFragment extends Fragment {
     /**
      * show data in recycler view.
      */
-    private void showProfitsReport(String begDate, String finDate) {
-        // Get Entries from database with period and instance as filter
-        Cursor profits = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finDate, 0);
+    private class Task extends AsyncTask<String, Void, Void> {
 
-        // Get categories from database with instance as filter
-        Cursor categories = db.getCategoriesByInstance(MainActivity.idInstance);
+        @Override
+        protected void onPreExecute() {
+            progressBar_profitProgress.setVisibility(View.VISIBLE);
+        }
 
-        // Process categories
-        ArrayList<String> categoriesIds = new ArrayList<>();
-        ArrayList<String> categoriesNames = new ArrayList<>();
-        ArrayList<String> categoriesIc = new ArrayList<>();
-        ArrayList<Double> categoriesTotalAmount = new ArrayList<>();
-        while (categories.moveToNext()) {
-            double totalAmount = 0;
-            String categId = categories.getString(0);
-            while (profits.moveToNext()) {
-                String profitCategId = profits.getString(2);
-                if (profitCategId.equals(categId)) {
-                    double amount = profits.getDouble(5);
-                    totalAmount += amount;
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressBar_profitProgress.setVisibility(View.GONE);
+            recyclerView_profitReport.setAdapter(adapter_profitReport);
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            // Get Entries from database with period and instance as filter
+            Cursor profits = db.getEntryProfitInDate(MainActivity.idInstance, strings[0], strings[1], 0);
+
+            // Get categories from database with instance as filter
+            Cursor categories = db.getCategoriesByInstance(MainActivity.idInstance);
+
+            // Process categories
+            ArrayList<String> categoriesIds = new ArrayList<>();
+            ArrayList<String> categoriesNames = new ArrayList<>();
+            ArrayList<String> categoriesIc = new ArrayList<>();
+            ArrayList<Double> categoriesTotalAmount = new ArrayList<>();
+            while (categories.moveToNext()) {
+                double totalAmount = 0;
+                String categId = categories.getString(0);
+                while (profits.moveToNext()) {
+                    String profitCategId = profits.getString(2);
+                    if (profitCategId.equals(categId)) {
+                        double amount = profits.getDouble(5);
+                        totalAmount += amount;
+                    }
                 }
+
+                // Add data in temporal lists
+                categoriesIds.add(categId);
+                categoriesIc.add(categories.getString(2));
+                categoriesNames.add(categories.getString(1));
+                categoriesTotalAmount.add(totalAmount);
+
+                // Reset profits Cursor position
+                profits.moveToPosition(-1);
+            }
+            categories.moveToPosition(-1);
+
+            // Get total amount to calculate percentage
+            double total = 0;
+            for (int i = 0; i < categoriesTotalAmount.size(); i++) {
+                total += categoriesTotalAmount.get(i);
+            }
+            // Calculate percentage for each category
+            // Add data in custom list
+            list_profitReport = new ArrayList<>();
+            for (int i = 0; i < categoriesIds.size(); i++) {
+                assert categoriesIds != null;
+                // Calculate percentage
+                double totalAmountCategory = categoriesTotalAmount.get(i);
+                double percentage = (totalAmountCategory * 100) / (total);
+
+                // Add data in custom list
+                ListDataReport listDataReport = new ListDataReport(
+                        categoriesIds.get(i),
+                        categoriesNames.get(i),
+                        percentage,
+                        categoriesTotalAmount.get(i),
+                        categoriesIc.get(i)
+                );
+
+                list_profitReport.add(listDataReport);
             }
 
-            // Add data in temporal lists
-            categoriesIds.add(categId);
-            categoriesIc.add(categories.getString(2));
-            categoriesNames.add(categories.getString(1));
-            categoriesTotalAmount.add(totalAmount);
+            // Sort List in descending mode by percentage
+            list_profitReport.sort(Comparator.comparing(ListDataReport::getPercentage).reversed());
 
-            // Reset profits Cursor position
-            profits.moveToPosition(-1);
+            // Set Adapter to recycler view
+            adapter_profitReport = new AdapterReport(list_profitReport, getContext(), getActivity(), "I", strings[0], strings[1]);
+
+            return null;
         }
-        categories.moveToPosition(-1);
-
-        // Get total amount to calculate percentage
-        double total = 0;
-        for (int i = 0; i < categoriesTotalAmount.size(); i++) {
-            total += categoriesTotalAmount.get(i);
-        }
-        // Calculate percentage for each category
-        // Add data in custom list
-        list_profitReport = new ArrayList<>();
-        for (int i = 0; i < categoriesIds.size(); i++) {
-            assert categoriesIds != null;
-            // Calculate percentage
-            double totalAmountCategory = categoriesTotalAmount.get(i);
-            double percentage = (totalAmountCategory * 100) / (total);
-
-            // Add data in custom list
-            ListDataReport listDataReport = new ListDataReport(
-                    categoriesIds.get(i),
-                    categoriesNames.get(i),
-                    percentage,
-                    categoriesTotalAmount.get(i),
-                    categoriesIc.get(i)
-            );
-
-            list_profitReport.add(listDataReport);
-        }
-
-        // Sort List in descending mode by percentage
-        list_profitReport.sort(Comparator.comparing(ListDataReport::getPercentage).reversed());
-
-        // Set Adapter to recycler view
-        adapter_profitReport = new AdapterReport(list_profitReport, getContext(), getActivity(), "I", begDate, finDate);
-        recyclerView_profitReport.setAdapter(adapter_profitReport);
     }
 
 }

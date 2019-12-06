@@ -17,6 +17,13 @@
         android:textColor="@color/colorGrayLight"
         android:visibility="gone" />
 
+    <ProgressBar
+        android:id="@+id/progressBar_reportGraphicsFragment"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
     <ScrollView
         android:id="@+id/scrollview_reportGraphicsFragment_data"
         android:layout_width="match_parent"
