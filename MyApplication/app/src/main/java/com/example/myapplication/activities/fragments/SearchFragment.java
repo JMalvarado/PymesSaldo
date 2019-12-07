@@ -33,11 +33,14 @@ import com.example.myapplication.activities.data.CustomAdapter;
 import com.example.myapplication.activities.data.CustomItems;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.kal.rackmonthpicker.MonthType;
+import com.kal.rackmonthpicker.RackMonthPicker;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 public class SearchFragment extends Fragment implements View.OnClickListener {
@@ -48,16 +51,18 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private CheckBox checkBox_begining, checkBox_final;
     private FloatingActionButton fab_dateBegin, fab_dateFinal;
     private FloatingActionButton fab_find;
+    private FloatingActionButton fab_monthSelector;
     private ProgressBar progressBar;
-    private TextView textView_dateBeging, textView_dateFinal, textView_instanceName, textView_period;
+    private TextView textView_dateBeging, textView_dateFinal, textView_instanceName, textView_period, textView_monthSelected;
     private Spinner spinner_categories;
     private Spinner spinner_type;
 
     // Global variables
-    public static String begDay, begMonth, begYear, finDay, finMonth, finYear, period, type;
+    public static String begDay, begMonth, begYear, finDay, finMonth, finYear, period, type, monthForLabel, yearForLabel;
     public static int intBegDay, intBegMonth, intBegYear, intFinDay, intFinMonth, intFinYear;
     public static boolean radioButtonMonthIsChecked, checkboxBegIsChecked, checkboxFinalIsChecked, radioButtonPeriodIsChecked, radioButtonDatesIsChecked;
     public static int categoryIDSelected;
+    private String monthSelected, yearSelected;
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
     private ArrayAdapter<String> spinnerAdapterType;
@@ -103,15 +108,49 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         fab_dateFinal = view.findViewById(R.id.fab_calendar2_searchFragment);
         fab_dateFinal.setOnClickListener(this);
 
+        fab_monthSelector = view.findViewById(R.id.fab_calendarMonth_searchFragment);
+        fab_monthSelector.setOnClickListener(this);
+
         textView_dateBeging = view.findViewById(R.id.textview_search_datebeg);
         textView_dateFinal = view.findViewById(R.id.textview_search_datefinal);
         textView_instanceName = view.findViewById(R.id.textView_fragmentSearch_instanceName);
         textView_period = view.findViewById(R.id.textView_fragmentSearch_period);
+        textView_monthSelected = view.findViewById(R.id.textview_fragmentSearch_monthSelected);
 
         spinner_categories = view.findViewById(R.id.spinner_search_category);
         spinner_type = view.findViewById(R.id.spinner_search_type);
 
         progressBar = view.findViewById(R.id.progressBar_searchFragment);
+
+        // Get actual month as default month
+        String monthAndYear;
+
+        String[] monthNames = {getString(R.string.month_January),
+                getString(R.string.month_February),
+                getString(R.string.month_March),
+                getString(R.string.month_April),
+                getString(R.string.month_May),
+                getString(R.string.month_June),
+                getString(R.string.month_July),
+                getString(R.string.month_August),
+                getString(R.string.month_September),
+                getString(R.string.month_October),
+                getString(R.string.month_November),
+                getString(R.string.month_December)};
+
+        Calendar calendar = Calendar.getInstance();
+        String month = monthForLabel = monthNames[calendar.get(Calendar.MONTH)];
+        String year = yearSelected = yearForLabel = Integer.toString(calendar.get(Calendar.YEAR));
+        monthAndYear = month + ", " + year;
+
+        // Get actual month with 2 digits
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+        String dateNow;
+        LocalDateTime now = LocalDateTime.now();
+        dateNow = dtf.format(now);
+        monthSelected = dateNow.substring(5, 7);
+
+        textView_monthSelected.setText(monthAndYear);
 
         // Show FAB add entry from screen
         MainActivity.fab_addEntry.show();
@@ -137,6 +176,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             checkBox_final.setEnabled(false);
             fab_dateFinal.setEnabled(false);
             fab_dateFinal.setVisibility(View.GONE);
+            fab_monthSelector.setEnabled(true);
+            fab_monthSelector.setVisibility(View.VISIBLE);
         } else {
             radioButton_period.setEnabled(true);
             radioButton_period.setChecked(true);
@@ -155,14 +196,14 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         // Get the shared preferences period of instance
         SharedPreferences prefsPeriod = getActivity().getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
         String periodDates = prefsPeriod.getString(MainActivity.idInstance, null);
-        if (periodDates!=null) {
+        if (periodDates != null) {
             // Get date components
-            begDay = periodDates.substring(0,2);
-            begMonth = periodDates.substring(3,5);
-            begYear = periodDates.substring(6,10);
-            finDay = periodDates.substring(11,13);
-            finMonth = periodDates.substring(14,16);
-            finYear = periodDates.substring(17,21);
+            begDay = periodDates.substring(0, 2);
+            begMonth = periodDates.substring(3, 5);
+            begYear = periodDates.substring(6, 10);
+            finDay = periodDates.substring(11, 13);
+            finMonth = periodDates.substring(14, 16);
+            finYear = periodDates.substring(17, 21);
 
             // Set text views with the default period
             String begPeriodDate = periodDates.substring(0, 10);
@@ -175,6 +216,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             checkBox_final.setEnabled(true);
             fab_dateFinal.setEnabled(true);
             fab_dateFinal.setVisibility(View.VISIBLE);
+            fab_monthSelector.setEnabled(false);
+            fab_monthSelector.setVisibility(View.GONE);
 
             textView_dateBeging.setText(begPeriodDate);
             textView_dateFinal.setText(finPeriodDate);
@@ -285,6 +328,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 checkBox_begining.setChecked(false);
                 checkBox_final.setChecked(false);
 
+                fab_monthSelector.setEnabled(false);
+                fab_monthSelector.setVisibility(View.GONE);
+
                 textView_dateBeging.setText("");
                 textView_dateFinal.setText("");
 
@@ -302,6 +348,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 checkBox_begining.setChecked(false);
                 checkBox_final.setChecked(false);
 
+                fab_monthSelector.setEnabled(true);
+                fab_monthSelector.setVisibility(View.VISIBLE);
+
                 textView_dateBeging.setText("");
                 textView_dateFinal.setText("");
 
@@ -312,14 +361,14 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 // Get the shared preferences period of instance
                 SharedPreferences prefsPeriod = Objects.requireNonNull(getActivity()).getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
                 String periodDates = prefsPeriod.getString(MainActivity.idInstance, null);
-                if (periodDates!=null) {
+                if (periodDates != null) {
                     // Get date components
-                    begDay = periodDates.substring(0,2);
-                    begMonth = periodDates.substring(3,5);
-                    begYear = periodDates.substring(6,10);
-                    finDay = periodDates.substring(11,13);
-                    finMonth = periodDates.substring(14,16);
-                    finYear = periodDates.substring(17,21);
+                    begDay = periodDates.substring(0, 2);
+                    begMonth = periodDates.substring(3, 5);
+                    begYear = periodDates.substring(6, 10);
+                    finDay = periodDates.substring(11, 13);
+                    finMonth = periodDates.substring(14, 16);
+                    finYear = periodDates.substring(17, 21);
 
                     // Set text views with the default period
                     String begPeriodDate = periodDates.substring(0, 10);
@@ -346,6 +395,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     fab_dateFinal.setEnabled(true);
                     fab_dateFinal.setVisibility(View.VISIBLE);
                 }
+
+                fab_monthSelector.setEnabled(false);
+                fab_monthSelector.setVisibility(View.GONE);
 
                 break;
 
@@ -404,6 +456,83 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     finYear = Integer.toString(i);
                 }, intFinYear, intFinMonth, intFinDay);
                 datePickerDialog.show();
+
+                break;
+
+            case R.id.fab_calendarMonth_searchFragment:
+                // Get actual month as default month
+                Calendar calendar = Calendar.getInstance();
+
+                String[] monthNames = {getString(R.string.month_January),
+                        getString(R.string.month_February),
+                        getString(R.string.month_March),
+                        getString(R.string.month_April),
+                        getString(R.string.month_May),
+                        getString(R.string.month_June),
+                        getString(R.string.month_July),
+                        getString(R.string.month_August),
+                        getString(R.string.month_September),
+                        getString(R.string.month_October),
+                        getString(R.string.month_November),
+                        getString(R.string.month_December)};
+
+
+                RackMonthPicker rackMonthPicker = new RackMonthPicker(view.getContext());
+
+                rackMonthPicker.setLocale(Locale.ENGLISH);
+                rackMonthPicker.setPositiveText(getString(R.string.alert_positiveBttn_addCategory));
+                rackMonthPicker.setNegativeText(getString(R.string.alert_negativeBttn_addCategory));
+                rackMonthPicker.setColorTheme(R.color.colorAccent);
+                rackMonthPicker.setSelectedMonth(calendar.get(Calendar.MONTH));
+                rackMonthPicker.setSelectedYear(calendar.get(Calendar.YEAR));
+                rackMonthPicker.setMonthType(MonthType.NUMBER);
+                rackMonthPicker.setPositiveButton((month, startDate, endDate, year, monthLabel) -> {
+                    String monthStr = monthForLabel = monthNames[month - 1];
+                    String monthDigitStr = Integer.toString(month);
+                    String yearStr = yearSelected = yearForLabel = Integer.toString(year);
+
+                    // Set two digits month
+                    switch (monthDigitStr) {
+                        case "1":
+                            monthDigitStr = "01";
+                            break;
+                        case "2":
+                            monthDigitStr = "02";
+                            break;
+                        case "3":
+                            monthDigitStr = "03";
+                            break;
+                        case "4":
+                            monthDigitStr = "04";
+                            break;
+                        case "5":
+                            monthDigitStr = "05";
+                            break;
+                        case "6":
+                            monthDigitStr = "06";
+                            break;
+                        case "7":
+                            monthDigitStr = "07";
+                            break;
+                        case "8":
+                            monthDigitStr = "08";
+                            break;
+                        case "9":
+                            monthDigitStr = "09";
+                            break;
+                        default:
+                            break;
+                    }
+
+
+                    monthSelected = monthDigitStr;
+                    String monthAndYear = monthStr + ", " + yearStr;
+                    textView_monthSelected.setText(monthAndYear);
+
+                    rackMonthPicker.dismiss();
+                });
+                rackMonthPicker.setNegativeButton(dialog -> rackMonthPicker.dismiss());
+                rackMonthPicker.show();
 
                 break;
 
@@ -762,7 +891,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
             if (type.equals(getResources().getString(R.string.fragment_search_type_spinner_all))) {
                 if (radioButtonMonthIsChecked) {
-                    resultado = db.getEntryMonthData(MainActivity.idInstance, categoryIDSelected);
+                    resultado = db.getEntryInMonthYearByCategory(MainActivity.idInstance, categoryIDSelected, monthSelected, yearSelected);
                 } else if (radioButtonDatesIsChecked) {
                     if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
@@ -775,13 +904,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     } else {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                        String begDatePeriodDefault = begDay + "-" + begMonth + "-"+ begYear;
-                        String finDatePeriodDefault = finDay + "-" + finMonth + "-"+ finYear;
+                        String begDatePeriodDefault = begDay + "-" + begMonth + "-" + begYear;
+                        String finDatePeriodDefault = finDay + "-" + finMonth + "-" + finYear;
                         // Store the instance custom period default
                         SharedPreferences prefsPeriod = Objects.requireNonNull(getActivity()).
                                 getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = prefsPeriod.edit();
-                        String defaultPeriod = begDatePeriodDefault+"/"+finDatePeriodDefault;
+                        String defaultPeriod = begDatePeriodDefault + "/" + finDatePeriodDefault;
                         editor.putString(MainActivity.idInstance, defaultPeriod);
                         editor.apply();
                         // DB process
@@ -794,7 +923,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 }
             } else if (type.equals(getResources().getString(R.string.fragment_search_type_spinner_profit))) {
                 if (radioButtonMonthIsChecked) {
-                    resultado = db.getEntryMonthProfit(MainActivity.idInstance, categoryIDSelected);
+                    resultado = db.getIngresosInMonthYearByCategory(MainActivity.idInstance, categoryIDSelected, monthSelected, yearSelected);
                 } else if (radioButtonDatesIsChecked) {
                     if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
@@ -807,12 +936,12 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     } else {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                        String begDatePeriodDefault = begDay + "-" + begMonth + "-"+ begYear;
-                        String finDatePeriodDefault = finDay + "-" + finMonth + "-"+ finYear;
+                        String begDatePeriodDefault = begDay + "-" + begMonth + "-" + begYear;
+                        String finDatePeriodDefault = finDay + "-" + finMonth + "-" + finYear;
                         // Store the instance custom period default
                         SharedPreferences prefsPeriod = Objects.requireNonNull(getActivity()).getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = prefsPeriod.edit();
-                        String defaultPeriod = begDatePeriodDefault+"/"+finDatePeriodDefault;
+                        String defaultPeriod = begDatePeriodDefault + "/" + finDatePeriodDefault;
                         editor.putString(MainActivity.idInstance, defaultPeriod);
                         editor.apply();
                         // DB process
@@ -825,7 +954,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 }
             } else {
                 if (radioButtonMonthIsChecked) {
-                    resultado = db.getEntryMonthSpend(MainActivity.idInstance, categoryIDSelected);
+                    resultado = db.getGastosInMonthYearByCategory(MainActivity.idInstance, categoryIDSelected, monthSelected, yearSelected);
                 } else if (radioButtonDatesIsChecked) {
                     if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
@@ -838,13 +967,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     } else {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                        String begDatePeriodDefault = begDay + "-" + begMonth + "-"+ begYear;
-                        String finDatePeriodDefault = finDay + "-" + finMonth + "-"+ finYear;
+                        String begDatePeriodDefault = begDay + "-" + begMonth + "-" + begYear;
+                        String finDatePeriodDefault = finDay + "-" + finMonth + "-" + finYear;
                         // Store the instance custom period default
                         SharedPreferences prefsPeriod = Objects.requireNonNull(getActivity()).
                                 getSharedPreferences("profileperiod", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = prefsPeriod.edit();
-                        String defaultPeriod = begDatePeriodDefault+"/"+finDatePeriodDefault;
+                        String defaultPeriod = begDatePeriodDefault + "/" + finDatePeriodDefault;
                         editor.putString(MainActivity.idInstance, defaultPeriod);
                         editor.apply();
                         // DB process

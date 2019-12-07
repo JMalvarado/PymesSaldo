@@ -28,7 +28,7 @@
         android:id="@+id/tabLayout_addEntry"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorWhite"
         android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
         app:tabGravity="fill"

@@ -310,7 +310,23 @@ public class BalancePeriodFragment extends Fragment {
             begYear = year;
         }
 
-        return begDay + "-" + begMonth + "-" + begYear + "    -    " + finDay + "-" + finMonth + "-" + finYear;
+        String separator = "/";
+
+        // Period title
+        String periodTitle = getString(R.string.reportGraphicsFragment_periodoTitle_from) + " " +
+                begDay +
+                separator +
+                begMonth +
+                separator +
+                begYear + " " +
+                getString(R.string.reportGraphicsFragment_periodoTitle_to) + " " +
+                finDay +
+                separator +
+                finMonth +
+                separator +
+                finYear;
+
+        return periodTitle;
     }
 
 }

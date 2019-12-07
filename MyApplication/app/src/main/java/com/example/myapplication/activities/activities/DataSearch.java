@@ -85,25 +85,9 @@ public class DataSearch extends AppCompatActivity {
         // Get range date for period
         if (SearchFragment.radioButtonMonthIsChecked) {
             // Set month and year in text view
-            String monthAndYear;
-
-            String[] monthNames = {getString(R.string.month_January),
-                    getString(R.string.month_February),
-                    getString(R.string.month_March),
-                    getString(R.string.month_April),
-                    getString(R.string.month_May),
-                    getString(R.string.month_June),
-                    getString(R.string.month_July),
-                    getString(R.string.month_August),
-                    getString(R.string.month_September),
-                    getString(R.string.month_October),
-                    getString(R.string.month_November),
-                    getString(R.string.month_December)};
-
-            Calendar calendar = Calendar.getInstance();
-            String month = monthNames[calendar.get(Calendar.MONTH)];
-            String year = Integer.toString(calendar.get(Calendar.YEAR));
-            monthAndYear = month + ", " + year;
+            String month = SearchFragment.monthForLabel;
+            String year = SearchFragment.yearForLabel;
+            String monthAndYear = month + ", " + year;
 
             textView_periodTitle.setText(monthAndYear);
 

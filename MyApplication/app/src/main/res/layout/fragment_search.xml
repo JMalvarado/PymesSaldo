@@ -138,6 +138,32 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_calendarMonth_searchFragment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:backgroundTint="@android:color/white"
+                            android:elevation="0dp"
+                            android:src="@drawable/ic_calendar_64"
+                            app:backgroundTint="@android:color/darker_gray"
+                            app:elevation="0dp"
+                            app:fabSize="mini"
+                            app:rippleColor="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/textview_fragmentSearch_monthSelected"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -195,6 +221,7 @@
                             android:src="@drawable/ic_calendar_64"
                             app:backgroundTint="@android:color/darker_gray"
                             app:elevation="0dp"
+                            app:fabSize="mini"
                             app:rippleColor="@color/colorPrimary" />
 
                         <TextView
@@ -246,6 +273,7 @@
                             android:src="@drawable/ic_calendar_64"
                             app:backgroundTint="@android:color/darker_gray"
                             app:elevation="0dp"
+                            app:fabSize="mini"
                             app:rippleColor="@color/colorPrimary" />
 
                         <TextView

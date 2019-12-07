@@ -129,7 +129,7 @@
         android:id="@+id/tabLayout_reportCateg"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorWhite"
         android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
         app:tabGravity="fill"
@@ -142,7 +142,6 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager_reportCateg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

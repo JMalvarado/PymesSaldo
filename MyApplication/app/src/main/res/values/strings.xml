@@ -42,7 +42,7 @@
     <string name="fragment_search_period_period_header">Día de corte:</string>
     <string name="fragment_search_textView_type_spinner">Tipo de movimiento</string>
     <string name="fragment_search_period_title">Periodo:</string>
-    <string name="fragment_search_period_checkboxTitle">Periodo definido</string>
+    <string name="fragment_search_period_checkboxTitle">Por periodo definido</string>
     <string name="fragment_search_dates_radioButtonTitle">Por periodo</string>
     <string name="fragment_search_period_title_all">Todo</string>
     <string name="fragment_search_textview_filtro">Filtro:</string>
@@ -56,7 +56,7 @@
     <string name="fragment_search_button_buscar">Buscar</string>
     <string name="fragment_search_button_datebeg">Fecha</string>
     <string name="fragment_search_button_datefinal">Fecha</string>
-    <string name="fragment_search_checkbox_saldoalmes">Datos del mes</string>
+    <string name="fragment_search_checkbox_saldoalmes">Por mes</string>
     <string name="fragment_balance_textView_titleBalance">El balance para el mes en curso es</string>
     <string name="fragment_balance_textView_ingresos">Ingresos:</string>
     <string name="fragment_balance_textView_gastos">Gastos:</string>

@@ -36,8 +36,4 @@
     <color name="colorPrimary">#DABC48</color>
     <color name="colorPrimaryDark">#DDDDD9</color>
     <color name="colorAccent">#850290</color>
-
-    <!--    <color name="colorPrimary">#008577</color>-->
-    <!--    <color name="colorPrimaryDark">#00574B</color>-->
-    <!--    <color name="colorAccent">#C44271</color>-->
 </resources>

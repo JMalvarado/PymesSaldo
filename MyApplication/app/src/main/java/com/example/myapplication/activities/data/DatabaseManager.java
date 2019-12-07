@@ -304,7 +304,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public String getCategoryId(String name, String instance_id) {
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA3_NOMBRE + " WHERE Nombre='" + name + "' " +
-                        "AND Instancias_ID="+instance_id, null);
+                        "AND Instancias_ID=" + instance_id, null);
 
         String id = "";
 
@@ -324,7 +324,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public String getCategoryName(String id, String instance_id) {
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA3_NOMBRE + " WHERE Categorias_ID='" + id + "' " +
-                        "AND Instancias_ID="+instance_id, null);
+                        "AND Instancias_ID=" + instance_id, null);
 
         String name = "";
 
@@ -344,7 +344,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public String getCategoryIconName(String name, String instance_id) {
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA3_NOMBRE + " WHERE Nombre='" + name + "' " +
-                        "AND Instancias_ID="+instance_id, null);
+                        "AND Instancias_ID=" + instance_id, null);
 
         String icon = "";
 
@@ -367,13 +367,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     /**
      * Get all the categories of specific instance
+     *
      * @param instance_id
      * @return
      */
     public Cursor getCategoriesByInstance(String instance_id) {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLA3_NOMBRE +
-                " WHERE Instancias_ID="+instance_id, null);
+                " WHERE Instancias_ID=" + instance_id, null);
     }
 
     /**
@@ -498,6 +499,66 @@ public class DatabaseManager extends SQLiteOpenHelper {
         }
 
         return ingresos;
+    }
+
+    /**
+     * Get the data from in the given month and year with specific category
+     *
+     * @return
+     */
+    public Cursor getEntryInMonthYearByCategory(String Instancias_ID, int category, String month, String year) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID, null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+        }
+
+        return resultado;
+    }
+
+    /**
+     * Get the Profit data from in the given month and year with specific category
+     *
+     * @return
+     */
+    public Cursor getIngresosInMonthYearByCategory(String Instancias_ID, int category, String month, String year) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+        }
+
+        return resultado;
+    }
+
+    /**
+     * Get the Spend data from in the given month and year with specific category
+     *
+     * @return
+     */
+    public Cursor getGastosInMonthYearByCategory(String Instancias_ID, int category, String month, String year) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
+        }
+
+        return resultado;
     }
 
     /**
