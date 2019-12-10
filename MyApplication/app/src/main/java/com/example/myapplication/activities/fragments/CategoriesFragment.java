@@ -261,7 +261,6 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
             final ImageView imageView_ic_plug = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_plug);
             final ImageView imageView_ic_recycle = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_recycle);
             final ImageView imageView_ic_wifilogo = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_wifilogo);
-
             final ImageView imageView_ic_candy = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_candy);
             final ImageView imageView_ic_gardening = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_gardening);
             final ImageView imageView_ic_moneygift = dialogIcCategories.findViewById(R.id.imageView_dialogAddIcon_moneygift);

@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -182,17 +183,14 @@ public class ReportGraphicsFragment extends Fragment {
         pieChart_spends.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                int pos1 = e.toString().indexOf("y: ");
-                String percentageStr = e.toString().substring(pos1 + 3);
+                int pos1 = h.toString().indexOf("x: ");
+                int pos2 = h.toString().indexOf(".");
+                int categIndex = Integer.parseInt(h.toString().substring(pos1 + 3, pos2));
+                int pos3 = h.toString().indexOf("y: ");
+                int pos4 = h.toString().indexOf(", dataSetIndex: ");
+                String percentageStr = h.toString().substring(pos3 + 3, pos4);
 
-                for (int i = 0; i < categoriesTmp.getCount(); i++) {
-                    if (percentagesSpendsList.get(i).getValue() == Float.parseFloat(percentageStr)) {
-                        pos1 = i;
-                        break;
-                    }
-                }
-
-                String categoryStr = percentagesSpendsList.get(pos1).getLabel();
+                String categoryStr = percentagesSpendsList.get(categIndex).getLabel();
                 Toast.makeText(getContext(), getString(R.string.reportGraphicsFragment_category) +
                                 ": " + categoryStr + "\n" +
                                 getString(R.string.reportGraphicsFragment_total) + ": " + percentageStr + " %",

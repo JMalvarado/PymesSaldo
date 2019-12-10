@@ -46,12 +46,12 @@
     <string name="fragment_search_dates_radioButtonTitle">Por periodo</string>
     <string name="fragment_search_period_title_all">Todo</string>
     <string name="fragment_search_textview_filtro">Filtro:</string>
-    <string name="fragment_search_textview_inicio">Inicio</string>
+    <string name="fragment_search_textview_inicio">Desde</string>
     <string name="fragment_search_textview_dia">Dia</string>
     <string name="fragment_search_textview_mes">Mes</string>
     <string name="fragment_search_textview_anyo">Año</string>
     <string name="fragment_search_checkbox_principio">Desde el principio</string>
-    <string name="fragment_search_textview_final">Final</string>
+    <string name="fragment_search_textview_final">Hasta</string>
     <string name="fragment_search_checkox_hastahoy">Hasta hoy</string>
     <string name="fragment_search_button_buscar">Buscar</string>
     <string name="fragment_search_button_datebeg">Fecha</string>
@@ -144,6 +144,7 @@
     <string name="toast_balanceFragment_info_equal">Balance</string>
     <string name="toast_balanceFragment_info_remanents">Remanentes del mes anterior</string>
     <string name="toast_balanceFragment_info_equalPlusRemanents">Balance más remanentes</string>
+    <string name="toast_reportCategFragment_info_noPeriodSelected">Primero seleccione un periodo</string>
     <string name="snack_mainActivity_exit">Presione Salir</string>
     <string name="alert_title">Alerta</string>
     <string name="alert_addEntryActivity_nodata">Por favor complete todos los espacios</string>
@@ -162,11 +163,26 @@
     <string name="dialogInfo_title_help">Info</string>
     <string name="dialogInfo_content_help_initialProfit">Añade un ingreso inicial para el estado financiero</string>
     <string name="dialogInfo_content_help_period">Añade un día de mes como ciclo o fecha de corte. Ejemplo: Día de corte en las tarjetas de crédito</string>
+    <string name="dialogExportFile_textviewHint_filename">Nombre de archivo</string>
+    <string name="dialogExportFile_folderName">NED-Cuentas_Reportes</string>
+    <string name="dialogExportFile_title">Exportar archivo</string>
+    <string name="dialogExportFile_mssg">Archivo Excel</string>
+    <string name="dialogExportFile_sheetProfitTitle">Ingresos</string>
+    <string name="dialogExportFile_sheetSpendTitle">Gastos</string>
+    <string name="dialogExportFile_sheetTitleCategory">Categoría</string>
+    <string name="dialogExportFile_sheetTitleAmount">Monto</string>
+    <string name="dialogExportFile_sheetTitlePercentage">Porcentaje</string>
+    <string name="dialogExportFile_sheetTitleFrom">Desde</string>
+    <string name="dialogExportFile_sheetTitleTo">Hasta</string>
+    <string name="dialog_saving_title">Guardando…</string>
+    <string name="dialog_loading_title">Cargando…</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="toolbar_action_help">Ayuda</string>
+    <string name="toolbar_action_about">Acerca de</string>
+    <string name="toolbar_action_config">Configuración</string>
     <!-- Navigation Drawer Menu -->
     <string name="nav_add_entry">Agregar entrada</string>
     <string name="nav_explore">Explorar movimientos</string>

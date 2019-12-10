@@ -6,4 +6,17 @@
         android:orderInCategory="100"
         android:title="@string/toolbar_action_help"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_about"
+        android:orderInCategory="100"
+        android:title="@string/toolbar_action_about"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_config"
+        android:icon="@drawable/ic_gear_100"
+        android:orderInCategory="100"
+        android:title="@string/toolbar_action_config"
+        app:showAsAction="ifRoom" />
 </menu>

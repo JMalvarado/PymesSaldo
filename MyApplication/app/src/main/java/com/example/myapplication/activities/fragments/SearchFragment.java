@@ -152,8 +152,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
         textView_monthSelected.setText(monthAndYear);
 
-        // Show FAB add entry from screen
-        MainActivity.fab_addEntry.show();
+        // Hide FAB add entry from screen
+        MainActivity.fab_addEntry.hide();
 
         // Set instance name as title
         SharedPreferences prefs = getActivity().getSharedPreferences("instance", Context.MODE_PRIVATE);
@@ -839,16 +839,18 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             myContext = context;
         }
 
+        @SuppressLint("RestrictedApi")
         @Override
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
-            fab_find.setEnabled(false);
+            fab_find.setVisibility(View.GONE);
         }
 
+        @SuppressLint("RestrictedApi")
         @Override
         protected void onPostExecute(Cursor resultado) {
-            progressBar.setVisibility(View.INVISIBLE);
-            fab_find.setEnabled(true);
+            progressBar.setVisibility(View.GONE);
+            fab_find.setVisibility(View.VISIBLE);
 
             if (resultado.getCount() == 0) {
                 Toast.makeText(myContext, getString(R.string.toast_searchfragment_nodatafound), Toast.LENGTH_LONG).show();

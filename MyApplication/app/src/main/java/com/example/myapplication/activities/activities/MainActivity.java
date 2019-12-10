@@ -264,6 +264,10 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.action_help) {
             return true;
+        } else if (id == R.id.action_about) {
+            return true;
+        } else if (id == R.id.action_config) {
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
