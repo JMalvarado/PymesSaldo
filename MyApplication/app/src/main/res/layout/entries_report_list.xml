@@ -16,7 +16,7 @@
         android:id="@+id/textview_entriesReportList_mount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorBlue"
+        android:textColor="@color/colorBlueDark"
         android:textSize="15sp"
         android:textStyle="bold" />
 

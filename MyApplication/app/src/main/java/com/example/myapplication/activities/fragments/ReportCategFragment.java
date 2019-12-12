@@ -65,6 +65,7 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
     private FloatingActionButton fab_dateFinal;
     private TextView textView_dateBegin;
     private TextView textView_dateFinal;
+    private TextView textView_directory;
     private ImageButton imageButton_download;
     private EditText editText_fileName;
 
@@ -251,6 +252,7 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
 
         // Initialize
         editText_fileName = subView.findViewById(R.id.dialogLayoutExportFile_editText_fileName);
+        textView_directory = subView.findViewById(R.id.dialogLayoutExportFile_textView_directory);
 
         // Set actual date and time as file name
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
@@ -267,6 +269,8 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
 
         fileName = new String[]{dateNow + "_" + timeToShow};
         editText_fileName.setText(fileName[0]);
+        String directory = getString(R.string.dialogExportFile_directoryName);
+        textView_directory.setText(directory.concat("/").concat(getString(R.string.dialogExportFile_folderName)));
 
         // Alert dialog build
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
@@ -389,14 +393,19 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
 
             dialogSaving.setContentView(R.layout.dialog_saving);
             dialogSaving.setTitle(getString(R.string.dialogInfo_title_help));
-            dialogSaving.setCanceledOnTouchOutside(false);
+            dialogSaving.setCancelable(false);
 
             dialogSaving.show();
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            fileName[0] = editText_fileName.getText().toString() + ".xlsx";
+            if (!editText_fileName.getText().toString().equals("")) {
+                fileName[0] = editText_fileName.getText().toString() + ".xlsx";
+            } else {
+                fileName[0] = fileName[0].concat(".xlsx");
+            }
+
             String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
             File folder = new File(extStorageDirectory, getString(R.string.dialogExportFile_folderName));
             folder.mkdir();

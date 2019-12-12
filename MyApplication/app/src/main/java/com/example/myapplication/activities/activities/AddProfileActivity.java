@@ -94,12 +94,9 @@ public class AddProfileActivity extends AppCompatActivity {
 
                 // Dialog help
                 TextView textView_help = dialogHelpInitialProfit.findViewById(R.id.textView_dialogInfo_description);
-                FloatingActionButton fab_dismiss_help = dialogHelpInitialProfit.findViewById(R.id.fab_dialogInfo_dismiss);
 
                 // Add text
                 textView_help.setText(getString(R.string.dialogInfo_content_help_initialProfit));
-
-                fab_dismiss_help.setOnClickListener(view1 -> dialogHelpInitialProfit.dismiss());
 
                 dialogHelpInitialProfit.show();
 
@@ -114,12 +111,9 @@ public class AddProfileActivity extends AppCompatActivity {
                 dialogHelpPeriod.setTitle(getString(R.string.dialogInfo_title_help));
 
                 textView_help = dialogHelpPeriod.findViewById(R.id.textView_dialogInfo_description);
-                fab_dismiss_help = dialogHelpPeriod.findViewById(R.id.fab_dialogInfo_dismiss);
 
                 // Add text
                 textView_help.setText(getString(R.string.dialogInfo_content_help_period));
-
-                fab_dismiss_help.setOnClickListener(view12 -> dialogHelpPeriod.dismiss());
 
                 dialogHelpPeriod.show();
 

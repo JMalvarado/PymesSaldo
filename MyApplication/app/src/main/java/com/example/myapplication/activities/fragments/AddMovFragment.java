@@ -995,6 +995,7 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
         builder.setTitle(getString(R.string.alert_title_addCategory));
         builder.setMessage(getString(R.string.alert_mssg_addCategory));
         builder.setView(subView);
+        builder.setCancelable(false);
         AlertDialog alertDialog = builder.create();
 
         // Positive option
@@ -1050,8 +1051,6 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
 
         // Negative option
         builder.setNegativeButton(getString(R.string.alert_negativeBttn_addCategory), (dialogInterface, i) -> {
-            Toast.makeText(getContext(), getString(R.string.toast_addEntryActivity_alertAddCateg_Canceled), Toast.LENGTH_LONG).show();
-
             // Set default position
             spinner_categories.setSelection(0);
         });
