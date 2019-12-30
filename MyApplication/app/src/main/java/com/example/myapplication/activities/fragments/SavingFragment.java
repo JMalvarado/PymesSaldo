@@ -96,7 +96,7 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
         db = new DatabaseManager(view.getContext());
 
         // Set date format
-        dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+        dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         // Set date now in the textView
         String DateNow;
