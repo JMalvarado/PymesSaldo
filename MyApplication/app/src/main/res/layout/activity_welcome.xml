@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:weightSum="1"
     tools:context=".activities.activities.WelcomeActivity">
 
@@ -18,14 +20,15 @@
 
     <ImageButton
         android:id="@+id/imageButton_activityWelcome_next"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_weight="0.20"
         android:adjustViewBounds="true"
         android:background="@color/colorWhiteSplash"
         android:contentDescription="@string/welcome_imageButtonDecr"
         android:padding="7dp"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_forward_100" />
+        android:src="@drawable/ic_forward_100"
+        android:tint="@color/colorAccent" />
 
 </LinearLayout>

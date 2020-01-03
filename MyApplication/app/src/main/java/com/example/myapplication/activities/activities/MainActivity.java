@@ -112,127 +112,127 @@ public class MainActivity extends AppCompatActivity
 
             Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
             startActivity(welcomeIntent);
-        }
-
-        /* Make an initial query to verify if there is any instance created.
-           If not, show the activity to create a profile. */
-        Cursor instancesData = db.getInstancesAllData();
-        if (instancesData.getCount() == 0) {
-            Intent intentAddProfile = new Intent(this, AddProfileActivity.class);
-            intentAddProfile.putExtra("IS_NEW_USER", true);
-            startActivity(intentAddProfile);
         } else {
-            // Array List to store the profiles names
-            ArrayList<String> profilesList = new ArrayList<>();
+            /* Make an initial query to verify if there is any instance created.
+           If not, show the activity to create a profile. */
+            Cursor instancesData = db.getInstancesAllData();
+            if (instancesData.getCount() == 0) {
+                Intent intentAddProfile = new Intent(this, AddProfileActivity.class);
+                intentAddProfile.putExtra("IS_NEW_USER", true);
+                startActivity(intentAddProfile);
+            } else {
+                // Array List to store the profiles names
+                ArrayList<String> profilesList = new ArrayList<>();
 
-            // Instantiate text view, spinner and buttons for the header of the drawer
-            final TextView tv_navheader_title = navHeader.findViewById(R.id.textview_navheadermain_title);
-            Spinner spinner_instances = navHeader.findViewById(R.id.spinner_navHeader_profiles);
-            fab_addProfile = navHeader.findViewById(R.id.fab_navHeader_addProfile);
-            fab_confProfile = navHeader.findViewById(R.id.fab_navHeader_confProfile);
+                // Instantiate text view, spinner and buttons for the header of the drawer
+                final TextView tv_navheader_title = navHeader.findViewById(R.id.textview_navheadermain_title);
+                Spinner spinner_instances = navHeader.findViewById(R.id.spinner_navHeader_profiles);
+                fab_addProfile = navHeader.findViewById(R.id.fab_navHeader_addProfile);
+                fab_confProfile = navHeader.findViewById(R.id.fab_navHeader_confProfile);
 
-            // Add profiles names to profilesList
-            while (instancesData.moveToNext()) {
-                profilesList.add(instancesData.getString(1));
-            }
-
-            // Create adapter for the spinner of profiles
-            ArrayAdapter<String> spinnerAdapter;
-            spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_items_theme, profilesList) {
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
-                    TextView textView = (TextView) super.getView(position, convertView, parent);
-
-                    textView.setTextColor(Color.BLACK);
-                    textView.setTextSize(20);
-                    textView.setGravity(Gravity.CENTER);
-
-                    return textView;
+                // Add profiles names to profilesList
+                while (instancesData.moveToNext()) {
+                    profilesList.add(instancesData.getString(1));
                 }
-            };
-            spinner_instances.setAdapter(spinnerAdapter);
 
-            // Set text title and id with shared preference
-            tv_navheader_title.setText(name);
+                // Create adapter for the spinner of profiles
+                ArrayAdapter<String> spinnerAdapter;
+                spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_items_theme, profilesList) {
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        TextView textView = (TextView) super.getView(position, convertView, parent);
 
-            int spinner_DefaultPosition = 0;
-            for (int i = 0; i < profilesList.size(); i++) {
-                if (profilesList.get(i).equals(name)) {
-                    spinner_DefaultPosition = i;
-                    break;
-                }
-            }
-            spinner_instances.setSelection(spinner_DefaultPosition);
+                        textView.setTextColor(Color.BLACK);
+                        textView.setTextSize(20);
+                        textView.setGravity(Gravity.CENTER);
 
-            // Set spinner itemClickListener
-            spinner_instances.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    String name = adapterView.getItemAtPosition(i).toString();
-                    String id = db.getInstanceId(name);
-                    String period = Integer.toString(db.getInstancePeriod(name));
+                        return textView;
+                    }
+                };
+                spinner_instances.setAdapter(spinnerAdapter);
 
-                    // Store the instance as default
-                    SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("NAME", name);
-                    editor.putString("ID", id);
-                    editor.putString("PERIOD", period);
-                    editor.apply();
+                // Set text title and id with shared preference
+                tv_navheader_title.setText(name);
 
-                    idInstance = id;
-
-                    BalanceFragment balanceFragment = new BalanceFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, balanceFragment).commit();
-
-                    navigationView.getMenu().getItem(1).setChecked(true);
-
-                    // Set title head text
-                    tv_navheader_title.setText(name);
-
-                    // Check if there is defined period to enable nav item period balance
-                    Menu menuNav = navigationView.getMenu();
-                    MenuItem navItemPeriodBalance = menuNav.findItem(R.id.nav_period_balance);
-                    // Set state for period option
-                    assert period != null;
-                    if (period.equals("0")) {
-                        navItemPeriodBalance.setEnabled(false);
-                    } else {
-                        navItemPeriodBalance.setEnabled(true);
+                int spinner_DefaultPosition = 0;
+                for (int i = 0; i < profilesList.size(); i++) {
+                    if (profilesList.get(i).equals(name)) {
+                        spinner_DefaultPosition = i;
+                        break;
                     }
                 }
+                spinner_instances.setSelection(spinner_DefaultPosition);
 
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
+                // Set spinner itemClickListener
+                spinner_instances.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        String name = adapterView.getItemAtPosition(i).toString();
+                        String id = db.getInstanceId(name);
+                        String period = Integer.toString(db.getInstancePeriod(name));
+
+                        // Store the instance as default
+                        SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("NAME", name);
+                        editor.putString("ID", id);
+                        editor.putString("PERIOD", period);
+                        editor.apply();
+
+                        idInstance = id;
+
+                        BalanceFragment balanceFragment = new BalanceFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, balanceFragment).commit();
+
+                        navigationView.getMenu().getItem(1).setChecked(true);
+
+                        // Set title head text
+                        tv_navheader_title.setText(name);
+
+                        // Check if there is defined period to enable nav item period balance
+                        Menu menuNav = navigationView.getMenu();
+                        MenuItem navItemPeriodBalance = menuNav.findItem(R.id.nav_period_balance);
+                        // Set state for period option
+                        assert period != null;
+                        if (period.equals("0")) {
+                            navItemPeriodBalance.setEnabled(false);
+                        } else {
+                            navItemPeriodBalance.setEnabled(true);
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                    }
+                });
+
+                // Set clickListener for the add and edit profile buttons
+                fab_addProfile.setOnClickListener(view -> {
+                    Intent addProfileIntent = new Intent(view.getContext(), AddProfileActivity.class);
+                    startActivity(addProfileIntent);
+                });
+
+                fab_confProfile.setOnClickListener(view -> {
+                    Intent editProfileIntent = new Intent(view.getContext(), EditProfileActivity.class);
+                    startActivity(editProfileIntent);
+                });
+
+                // Get and show the default fragment
+                BalanceFragment balanceFragment = new BalanceFragment();
+                fragment = balanceFragment;
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, balanceFragment).commit();
+
+                // Check if there is defined period to enable nav item period balance
+                Menu menuNav = navigationView.getMenu();
+                MenuItem navItemPeriodBalance = menuNav.findItem(R.id.nav_period_balance);
+                // Set state for period option
+                String period = prefs.getString("PERIOD", null);
+                assert period != null;
+                if (period.equals("0")) {
+                    navItemPeriodBalance.setEnabled(false);
+                } else {
+                    navItemPeriodBalance.setEnabled(true);
                 }
-            });
-
-            // Set clickListener for the add and edit profile buttons
-            fab_addProfile.setOnClickListener(view -> {
-                Intent addProfileIntent = new Intent(view.getContext(), AddProfileActivity.class);
-                startActivity(addProfileIntent);
-            });
-
-            fab_confProfile.setOnClickListener(view -> {
-                Intent editProfileIntent = new Intent(view.getContext(), EditProfileActivity.class);
-                startActivity(editProfileIntent);
-            });
-
-            // Get and show the default fragment
-            BalanceFragment balanceFragment = new BalanceFragment();
-            fragment = balanceFragment;
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, balanceFragment).commit();
-
-            // Check if there is defined period to enable nav item period balance
-            Menu menuNav = navigationView.getMenu();
-            MenuItem navItemPeriodBalance = menuNav.findItem(R.id.nav_period_balance);
-            // Set state for period option
-            String period = prefs.getString("PERIOD", null);
-            assert period != null;
-            if (period.equals("0")) {
-                navItemPeriodBalance.setEnabled(false);
-            } else {
-                navItemPeriodBalance.setEnabled(true);
             }
         }
     }
