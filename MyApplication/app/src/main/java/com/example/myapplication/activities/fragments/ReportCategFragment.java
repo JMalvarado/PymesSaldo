@@ -243,7 +243,7 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
     }
 
     /**
-     * Alert dialog to add category
+     * Alert dialog to download
      */
     private void openDialog() {
         // Inflate layout
@@ -255,7 +255,7 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
         textView_directory = subView.findViewById(R.id.dialogLayoutExportFile_textView_directory);
 
         // Set actual date and time as file name
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String dateNow;
         LocalDateTime now = LocalDateTime.now();
         dateNow = dtf.format(now);
@@ -280,9 +280,7 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
         AlertDialog alertDialog = builder.create();
 
         // Positive option
-        builder.setPositiveButton(getString(R.string.alert_positiveBttn_addCategory), (dialogInterface, i) -> {
-            new TaskCreateXLSX().execute();
-        });
+        builder.setPositiveButton(getString(R.string.alert_positiveBttn_addCategory), (dialogInterface, i) -> new TaskCreateXLSX().execute());
 
         // Negative option
         builder.setNegativeButton(getString(R.string.alert_negativeBttn_addCategory), (dialogInterface, i) -> {

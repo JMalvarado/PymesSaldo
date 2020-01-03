@@ -94,6 +94,7 @@
             android:src="@drawable/ic_calendar_64"
             app:backgroundTint="@android:color/darker_gray"
             app:elevation="0dp"
+            app:fabSize="mini"
             app:rippleColor="@color/colorPrimary" />
 
         <TextView
@@ -122,6 +123,7 @@
             android:src="@drawable/ic_clock_64"
             app:backgroundTint="@android:color/darker_gray"
             app:elevation="0dp"
+            app:fabSize="mini"
             app:rippleColor="@color/colorPrimary" />
 
         <TextView
@@ -148,6 +150,7 @@
             android:backgroundTint="@android:color/white"
             android:src="@drawable/ic_check_64"
             app:backgroundTint="@android:color/darker_gray"
+            app:fabSize="mini"
             app:rippleColor="@color/colorPrimary" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -159,6 +162,7 @@
             android:backgroundTint="@android:color/white"
             android:src="@drawable/ic_cancel_64"
             app:backgroundTint="@android:color/darker_gray"
+            app:fabSize="mini"
             app:rippleColor="@color/colorRed" />
 
     </LinearLayout>

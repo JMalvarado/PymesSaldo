@@ -212,7 +212,7 @@ public class BalancePeriodFragment extends Fragment {
         }
 
         // get actual month
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String dateNow;
         LocalDateTime now = LocalDateTime.now();
         dateNow = dtf.format(now);

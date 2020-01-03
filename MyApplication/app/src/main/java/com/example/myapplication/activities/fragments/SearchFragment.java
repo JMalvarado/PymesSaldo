@@ -144,7 +144,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         monthAndYear = month + ", " + year;
 
         // Get actual month with 2 digits
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String dateNow;
         LocalDateTime now = LocalDateTime.now();
         dateNow = dtf.format(now);
@@ -579,7 +579,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     }
 
                     // get actual month
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     String dateNow;
                     LocalDateTime now = LocalDateTime.now();
                     dateNow = dtf.format(now);

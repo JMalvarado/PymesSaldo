@@ -123,6 +123,7 @@
             android:onClick="onClickAddProfile"
             android:src="@drawable/ic_check_64"
             app:backgroundTint="@android:color/darker_gray"
+            app:fabSize="mini"
             app:rippleColor="@color/colorPrimary" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -135,6 +136,7 @@
             android:onClick="onClickAddProfile"
             android:src="@drawable/ic_cancel_64"
             app:backgroundTint="@android:color/darker_gray"
+            app:fabSize="mini"
             app:rippleColor="@color/colorRed" />
 
     </LinearLayout>

@@ -114,7 +114,7 @@ public class BalanceFragment extends Fragment {
         textView_date.setText(monthAndYear);
 
         // Get actual month with 2 digits
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String dateNow;
         LocalDateTime now = LocalDateTime.now();
         dateNow = dtf.format(now);

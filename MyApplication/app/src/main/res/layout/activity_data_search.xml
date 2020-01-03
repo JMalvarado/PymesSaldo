@@ -52,82 +52,107 @@
         android:background="?android:attr/listDivider" />
 
     <LinearLayout
-        android:id="@+id/linearLayout_activitydatasearch_balance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp">
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/linearLayout_activitydatasearch_balance"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_weight="0.88"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:contentDescription="@string/imageview_descr"
-                android:src="@drawable/ic_profitgreen_48" />
-
-            <TextView
-                android:id="@+id/textview_activitydatasearch_profit"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/colorBlueDark"
-                android:textSize="12sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/imageview_descr"
+                    android:src="@drawable/ic_profitgreen_48" />
+
+                <TextView
+                    android:id="@+id/textview_activitydatasearch_profit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/colorBlueDark"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/imageview_descr"
+                    android:src="@drawable/ic_spendred_48" />
+
+                <TextView
+                    android:id="@+id/textview_activitydatasearch_spend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/colorBlueDark"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/imageview_descr"
+                    android:src="@drawable/ic_equal_100" />
+
+                <TextView
+                    android:id="@+id/textview_activitydatasearch_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:contentDescription="@string/imageview_descr"
-                android:src="@drawable/ic_spendred_48" />
-
-            <TextView
-                android:id="@+id/textview_activitydatasearch_spend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/colorBlueDark"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:contentDescription="@string/imageview_descr"
-                android:src="@drawable/ic_equal_100" />
-
-            <TextView
-                android:id="@+id/textview_activitydatasearch_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/colorBlack"
-                android:textSize="12sp" />
-
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/imageButton_activityDataSearch_download"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="0.12"
+            android:adjustViewBounds="true"
+            android:background="@drawable/roundcornerbrownlight"
+            android:contentDescription="@string/fragmentReport_imageButton_decr_download"
+            android:padding="7dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_download_48" />
 
     </LinearLayout>
+
 
     <View
         android:layout_width="match_parent"

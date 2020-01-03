@@ -189,7 +189,7 @@ public class AddProfileActivity extends AppCompatActivity {
                         String description = getString(R.string.activity_addprofile_categoryInitial);
                         // Date now
                         String dateNow;
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                         LocalDateTime now = LocalDateTime.now();
                         dateNow = dtf.format(now);
                         // Time now

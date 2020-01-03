@@ -52,7 +52,7 @@
     <string name="fragment_search_textview_anyo">Año</string>
     <string name="fragment_search_checkbox_principio">Desde el principio</string>
     <string name="fragment_search_textview_final">Hasta</string>
-    <string name="fragment_search_checkox_hastahoy">Hasta hoy</string>
+    <string name="fragment_search_checkox_hastahoy">Hasta el final</string>
     <string name="fragment_search_button_buscar">Buscar</string>
     <string name="fragment_search_button_datebeg">Fecha</string>
     <string name="fragment_search_button_datefinal">Fecha</string>
@@ -165,6 +165,7 @@
     <string name="dialogInfo_content_help_period">Añade un día de mes como ciclo o fecha de corte. Ejemplo: Día de corte en las tarjetas de crédito</string>
     <string name="dialogExportFile_textviewHint_filename">Nombre de archivo</string>
     <string name="dialogExportFile_folderName">NED-Cuentas_Reportes</string>
+    <string name="dialogExportFile_folderName_Entries">NED-Cuentas_Movimientos</string>
     <string name="dialogExportFile_directoryName">Almacenamiento interno</string>
     <string name="dialogExportFile_title">Exportar archivo</string>
     <string name="dialogExportFile_mssg">Archivo Excel</string>
@@ -173,8 +174,12 @@
     <string name="dialogExportFile_sheetTitleCategory">Categoría</string>
     <string name="dialogExportFile_sheetTitleAmount">Monto</string>
     <string name="dialogExportFile_sheetTitlePercentage">Porcentaje</string>
+    <string name="dialogExportFile_sheetTitleDescription">Descripción</string>
+    <string name="dialogExportFile_sheetTitleDate">Fecha</string>
+    <string name="dialogExportFile_sheetTitleTime">Hora</string>
     <string name="dialogExportFile_sheetTitleFrom">Desde</string>
     <string name="dialogExportFile_sheetTitleTo">Hasta</string>
+    <string name="dialogExportFile_sheetTitleTotal">Total</string>
     <string name="dialogExportFile_downloadDirectoryTitle">El archivo se descargará en:</string>
     <string name="dialog_saving_title">Guardando…</string>
     <string name="dialog_loading_title">Cargando…</string>
