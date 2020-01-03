@@ -15,6 +15,9 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".activities.activities.WelcomeActivity"
+            android:theme="@style/SplashTheme" />
+        <activity
             android:name=".activities.activities.EditProfileActivity"
             android:label="@string/editProfile_name"
             android:theme="@style/myTheme" />

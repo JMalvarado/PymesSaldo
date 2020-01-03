@@ -1,5 +1,6 @@
 package com.example.myapplication.activities.activities;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,7 +19,6 @@ import com.example.myapplication.activities.fragments.SearchFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity
 
     // Variables
     public static String idInstance;
+    public static boolean isFirstStart;
     private Fragment fragment = null;
     private NavigationView navigationView;
 
@@ -98,6 +99,20 @@ public class MainActivity extends AppCompatActivity
         String name = prefs.getString("NAME", null);
         idInstance = prefs.getString("ID", null);
 
+        // Shared preferences of main configuration
+        SharedPreferences prefsConfig = getSharedPreferences("config", Context.MODE_PRIVATE);
+        isFirstStart = prefsConfig.getBoolean("FIRSTSTART", true);
+
+        // Start welcome screen if is the first run of the app
+        if (isFirstStart) {
+            isFirstStart = false;
+            SharedPreferences.Editor editorConfig = prefsConfig.edit();
+            editorConfig.putBoolean("FIRSTSTART", isFirstStart);
+            editorConfig.apply();
+
+            Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
+            startActivity(welcomeIntent);
+        }
 
         /* Make an initial query to verify if there is any instance created.
            If not, show the activity to create a profile. */
@@ -231,7 +246,7 @@ public class MainActivity extends AppCompatActivity
             if (fragment != null) {
                 if (fragment instanceof BalanceFragment) {
                     Snackbar.make(findViewById(R.id.drawer_layout), getString(R.string.snack_mainActivity_exit), Snackbar.LENGTH_LONG)
-                            .setAction("Salir", v -> onExit())
+                            .setAction(getString(R.string.snack_mainActivity_exit_button), v -> onExit())
                             .show();
                 } else {
                     showHomeFragment();
@@ -265,12 +280,18 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_help) {
             return true;
         } else if (id == R.id.action_about) {
-            return true;
+            // Constant
+            final Dialog dialogAbout = new Dialog(MainActivity.this);
+            // Set custom layout to dialog help
+            dialogAbout.setContentView(R.layout.dialog_about);
+            //dialogAbout.setTitle(getString(R.string.dialogInfo_title_help));
+            dialogAbout.show();
+
         } else if (id == R.id.action_config) {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Override

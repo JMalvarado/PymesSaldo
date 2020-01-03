@@ -423,6 +423,8 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
             }
 
             dialogSaving.dismiss();
+
+            Toast.makeText(getContext(), getString(R.string.toast_fileSaved), Toast.LENGTH_SHORT).show();
         }
 
         @Override

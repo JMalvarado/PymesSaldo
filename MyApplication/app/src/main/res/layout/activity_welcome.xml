@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context=".activities.activities.WelcomeActivity">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager_activityWelcome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.80">
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <ImageButton
+        android:id="@+id/imageButton_activityWelcome_next"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_weight="0.20"
+        android:adjustViewBounds="true"
+        android:background="@color/colorWhiteSplash"
+        android:contentDescription="@string/welcome_imageButtonDecr"
+        android:padding="7dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_forward_100" />
+
+</LinearLayout>

@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -369,6 +370,8 @@ public class DataSearch extends AppCompatActivity {
             }
 
             dialogSaving.dismiss();
+
+            Toast.makeText(DataSearch.this, getString(R.string.toast_fileSaved), Toast.LENGTH_SHORT).show();
         }
 
         @Override

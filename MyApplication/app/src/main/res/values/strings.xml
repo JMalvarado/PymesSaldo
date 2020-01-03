@@ -12,6 +12,16 @@
     <string name="categories_name">Categorías</string>
     <string name="editEntry_name">Editar movimiento</string>
     <string name="editProfile_name">Editar estado financiero</string>
+    <string name="welcome_title1">¡Bienvenido!</string>
+    <string name="welcome_title2">NED-Cuentas</string>
+    <string name="welcome_title3">Con el fin de</string>
+    <string name="welcome_title4">Para comenzar</string>
+    <string name="welcome_subtitle1">Gracias por elegirnos</string>
+    <string name="welcome_subtitle2">le ayudará con el orden de sus finanzs</string>
+    <string name="welcome_subtitle3">aumentar sus ganancias y reducir los conflictos económicos</string>
+    <string name="welcome_subtitle4">agregue su primer estado financiero, el cual puede representar un negocio, cuenta bancaria o personal, entre otras opciones</string>
+    <string name="welcome_imageDecr">Imagen para representar pagina</string>
+    <string name="welcome_imageButtonDecr">aceptar</string>
 
     <string name="month_January">Enero</string>
     <string name="month_February">Febrero</string>
@@ -107,7 +117,7 @@
     <string name="dataList_imageButton_decr_delete">Delete entry</string>
     <string name="fragmentReport_imageButton_decr_download">Download</string>
     <string name="dialogAddCategory_imageButton_decr_selectIcon">Select icon</string>
-    <string name="datalist_imageview_decr_imagecategory">Image view for categor list</string>
+    <string name="datalist_imageview_decr_imagecategory">Image view for category list</string>
     <string name="dataList_textView_ingr">Monto:</string>
     <string name="dataList_textView_gast">Gasto:</string>
     <string name="dataList_textView_categ">Categoría:</string>
@@ -145,7 +155,10 @@
     <string name="toast_balanceFragment_info_remanents">Remanentes del mes anterior</string>
     <string name="toast_balanceFragment_info_equalPlusRemanents">Balance más remanentes</string>
     <string name="toast_reportCategFragment_info_noPeriodSelected">Primero seleccione un periodo</string>
+    <string name="toast_fileSaved">Archivo guardado</string>
     <string name="snack_mainActivity_exit">Presione Salir</string>
+    <string name="snack_mainActivity_exit_button">Salir</string>
+    <string name="snack_fileDownloaded_button">Abrir</string>
     <string name="alert_title">Alerta</string>
     <string name="alert_addEntryActivity_nodata">Por favor complete todos los espacios</string>
     <string name="alert_title_addCategory">Categoría</string>
@@ -183,6 +196,14 @@
     <string name="dialogExportFile_downloadDirectoryTitle">El archivo se descargará en:</string>
     <string name="dialog_saving_title">Guardando…</string>
     <string name="dialog_loading_title">Cargando…</string>
+    <string name="dialog_about_title">Acerca de</string>
+    <string name="dialog_about_version">V. 1.0.0</string>
+    <string name="dialog_about_companyName">Nueva Escuela Digital</string>
+    <string name="dialog_about_authorsTitle">Creadores</string>
+    <string name="dialog_about_authorName1">Jeremy Rodríguez</string>
+    <string name="dialog_about_authorName2">Jose Mario Alvarado</string>
+    <string name="dialog_about_authorName3">Johan Quesada</string>
+    <string name="dialog_about_imageDecr">app icon</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
