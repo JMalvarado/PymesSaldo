@@ -23,29 +23,30 @@ public class WelcomeViewPagerAdapter extends PagerAdapter {
     private LayoutInflater inflater;
 
     /// List of elements in pager
-    // Images
-    public int[] images = {
-            R.drawable.ic_ac_100,
-            R.drawable.ic_add_64,
-            R.drawable.ic_amazon_100,
-            R.drawable.ic_arrowdropdown_24
+    // Image
+    private int[] images = {
+            R.drawable.handshake_1280,
+            R.mipmap.ic_launcher_foreground,
+            R.drawable.money_1280,
+            R.drawable.wallet_1280
     };
 
-    // Titles
-    public int[] titles = {
+    // Title
+    private int[] titles = {
             R.string.welcome_title1,
             R.string.welcome_title2,
             R.string.welcome_title3,
             R.string.welcome_title4
     };
 
-    // Subtitles
-    public int[] subtitles = {
+    // Subtitle
+    private int[] subtitles = {
             R.string.welcome_subtitle1,
             R.string.welcome_subtitle2,
             R.string.welcome_subtitle3,
             R.string.welcome_subtitle4
     };
+
 
     public WelcomeViewPagerAdapter(Context context) {
         this.context = context;

@@ -1058,6 +1058,12 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
         builder.show();
     }
 
+    /**
+     * Show given message in screen
+     *
+     * @param titulo
+     * @param mensaje
+     */
     private void showMessage(String titulo, String mensaje) {
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         builder.setCancelable(true);

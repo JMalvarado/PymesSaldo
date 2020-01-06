@@ -16,7 +16,7 @@
         tools:replace="android:allowBackup">
         <activity
             android:name=".activities.activities.WelcomeActivity"
-            android:theme="@style/SplashTheme" />
+            android:theme="@style/WelcomeTheme" />
         <activity
             android:name=".activities.activities.EditProfileActivity"
             android:label="@string/editProfile_name"

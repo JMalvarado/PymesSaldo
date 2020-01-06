@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 18;
+    private static final int DATABASE_VERSION = 19;
     private static final String DATABASE_NAME = "Saldos.db";
 
     //tabla1
@@ -48,6 +48,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final String Col_FechaAhorro = "Fecha";
     private static final String Col_HoraAhorro = "Hora";
     private static final String Col_TipoMovAhorro = "Tipo";
+
+    //tabla5
+    private static final String TABLA5_NOMBRE = "Deudas";
+    //columnas
+    private static final String Col_InstIDDeuda = "Instancias_ID";
+    private static final String Col_DescripcionDeuda = "Descripcion";
+    private static final String Col_MontoDeuda = "Monto";
+    private static final String Col_FechaDeuda = "Fecha";
 
     //constructor
     public DatabaseManager(Context context) {
@@ -107,6 +115,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 "Tipo TEXT," +
                 "FOREIGN KEY (Instancias_ID) REFERENCES Instancias (Instancias_ID) " +
                 "ON DELETE CASCADE ON UPDATE NO ACTION)");
+
+        // Create table for Dept
+        sqLiteDatabase.execSQL("create table " + TABLA5_NOMBRE + " " +
+                "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Instancias_ID INTEGER," +
+                "Descripcion TEXT," +
+                "Monto REAL," +
+                "Fecha DATE," +
+                "FOREIGN KEY (Instancias_ID) REFERENCES Instancias (Instancias_ID) " +
+                "ON DELETE CASCADE ON UPDATE NO ACTION)");
     }
 
     /**
@@ -122,6 +140,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLA2_NOMBRE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLA3_NOMBRE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLA4_NOMBRE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLA5_NOMBRE);
         onCreate(sqLiteDatabase);
     }
 
@@ -220,6 +239,28 @@ public class DatabaseManager extends SQLiteOpenHelper {
         contentValues.put(Col_TipoMovAhorro, type);
 
         long resultado = db.insert(TABLA4_NOMBRE, null, contentValues);
+
+        return resultado != -1;
+    }
+
+    /**
+     * Add new dept to table "Deudas"
+     *
+     * @param instanceID
+     * @param value
+     * @param date
+     * @return
+     */
+    public boolean addDept(String instanceID, String descripcion, double value, String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Col_InstIDDeuda, instanceID);
+        contentValues.put(Col_DescripcionDeuda, descripcion);
+        contentValues.put(Col_MontoDeuda, value);
+        contentValues.put(Col_FechaAhorro, date);
+
+        long resultado = db.insert(TABLA5_NOMBRE, null, contentValues);
 
         return resultado != -1;
     }
@@ -982,6 +1023,20 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return retiros;
     }
 
+    /**
+     * Get all the dept data from table Deudas
+     *
+     * @return Cursor with all the information in all the columns
+     */
+    public Cursor getAllDeptsData(String Instancias_ID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        resultado = db.rawQuery("SELECT * FROM " + TABLA5_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
+
+        return resultado;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     /// Delete methods
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1017,6 +1072,18 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public Integer deleteCategory(String id, String instance_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLA3_NOMBRE, "Categorias_ID=? AND Instancias_ID=?", new String[]{id, instance_id});
+    }
+
+    /**
+     * Delete a row from Deudas table, given by the entry id and instance id
+     *
+     * @param id
+     * @param instance_id
+     * @return
+     */
+    public Integer deleteDept(String id, String instance_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLA5_NOMBRE, "ID=? AND Instancias_ID=?", new String[]{id, instance_id});
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1088,6 +1155,32 @@ public class DatabaseManager extends SQLiteOpenHelper {
         contentValues.put(Col_InstIDCateg, instance_id);
 
         db.update(TABLA3_NOMBRE, contentValues, "Categorias_ID=? AND Instancias_ID=?", new String[]{category_ID, instance_id});
+
+        return true;
+    }
+
+    /**
+     * Update dept row from Deudas table
+     *
+     * @param instance_ID
+     * @param new_instance_ID
+     * @param dept_ID
+     * @param description
+     * @param amount
+     * @param date
+     * @return
+     */
+    public boolean editDept(String instance_ID, String new_instance_ID, String dept_ID, String description, Double amount, String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ID", dept_ID);
+        contentValues.put(Col_InstanciaID, new_instance_ID);
+        contentValues.put(Col_Fecha, date);
+        contentValues.put(Col_MontoDeuda, amount);
+        contentValues.put(Col_Descripcion, description);
+
+        db.update(TABLA5_NOMBRE, contentValues, "ID=? AND Instancias_ID=?", new String[]{dept_ID, instance_ID});
 
         return true;
     }

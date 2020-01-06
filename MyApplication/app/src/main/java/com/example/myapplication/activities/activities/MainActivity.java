@@ -13,6 +13,7 @@ import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.fragments.BalanceFragment;
 import com.example.myapplication.activities.fragments.BalancePeriodFragment;
 import com.example.myapplication.activities.fragments.CategoriesFragment;
+import com.example.myapplication.activities.fragments.DebtsFragment;
 import com.example.myapplication.activities.fragments.ReportCategFragment;
 import com.example.myapplication.activities.fragments.SaveMoneyFragment;
 import com.example.myapplication.activities.fragments.SearchFragment;
@@ -318,6 +319,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_report_categ) {
             fragment = new CategoriesFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new ReportCategFragment()).commit();
+        } else if (id == R.id.nav_debt) {
+            fragment = new DebtsFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new DebtsFragment()).commit();
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

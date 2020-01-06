@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activities.fragments.AddDebtFragment;
 import com.example.myapplication.activities.fragments.AddMovFragment;
 import com.example.myapplication.activities.fragments.SavingFragment;
 import com.example.myapplication.activities.fragments.TransferFragment;
@@ -41,6 +42,10 @@ public class AddEntryViewPagerAdapter extends FragmentPagerAdapter {
                 fragment = new TransferFragment();
                 break;
 
+            case 3:
+                fragment = new AddDebtFragment();
+                break;
+
         }
 
         return fragment;
@@ -48,7 +53,7 @@ public class AddEntryViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Nullable
@@ -66,6 +71,10 @@ public class AddEntryViewPagerAdapter extends FragmentPagerAdapter {
 
             case 2:
                 title = context.getResources().getString(R.string.addEntryViewPagerAdapter_title3);
+                break;
+
+            case 3:
+                title = context.getResources().getString(R.string.addEntryViewPagerAdapter_title4);
                 break;
         }
         return title;

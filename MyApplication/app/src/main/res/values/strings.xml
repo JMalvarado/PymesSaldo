@@ -10,6 +10,7 @@
     <string name="report_name">Reporte por categorías</string>
     <string name="search_name">Explorar</string>
     <string name="categories_name">Categorías</string>
+    <string name="debt_name">Deudas</string>
     <string name="editEntry_name">Editar movimiento</string>
     <string name="editProfile_name">Editar estado financiero</string>
     <string name="welcome_title1">¡Bienvenido!</string>
@@ -86,6 +87,7 @@
     <string name="fragment_addMov_radiobttn_Ingreso">Ingreso</string>
     <string name="fragment_addMov_radiobttn_Gasto">Gasto</string>
     <string name="fragment_categories_textView_nodata">No hay categorías para mostrar</string>
+    <string name="fragment_debts_textView_nodata">No hay deudas para mostrar</string>
     <string name="fragment_categories_imageButton_add_descr">Agregar categoría</string>
     <string name="fragment_reportCategories_datearrow_descr">Flecha de hasta</string>
     <string name="fragment_reportCategories_textview_dnterDate">Ingrese el periodo arriba</string>
@@ -128,10 +130,11 @@
     <string name="mainActivity_addEntry_lastBalance">Remanente de: </string>
     <string name="addEntryViewPagerAdapter_title1">Movimiento</string>
     <string name="addEntryViewPagerAdapter_title2">Ahorro</string>
+    <string name="addEntryViewPagerAdapter_title3">Transferencia</string>
+    <string name="addEntryViewPagerAdapter_title4">Deuda</string>
     <string name="reportViewCategPagerAdapter_title1">Ingreso</string>
     <string name="reportViewCategPagerAdapter_title2">Gasto</string>
     <string name="reportViewCategPagerAdapter_title3">Gráficas</string>
-    <string name="addEntryViewPagerAdapter_title3">Transferencia</string>
     <string name="customSpinnerCategories_imageView_descr">Imagen</string>
     <string name="imageview_descr">imageview balance</string>
 
@@ -162,14 +165,19 @@
     <string name="alert_title">Alerta</string>
     <string name="alert_addEntryActivity_nodata">Por favor complete todos los espacios</string>
     <string name="alert_title_addCategory">Categoría</string>
+    <string name="alert_title_editDebt">Deuda</string>
     <string name="alert_mssg_addCategory">Nueva categoría</string>
     <string name="alert_mssg_editCategory">Editar categoría</string>
+    <string name="alert_mssg_editDebt">Editar deuda</string>
+    <string name="alert_mssg_addToDebt">Agregar a deuda</string>
+    <string name="alert_mssg_subtractToDebt">Restar a deuda</string>
     <string name="alert_positiveBttn_addCategory">OK</string>
     <string name="alert_negativeBttn_addCategory">Cancelar</string>
     <string name="alert_optSi">Si</string>
     <string name="alert_optNo">No</string>
     <string name="alert_title_deleteProfile">¿Desea eliminar el estado?</string>
     <string name="alert_title_deleteData">¿Desea eliminar el dato?</string>
+    <string name="alert_title_deleteData2">La deuda es igual o menor a 0, ¿Desea eliminarla?</string>
     <string name="alert_msg_deleteData">Esto eliminará todos sus movimientos correspondientes</string>
     <string name="dialogInfo_imageView_image">info Image</string>
     <string name="dialogInfo_button_dismiss_text">Cerrar</string>
@@ -219,8 +227,12 @@
     <string name="nav_categories">Categorías</string>
     <string name="nav_money_save">Ahorro</string>
     <string name="nav_report_categ">Reporte por categorías</string>
+    <string name="nav_debt">Deudas</string>
     <string name="nav_add_profile">Agregar estado financiero</string>
     <string name="nav_conf_profile">Configurar estado</string>
     <string name="nav_exit">Salir</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -33,7 +33,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 Intent mainIntent = new Intent(v.getContext(), MainActivity.class);
                 startActivity(mainIntent);
             } else {
-                viewPagerWelcome.setCurrentItem(getItem(+1), true);
+                viewPagerWelcome.setCurrentItem(getItem(), true);
             }
         });
 
@@ -41,7 +41,7 @@ public class WelcomeActivity extends AppCompatActivity {
         viewPagerWelcome.setAdapter(welcomeViewPagerAdapter);
     }
 
-    private int getItem(int i) {
-        return viewPagerWelcome.getCurrentItem() + i;
+    private int getItem() {
+        return viewPagerWelcome.getCurrentItem() + 1;
     }
 }

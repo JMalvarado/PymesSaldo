@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhiteSplash"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
     android:weightSum="1"
     tools:context=".activities.activities.WelcomeActivity">
 
@@ -28,7 +27,6 @@
         android:contentDescription="@string/welcome_imageButtonDecr"
         android:padding="7dp"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_forward_100"
-        android:tint="@color/colorAccent" />
+        android:src="@drawable/ic_forward_100" />
 
 </LinearLayout>

@@ -3,7 +3,6 @@ package com.example.myapplication.activities.data;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,7 +105,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
 
 
     /**
-     * Alert dialog to add category
+     * Alert dialog to edit category
      */
     private void openDialog(final String categoryId, final String name, final String ic) {
         // Inflate layout

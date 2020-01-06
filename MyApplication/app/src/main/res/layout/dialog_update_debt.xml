@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <ImageView
+        android:id="@+id/imageView_dialogUpdateDebt_type"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/imageview_descr"
+        android:src="@drawable/ic_profitgreen_48" />
+
+    <EditText
+        android:id="@+id/editText_dialogUpdateDebt_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:hint="@string/addentry_textView_hintIngreso"
+        android:inputType="numberDecimal"
+        android:maxLength="12"
+        tools:ignore="LabelFor" />
+
+</LinearLayout>

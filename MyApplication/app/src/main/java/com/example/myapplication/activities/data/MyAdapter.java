@@ -95,47 +95,38 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         int imageID = context.getResources().getIdentifier(categoryIcName, "drawable", context.getPackageName());
         myViewHolder.imageView_ic.setImageResource(imageID);
 
-        myViewHolder.fab_dit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent editIntent = new Intent(view.getContext(), EditEntryActivity.class);
-                editIntent.putExtra("ID", data.getId());
-                editIntent.putExtra("INGRESO", data.getIngreso());
-                editIntent.putExtra("GASTO", data.getGasto());
-                editIntent.putExtra("FECHA", data.getFecha());
-                editIntent.putExtra("HORA", data.getHora());
-                editIntent.putExtra("DESCR", data.getDescr());
-                editIntent.putExtra("CATEG", data.getCategId());
+        myViewHolder.fab_dit.setOnClickListener(view -> {
+            Intent editIntent = new Intent(view.getContext(), EditEntryActivity.class);
+            editIntent.putExtra("ID", data.getId());
+            editIntent.putExtra("INGRESO", data.getIngreso());
+            editIntent.putExtra("GASTO", data.getGasto());
+            editIntent.putExtra("FECHA", data.getFecha());
+            editIntent.putExtra("HORA", data.getHora());
+            editIntent.putExtra("DESCR", data.getDescr());
+            editIntent.putExtra("CATEG", data.getCategId());
 
-                context.startActivity(editIntent);
-            }
+            context.startActivity(editIntent);
         });
 
         final CharSequence[] opciones;
         opciones = new CharSequence[]{context.getResources().getString(R.string.alert_optSi), context.getResources().getString(R.string.alert_optNo)};
 
-        myViewHolder.fab_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setCancelable(false);
-                builder.setTitle(R.string.alert_title_deleteData);
-                builder.setItems(opciones, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                db.deleteEntryData(MainActivity.idInstance, data.getId());
-                                new Task().execute();
-                                break;
+        myViewHolder.fab_delete.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+            builder.setCancelable(false);
+            builder.setTitle(R.string.alert_title_deleteData);
+            builder.setItems(opciones, (dialog, which) -> {
+                switch (which) {
+                    case 0:
+                        db.deleteEntryData(MainActivity.idInstance, data.getId());
+                        new Task().execute();
+                        break;
 
-                            case 1:
-                                break;
-                        }
-                    }
-                });
-                builder.show();
-            }
+                    case 1:
+                        break;
+                }
+            });
+            builder.show();
         });
     }
 

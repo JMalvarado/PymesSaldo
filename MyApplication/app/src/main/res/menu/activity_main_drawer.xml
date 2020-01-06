@@ -37,6 +37,11 @@
             android:icon="@drawable/ic_piechart_64"
             android:title="@string/nav_report_categ" />
 
+        <item
+            android:id="@+id/nav_debt"
+            android:icon="@drawable/ic_piechart_64"
+            android:title="@string/nav_debt" />
+
     </group>
 
     <group

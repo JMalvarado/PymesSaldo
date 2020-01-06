@@ -31,9 +31,6 @@ import java.util.Calendar;
 import java.util.Objects;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SavingFragment extends Fragment implements View.OnClickListener {
 
     // Components view
