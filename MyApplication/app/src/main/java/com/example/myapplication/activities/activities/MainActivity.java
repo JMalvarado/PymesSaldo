@@ -126,7 +126,6 @@ public class MainActivity extends AppCompatActivity
                 ArrayList<String> profilesList = new ArrayList<>();
 
                 // Instantiate text view, spinner and buttons for the header of the drawer
-                final TextView tv_navheader_title = navHeader.findViewById(R.id.textview_navheadermain_title);
                 Spinner spinner_instances = navHeader.findViewById(R.id.spinner_navHeader_profiles);
                 fab_addProfile = navHeader.findViewById(R.id.fab_navHeader_addProfile);
                 fab_confProfile = navHeader.findViewById(R.id.fab_navHeader_confProfile);
@@ -151,9 +150,6 @@ public class MainActivity extends AppCompatActivity
                     }
                 };
                 spinner_instances.setAdapter(spinnerAdapter);
-
-                // Set text title and id with shared preference
-                tv_navheader_title.setText(name);
 
                 int spinner_DefaultPosition = 0;
                 for (int i = 0; i < profilesList.size(); i++) {
@@ -186,9 +182,6 @@ public class MainActivity extends AppCompatActivity
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, balanceFragment).commit();
 
                         navigationView.getMenu().getItem(1).setChecked(true);
-
-                        // Set title head text
-                        tv_navheader_title.setText(name);
 
                         // Check if there is defined period to enable nav item period balance
                         Menu menuNav = navigationView.getMenu();
@@ -305,8 +298,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_explore) {
             fragment = new SearchFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new SearchFragment()).commit();
-        } else if (id == R.id.nav_exit) {
-            onExit();
         } else if (id == R.id.nav_money_save) {
             fragment = new SaveMoneyFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new SaveMoneyFragment()).commit();

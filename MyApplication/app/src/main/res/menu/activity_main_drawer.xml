@@ -39,19 +39,9 @@
 
         <item
             android:id="@+id/nav_debt"
-            android:icon="@drawable/ic_piechart_64"
+            android:icon="@drawable/ic_debt_64"
             android:title="@string/nav_debt" />
 
-    </group>
-
-    <group
-        android:id="@+id/navgroup_exit"
-        android:checkableBehavior="single">
-
-        <item
-            android:id="@+id/nav_exit"
-            android:icon="@drawable/ic_exit_64"
-            android:title="@string/nav_exit" />
     </group>
 
 </menu>
