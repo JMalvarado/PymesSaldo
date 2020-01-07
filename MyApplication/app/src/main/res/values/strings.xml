@@ -13,6 +13,7 @@
     <string name="debt_name">Deudas</string>
     <string name="editEntry_name">Editar movimiento</string>
     <string name="editProfile_name">Editar estado financiero</string>
+    <string name="help_name">Ayuda</string>
     <string name="welcome_title1">¡Felicidades!</string>
     <string name="welcome_title2">Te recompensamos</string>
     <string name="welcome_title3">Gratuita</string>
@@ -24,6 +25,7 @@
     <string name="welcome_imageWATitle">Contactar asesor</string>
     <string name="welcome_imageDecr">Imagen para representar pagina</string>
     <string name="welcome_imageButtonDecr">aceptar</string>
+
 
     <string name="month_January">Enero</string>
     <string name="month_February">Febrero</string>
@@ -239,5 +241,40 @@
     <string name="nav_add_profile">Agregar estado financiero</string>
     <string name="nav_conf_profile">Configurar estado</string>
     <string name="nav_exit">Salir</string>
+
+    <string name="activityHelp_title1">Conceptos</string>
+    <string name="activityHelp_subtitle1">Estado financiero:</string>
+    <string name="activityHelp_content1">Se refiere a cualquier entidad que represente gastos y/o ingresos económicos, ya sea un negocio o franquicia (supermercado, tienda), cuenta personal, cuenta bancaria, tarjeta de cŕedito, entre otras.</string>
+    <string name="activityHelp_subtitle2">Saldo inicial:</string>
+    <string name="activityHelp_content2">Saldo con el que se desea iniciar un estado financiero en el momento de ser creado.</string>
+    <string name="activityHelp_subtitle3">Ciclo definido:</string>
+    <string name="activityHelp_content3">Día del mes definido como fecha de corte para mostrar un balance. El balance dado por esta opción se muestra en la pantalla Balance del ciclo definido, donde se toma en cuenta el periodo que abarca desde el mes anterior en el día definido, hasta el mes siguiente en el mismo día definido.</string>
+    <string name="activityHelp_subtitle4">Remanentes:</string>
+    <string name="activityHelp_content4">Saldo sobrante del mes anterior.</string>
+    <string name="activityHelp_subtitle5">Movimiento:</string>
+    <string name="activityHelp_content5">Representa un ingreso o gasto, contiene como información: la descripción, fecha, hora, monto y categoría.</string>
+    <string name="activityHelp_title2">Funciones</string>
+    <string name="activityHelp_subtitle6">Agregar movimiento:</string>
+    <string name="activityHelp_content6">Se ingresa mediante el botón flotante ubicado en la esquina inferior derecha, permite agregar 4 tipos de entradas:</string>
+    <string name="activityHelp_content6_1">Movimiento común: Gasto o Ingreso.</string>
+    <string name="activityHelp_content6_2">Ahorro: Abonar o retirar del ahorro propio del estado financiero. Se puede agregar la opción de ingresar dicho abono o retiro como un movimiento común (Gasto o Ingreso) en el balance general.</string>
+    <string name="activityHelp_content6_3">Transferencia: Permite transferir fondos de un estado financiero a otro, se agrega como movimiento común en ambos estados, y se almacena en la categoría Transferencia</string>
+    <string name="activityHelp_content6_4">Deuda: Agrega una nueva deuda, visible en la sección Deudas del panel principal.</string>
+    <string name="activityHelp_subtitle7">Explorar movimientos:</string>
+    <string name="activityHelp_content7">Permite definir filtros de búsqueda para explorar los movimientos deseados. Se puede filtrar por categoría, Tipo (Ingreso o gasto) y por periodo. Entre las opciones de periodo están:</string>
+    <string name="activityHelp_content7_1">Por periodo definido: Periodo que se encuentra entre los días del mes definido como periodo definido al crear el estado financiero.</string>
+    <string name="activityHelp_content7_2">Por mes: Explora los movimientos definidos en un mes dado por el usuario.</string>
+    <string name="activityHelp_content7_3">Por periodo: Rango de fechas específicas.</string>
+    <string name="activityHelp_content7_4">El resultado es una pantalla que contiene todos los movimientos encontrados en la base de datos, junto con el total de ingreso, gasto y balance, además de una opción para descargar un archivo XLS con los movimientos.</string>
+    <string name="activityHelp_subtitle8">Balance general:</string>
+    <string name="activityHelp_content8">Muestra total de ingresos, gastos y balance del mes actual, además de remanentes del mes anterior y balance con los remanentes sumados.</string>
+    <string name="activityHelp_subtitle9">Categorías:</string>
+    <string name="activityHelp_content9">Muestra la lista de categorías. Existen tres categorías principales estáticas: Ahorro, transferencia y otros, además, se pueden crear hasta 22 categorías nuevas, todas ellas distintas para cada estado financiero. Cada una muestra la opción de editar (nombre e ícono) y eliminar.</string>
+    <string name="activityHelp_subtitle10">Ahorro:</string>
+    <string name="activityHelp_content10">Permite visualizar el estado actual del fondo de ahorro del estado financiero.</string>
+    <string name="activityHelp_subtitle11">Reporte por categorías:</string>
+    <string name="activityHelp_content11">Visualiza el monto total y porcentaje en cada categoría, además de los movimientos de cada una. Esto en un periodo definido en la parte superior. Se muestra por separado el resultado para ingresos, gastos y las gráficas circulares que representan los porcentajes de gasto e ingreso en cada categoría, también permite descargar el archivo XLS con los datos</string>
+    <string name="activityHelp_subtitle12">Deudas:</string>
+    <string name="activityHelp_content12">Muestra la lista de deudas creadas y pendientes para el estado financiero, cada deuda se puede eliminar, editar (Descripción, fecha y monto) o agregar o sustraer de la misma. Si se Sustrae un monto igual o superior al actual, el sistema le advierte al usuario y le permite eliminar la deuda.</string>
 
 </resources>

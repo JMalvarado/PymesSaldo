@@ -15,6 +15,10 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".activities.activities.HelpActivity"
+            android:label="@string/help_name">
+        </activity>
+        <activity
             android:name=".activities.activities.WelcomeActivity"
             android:theme="@style/WelcomeTheme" />
         <activity

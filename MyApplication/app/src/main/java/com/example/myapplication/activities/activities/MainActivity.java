@@ -292,7 +292,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_help) {
-            return true;
+            // Help screen
+            Intent helpIntent = new Intent(this, HelpActivity.class);
+            startActivity(helpIntent);
         } else if (id == R.id.action_about) {
             // Constant
             final Dialog dialogAbout = new Dialog(MainActivity.this);
