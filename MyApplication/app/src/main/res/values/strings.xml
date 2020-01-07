@@ -13,14 +13,15 @@
     <string name="debt_name">Deudas</string>
     <string name="editEntry_name">Editar movimiento</string>
     <string name="editProfile_name">Editar estado financiero</string>
-    <string name="welcome_title1">¡Bienvenido!</string>
-    <string name="welcome_title2">NED-Cuentas</string>
-    <string name="welcome_title3">Con el fin de</string>
-    <string name="welcome_title4">Para comenzar</string>
-    <string name="welcome_subtitle1">Gracias por elegirnos</string>
-    <string name="welcome_subtitle2">le ayudará con el orden de sus finanzas</string>
-    <string name="welcome_subtitle3">aumentar sus ganancias y reducir los conflictos económicos</string>
-    <string name="welcome_subtitle4">agregue su primer estado financiero, el cual puede representar un negocio, cuenta bancaria o personal, entre otras opciones</string>
+    <string name="welcome_title1">¡Felicidades!</string>
+    <string name="welcome_title2">Te recompensamos</string>
+    <string name="welcome_title3">Gratuita</string>
+    <string name="welcome_title4">Contáctalo</string>
+    <string name="welcome_subtitle1">¡tomaste una exelente decisión! Queremos que tus finanzas realmente mejoren, es por eso que…</string>
+    <string name="welcome_subtitle2">al adquirir nuestra app, y te ofrecemos de forma…</string>
+    <string name="welcome_subtitle3">un asesor financiero, para que resuelva todas tus consultas de manera personalizada.</string>
+    <string name="welcome_subtitle4">vía WhatsApp, a través del siguiente botón</string>
+    <string name="welcome_imageWATitle">Contactar asesor</string>
     <string name="welcome_imageDecr">Imagen para representar pagina</string>
     <string name="welcome_imageButtonDecr">aceptar</string>
 

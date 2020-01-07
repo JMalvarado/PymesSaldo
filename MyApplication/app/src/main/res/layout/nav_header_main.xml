@@ -20,6 +20,8 @@
         android:text="@string/header_textView_spinnerTitle"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
         android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        android:textStyle="bold"
         tools:ignore="PrivateResource" />
 
     <View

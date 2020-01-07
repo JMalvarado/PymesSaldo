@@ -18,7 +18,7 @@
         android:id="@+id/textView_welcomeSlide_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold" />
 

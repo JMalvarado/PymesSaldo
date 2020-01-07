@@ -28,7 +28,7 @@ public class WelcomeViewPagerAdapter extends PagerAdapter {
             R.drawable.handshake_1280,
             R.mipmap.ic_launcher_foreground,
             R.drawable.money_1280,
-            R.drawable.wallet_1280
+            R.drawable.communication_1280
     };
 
     // Title

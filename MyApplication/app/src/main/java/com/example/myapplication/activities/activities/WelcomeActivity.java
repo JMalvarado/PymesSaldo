@@ -18,6 +18,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private ViewPager viewPagerWelcome;
     private WelcomeViewPagerAdapter welcomeViewPagerAdapter;
     private ImageButton imageButton_next;
+    private ImageButton imageButton_wa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,9 @@ public class WelcomeActivity extends AppCompatActivity {
             } else {
                 viewPagerWelcome.setCurrentItem(getItem(), true);
             }
+        });
+        imageButton_wa = findViewById(R.id.imageButton_activityWelcome_wa);
+        imageButton_wa.setOnClickListener(v -> {
         });
 
         welcomeViewPagerAdapter = new WelcomeViewPagerAdapter(this);
