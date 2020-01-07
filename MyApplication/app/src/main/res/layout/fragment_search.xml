@@ -28,7 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
         android:background="@drawable/roundcornerbrownlight"
         android:orientation="vertical">
 
@@ -54,8 +53,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
         android:background="@drawable/roundcornerbrownlight"
         android:orientation="vertical">
 
@@ -124,7 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginStart="25dp"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="4dp"
                         android:layout_marginEnd="25dp"
                         android:background="?android:attr/listDivider" />
 
@@ -133,7 +130,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="10dp"
                         android:text="@string/fragment_search_checkbox_saldoalmes"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -168,7 +164,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginStart="25dp"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="4dp"
                         android:layout_marginEnd="25dp"
                         android:background="?android:attr/listDivider" />
 
@@ -177,7 +173,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="10dp"
                         android:text="@string/fragment_search_dates_radioButtonTitle"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -287,9 +282,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginEnd="25dp"
-                    android:layout_marginBottom="7dp"
+                    android:layout_marginBottom="4dp"
                     android:background="?android:attr/listDivider" />
 
                 <RelativeLayout
@@ -301,6 +296,7 @@
                         android:id="@+id/Buscar_searchFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginBottom="12dp"
                         android:backgroundTint="@android:color/white"
                         android:src="@drawable/ic_find_64"
@@ -313,6 +309,7 @@
                         style="?android:attr/progressBarStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:layout_gravity="center"
                         android:visibility="invisible" />
                 </RelativeLayout>

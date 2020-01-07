@@ -50,6 +50,11 @@
     <string name="activity_add_profile_switch_periodo">Ciclo definido</string>
     <string name="activity_add_profile_helpButton_initialprofit_descr">Descripcion de la funcion del boton saldo inicial</string>
     <string name="activity_add_profile_helpButton_period_descr">Descripcion de la funcion del boton perido definido</string>
+    <string name="activity_main_slidinguppanel_title">Info</string>
+    <string name="activity_main_slidinguppanel_weblinkHeader">Visite nuestro sitio web:</string>
+    <string name="activity_main_slidinguppanel_webLink">nuevaescueladigital.com</string>
+    <string name="activity_main_slidinguppanel_subscribeHeader">Recibirás información, recursos educativos y herramientas gratuitas al suscribirte</string>
+    <string name="activity_main_slidinguppanel_SubscribeInfo">Suscríbete pulsando el ícono</string>
 
     <string name="fragment_search_period_period_header">Día de corte:</string>
     <string name="fragment_search_textView_type_spinner">Tipo de movimiento</string>
@@ -213,12 +218,14 @@
     <string name="dialog_about_authorName2">Jose Mario Alvarado</string>
     <string name="dialog_about_authorName3">Johan Quesada</string>
     <string name="dialog_about_imageDecr">app icon</string>
+    <string name="dialog_contact_WAdescription">Contacta a tu asesor financiero a través del siguiente ícono:</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="toolbar_action_help">Ayuda</string>
     <string name="toolbar_action_about">Acerca de</string>
+    <string name="toolbar_action_contact">Contáctenos</string>
     <string name="toolbar_action_config">Configuración</string>
     <!-- Navigation Drawer Menu -->
     <string name="nav_add_entry">Agregar entrada</string>
@@ -232,8 +239,5 @@
     <string name="nav_add_profile">Agregar estado financiero</string>
     <string name="nav_conf_profile">Configurar estado</string>
     <string name="nav_exit">Salir</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

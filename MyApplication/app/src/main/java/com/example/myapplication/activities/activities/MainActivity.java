@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.myapplication.R;
@@ -40,6 +41,7 @@ import android.view.Menu;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -52,7 +54,9 @@ public class MainActivity extends AppCompatActivity
     // Components view
     private FloatingActionButton fab_addProfile;
     private FloatingActionButton fab_confProfile;
-    static public FloatingActionButton fab_addEntry;
+    private TextView textView_webLink;
+    private ImageButton imageButton_subscribe;
+    public static FloatingActionButton fab_addEntry;
 
     // Variables
     public static String idInstance;
@@ -74,6 +78,22 @@ public class MainActivity extends AppCompatActivity
 
         // Initialize floating button view
         fab_addEntry = findViewById(R.id.fab);
+
+        // Textview web link
+        textView_webLink = findViewById(R.id.textView_activityMain_webLink);
+        textView_webLink.setOnClickListener(v -> {
+            Intent intentURLWeb = new Intent(Intent.ACTION_VIEW);
+            intentURLWeb.setData(Uri.parse("https://nuevaescueladigital.com"));
+            startActivity(intentURLWeb);
+        });
+
+        // ImageButton subscribe link
+        imageButton_subscribe = findViewById(R.id.imageButton_activityMain_subscribe);
+        imageButton_subscribe.setOnClickListener(v -> {
+            Intent intentURLSubscribe = new Intent(Intent.ACTION_VIEW);
+            intentURLSubscribe.setData(Uri.parse("https://forms.gle/HMgg8fP6njJYVBCd9"));
+            startActivity(intentURLSubscribe);
+        });
 
         // Floating Button action
         fab_addEntry.setOnClickListener(view -> {
@@ -278,11 +298,20 @@ public class MainActivity extends AppCompatActivity
             final Dialog dialogAbout = new Dialog(MainActivity.this);
             // Set custom layout to dialog help
             dialogAbout.setContentView(R.layout.dialog_about);
-            //dialogAbout.setTitle(getString(R.string.dialogInfo_title_help));
             dialogAbout.show();
 
-        } else if (id == R.id.action_config) {
-            return true;
+        } else if (id == R.id.action_contact) {
+            // Constant
+            final Dialog dialogContact = new Dialog(MainActivity.this);
+            // Set custom layout to dialog help
+            dialogContact.setContentView(R.layout.dialog_contact);
+            dialogContact.show();
+            ImageButton imageButton_WA = dialogContact.findViewById(R.id.imageButton_dialogContact_wa);
+            imageButton_WA.setOnClickListener(v -> {
+                Intent intentURLWA = new Intent(Intent.ACTION_VIEW);
+                intentURLWA.setData(Uri.parse("https://bit.ly/2PJjOuq"));
+                startActivity(intentURLWA);
+            });
         }
 
         return true;

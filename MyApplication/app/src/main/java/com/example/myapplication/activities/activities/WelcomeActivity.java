@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
@@ -39,6 +40,9 @@ public class WelcomeActivity extends AppCompatActivity {
         });
         imageButton_wa = findViewById(R.id.imageButton_activityWelcome_wa);
         imageButton_wa.setOnClickListener(v -> {
+            Intent intentURLWA = new Intent(Intent.ACTION_VIEW);
+            intentURLWA.setData(Uri.parse("https://bit.ly/2PJjOuq"));
+            startActivity(intentURLWA);
         });
 
         welcomeViewPagerAdapter = new WelcomeViewPagerAdapter(this);
