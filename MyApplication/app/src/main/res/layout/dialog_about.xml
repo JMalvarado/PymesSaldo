@@ -63,7 +63,99 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:text="@string/dialog_about_authorName1"
         android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/dialog_about_followTitle"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/imageButton_dialogAbout_facebook"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:adjustViewBounds="true"
+                android:background="@color/colorWhiteSplash"
+                android:contentDescription="@string/welcome_imageButtonDecr"
+                android:padding="0dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_facebookcute_100" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_about_facebookTitle" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/imageButton_dialogAbout_youtube"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:adjustViewBounds="true"
+                android:background="@color/colorWhiteSplash"
+                android:contentDescription="@string/welcome_imageButtonDecr"
+                android:padding="0dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_youtubecute_100" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_about_youtubeTitle" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/imageButton_dialogAbout_instagram"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:adjustViewBounds="true"
+                android:background="@color/colorWhiteSplash"
+                android:contentDescription="@string/welcome_imageButtonDecr"
+                android:padding="0dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_instagramcute_100" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_about_instagramTitle" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

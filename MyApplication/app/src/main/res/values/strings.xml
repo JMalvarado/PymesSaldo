@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">NED-Cuentas</string>
-    <string name="addEntry_name">Agregar movimiento</string>
+    <string name="addEntry_name">Agregar</string>
     <string name="itemInfo_name">Datos</string>
     <string name="dataSearch_name">Lista de movimientos</string>
     <string name="addProfile_name">Agregar estado financiero</string>
@@ -53,10 +53,10 @@
     <string name="activity_add_profile_helpButton_initialprofit_descr">Descripcion de la funcion del boton saldo inicial</string>
     <string name="activity_add_profile_helpButton_period_descr">Descripcion de la funcion del boton perido definido</string>
     <string name="activity_main_slidinguppanel_title">Info</string>
-    <string name="activity_main_slidinguppanel_weblinkHeader">Visite nuestro sitio web:</string>
+    <string name="activity_main_slidinguppanel_weblinkHeader">Visita nuestro sitio web:</string>
     <string name="activity_main_slidinguppanel_webLink">nuevaescueladigital.com</string>
     <string name="activity_main_slidinguppanel_subscribeHeader">Recibirás información, recursos educativos y herramientas gratuitas al suscribirte</string>
-    <string name="activity_main_slidinguppanel_SubscribeInfo">Suscríbete pulsando el ícono</string>
+    <string name="activity_main_slidinguppanel_SubscribeInfo">Suscríbete pulsando el logo</string>
 
     <string name="fragment_search_period_period_header">Día de corte:</string>
     <string name="fragment_search_textView_type_spinner">Tipo de movimiento</string>
@@ -136,10 +136,10 @@
     <string name="mainActivity_addCategory_transfer">Transferencia</string>
     <string name="mainActivity_addCategory_saving">Ahorro</string>
     <string name="mainActivity_addEntry_lastBalance">Remanente de: </string>
-    <string name="addEntryViewPagerAdapter_title1">Movimiento</string>
-    <string name="addEntryViewPagerAdapter_title2">Ahorro</string>
-    <string name="addEntryViewPagerAdapter_title3">Transferencia</string>
-    <string name="addEntryViewPagerAdapter_title4">Deuda</string>
+    <string name="addEntryViewPagerAdapter_title1">MOV.</string>
+    <string name="addEntryViewPagerAdapter_title2">AHORRO</string>
+    <string name="addEntryViewPagerAdapter_title3">TRANSF.</string>
+    <string name="addEntryViewPagerAdapter_title4">DEUDA</string>
     <string name="reportViewCategPagerAdapter_title1">Ingreso</string>
     <string name="reportViewCategPagerAdapter_title2">Gasto</string>
     <string name="reportViewCategPagerAdapter_title3">Gráficas</string>
@@ -215,10 +215,14 @@
     <string name="dialog_about_title">Acerca de</string>
     <string name="dialog_about_version">V. 1.0.0</string>
     <string name="dialog_about_companyName">Nueva Escuela Digital</string>
-    <string name="dialog_about_authorsTitle">Creadores</string>
-    <string name="dialog_about_authorName1">Jeremy Rodríguez</string>
-    <string name="dialog_about_authorName2">Jose Mario Alvarado</string>
-    <string name="dialog_about_authorName3">Johan Quesada</string>
+    <string name="dialog_about_authorsTitle">Equipo NED</string>
+    <string name="dialog_about_authorName1">Jeremy Rodríguez Solórzano</string>
+    <string name="dialog_about_authorName2">Jose Mario Alvarado Núñez</string>
+    <string name="dialog_about_authorName3">Johan Quesada Campos</string>
+    <string name="dialog_about_followTitle">Síguenos en:</string>
+    <string name="dialog_about_facebookTitle">Facebook</string>
+    <string name="dialog_about_instagramTitle">Instagram</string>
+    <string name="dialog_about_youtubeTitle">Youtube</string>
     <string name="dialog_about_imageDecr">app icon</string>
     <string name="dialog_contact_WAdescription">Contacta a tu asesor financiero a través del siguiente ícono:</string>
 

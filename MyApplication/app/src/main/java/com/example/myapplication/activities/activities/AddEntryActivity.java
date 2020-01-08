@@ -13,6 +13,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.activities.data.AddEntryViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Objects;
+
 
 public class AddEntryActivity extends AppCompatActivity {
 
@@ -40,6 +42,11 @@ public class AddEntryActivity extends AppCompatActivity {
         viewPager.setAdapter(viewPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
+
+        Objects.requireNonNull(tabLayout.getTabAt(0)).setIcon(R.drawable.ic_coininhand_48);
+        Objects.requireNonNull(tabLayout.getTabAt(1)).setIcon(R.drawable.ic_pigmoney_48);
+        Objects.requireNonNull(tabLayout.getTabAt(2)).setIcon(R.drawable.ic_transfercoin_48);
+        Objects.requireNonNull(tabLayout.getTabAt(3)).setIcon(R.drawable.ic_debt_48);
     }
 
     @Override

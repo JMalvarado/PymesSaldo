@@ -302,13 +302,35 @@ public class MainActivity extends AppCompatActivity
             dialogAbout.setContentView(R.layout.dialog_about);
             dialogAbout.show();
 
+            ImageButton imageButton_facebook = dialogAbout.findViewById(R.id.imageButton_dialogAbout_facebook);
+            ImageButton imageButton_youtube = dialogAbout.findViewById(R.id.imageButton_dialogAbout_youtube);
+            ImageButton imageButton_instagram = dialogAbout.findViewById(R.id.imageButton_dialogAbout_instagram);
+
+            imageButton_facebook.setOnClickListener(v -> {
+                Intent intentURLFacebook = new Intent(Intent.ACTION_VIEW);
+                intentURLFacebook.setData(Uri.parse("https://www.facebook.com/Nueva-Escuela-Digital-109624583896807/"));
+                startActivity(intentURLFacebook);
+            });
+            imageButton_youtube.setOnClickListener(v -> {
+                Intent intentURLYoutube = new Intent(Intent.ACTION_VIEW);
+                intentURLYoutube.setData(Uri.parse("https://www.youtube.com/channel/UCjRK0Z3920z0GSSuIRBE8JA/?guided_help_flow=5"));
+                startActivity(intentURLYoutube);
+            });
+            imageButton_instagram.setOnClickListener(v -> {
+                Intent intentURLInstagram = new Intent(Intent.ACTION_VIEW);
+                intentURLInstagram.setData(Uri.parse("http://instagram.com/ned_nuevaescueladigital/"));
+                startActivity(intentURLInstagram);
+            });
+
         } else if (id == R.id.action_contact) {
             // Constant
             final Dialog dialogContact = new Dialog(MainActivity.this);
             // Set custom layout to dialog help
             dialogContact.setContentView(R.layout.dialog_contact);
             dialogContact.show();
+
             ImageButton imageButton_WA = dialogContact.findViewById(R.id.imageButton_dialogContact_wa);
+
             imageButton_WA.setOnClickListener(v -> {
                 Intent intentURLWA = new Intent(Intent.ACTION_VIEW);
                 intentURLWA.setData(Uri.parse("https://bit.ly/2PJjOuq"));
