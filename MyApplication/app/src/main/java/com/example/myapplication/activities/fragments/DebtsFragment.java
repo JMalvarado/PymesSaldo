@@ -58,8 +58,8 @@ public class DebtsFragment extends Fragment {
         textView_nodata = view.findViewById(R.id.textView_fragmentDebt_nodata);
         imageView_nodata = view.findViewById(R.id.imageView_fragmentDebt_nodata);
 
-        // Hide FAB add entry from screen
-        MainActivity.fab_addEntry.hide();
+        // Show FAB add entry from screen
+        MainActivity.fab_addEntry.show();
 
         // Set toolbar title
         Objects.requireNonNull(getActivity()).setTitle(getString(R.string.debt_name));
