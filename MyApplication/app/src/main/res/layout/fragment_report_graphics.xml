@@ -8,14 +8,26 @@
     android:gravity="center"
     tools:context="com.example.myapplication.activities.fragments.ReportGraphicsFragment">
 
+
+    <ImageView
+        android:id="@+id/imageView_reportGraphicsFragment_nodata"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignBottom="@+id/textView_reportGraphicsFragment_info"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_calendarandcross_100"
+        android:visibility="visible"
+        tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/textView_reportGraphicsFragment_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:text="@string/fragment_reportCategories_textview_dnterDate"
-        android:textColor="@color/colorGrayLight"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progressBar_reportGraphicsFragment"
@@ -30,7 +42,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:isScrollContainer="false"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout

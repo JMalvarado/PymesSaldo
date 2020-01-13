@@ -45,7 +45,8 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="40dp"
         android:onClick="onClickEditProfile"
-        android:text="@string/activity_add_profile_switch_periodo" />
+        android:text="@string/activity_add_profile_switch_periodo"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edittext_editprofile_period"

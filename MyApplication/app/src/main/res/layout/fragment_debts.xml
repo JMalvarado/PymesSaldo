@@ -34,6 +34,18 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
+        <ImageView
+            android:id="@+id/imageView_fragmentDebt_nodata"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignBottom="@+id/textView_fragmentDebt_nodata"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_debtandcross_100"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
         <TextView
             android:id="@+id/textView_fragmentDebt_nodata"
             android:layout_width="wrap_content"

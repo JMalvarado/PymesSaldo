@@ -1,7 +1,9 @@
 package com.example.myapplication.activities.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -120,6 +122,10 @@ public class BalanceFragment extends Fragment {
         dateNow = dtf.format(now);
         String monthtwodigits = dateNow.substring(5, 7);
 
+        // Get current time
+        // Store time in format HH:MM:SS.SSSS
+        String time = java.time.LocalTime.now().toString();
+
         // Get data
         // actual month
         String balance = getMonthBalance(monthtwodigits, year);
@@ -172,9 +178,40 @@ public class BalanceFragment extends Fragment {
         // Previous balance (remnants)
         String balanceprev = getMonthBalance(monthprev, yearprev);
 
+        // Add prev balance to database
+        if (Double.parseDouble(balanceprev) != 0) {
+            // Check if remnant was added to database
+            int categoryId = Integer.parseInt(db.getCategoryId(getString(R.string.mainActivity_addCategory_others), MainActivity.idInstance));
+            Cursor remnantList = db.getEntryInMonthYearByCategoryAndDescription(MainActivity.idInstance,
+                    getString(R.string.fragment_balance_class_remnantDescription),
+                    categoryId,
+                    monthtwodigits,
+                    year);
+            if (remnantList.getCount() == 0) {
+                db.addEntry(dateNow,
+                        time,
+                        0,
+                        Double.parseDouble(balanceprev),
+                        getString(R.string.fragment_balance_class_remnantDescription),
+                        MainActivity.idInstance,
+                        Integer.toString(categoryId));
+            } else {
+                remnantList.moveToPosition(0);
+                db.editEntryData(remnantList.getString(0),
+                        dateNow,
+                        time,
+                        Double.parseDouble(balanceprev),
+                        0,
+                        getString(R.string.fragment_balance_class_remnantDescription),
+                        MainActivity.idInstance,
+                        MainActivity.idInstance,
+                        Integer.toString(categoryId));
+            }
+        }
+
         // Calc total balance
         double totalBalanceDoub = Double.parseDouble(balance) + Double.parseDouble(balanceprev);
-        String totalBalance = Double.toHexString(totalBalanceDoub);
+        String totalBalance = Double.toString(totalBalanceDoub);
 
         // Format
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -185,7 +222,7 @@ public class BalanceFragment extends Fragment {
         String spendDf = df.format(Double.parseDouble(spend));
         String balanceprevDf = df.format(Double.parseDouble(balanceprev));
         String balanceplusremDf = df.format(Double.parseDouble(totalBalance));
-        // Set balance, profit asn spend on textView
+        // Set balance, profit and spend on textView
         textView_balance.setText(balanceDf);
         textView_profit.setText(profitDf);
         textView_spend.setText(spendDf);

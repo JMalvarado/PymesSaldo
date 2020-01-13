@@ -6,12 +6,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.myapplication.R;
+
 import java.util.ArrayList;
 
 /**
  * Database manager
  */
 public class DatabaseManager extends SQLiteOpenHelper {
+
+    // Global variables
+    private Context context;
 
     private static final int DATABASE_VERSION = 19;
     private static final String DATABASE_NAME = "Saldos.db";
@@ -60,6 +65,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     //constructor
     public DatabaseManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -518,7 +524,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     /**
-     * Get the data from column ingresos in the given month and year
+     * Get the data from column ingresos in the given month and year. Doesn't take the entry 'Remanentes'
      *
      * @return
      */
@@ -532,7 +538,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         Cursor consulta = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
-                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID, null);
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
 
         while (consulta.moveToNext()) {
             ingreso = consulta.getDouble(5);
@@ -557,6 +563,26 @@ public class DatabaseManager extends SQLiteOpenHelper {
         } else {
             resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
                     "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+        }
+
+        return resultado;
+    }
+
+    /**
+     * Get the data from in the given month and year with specific category and specific description (Remnant)
+     *
+     * @return
+     */
+    public Cursor getEntryInMonthYearByCategoryAndDescription(String Instancias_ID, String description, int category, String month, String year) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+
+        if (category == 0) {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Descripcion='" + description + "'", null);
+        } else {
+            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Descripcion='" + description + "'", null);
         }
 
         return resultado;

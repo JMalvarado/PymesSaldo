@@ -43,10 +43,8 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
     private FloatingActionButton fab_addTimeSaving;
     private TextView textView_date;
     private TextView textView_time;
-    private EditText editText_payment;
-    private EditText editText_withdrawal;
-    private CheckBox checkBox_addSpend;
-    private CheckBox checkBox_addProfit;
+    private EditText editText_amount;
+    private CheckBox checkBox_addSpendOrProfit;
 
     // Global variables
     private DateTimeFormatter dtf;
@@ -62,14 +60,12 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_saving, container, false);
 
         // Initialize Components view
-        checkBox_addSpend = view.findViewById(R.id.checkbox_fragment_saving_addSpend);
-        checkBox_addProfit = view.findViewById(R.id.checkbox_fragment_saving_addProfit);
+        checkBox_addSpendOrProfit = view.findViewById(R.id.checkbox_fragment_saving_addSpendOrProfit);
 
         radioGroup_addSavingMov = view.findViewById(R.id.radioGroup_addSavingMov);
         textView_date = view.findViewById(R.id.textView_addSaving_date);
         textView_time = view.findViewById(R.id.textView_addSaving_time);
-        editText_payment = view.findViewById(R.id.etIngresoAbonoAhorro);
-        editText_withdrawal = view.findViewById(R.id.etIngresoRetiroAhorro);
+        editText_amount = view.findViewById(R.id.editText_fragmentSaving_amount);
 
         radioButton_payment = view.findViewById(R.id.radioButton_fragmentSaving_payment);
         radioButton_payment.setOnClickListener(this);
@@ -123,22 +119,14 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.radioButton_fragmentSaving_payment:
-                editText_withdrawal.setEnabled(false);
-                editText_payment.setEnabled(true);
-                checkBox_addProfit.setEnabled(false);
-                checkBox_addSpend.setEnabled(true);
-                checkBox_addProfit.setChecked(false);
-                editText_withdrawal.setText("");
+                checkBox_addSpendOrProfit.setText(getString(R.string.fragment_saving_checkbox_addSpend));
+                editText_amount.setText("");
 
                 break;
 
             case R.id.radioButton_fragmentSaving_withdrawal:
-                editText_payment.setEnabled(false);
-                editText_withdrawal.setEnabled(true);
-                checkBox_addProfit.setEnabled(true);
-                checkBox_addSpend.setEnabled(false);
-                checkBox_addSpend.setChecked(false);
-                editText_payment.setText("");
+                checkBox_addSpendOrProfit.setText(getString(R.string.fragment_saving_checkbox_addProfit));
+                editText_amount.setText("");
 
                 break;
 
@@ -317,7 +305,7 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
 
             case R.id.Ingreso_saving:
                 // Check if there is blank spaces
-                if ((editText_payment.getText().toString().equals("")) && (editText_withdrawal.getText().toString().equals(""))) {
+                if (editText_amount.getText().toString().equals("")) {
                     showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_nodata));
                     break;
                 }
@@ -327,10 +315,10 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
                 String type;
 
                 if (radioGroup_addSavingMov.getCheckedRadioButtonId() == R.id.radioButton_fragmentSaving_payment) {
-                    inData = Double.parseDouble(editText_payment.getText().toString());
+                    inData = Double.parseDouble(editText_amount.getText().toString());
                     type = "A";
                 } else {
-                    inData = Double.parseDouble(editText_withdrawal.getText().toString());
+                    inData = Double.parseDouble(editText_amount.getText().toString());
                     type = "R";
                 }
 
@@ -344,17 +332,17 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
                 // Check result
                 if (isResult) {
                     // Check add as a profit or spend option
-                    if (checkBox_addSpend.isChecked()) {
-                        double spend = Double.parseDouble(editText_payment.getText().toString());
+                    if ((checkBox_addSpendOrProfit.isChecked()) && (radioGroup_addSavingMov.getCheckedRadioButtonId() == R.id.radioButton_fragmentSaving_payment)) {
+                        double spend = Double.parseDouble(editText_amount.getText().toString());
                         double in = 0;
                         String description = getString(R.string.fragment_saving_addSpend_description);
                         // Category id
                         String categoryId = db.getCategoryId(getString(R.string.mainActivity_addCategory_saving), MainActivity.idInstance);
 
                         db.addEntry(date, time, spend, in, description, id, categoryId);
-                    } else if (checkBox_addProfit.isChecked()) {
+                    } else if ((checkBox_addSpendOrProfit.isChecked()) && (radioGroup_addSavingMov.getCheckedRadioButtonId() == R.id.radioButton_fragmentSaving_withdrawal)) {
                         double spend = 0;
-                        double in = Double.parseDouble(editText_withdrawal.getText().toString());
+                        double in = Double.parseDouble(editText_amount.getText().toString());
                         String description = getString(R.string.fragment_saving_addProfit_description);
                         // Category id
                         String categoryId = db.getCategoryId(getString(R.string.mainActivity_addCategory_saving), MainActivity.idInstance);
@@ -364,8 +352,7 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
 
                     Toast.makeText(view.getContext(), getString(R.string.toast_addEntryActivity_succesAdd), Toast.LENGTH_LONG).show();
 
-                    editText_payment.setText("");
-                    editText_withdrawal.setText("");
+                    editText_amount.setText("");
 
                     // Set date now in the textView
                     String DateNow;

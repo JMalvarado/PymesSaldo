@@ -21,24 +21,6 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/etIngresoAbonoAhorro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:autofillHints=""
-            android:hint="@string/fragment_saving_radioButton_abono"
-            android:inputType="numberDecimal"
-            android:padding="15dip" />
-
-        <CheckBox
-            android:id="@+id/checkbox_fragment_saving_addSpend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="@string/fragment_saving_checkbox_addSpend" />
-
         <RadioButton
             android:id="@+id/radioButton_fragmentSaving_withdrawal"
             android:layout_width="wrap_content"
@@ -47,35 +29,34 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/etIngresoRetiroAhorro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:autofillHints=""
-            android:enabled="false"
-            android:hint="@string/fragment_saving_radioButton_retiro"
-            android:inputType="numberDecimal"
-            android:padding="15dip" />
-
-        <CheckBox
-            android:id="@+id/checkbox_fragment_saving_addProfit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:text="@string/fragment_saving_checkbox_addProfit" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="5dp"
-            android:background="?android:attr/listDivider" />
-
     </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="5dp"
+        android:background="?android:attr/listDivider" />
+
+    <EditText
+        android:id="@+id/editText_fragmentSaving_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:autofillHints=""
+        android:hint="@string/fragment_saving_radioButton_amount"
+        android:inputType="numberDecimal"
+        android:padding="15dip" />
+
+    <CheckBox
+        android:id="@+id/checkbox_fragment_saving_addSpendOrProfit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/fragment_saving_checkbox_addSpend" />
 
     <LinearLayout
         android:layout_width="wrap_content"

@@ -81,7 +81,9 @@
     <string name="fragment_balance_textView_gastos">Gastos:</string>
     <string name="fragment_balance_textView_actualbalance">Balance</string>
     <string name="fragment_balance_textView_balanceplusrem">Balance + Remanentes</string>
+    <string name="fragment_balance_class_remnantDescription">Remanentes</string>
     <string name="fragment_saving_radioButton_abono">Abono</string>
+    <string name="fragment_saving_radioButton_amount">Monto</string>
     <string name="fragment_saving_radioButton_retiro">Retiro</string>
     <string name="fragment_saving_checkbox_addSpend">Agregar como GASTO en balance general</string>
     <string name="fragment_saving_checkbox_addProfit">Agregar como INGRESO en balance general</string>
@@ -127,6 +129,7 @@
     <string name="dataList_imageButton_decr_delete">Delete entry</string>
     <string name="fragmentReport_imageButton_decr_download">Download</string>
     <string name="dialogAddCategory_imageButton_decr_selectIcon">Select icon</string>
+    <string name="dialogAddCategory_textView_name_hint">Nombre</string>
     <string name="datalist_imageview_decr_imagecategory">Image view for category list</string>
     <string name="dataList_textView_ingr">Monto:</string>
     <string name="dataList_textView_gast">Gasto:</string>
@@ -163,7 +166,7 @@
     <string name="toast_balanceFragment_info_profit">Ingresos</string>
     <string name="toast_balanceFragment_info_spend">Gastos</string>
     <string name="toast_balanceFragment_info_equal">Balance</string>
-    <string name="toast_balanceFragment_info_remanents">Remanentes del mes anterior</string>
+    <string name="toast_balanceFragment_info_remanents">Remanentes</string>
     <string name="toast_balanceFragment_info_equalPlusRemanents">Balance más remanentes</string>
     <string name="toast_reportCategFragment_info_noPeriodSelected">Primero seleccione un periodo</string>
     <string name="toast_fileSaved">Archivo guardado</string>
@@ -197,7 +200,7 @@
     <string name="dialogExportFile_folderName_Entries">NED-Cuentas_Movimientos</string>
     <string name="dialogExportFile_directoryName">Almacenamiento interno</string>
     <string name="dialogExportFile_title">Exportar archivo</string>
-    <string name="dialogExportFile_mssg">Archivo Excel</string>
+    <string name="dialogExportFile_mssg">Hoja de cálculo</string>
     <string name="dialogExportFile_sheetProfitTitle">Ingresos</string>
     <string name="dialogExportFile_sheetSpendTitle">Gastos</string>
     <string name="dialogExportFile_sheetTitleCategory">Categoría</string>

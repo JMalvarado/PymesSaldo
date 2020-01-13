@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -32,6 +33,7 @@ public class DebtsFragment extends Fragment {
     private RecyclerView.Adapter rvAdapter;
     private TextView textView_instanceName;
     private TextView textView_nodata;
+    private ImageView imageView_nodata;
 
     // Global variables
     private DatabaseManager db;
@@ -54,6 +56,7 @@ public class DebtsFragment extends Fragment {
         // Initialize view components
         textView_instanceName = view.findViewById(R.id.textView_fragmentDebt_instanceName);
         textView_nodata = view.findViewById(R.id.textView_fragmentDebt_nodata);
+        imageView_nodata = view.findViewById(R.id.imageView_fragmentDebt_nodata);
 
         // Hide FAB add entry from screen
         MainActivity.fab_addEntry.hide();
@@ -85,8 +88,10 @@ public class DebtsFragment extends Fragment {
         if (result.getCount() == 0) {
             rvList.setVisibility(View.GONE);
             textView_nodata.setVisibility(View.VISIBLE);
+            imageView_nodata.setVisibility(View.VISIBLE);
         } else {
             textView_nodata.setVisibility(View.GONE);
+            imageView_nodata.setVisibility(View.GONE);
             rvList.setVisibility(View.VISIBLE);
             while (result.moveToNext()) {
                 id.add(result.getString(0));

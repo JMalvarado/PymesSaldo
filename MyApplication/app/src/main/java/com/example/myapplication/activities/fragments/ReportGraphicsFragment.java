@@ -9,10 +9,10 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -42,6 +42,7 @@ public class ReportGraphicsFragment extends Fragment {
     private ScrollView scrollview_data;
     private ProgressBar progressBar_graphicProgress;
     private TextView textView_info;
+    private ImageView imageView_nodata;
     private TextView textView_titleProfit;
     private TextView textView_titleSpend;
     private TextView textView_periodProfit;
@@ -72,6 +73,7 @@ public class ReportGraphicsFragment extends Fragment {
         textView_titleSpend = view.findViewById(R.id.textView_reportGraphicsFragment_titleSpend);
         textView_periodProfit = view.findViewById(R.id.textView_reportGraphicsFragment_periodProfit);
         textView_periodSpend = view.findViewById(R.id.textView_reportGraphicsFragment_periodSpend);
+        imageView_nodata = view.findViewById(R.id.imageView_reportGraphicsFragment_nodata);
         scrollview_data = view.findViewById(R.id.scrollview_reportGraphicsFragment_data);
         progressBar_graphicProgress = view.findViewById(R.id.progressBar_reportGraphicsFragment);
 
@@ -108,6 +110,7 @@ public class ReportGraphicsFragment extends Fragment {
         if (reportPeriod != null) {
             // Hide info textView
             textView_info.setVisibility(View.GONE);
+            imageView_nodata.setVisibility(View.GONE);
 
             // Get the default period.
             String begPeriodDate = reportPeriod.substring(0, 10);
@@ -152,6 +155,7 @@ public class ReportGraphicsFragment extends Fragment {
         } else {
             // Show info textView and hide recycler view
             textView_info.setVisibility(View.VISIBLE);
+            imageView_nodata.setVisibility(View.VISIBLE);
             scrollview_data.setVisibility(View.GONE);
         }
 

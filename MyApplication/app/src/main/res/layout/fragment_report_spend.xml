@@ -7,13 +7,24 @@
     android:gravity="center"
     tools:context="com.example.myapplication.activities.fragments.ReportSpendFragment">
 
+    <ImageView
+        android:id="@+id/imageView_reportSpendFragment_nodata"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignBottom="@+id/textView_reportSpendFragment_info"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_calendarandcross_100"
+        android:visibility="visible"
+        tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/textView_reportSpendFragment_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:text="@string/fragment_reportCategories_textview_dnterDate"
-        android:textColor="@color/colorGrayLight"
         android:visibility="visible" />
 
     <ProgressBar

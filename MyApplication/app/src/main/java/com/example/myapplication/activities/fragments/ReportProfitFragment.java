@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ public class ReportProfitFragment extends Fragment {
     private RecyclerView.Adapter adapter_profitReport;
     ProgressBar progressBar_profitProgress;
     private TextView textView_info;
+    private ImageView imageView_nodata;
 
     // Others
     private List<ListDataReport> list_profitReport;
@@ -59,6 +61,7 @@ public class ReportProfitFragment extends Fragment {
 
         // Set components
         textView_info = view.findViewById(R.id.textView_reportProfitFragment_info);
+        imageView_nodata = view.findViewById(R.id.imageView_reportProfitFragment_nodata);
         progressBar_profitProgress = view.findViewById(R.id.progressBar_reportProfitFragment);
         // Set recycler view component
         recyclerView_profitReport = view.findViewById(R.id.recyclerView_reportProfitFragment_profitList);
@@ -68,6 +71,7 @@ public class ReportProfitFragment extends Fragment {
         if (reportPeriod != null) {
             // Hide info textView
             textView_info.setVisibility(View.GONE);
+            imageView_nodata.setVisibility(View.GONE);
 
             // Get the default period.
             String begPeriodDate = reportPeriod.substring(0, 10);
@@ -79,6 +83,7 @@ public class ReportProfitFragment extends Fragment {
         } else {
             // Show info textView and hide recycler view
             textView_info.setVisibility(View.VISIBLE);
+            imageView_nodata.setVisibility(View.VISIBLE);
             recyclerView_profitReport.setVisibility(View.GONE);
         }
 
