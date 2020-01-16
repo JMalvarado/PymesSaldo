@@ -36,8 +36,8 @@
 
         <ImageView
             android:id="@+id/imageView_fragmentDebt_nodata"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignBottom="@+id/textView_fragmentDebt_nodata"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"

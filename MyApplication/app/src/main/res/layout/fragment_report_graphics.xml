@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/imageView_reportGraphicsFragment_nodata"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignBottom="@+id/textView_reportGraphicsFragment_info"
         android:layout_centerInParent="true"
         android:layout_marginBottom="20dp"
