@@ -90,13 +90,20 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginEnd="16dp"
+                            android:gravity="center"
                             android:text="@string/dataList_textView_ingr"
                             android:textColor="@color/colorBlack" />
 
                         <TextView
                             android:id="@+id/textView_dataList_ingr"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:autoSizeMaxTextSize="26sp"
+                            android:autoSizeMinTextSize="12sp"
+                            android:autoSizeStepGranularity="2sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
                             android:textColor="@color/colorBlueDark"
                             android:textSize="25sp"
                             android:textStyle="bold" />
@@ -113,14 +120,18 @@
                             android:id="@+id/tvListCateg"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_marginEnd="16dp"
+                            android:gravity="center"
                             android:text="@string/dataList_textView_categ"
                             android:textColor="@color/colorBlack" />
 
                         <TextView
                             android:id="@+id/textView_dataList_category"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center" />
 
                     </LinearLayout>
 

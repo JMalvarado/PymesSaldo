@@ -6,12 +6,12 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,9 +34,9 @@ public class BalancePeriodFragment extends Fragment {
     private TextView textView_profit;
     private TextView textView_spend;
     private TextView textView_date;
-    private LinearLayout layout_profit;
-    private LinearLayout layout_spend;
-    private LinearLayout layout_equal;
+    private CardView layout_profit;
+    private CardView layout_spend;
+    private CardView layout_equal;
 
     // Global variables
     private String idInstance, begDay, begMonth, begYear, finDay, finMonth, finYear, period;

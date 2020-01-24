@@ -1090,6 +1090,10 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
                     showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_nodata));
                     break;
                 }
+                if (editText_description.getText().toString().equals(getString(R.string.fragment_balance_class_remnantDescription))) {
+                    showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_reservedWord));
+                    break;
+                }
 
                 // Set 0 to blank spaces
                 if (radioGroup_addMov.getCheckedRadioButtonId() == R.id.radioButton_fragmentAddMov_Gasto) {

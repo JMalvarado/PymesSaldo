@@ -194,6 +194,10 @@ public class TransferFragment extends Fragment implements View.OnClickListener {
                     showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_nodata));
                     break;
                 }
+                if (editText_description.getText().toString().equals(getString(R.string.fragment_balance_class_remnantDescription))) {
+                    showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_reservedWord));
+                    break;
+                }
 
                 String descripcion = editText_description.getText().toString();
 

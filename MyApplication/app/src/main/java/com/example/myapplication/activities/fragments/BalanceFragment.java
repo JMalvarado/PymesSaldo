@@ -1,18 +1,17 @@
 package com.example.myapplication.activities.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,11 +38,11 @@ public class BalanceFragment extends Fragment {
     private TextView textView_profit;
     private TextView textView_spend;
     private TextView textView_date;
-    private LinearLayout layout_profit;
-    private LinearLayout layout_spend;
-    private LinearLayout layout_equal;
-    private LinearLayout layout_remanents;
-    private LinearLayout layout_equalPlusRemanents;
+    private CardView layout_profit;
+    private CardView layout_spend;
+    private CardView layout_equal;
+    private CardView layout_remanents;
+    private CardView layout_equalPlusRemanents;
 
     // Global variables
     private String idInstance;

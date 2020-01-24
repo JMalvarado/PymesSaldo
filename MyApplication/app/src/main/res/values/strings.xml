@@ -50,8 +50,8 @@
     <string name="activity_edit_entry_textView_profile">Estado financiero:</string>
     <string name="activity_add_profile_switch_agregarSaldoInicial">Saldo inicial</string>
     <string name="activity_add_profile_switch_periodo">Ciclo definido</string>
-    <string name="activity_add_profile_helpButton_initialprofit_descr">Descripcion de la funcion del boton saldo inicial</string>
-    <string name="activity_add_profile_helpButton_period_descr">Descripcion de la funcion del boton perido definido</string>
+    <string name="activity_add_profile_helpButton_initialprofit_descr">Descripción de la funcion del boton saldo inicial</string>
+    <string name="activity_add_profile_helpButton_period_descr">Descripción de la funcion del boton perido definido</string>
     <string name="activity_main_slidinguppanel_title">Info</string>
     <string name="activity_main_slidinguppanel_weblinkHeader">Visita nuestro sitio web:</string>
     <string name="activity_main_slidinguppanel_webLink">nuevaescueladigital.com</string>
@@ -116,7 +116,7 @@
     <string name="iteminfo_textView_ingreso">Ingreso:</string>
     <string name="addentry_textView_hintIngreso">Monto</string>
     <string name="addentry_textView_hintGasto">Gasto</string>
-    <string name="addentry_textView_hintDescr">Descripcion</string>
+    <string name="addentry_textView_hintDescr">Descripción</string>
     <string name="header_textView_spinnerTitle">Estado Financiero</string>
     <string name="addentry_button_textIngresar">Ingresar</string>
     <string name="addentry_button_textFecha">Fecha</string>
@@ -175,6 +175,7 @@
     <string name="snack_fileDownloaded_button">Abrir</string>
     <string name="alert_title">Alerta</string>
     <string name="alert_addEntryActivity_nodata">Por favor complete todos los espacios</string>
+    <string name="alert_addEntryActivity_reservedWord">Descripción incorrecta, palabra reservada</string>
     <string name="alert_title_addCategory">Categoría</string>
     <string name="alert_title_editDebt">Deuda</string>
     <string name="alert_mssg_addCategory">Nueva categoría</string>
