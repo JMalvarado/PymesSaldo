@@ -26,20 +26,20 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="10dp"
-        android:background="@color/colorWhite"
+        android:background="@color/transparent"
         android:gravity="center"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/imageButton_categories_add"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
             android:adjustViewBounds="true"
             android:background="@drawable/roundcornerbrownlight"
             android:contentDescription="@string/fragment_categories_imageButton_add_descr"
-            android:padding="2dp"
+            android:padding="7dp"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_addblack_64" />
+            android:src="@drawable/ic_categories_100" />
 
     </LinearLayout>
 
