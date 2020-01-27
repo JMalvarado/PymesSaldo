@@ -1,8 +1,8 @@
 package com.example.myapplication.activities.data;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
@@ -21,12 +23,14 @@ import com.example.myapplication.activities.activities.DataSearch;
 import com.example.myapplication.activities.activities.EditEntryActivity;
 import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.fragments.SearchFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Adapter for card view in search activity
@@ -95,7 +99,71 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         int imageID = context.getResources().getIdentifier(categoryIcName, "drawable", context.getPackageName());
         myViewHolder.imageView_ic.setImageResource(imageID);
 
-        myViewHolder.fab_dit.setOnClickListener(view -> {
+        myViewHolder.cardView.setOnClickListener(view -> {
+            PopupMenu popupMenu = new PopupMenu(context, view);
+            try {
+                Field[] fields = popupMenu.getClass().getDeclaredFields();
+                for (Field field : fields) {
+                    if ("mPopup".equals(field.getName())) {
+                        field.setAccessible(true);
+                        Object menuPopupHelper = field.get(popupMenu);
+                        Class<?> classPopupHelper = Class.forName(Objects.requireNonNull(menuPopupHelper).getClass().getName());
+                        Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                        setForceIcons.invoke(menuPopupHelper, true);
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.entryOption_edit:
+                        Intent editIntent = new Intent(context, EditEntryActivity.class);
+                        editIntent.putExtra("ID", data.getId());
+                        editIntent.putExtra("INGRESO", data.getIngreso());
+                        editIntent.putExtra("GASTO", data.getGasto());
+                        editIntent.putExtra("FECHA", data.getFecha());
+                        editIntent.putExtra("HORA", data.getHora());
+                        editIntent.putExtra("DESCR", data.getDescr());
+                        editIntent.putExtra("CATEG", data.getCategId());
+
+                        context.startActivity(editIntent);
+
+                        return true;
+
+                    case R.id.entryOption_delete:
+                        final CharSequence[] opciones;
+                        opciones = new CharSequence[]{context.getResources().getString(R.string.alert_optSi), context.getResources().getString(R.string.alert_optNo)};
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setCancelable(false);
+                        builder.setTitle(R.string.alert_title_deleteData);
+                        builder.setItems(opciones, (dialog, which) -> {
+                            switch (which) {
+                                case 0:
+                                    db.deleteEntryData(MainActivity.idInstance, data.getId());
+                                    new Task().execute();
+                                    break;
+
+                                case 1:
+                                    break;
+                            }
+                        });
+                        builder.show();
+
+                        return true;
+
+                    default:
+                        return false;
+                }
+            });
+            popupMenu.inflate(R.menu.entry_options);
+            popupMenu.show();
+        });
+
+        /*myViewHolder.fab_dit.setOnClickListener(view -> {
             Intent editIntent = new Intent(view.getContext(), EditEntryActivity.class);
             editIntent.putExtra("ID", data.getId());
             editIntent.putExtra("INGRESO", data.getIngreso());
@@ -127,7 +195,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 }
             });
             builder.show();
-        });
+        });*/
     }
 
     @Override
@@ -137,8 +205,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public FloatingActionButton fab_dit;
-        public FloatingActionButton fab_delete;
+        //        public FloatingActionButton fab_dit;
+//        public FloatingActionButton fab_delete;
         public ImageView imageView_item;
         public ImageView imageView_ic;
         public TextView tvDescr;
@@ -147,6 +215,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public TextView tvProfit;
         public TextView tvCategory;
         public LinearLayout linearLayout_data;
+        public CardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -157,10 +226,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             tvProfit = itemView.findViewById(R.id.textView_dataList_ingr);
             linearLayout_data = itemView.findViewById(R.id.linearLayout_data);
             tvCategory = itemView.findViewById(R.id.textView_dataList_category);
-            fab_dit = itemView.findViewById(R.id.fab_dataList_edit);
-            fab_delete = itemView.findViewById(R.id.fab_dataList_delete);
+//            fab_dit = itemView.findViewById(R.id.fab_dataList_edit);
+//            fab_delete = itemView.findViewById(R.id.fab_dataList_delete);
             imageView_item = itemView.findViewById(R.id.imageView_dataList_item);
             imageView_ic = itemView.findViewById(R.id.imageView_dataList_ic);
+            cardView = itemView.findViewById(R.id.cardView_dataList);
         }
     }
 
