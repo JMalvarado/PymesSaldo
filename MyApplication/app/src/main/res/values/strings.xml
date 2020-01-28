@@ -253,6 +253,8 @@
     <!-- Entry and category menu -->
     <string name="entry_options_edit">Editar</string>
     <string name="entry_options_delete">Eliminar</string>
+    <string name="debt_options_add">Agregar monto</string>
+    <string name="debt_options_subtract">Restar monto</string>
 
     <string name="activityHelp_title1">Conceptos</string>
     <string name="activityHelp_subtitle1">Estado financiero:</string>

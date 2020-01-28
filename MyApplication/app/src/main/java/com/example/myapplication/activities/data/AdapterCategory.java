@@ -9,21 +9,24 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.fragments.CategoriesFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Adapter for card view in categories fragment
@@ -63,9 +66,9 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
         int imageID = context.getResources().getIdentifier(ic, "drawable", context.getPackageName());
         myViewHolder.imageView_ic.setImageResource(imageID);
 
-        myViewHolder.fab_edit.setOnClickListener(view -> openDialog(data.getId(), data.getName(), data.getIc()));
+        //myViewHolder.fab_edit.setOnClickListener(view -> openDialog(data.getId(), data.getName(), data.getIc()));
 
-        myViewHolder.fab_delete.setOnClickListener(view -> {
+        /*myViewHolder.fab_delete.setOnClickListener(view -> {
             final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
             builder.setCancelable(false);
             builder.setTitle(R.string.alert_title_deleteData);
@@ -82,19 +85,67 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
                     (dialogInterface, i1) -> dialogInterface.cancel());
 
             builder.show();
-        });
+        });*/
 
-        // Check if is a default category. If true: disable delete and edit buttons
+        // Check if is a default category. If true: disable delete and edit options
         String othersCat = context.getResources().getString(R.string.mainActivity_addCategory_others);
         String savingCat = context.getResources().getString(R.string.mainActivity_addCategory_saving);
         String transCat = context.getResources().getString(R.string.mainActivity_addCategory_transfer);
-        if ((data.getName().equals(othersCat)) || (data.getName().equals(savingCat)) || (data.getName().equals(transCat))) {
-            myViewHolder.fab_delete.setVisibility(View.GONE);
-            myViewHolder.fab_edit.setVisibility(View.GONE);
-        } else {
-            myViewHolder.fab_delete.setVisibility(View.VISIBLE);
-            myViewHolder.fab_edit.setVisibility(View.VISIBLE);
+        if (!(data.getName().equals(othersCat)) && !(data.getName().equals(savingCat)) && !(data.getName().equals(transCat))) {
+            myViewHolder.cardView.setOnClickListener(view -> {
+                PopupMenu popupMenu = new PopupMenu(context, view);
+                try {
+                    Field[] fields = popupMenu.getClass().getDeclaredFields();
+                    for (Field field : fields) {
+                        if ("mPopup".equals(field.getName())) {
+                            field.setAccessible(true);
+                            Object menuPopupHelper = field.get(popupMenu);
+                            Class<?> classPopupHelper = Class.forName(Objects.requireNonNull(menuPopupHelper).getClass().getName());
+                            Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                            setForceIcons.invoke(menuPopupHelper, true);
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case R.id.entryOption_edit:
+                            openDialog(data.getId(), data.getName(), data.getIc());
+
+                            return true;
+
+                        case R.id.entryOption_delete:
+                            final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                            builder.setCancelable(false);
+                            builder.setTitle(R.string.alert_title_deleteData);
+                            builder.setMessage(R.string.alert_msg_deleteData);
+                            builder.setPositiveButton(context.getResources().getString(R.string.alert_optSi),
+                                    (dialogInterface, i12) -> {
+                                        db.deleteCategory(data.getId(), MainActivity.idInstance);
+
+                                        activity.getSupportFragmentManager().beginTransaction().
+                                                replace(R.id.content_main_layout, new CategoriesFragment()).commit();
+                                    });
+
+                            builder.setNegativeButton(context.getResources().getString(R.string.alert_optNo),
+                                    (dialogInterface, i1) -> dialogInterface.cancel());
+
+                            builder.show();
+
+                            return true;
+
+                        default:
+                            return false;
+                    }
+                });
+                popupMenu.inflate(R.menu.entry_options);
+                popupMenu.show();
+            });
+        } else {
+            myViewHolder.cardView.setClickable(false);
         }
     }
 
@@ -950,18 +1001,20 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        FloatingActionButton fab_edit;
-        FloatingActionButton fab_delete;
+        //        FloatingActionButton fab_edit;
+//        FloatingActionButton fab_delete;
+        CardView cardView;
         ImageView imageView_ic;
         TextView textView_name;
-        LinearLayout linearLayout_data;
+        //LinearLayout linearLayout_data;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            linearLayout_data = itemView.findViewById(R.id.linearLayout_dataCategories);
-            fab_edit = itemView.findViewById(R.id.fab_categoryList_edit);
-            fab_delete = itemView.findViewById(R.id.fab_categoryList_delete);
+            cardView = itemView.findViewById(R.id.cardView_categoryList);
+            //linearLayout_data = itemView.findViewById(R.id.linearLayout_dataCategories);
+//            fab_edit = itemView.findViewById(R.id.fab_categoryList_edit);
+//            fab_delete = itemView.findViewById(R.id.fab_categoryList_delete);
             imageView_ic = itemView.findViewById(R.id.imageView_categoryList_ic);
             textView_name = itemView.findViewById(R.id.textView_categoryList_name);
         }

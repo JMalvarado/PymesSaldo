@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/debtOption_edit"
+        android:icon="@drawable/ic_editblue_100"
+        android:title="@string/entry_options_edit" />
+
+    <item
+        android:id="@+id/debtOption_delete"
+        android:icon="@drawable/ic_deletered_100"
+        android:title="@string/entry_options_delete" />
+
+    <item
+        android:id="@+id/debtOption_add"
+        android:icon="@drawable/ic_profitgreen_48"
+        android:title="@string/debt_options_add" />
+
+    <item
+        android:id="@+id/debtOption_subtract"
+        android:icon="@drawable/ic_spendred_48"
+        android:title="@string/debt_options_subtract" />
+
+
 </menu>

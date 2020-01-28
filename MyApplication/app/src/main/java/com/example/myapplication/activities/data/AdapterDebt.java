@@ -7,28 +7,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.activities.MainActivity;
-import com.example.myapplication.activities.fragments.CategoriesFragment;
 import com.example.myapplication.activities.fragments.DebtsFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.w3c.dom.Text;
-
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class AdapterDebt extends RecyclerView.Adapter<AdapterDebt.MyViewHolder> {
 
@@ -84,7 +85,73 @@ public class AdapterDebt extends RecyclerView.Adapter<AdapterDebt.MyViewHolder> 
         amount = df.format(Double.parseDouble(data.getAmount()));
         holder.textView_amount.setText(amount);
 
-        // Delete button action
+        holder.cardView.setOnClickListener(view -> {
+            PopupMenu popupMenu = new PopupMenu(context, view);
+            try {
+                Field[] fields = popupMenu.getClass().getDeclaredFields();
+                for (Field field : fields) {
+                    if ("mPopup".equals(field.getName())) {
+                        field.setAccessible(true);
+                        Object menuPopupHelper = field.get(popupMenu);
+                        Class<?> classPopupHelper = Class.forName(Objects.requireNonNull(menuPopupHelper).getClass().getName());
+                        Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                        setForceIcons.invoke(menuPopupHelper, true);
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.debtOption_edit:
+                        openDialog(data.getId(), data.getDescripcion(), data.getAmount(), dateToShow);
+
+                        return true;
+
+                    case R.id.debtOption_delete:
+                        // Delete button action
+                        final CharSequence[] opciones;
+                        opciones = new CharSequence[]{context.getResources().getString(R.string.alert_optSi), context.getResources().getString(R.string.alert_optNo)};
+                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                        builder.setCancelable(false);
+                        builder.setTitle(R.string.alert_title_deleteData);
+                        builder.setItems(opciones, (dialog, which) -> {
+                            switch (which) {
+                                case 0:
+                                    db.deleteDept(data.getId(), MainActivity.idInstance);
+                                    activity.getSupportFragmentManager().beginTransaction().
+                                            replace(R.id.content_main_layout, new DebtsFragment()).commit();
+                                    break;
+
+                                case 1:
+                                    break;
+                            }
+                        });
+                        builder.show();
+
+                        return true;
+
+                    case R.id.debtOption_add:
+                        openDialogUpdate(data.getId(), data.getAmount(), data.getDescripcion(), true);
+
+                        return true;
+
+                    case R.id.debtOption_subtract:
+                        openDialogUpdate(data.getId(), data.getAmount(), data.getDescripcion(), false);
+
+                        return true;
+
+                    default:
+                        return false;
+                }
+            });
+            popupMenu.inflate(R.menu.debt_options);
+            popupMenu.show();
+        });
+
+        /*// Delete button action
         final CharSequence[] opciones;
         opciones = new CharSequence[]{context.getResources().getString(R.string.alert_optSi), context.getResources().getString(R.string.alert_optNo)};
         holder.fab_delete.setOnClickListener(view -> {
@@ -104,20 +171,20 @@ public class AdapterDebt extends RecyclerView.Adapter<AdapterDebt.MyViewHolder> 
                 }
             });
             builder.show();
-        });
+        });*/
 
         // Edit button action
-        holder.fab_edit.setOnClickListener(view -> openDialog(data.getId(), data.getDescripcion(), data.getAmount(), dateToShow));
+        //holder.fab_edit.setOnClickListener(view -> openDialog(data.getId(), data.getDescripcion(), data.getAmount(), dateToShow));
 
         // Add to amount
-        holder.fab_add.setOnClickListener(view -> {
+        /*holder.fab_add.setOnClickListener(view -> {
             openDialogUpdate(data.getId(), data.getAmount(), data.getDescripcion(), true);
-        });
+        });*/
 
         // Subtract to amount
-        holder.fab_subtract.setOnClickListener(view -> {
+        /*holder.fab_subtract.setOnClickListener(view -> {
             openDialogUpdate(data.getId(), data.getAmount(), data.getDescripcion(), false);
-        });
+        });*/
     }
 
     @Override
@@ -211,7 +278,7 @@ public class AdapterDebt extends RecyclerView.Adapter<AdapterDebt.MyViewHolder> 
     private void openDialog(final String id, final String description, final String amount, final String date) {
         // Inflate layout
         LayoutInflater inflater = LayoutInflater.from(context);
-        View subView = inflater.inflate(R.layout.dialog_edit_debt, null);
+        @SuppressLint("InflateParams") View subView = inflater.inflate(R.layout.dialog_edit_debt, null);
 
         // Initialize components
         final EditText editText_description = subView.findViewById(R.id.editText_dialogEditDebt_description);
@@ -336,23 +403,25 @@ public class AdapterDebt extends RecyclerView.Adapter<AdapterDebt.MyViewHolder> 
         builder.show();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
-        FloatingActionButton fab_add;
-        FloatingActionButton fab_subtract;
-        FloatingActionButton fab_edit;
-        FloatingActionButton fab_delete;
+        //        FloatingActionButton fab_add;
+//        FloatingActionButton fab_subtract;
+//        FloatingActionButton fab_edit;
+//        FloatingActionButton fab_delete;
+        CardView cardView;
         TextView textView_description;
         TextView textView_amount;
         TextView textView_date;
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            fab_add = itemView.findViewById(R.id.fab_debtList_add);
-            fab_subtract = itemView.findViewById(R.id.fab_debtList_subtract);
-            fab_edit = itemView.findViewById(R.id.fab_debtList_edit);
-            fab_delete = itemView.findViewById(R.id.fab_debtList_delete);
+//            fab_add = itemView.findViewById(R.id.fab_debtList_add);
+//            fab_subtract = itemView.findViewById(R.id.fab_debtList_subtract);
+//            fab_edit = itemView.findViewById(R.id.fab_debtList_edit);
+//            fab_delete = itemView.findViewById(R.id.fab_debtList_delete);
+            cardView = itemView.findViewById(R.id.cardView_debtList);
             textView_description = itemView.findViewById(R.id.textView_debtList_description);
             textView_amount = itemView.findViewById(R.id.textView_debtList_amount);
             textView_date = itemView.findViewById(R.id.textView_debtList_date);
