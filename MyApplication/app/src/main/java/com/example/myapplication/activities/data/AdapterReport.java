@@ -12,12 +12,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.activities.MainActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -88,8 +88,7 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.MyViewHold
         int progressInt = (int) Math.round(data.getPercentage());
         holder.progressBar_reportPercentage.setProgress(progressInt);
 
-        // FAB Entries click function
-        holder.fab_entries.setOnClickListener(v -> {
+        holder.cardView.setOnClickListener(v -> {
             final Dialog dialogEntriesReport = new Dialog(context);
 
             // Set custom layout to dialog help
@@ -203,6 +202,122 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.MyViewHold
 
             dialogEntriesReport.show();
         });
+
+        // FAB Entries click function
+        /*holder.fab_entries.setOnClickListener(v -> {
+            final Dialog dialogEntriesReport = new Dialog(context);
+
+            // Set custom layout to dialog help
+            dialogEntriesReport.setContentView(R.layout.dialog_entries_report);
+            dialogEntriesReport.setTitle(v.getContext().getString(R.string.dialogInfo_title_help));
+
+            // Dialog help
+            TextView textView_type = dialogEntriesReport.findViewById(R.id.textView_dialogEntriesReport_type);
+            TextView textView_category = dialogEntriesReport.findViewById(R.id.textView_dialogEntriesReport_category);
+            TextView textView_period = dialogEntriesReport.findViewById(R.id.textView_dialogEntriesReport_period);
+            ListView listView_entries = dialogEntriesReport.findViewById(R.id.listview_dialogEntriesReport_entries);
+
+            // Set text
+            // Type
+            if (type.equals("I")) {
+                textView_type.setText(v.getContext().getString(R.string.reportGraphicsFragment_profitTitle));
+            } else {
+                textView_type.setText(v.getContext().getString(R.string.reportGraphicsFragment_spendTitle));
+            }
+            // Category
+            textView_category.setText(data.getName());
+            // Period
+            // Get the period components
+            String begPeriodDay = begDate.substring(8, 10);
+            String begPeriodMonth = begDate.substring(5, 7);
+            String begPeriodYear = begDate.substring(0, 4);
+            String finPeriodDay = finDate.substring(8, 10);
+            String finPeriodMonth = finDate.substring(5, 7);
+            String finPeriodYear = finDate.substring(0, 4);
+
+            String separator = "/";
+
+            // Period title
+            String periodTitle = v.getContext().getString(R.string.reportGraphicsFragment_periodoTitle_from) + " " +
+                    begPeriodDay +
+                    separator +
+                    begPeriodMonth +
+                    separator +
+                    begPeriodYear + " " +
+                    v.getContext().getString(R.string.reportGraphicsFragment_periodoTitle_to) + " " +
+                    finPeriodDay +
+                    separator +
+                    finPeriodMonth +
+                    separator +
+                    finPeriodYear;
+            textView_period.setText(periodTitle);
+
+            // Entries listview
+            // Get Entries from database with period and instance as filter
+            int categId = Integer.parseInt(data.getId());
+
+            ArrayList<String> entriesDescription = new ArrayList<>();
+            ArrayList<String> entriesDate = new ArrayList<>();
+            ArrayList<String> entriesTime = new ArrayList<>();
+            ArrayList<Double> entriesAmount = new ArrayList<>();
+            if (type.equals("I")) {
+                Cursor profits = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finDate, categId);
+
+                while (profits.moveToNext()) {
+                    String description = profits.getString(7);
+
+                    String date = profits.getString(3);
+                    // Show date in format DD-MM-YY
+                    String year = date.substring(0, 4);
+                    String month = date.substring(5, 7);
+                    String day = date.substring(8, 10);
+                    String sepearator = "-";
+                    date = day + sepearator + month + sepearator + year;
+
+                    String time = profits.getString(4).substring(0, 5);
+
+                    Double amountEntry = profits.getDouble(5);
+
+                    entriesDescription.add(description);
+                    entriesDate.add(date);
+                    entriesTime.add(time);
+                    entriesAmount.add(amountEntry);
+                }
+                profits.moveToPosition(-1);
+            } else {
+                Cursor spends = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finDate, categId);
+
+                while (spends.moveToNext()) {
+                    String description = spends.getString(7);
+
+                    String date = spends.getString(3);
+                    // Show date in format DD-MM-YY
+                    String year = date.substring(0, 4);
+                    String month = date.substring(5, 7);
+                    String day = date.substring(8, 10);
+                    String sepearator = "-";
+                    date = day + sepearator + month + sepearator + year;
+
+                    String time = spends.getString(4).substring(0, 5);
+                    // Show time in format HH:MM
+
+                    Double amountEntry = spends.getDouble(6);
+
+                    entriesDescription.add(description);
+                    entriesDate.add(date);
+                    entriesTime.add(time);
+                    entriesAmount.add(amountEntry);
+                }
+                spends.moveToPosition(-1);
+            }
+
+
+            // Set List View Adapter
+            ListEntriesAdapter listEntriesAdapter = new ListEntriesAdapter(activity, entriesDescription, entriesDate, entriesTime, entriesAmount);
+            listView_entries.setAdapter(listEntriesAdapter);
+
+            dialogEntriesReport.show();
+        });*/
     }
 
     @Override
@@ -212,17 +327,19 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.MyViewHold
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
+        CardView cardView;
         TextView textView_reportCategName;
         TextView textView_reportAmount;
         TextView textView_reportPercentage;
-        FloatingActionButton fab_entries;
+        //FloatingActionButton fab_entries;
         ImageView imageView_reportIc;
         ProgressBar progressBar_reportPercentage;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            fab_entries = itemView.findViewById(R.id.fab_reportList_entries);
+            //fab_entries = itemView.findViewById(R.id.fab_reportList_entries);
+            cardView = itemView.findViewById(R.id.cardView_reportList);
             textView_reportCategName = itemView.findViewById(R.id.textView_reportList_categName);
             textView_reportAmount = itemView.findViewById(R.id.textView_reportList_amount);
             textView_reportPercentage = itemView.findViewById(R.id.textView_reportList_percentage);
