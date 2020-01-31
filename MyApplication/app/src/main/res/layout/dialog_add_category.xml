@@ -14,7 +14,7 @@
         android:autofillHints=""
         android:hint="@string/dialogAddCategory_textView_name_hint"
         android:inputType="text"
-        android:maxLength="12"
+        android:maxLength="20"
         tools:ignore="LabelFor" />
 
     <ImageButton
@@ -24,7 +24,9 @@
         android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
         android:background="@drawable/roundcornerbrownlight"
+        android:clickable="true"
         android:contentDescription="@string/datalist_imageview_decr_imagecategory"
+        android:foreground="?android:attr/selectableItemBackground"
         android:padding="7dp"
         android:scaleType="centerInside"
         android:src="@drawable/baseline_add_photo_alternate_black_48dp" />
