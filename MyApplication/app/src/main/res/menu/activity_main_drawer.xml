@@ -18,6 +18,11 @@
             android:title="@string/nav_month_balance" />
 
         <item
+            android:id="@+id/nav_custom_balance"
+            android:icon="@drawable/ic_graph_custom_64"
+            android:title="@string/nav_custom_balance" />
+
+        <item
             android:id="@+id/nav_period_balance"
             android:icon="@drawable/ic_graph_period_64"
             android:title="@string/nav_period_balance" />

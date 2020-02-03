@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
+import com.example.myapplication.activities.fragments.BalanceCustomFragment;
 import com.example.myapplication.activities.fragments.BalanceFragment;
 import com.example.myapplication.activities.fragments.BalancePeriodFragment;
 import com.example.myapplication.activities.fragments.CategoriesFragment;
@@ -357,6 +358,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_period_balance) {
             fragment = new BalancePeriodFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new BalancePeriodFragment()).commit();
+        } else if (id == R.id.nav_custom_balance) {
+            fragment = new BalanceCustomFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new BalanceCustomFragment()).commit();
         } else if (id == R.id.nav_categories) {
             fragment = new CategoriesFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_layout, new CategoriesFragment()).commit();

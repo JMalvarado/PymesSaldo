@@ -6,6 +6,7 @@
     <string name="addProfile_name">Agregar estado financiero</string>
     <string name="balance_name">Balance del mes</string>
     <string name="balance_period_name">Balance del periodo</string>
+    <string name="balance_custom_name">Balance personalizado</string>
     <string name="save_name">Ahorro</string>
     <string name="report_name">Reporte por categorías</string>
     <string name="search_name">Explorar</string>
@@ -103,6 +104,7 @@
     <string name="fragment_reportCategories_textview_dnterDate">Ingrese el periodo arriba</string>
     <string name="fragment_transfer_textview_from">Desde:</string>
     <string name="fragment_transfer_textview_to">Hacia:</string>
+    <string name="fragment_balanceCustom_textview_instances">Estados financieros:</string>
     <string name="reportGraphicsFragment_spendTitle">Gastos</string>
     <string name="reportGraphicsFragment_profitTitle">Ingresos</string>
     <string name="reportGraphicsFragment_profitDescription">Ingresos por categoría (%)</string>
@@ -229,6 +231,10 @@
     <string name="dialog_about_youtubeTitle">Youtube</string>
     <string name="dialog_about_imageDecr">app icon</string>
     <string name="dialog_contact_WAdescription">Contacta a tu asesor financiero a través del siguiente ícono:</string>
+    <string name="dialog_instances_title">Estados financieros</string>
+    <string name="dialog_instances_positiveButton">OK</string>
+    <string name="dialog_instances_negativeButton">Cancelar</string>
+    <string name="dialog_instances_neutralButton">Borrar todo</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -240,8 +246,9 @@
     <!-- Navigation Drawer Menu -->
     <string name="nav_add_entry">Agregar entrada</string>
     <string name="nav_explore">Explorar movimientos</string>
-    <string name="nav_month_balance">Balance general</string>
+    <string name="nav_month_balance">Balance mensual</string>
     <string name="nav_period_balance">Balance del ciclo definido</string>
+    <string name="nav_custom_balance">Balance personalizado</string>
     <string name="nav_categories">Categorías</string>
     <string name="nav_money_save">Ahorro</string>
     <string name="nav_report_categ">Reporte por categorías</string>
@@ -290,5 +297,8 @@
     <string name="activityHelp_content11">Visualiza el monto total y porcentaje en cada categoría, además de los movimientos de cada una. Esto en un periodo definido en la parte superior. Se muestra por separado el resultado para ingresos, gastos y las gráficas circulares que representan los porcentajes de gasto e ingreso en cada categoría, también permite descargar el archivo XLS con los datos</string>
     <string name="activityHelp_subtitle12">Deudas:</string>
     <string name="activityHelp_content12">Muestra la lista de deudas creadas y pendientes para el estado financiero, cada deuda se puede eliminar, editar (Descripción, fecha y monto) o agregar o sustraer de la misma. Si se Sustrae un monto igual o superior al actual, el sistema le advierte al usuario y le permite eliminar la deuda.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

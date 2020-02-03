@@ -960,6 +960,24 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     /**
+     * Get all the data from table Saldos between two given dates and given instances
+     *
+     * @param beginDate
+     * @param finalDate
+     * @return Cursor with all the information in all the columns
+     */
+    public Cursor getEntryByPeriodAndInstance(String beginDate, String finalDate, String whereClause) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor resultado;
+        String query = "SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                "AND '" + finalDate + "') AND (%s)";
+
+        resultado = db.rawQuery(String.format(query, whereClause), null);
+
+        return resultado;
+    }
+
+    /**
      * Get all the profit data from table Saldos between two given dates
      *
      * @param beginDate
