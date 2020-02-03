@@ -105,6 +105,7 @@
     <string name="fragment_transfer_textview_from">Desde:</string>
     <string name="fragment_transfer_textview_to">Hacia:</string>
     <string name="fragment_balanceCustom_textview_instances">Estados financieros:</string>
+    <string name="fragment_balanceCustom_textview_period">Periodo:</string>
     <string name="reportGraphicsFragment_spendTitle">Gastos</string>
     <string name="reportGraphicsFragment_profitTitle">Ingresos</string>
     <string name="reportGraphicsFragment_profitDescription">Ingresos por categoría (%)</string>

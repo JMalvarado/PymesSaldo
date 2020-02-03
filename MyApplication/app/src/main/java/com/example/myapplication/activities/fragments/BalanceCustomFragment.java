@@ -105,6 +105,9 @@ public class BalanceCustomFragment extends Fragment implements View.OnClickListe
         // Show FAB add entry from screen
         MainActivity.fab_addEntry.show();
 
+        SharedPreferences prefsBalanceInstances = getActivity().getSharedPreferences("profilebalanceinstances", Context.MODE_PRIVATE);
+        String balanceInstances = prefsBalanceInstances.getString(MainActivity.idInstance, null);
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         // Instances dialog box
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,12 +122,26 @@ public class BalanceCustomFragment extends Fragment implements View.OnClickListe
             String instanceId = instanceData.getString(0);
             if (!(instanceId.equals(MainActivity.idInstance))) {
                 listItems[index] = instanceName;
+                index++;
             }
-            index++;
         }
 
         // Initialize check items list
         checkedItems = new boolean[listItems.length];
+
+        // Set default by user values
+        if (balanceInstances != null) {
+            for (int i = 0; i < listItems.length; i++) {
+                String id = db.getInstanceId(listItems[i]);
+                String[] idsByUser = balanceInstances.split(",");
+                for (String idPref : idsByUser) {
+                    if (idPref.equals(id)) {
+                        checkedItems[i] = true;
+                        break;
+                    }
+                }
+            }
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -136,8 +153,6 @@ public class BalanceCustomFragment extends Fragment implements View.OnClickListe
         // If there is default list of instance previously selected, set that list
         // Else, create shared preferences for instance ids with current id
         // Get the shared preferences list of instance
-        SharedPreferences prefsBalanceInstances = getActivity().getSharedPreferences("profilebalanceinstances", Context.MODE_PRIVATE);
-        String balanceInstances = prefsBalanceInstances.getString(MainActivity.idInstance, null);
         if (balanceInstances != null) {
             String[] instanceList = balanceInstances.split(",");
 
@@ -148,7 +163,7 @@ public class BalanceCustomFragment extends Fragment implements View.OnClickListe
                 if (i == instanceList.length - 1) {
                     tvString = tvString.concat(instanceName);
                 } else {
-                    tvString = tvString.concat(instanceName + ",");
+                    tvString = tvString.concat(instanceName + ", ");
                 }
             }
 
@@ -204,17 +219,20 @@ public class BalanceCustomFragment extends Fragment implements View.OnClickListe
                     if (isChecked) {
                         if (!userItems.contains(position)) {
                             userItems.add(position);
-                        } else if (userItems.contains(position)) {
-                            userItems.remove(position);
                         }
+                    } else if (userItems.contains(position)) {
+                        userItems.remove((Integer) position);
                     }
                 });
 
                 builder.setCancelable(false);
                 builder.setPositiveButton(getString(R.string.dialog_instances_positiveButton), (dialogInterface, which) -> {
-                    String list = "";
+                    String list = db.getInstanceName(MainActivity.idInstance);
                     String ids = MainActivity.idInstance + ",";
                     for (int i = 0; i < userItems.size(); i++) {
+                        if (i == 0) {
+                            list = list.concat(", ");
+                        }
                         list = list.concat(listItems[userItems.get(i)]);
                         if (i != userItems.size() - 1) {
                             list = list.concat(", ");
@@ -235,6 +253,9 @@ public class BalanceCustomFragment extends Fragment implements View.OnClickListe
                 builder.setNegativeButton(getString(R.string.dialog_instances_negativeButton), (dialogInterface, which) -> {
                     dialogInterface.dismiss();
                 });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
                 break;
 
@@ -479,13 +500,15 @@ public class BalanceCustomFragment extends Fragment implements View.OnClickListe
             String[] instanceIdlist = strings[2].split(",");
             String whereClause = getWhereClause(instanceIdlist);
 
-            // Get Entries from database with period and instance as filter
+            // Get Entries from database with period and instance list as filter
             Cursor entries = db.getEntryByPeriodAndInstance(strings[0], strings[1], whereClause);
 
             // Get total profit
             double totalProfit = 0;
             while (entries.moveToNext()) {
-                totalProfit += entries.getDouble(5);
+                if (!(entries.getString(7).equals(getString(R.string.fragment_balance_class_remnantDescription)))) {
+                    totalProfit += entries.getDouble(5);
+                }
             }
             entries.moveToPosition(-1);
 
