@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
+        android:orientation="horizontal"
         android:paddingTop="3dp"
-        android:paddingBottom="3dp"
-        android:orientation="horizontal">
+        android:paddingBottom="3dp">
 
         <TextView
             android:id="@+id/textView_editProfile_instanceName"
@@ -25,27 +25,33 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/editText_editProfile_name"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="60dp"
-        android:autofillHints=""
-        android:ellipsize="start"
-        android:gravity="center_horizontal"
-        android:hint="@string/activity_add_profile_hint_nombre"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        tools:ignore="LabelFor" />
+        android:layout_marginEnd="60dp">
+
+        <EditText
+            android:id="@+id/editText_editProfile_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ellipsize="start"
+            android:gravity="center_horizontal"
+            android:hint="@string/activity_add_profile_hint_nombre"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            tools:ignore="LabelFor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Switch
         android:id="@+id/switch_editProfile_addPeriod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:onClick="onClickEditProfile"
         android:text="@string/activity_add_profile_switch_periodo"
         android:textStyle="bold" />
@@ -56,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
         android:ellipsize="start"
         android:enabled="false"
         android:gravity="center_horizontal"
@@ -64,9 +70,69 @@
         android:inputType="number"
         tools:ignore="LabelFor" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_editProfile_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/colorWhite"
+        android:onClick="onClickEditProfile"
+        android:src="@drawable/ic_deletered_100"
+        app:backgroundTint="@color/colorWhite"
+        app:borderWidth="0dp"
+        app:elevation="0dp"
+        app:fabSize="mini"
+        app:rippleColor="@color/colorRed" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_activityEditProfile_addData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="45dp"
+            android:background="@drawable/roundcornerbrownlight"
+            android:backgroundTint="@color/colorAccent"
+            android:onClick="onClickEditProfile"
+            android:paddingStart="25dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="5dp"
+            android:text="@string/button_add"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/button_activityEditProfile_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundcornerbrownlight"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:onClick="onClickEditProfile"
+            android:paddingStart="25dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="5dp"
+            android:text="@string/button_cancel"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorRedDark"
+            android:textSize="15sp"
+            tools:ignore="ButtonStyle" />
+
+    </LinearLayout>
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -96,21 +162,6 @@
             app:fabSize="mini"
             app:rippleColor="@color/colorRed" />
 
-    </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_editProfile_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/colorWhite"
-        android:onClick="onClickEditProfile"
-        android:src="@drawable/ic_deletered_100"
-        app:backgroundTint="@color/colorWhite"
-        app:borderWidth="0dp"
-        app:elevation="0dp"
-        app:fabSize="mini"
-        app:rippleColor="@color/colorRed" />
+    </LinearLayout>-->
 
 </LinearLayout>

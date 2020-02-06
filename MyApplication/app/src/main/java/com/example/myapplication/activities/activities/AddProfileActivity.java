@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
 import com.example.myapplication.activities.data.InputFilterMinMax;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,8 +30,6 @@ public class AddProfileActivity extends AppCompatActivity {
     private EditText editText_period;
     private Switch switch_addInitialProfit;
     private Switch switch_addPeriod;
-    private ImageButton imageButton_help_initialProfit;
-    private ImageButton imageButton_help_period;
 
     // Database instance
     DatabaseManager db;
@@ -52,8 +48,6 @@ public class AddProfileActivity extends AppCompatActivity {
         editText_period = findViewById(R.id.edittext_addprofile_period);
         switch_addInitialProfit = findViewById(R.id.switch_addProfile_addInitialProfit);
         switch_addPeriod = findViewById(R.id.switch_addProfile_addPeriod);
-        imageButton_help_initialProfit = findViewById(R.id.imageButton_add_profile_help_saldoinicial);
-        imageButton_help_period = findViewById(R.id.imageButton_add_profile_help_periodo);
 
         // Initialize db manager instance
         db = new DatabaseManager(this);
@@ -62,7 +56,7 @@ public class AddProfileActivity extends AppCompatActivity {
         isNewUser = getIntent().getBooleanExtra("IS_NEW_USER", false);
 
         // Set filter for period edit text
-        editText_period.setFilters(new InputFilter[]{new InputFilterMinMax(1,31)});
+        editText_period.setFilters(new InputFilter[]{new InputFilterMinMax(1, 31)});
     }
 
     @Override
@@ -141,15 +135,14 @@ public class AddProfileActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.Ingreso_addProfileActivity:
+            case R.id.button_activityAddProfile_addData:
                 if (editText_name.getText().toString().equals("")) {
                     Toast.makeText(this, R.string.toast_addprofileactivity_noname, Toast.LENGTH_LONG).show();
                 } else if ((switch_addInitialProfit.isChecked()) && (editText_initialProfit.getText().toString().equals(""))) {
                     Toast.makeText(this, R.string.toast_addprofileactivity_noinitialprofit, Toast.LENGTH_LONG).show();
-                } else if ( (switch_addPeriod.isChecked()) && (editText_period.getText().toString().equals("")) ) {
+                } else if ((switch_addPeriod.isChecked()) && (editText_period.getText().toString().equals(""))) {
                     Toast.makeText(this, R.string.toast_addprofileactivity_noperiod, Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     Cursor instances = db.getInstancesAllData();
                     if (instances.getCount() > 0) {
                         String name = editText_name.getText().toString();
@@ -214,7 +207,7 @@ public class AddProfileActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.cancel_addProfileActivity:
+            case R.id.button_activityAddProfile_cancel:
                 onBackPressed();
 
                 break;

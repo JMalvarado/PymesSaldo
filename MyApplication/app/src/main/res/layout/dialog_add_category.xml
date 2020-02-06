@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,15 +8,23 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
 
-    <EditText
-        android:id="@+id/dialogLayoutAddCategory_editText_categoryName"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:hint="@string/dialogAddCategory_textView_name_hint"
-        android:inputType="text"
-        android:maxLength="20"
-        tools:ignore="LabelFor" />
+        app:counterEnabled="true"
+        app:counterMaxLength="20">
+
+        <EditText
+            android:id="@+id/dialogLayoutAddCategory_editText_categoryName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/dialogAddCategory_textView_name_hint"
+            android:inputType="text"
+            android:maxLength="20"
+            tools:ignore="LabelFor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
         android:id="@+id/imageButton_addCategory_addIcon"

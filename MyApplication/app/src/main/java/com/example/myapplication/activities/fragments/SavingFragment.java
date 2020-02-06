@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -37,8 +38,8 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
     private RadioGroup radioGroup_addSavingMov;
     private RadioButton radioButton_payment;
     private RadioButton radioButton_withdrawal;
-    private FloatingActionButton button_enter;
-    private FloatingActionButton button_cancel;
+    private Button button_enter;
+    private Button button_cancel;
     private FloatingActionButton fab_addDateSaving;
     private FloatingActionButton fab_addTimeSaving;
     private TextView textView_date;
@@ -79,10 +80,10 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
         fab_addTimeSaving = view.findViewById(R.id.fab_clock_addSavingFragment);
         fab_addTimeSaving.setOnClickListener(this);
 
-        button_enter = view.findViewById(R.id.Ingreso_saving);
+        button_enter = view.findViewById(R.id.button_fragmentAddSave_addData);
         button_enter.setOnClickListener(this);
 
-        button_cancel = view.findViewById(R.id.cancel_saving);
+        button_cancel = view.findViewById(R.id.button_fragmentAddSave_cancel);
         button_cancel.setOnClickListener(this);
 
         // Database instance
@@ -303,7 +304,7 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.Ingreso_saving:
+            case R.id.button_fragmentAddSave_addData:
                 // Check if there is blank spaces
                 if (editText_amount.getText().toString().equals("")) {
                     showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_nodata));
@@ -383,7 +384,7 @@ public class SavingFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.cancel_saving:
+            case R.id.button_fragmentAddSave_cancel:
                 Objects.requireNonNull(getActivity()).onBackPressed();
                 break;
         }

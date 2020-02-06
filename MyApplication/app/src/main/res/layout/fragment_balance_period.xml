@@ -54,6 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginBottom="15dp">
 
         <LinearLayout
@@ -93,6 +95,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="15dp">
 
@@ -134,6 +138,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginBottom="15dp">
 
         <LinearLayout

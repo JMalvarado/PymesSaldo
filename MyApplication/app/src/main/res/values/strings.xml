@@ -60,7 +60,7 @@
     <string name="activity_main_slidinguppanel_SubscribeInfo">Suscríbete pulsando el logo</string>
 
     <string name="fragment_search_period_period_header">Día de corte:</string>
-    <string name="fragment_search_textView_type_spinner">Tipo de movimiento</string>
+    <string name="fragment_search_textView_type_spinner">Tipo de movimiento:</string>
     <string name="fragment_search_period_title">Periodo:</string>
     <string name="fragment_search_period_checkboxTitle">Por periodo definido</string>
     <string name="fragment_search_dates_radioButtonTitle">Por periodo</string>
@@ -151,7 +151,8 @@
     <string name="reportViewCategPagerAdapter_title3">Gráficas</string>
     <string name="customSpinnerCategories_imageView_descr">Imagen</string>
     <string name="imageview_descr">imageview balance</string>
-
+    <string name="button_add">Ingresar</string>
+    <string name="button_cancel">Cancelar</string>
 
     <!-- Toast, snack bar and alerts -->
     <string name="toast_addprofileactivity_noinitialprofit">Por favor ingrese un saldo inicial</string>

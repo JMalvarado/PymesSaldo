@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,8 +32,8 @@ public class AddDebtFragment extends Fragment implements View.OnClickListener {
     private EditText editText_description;
     private TextView textView_date;
     private FloatingActionButton fab_date;
-    private FloatingActionButton fab_ok;
-    private FloatingActionButton fab_cancel;
+    private Button button_ok;
+    private Button button_cancel;
 
     // Global variables
     private DatabaseManager db;
@@ -53,10 +54,10 @@ public class AddDebtFragment extends Fragment implements View.OnClickListener {
         textView_date = view.findViewById(R.id.textView_fragmentAddDebt_date);
         fab_date = view.findViewById(R.id.fab_fragmentAddDebt_date);
         fab_date.setOnClickListener(this);
-        fab_ok = view.findViewById(R.id.fab_fragmentAddDebt_ok);
-        fab_ok.setOnClickListener(this);
-        fab_cancel = view.findViewById(R.id.fab_fragmentAddDebt_cancel);
-        fab_cancel.setOnClickListener(this);
+        button_ok = view.findViewById(R.id.button_fragmentAddDebt_addData);
+        button_ok.setOnClickListener(this);
+        button_cancel = view.findViewById(R.id.button_fragmentAddDebt_cancel);
+        button_cancel.setOnClickListener(this);
 
         // Database instance
         db = new DatabaseManager(view.getContext());
@@ -171,7 +172,7 @@ public class AddDebtFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.fab_fragmentAddDebt_ok:
+            case R.id.button_fragmentAddDebt_addData:
                 // Verify blank spaces
                 if ((editText_amount.getText().toString().equals(""))) {
                     showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_nodata));
@@ -219,7 +220,7 @@ public class AddDebtFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.fab_fragmentAddDebt_cancel:
+            case R.id.button_fragmentAddDebt_cancel:
                 Objects.requireNonNull(getActivity()).onBackPressed();
                 break;
         }

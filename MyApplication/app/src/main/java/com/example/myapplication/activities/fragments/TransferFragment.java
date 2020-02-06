@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,8 +39,8 @@ public class TransferFragment extends Fragment implements View.OnClickListener {
     private EditText editText_description;
     private TextView textView_date;
     private TextView textView_time;
-    private FloatingActionButton fab_in;
-    private FloatingActionButton fab_cancel;
+    private Button button_in;
+    private Button button_cancel;
     private FloatingActionButton fab_addDate;
     private FloatingActionButton fab_addTime;
     private Spinner spinner_from;
@@ -62,10 +63,10 @@ public class TransferFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_transfer, container, false);
 
         // Initialize components
-        fab_in = view.findViewById(R.id.fab_transfer_in);
-        fab_in.setOnClickListener(this);
-        fab_cancel = view.findViewById(R.id.fab_transfer_cancel);
-        fab_cancel.setOnClickListener(this);
+        button_in = view.findViewById(R.id.button_fragmentAddTransfer_addData);
+        button_in.setOnClickListener(this);
+        button_cancel = view.findViewById(R.id.button_fragmentAddTransfer_cancel);
+        button_cancel.setOnClickListener(this);
         editText_mount = view.findViewById(R.id.editText_transfer_input);
         editText_description = view.findViewById(R.id.editText_transfer_description);
         textView_date = view.findViewById(R.id.textView_transfer_date);
@@ -179,7 +180,7 @@ public class TransferFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.fab_transfer_in:
+            case R.id.button_fragmentAddTransfer_addData:
                 String montoStr = editText_mount.getText().toString();
 
                 double ingresoInt;
@@ -250,7 +251,7 @@ public class TransferFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.fab_transfer_cancel:
+            case R.id.button_fragmentAddTransfer_cancel:
                 Objects.requireNonNull(getActivity()).onBackPressed();
 
                 break;

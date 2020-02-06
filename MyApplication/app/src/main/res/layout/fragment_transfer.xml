@@ -7,36 +7,50 @@
     android:orientation="vertical"
     tools:context=".activities.fragments.TransferFragment">
 
-    <EditText
-        android:id="@+id/editText_transfer_input"
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="16dp"
-        android:autofillHints=""
-        android:hint="@string/addentry_textView_hintIngreso"
-        android:inputType="numberDecimal"
-        android:padding="15dip" />
+        android:layout_marginRight="16dp">
 
-    <EditText
-        android:id="@+id/editText_transfer_description"
+        <EditText
+            android:id="@+id/editText_transfer_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/addentry_textView_hintIngreso"
+            android:inputType="numberDecimal"
+            android:padding="15dip" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:autofillHints=""
-        android:hint="@string/addentry_textView_hintDescr"
-        android:inputType="text"
-        android:maxLength="20"
-        android:padding="15dip" />
+        app:counterEnabled="true"
+        app:counterMaxLength="20">
+
+        <EditText
+            android:id="@+id/editText_transfer_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/addentry_textView_hintDescr"
+            android:inputType="text"
+            android:maxLength="20"
+            android:padding="15dip" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:background="@drawable/roundcornerbrownlight"
         android:orientation="vertical">
 
         <TextView
@@ -45,14 +59,15 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="5dp"
             android:text="@string/fragment_transfer_textview_from"
-            android:textSize="18sp" />
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinner_transfer_fromInstance"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp" />
 
     </LinearLayout>
@@ -62,8 +77,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/roundcornerbrownlight"
         android:orientation="vertical">
 
         <TextView
@@ -72,14 +85,15 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="5dp"
             android:text="@string/fragment_transfer_textview_to"
-            android:textSize="18sp" />
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinner_transfer_toInstance"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp" />
 
     </LinearLayout>
@@ -144,7 +158,51 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_fragmentAddTransfer_addData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="45dp"
+            android:background="@drawable/roundcornerbrownlight"
+            android:backgroundTint="@color/colorAccent"
+            android:paddingStart="25dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="5dp"
+            android:text="@string/button_add"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/button_fragmentAddTransfer_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundcornerbrownlight"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:paddingStart="25dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="5dp"
+            android:text="@string/button_cancel"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorRedDark"
+            android:textSize="15sp"
+            tools:ignore="ButtonStyle" />
+
+    </LinearLayout>
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -172,6 +230,6 @@
             app:fabSize="mini"
             app:rippleColor="@color/colorRed" />
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 </LinearLayout>

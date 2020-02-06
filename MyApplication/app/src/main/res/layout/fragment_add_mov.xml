@@ -41,53 +41,65 @@
         android:layout_marginBottom="5dp"
         android:background="?android:attr/listDivider" />
 
-    <EditText
-        android:id="@+id/etIngreso"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:autofillHints=""
-        android:hint="@string/addentry_textView_hintIngreso"
-        android:inputType="numberDecimal"
-        android:padding="15dip" />
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/etdescripcion"
+        <EditText
+            android:id="@+id/etIngreso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:autofillHints=""
+            android:hint="@string/addentry_textView_hintIngreso"
+            android:inputType="numberDecimal"
+            android:padding="15dip" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:autofillHints=""
-        android:hint="@string/addentry_textView_hintDescr"
-        android:inputType="text"
-        android:maxLength="20"
-        android:padding="15dip" />
+        app:counterEnabled="true"
+        app:counterMaxLength="20">
+
+        <EditText
+            android:id="@+id/etdescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:autofillHints=""
+            android:hint="@string/addentry_textView_hintDescr"
+            android:inputType="text"
+            android:maxLength="20"
+            android:padding="15dip" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="5dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/roundcornerbrownlight"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
             android:text="@string/activity_add_entry_textView_category"
-            android:textSize="18sp" />
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinner_addEntry_category"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp" />
 
     </LinearLayout>
@@ -152,35 +164,78 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/Ingreso_addMov"
+        <Button
+            android:id="@+id/button_fragmentAddMov_addData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="5dp"
-            android:backgroundTint="@android:color/white"
-            android:src="@drawable/ic_check_64"
-            app:backgroundTint="@android:color/darker_gray"
-            app:fabSize="mini"
-            app:rippleColor="@color/colorPrimary" />
+            android:layout_marginEnd="45dp"
+            android:background="@drawable/roundcornerbrownlight"
+            android:backgroundTint="@color/colorAccent"
+            android:paddingStart="25dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="5dp"
+            android:text="@string/button_add"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp"
+            tools:ignore="ButtonStyle" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/cancel_addMov"
+        <Button
+            android:id="@+id/button_fragmentAddMov_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="5dp"
-            android:backgroundTint="@android:color/white"
-            android:src="@drawable/ic_cancel_64"
-            app:backgroundTint="@android:color/darker_gray"
-            app:fabSize="mini"
-            app:rippleColor="@color/colorRed" />
+            android:background="@drawable/roundcornerbrownlight"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:paddingStart="25dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="5dp"
+            android:text="@string/button_cancel"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorRedDark"
+            android:textSize="15sp"
+            tools:ignore="ButtonStyle" />
 
     </LinearLayout>
+    <!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/Ingreso_addMov"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp"
+                android:backgroundTint="@android:color/white"
+                android:src="@drawable/ic_check_64"
+                app:backgroundTint="@android:color/darker_gray"
+                app:fabSize="mini"
+                app:rippleColor="@color/colorPrimary" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/cancel_addMov"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp"
+                android:backgroundTint="@android:color/white"
+                android:src="@drawable/ic_cancel_64"
+                app:backgroundTint="@android:color/darker_gray"
+                app:fabSize="mini"
+                app:rippleColor="@color/colorRed" />
+
+        </LinearLayout>-->
 
 </LinearLayout>

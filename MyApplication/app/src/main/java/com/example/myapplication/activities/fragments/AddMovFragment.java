@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -49,8 +50,8 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
     private RadioGroup radioGroup_addMov;
     private RadioButton radioButton_in;
     private RadioButton radioButton_spend;
-    private FloatingActionButton fab_in;
-    private FloatingActionButton fab_cancel;
+    private Button button_in;
+    private Button button_cancel;
     private FloatingActionButton fab_addDate;
     private FloatingActionButton fab_addTime;
     private Spinner spinner_categories;
@@ -73,10 +74,10 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_add_mov, container, false);
 
         // Initialize components
-        fab_in = view.findViewById(R.id.Ingreso_addMov);
-        fab_in.setOnClickListener(this);
-        fab_cancel = view.findViewById(R.id.cancel_addMov);
-        fab_cancel.setOnClickListener(this);
+        button_in = view.findViewById(R.id.button_fragmentAddMov_addData);
+        button_in.setOnClickListener(this);
+        button_cancel = view.findViewById(R.id.button_fragmentAddMov_cancel);
+        button_cancel.setOnClickListener(this);
         editText_profit = view.findViewById(R.id.etIngreso);
         editText_description = view.findViewById(R.id.etdescripcion);
         textView_date = view.findViewById(R.id.textView_addEntry_date);
@@ -1080,7 +1081,7 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
         double gastoInt;
 
         switch (view.getId()) {
-            case R.id.Ingreso_addMov:
+            case R.id.button_fragmentAddMov_addData:
                 // Verify blank spaces
                 if ((editText_profit.getText().toString().equals(""))) {
                     showMessage(getString(R.string.alert_title), getString(R.string.alert_addEntryActivity_nodata));
@@ -1146,7 +1147,7 @@ public class AddMovFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.cancel_addMov:
+            case R.id.button_fragmentAddMov_cancel:
                 Objects.requireNonNull(getActivity()).onBackPressed();
 
                 break;

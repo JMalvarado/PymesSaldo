@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:background="@drawable/roundcornerbrownlight"
+        android:background="@color/colorWhiteSplash"
         android:orientation="vertical">
 
         <TextView
@@ -39,23 +39,23 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="5dp"
             android:text="@string/activity_add_entry_textView_category"
-            android:textSize="18sp" />
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinner_search_category"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="16dp"
-            android:backgroundTint="@color/colorPrimaryDark" />
+            android:layout_marginEnd="16dp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/roundcornerbrownlight"
+        android:background="@color/colorWhiteSplash"
         android:orientation="vertical">
 
         <TextView
@@ -64,16 +64,16 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="5dp"
             android:text="@string/fragment_search_textView_type_spinner"
-            android:textSize="18sp" />
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinner_search_type"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="16dp"
-            android:backgroundTint="@color/colorPrimaryDark" />
+            android:layout_marginEnd="16dp" />
 
     </LinearLayout>
 
@@ -301,8 +301,10 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="12dp"
                         android:backgroundTint="@android:color/white"
+                        android:elevation="0dp"
                         android:src="@drawable/ic_find_64"
                         app:backgroundTint="@android:color/darker_gray"
+                        app:elevation="0dp"
                         app:fabSize="mini"
                         app:rippleColor="@color/colorPrimary" />
 

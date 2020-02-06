@@ -40,16 +40,22 @@
         android:layout_marginBottom="5dp"
         android:background="?android:attr/listDivider" />
 
-    <EditText
-        android:id="@+id/editText_fragmentSaving_amount"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:autofillHints=""
-        android:hint="@string/fragment_saving_radioButton_amount"
-        android:inputType="numberDecimal"
-        android:padding="15dip" />
+        android:layout_marginRight="16dp">
+
+        <EditText
+            android:id="@+id/editText_fragmentSaving_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/fragment_saving_radioButton_amount"
+            android:inputType="numberDecimal"
+            android:padding="15dip" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox
         android:id="@+id/checkbox_fragment_saving_addSpendOrProfit"
@@ -118,7 +124,51 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_fragmentAddSave_addData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="45dp"
+            android:background="@drawable/roundcornerbrownlight"
+            android:backgroundTint="@color/colorAccent"
+            android:paddingStart="25dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="5dp"
+            android:text="@string/button_add"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/button_fragmentAddSave_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundcornerbrownlight"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:paddingStart="25dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="5dp"
+            android:text="@string/button_cancel"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorRedDark"
+            android:textSize="15sp"
+            tools:ignore="ButtonStyle" />
+
+    </LinearLayout>
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -146,6 +196,6 @@
             app:fabSize="mini"
             app:rippleColor="@color/colorRed" />
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 </LinearLayout>

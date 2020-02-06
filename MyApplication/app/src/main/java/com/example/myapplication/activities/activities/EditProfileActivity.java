@@ -4,7 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -80,50 +79,42 @@ public class EditProfileActivity extends AppCompatActivity {
                 builder.setTitle(getString(R.string.alert_title_deleteProfile));
                 builder.setMessage(R.string.alert_msg_deleteData);
                 builder.setPositiveButton(getResources().getString(R.string.alert_optSi),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                // Delete Data
-                                db.deleteInstance(idInstance);
+                        (dialogInterface, i) -> {
+                            // Delete Data
+                            db.deleteInstance(idInstance);
 
-                                // Get new default profile
-                                Cursor cursor = db.getInstancesAllData();
+                            // Get new default profile
+                            Cursor cursor = db.getInstancesAllData();
 
-                                if (cursor.getCount() == 0) {
-                                    Intent mainActvityIntent = new Intent(view.getContext(), MainActivity.class);
-                                    startActivity(mainActvityIntent);
+                            if (cursor.getCount() == 0) {
+                                Intent mainActvityIntent = new Intent(view.getContext(), MainActivity.class);
+                                startActivity(mainActvityIntent);
 
-                                    dialogInterface.cancel();
-                                    return;
-                                }
-
-                                cursor.moveToNext();
-                                String itemId = cursor.getString(0);
-                                String itemName = cursor.getString(1);
-                                String itemPeriod = Integer.toString(cursor.getInt(2));
-
-                                // Set new default profile
-                                // Store the instance as default
-                                SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = prefs.edit();
-                                editor.putString("NAME", itemName);
-                                editor.putString("ID", itemId);
-                                editor.putString("PERIOD", itemPeriod);
-                                editor.apply();
-
-                                // Start main activity
-                                Intent mainActivityIntent = new Intent(view.getContext(), MainActivity.class);
-                                startActivity(mainActivityIntent);
+                                dialogInterface.cancel();
+                                return;
                             }
+
+                            cursor.moveToNext();
+                            String itemId = cursor.getString(0);
+                            String itemName = cursor.getString(1);
+                            String itemPeriod = Integer.toString(cursor.getInt(2));
+
+                            // Set new default profile
+                            // Store the instance as default
+                            SharedPreferences prefs = getSharedPreferences("instance", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("NAME", itemName);
+                            editor.putString("ID", itemId);
+                            editor.putString("PERIOD", itemPeriod);
+                            editor.apply();
+
+                            // Start main activity
+                            Intent mainActivityIntent = new Intent(view.getContext(), MainActivity.class);
+                            startActivity(mainActivityIntent);
                         });
 
                 builder.setNegativeButton(getResources().getString(R.string.alert_optNo),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        });
+                        (dialogInterface, i) -> dialogInterface.cancel());
 
                 builder.show();
 
@@ -140,7 +131,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.Ingreso_editProfile:
+            case R.id.button_activityEditProfile_addData:
                 if (editText_profileName.getText().toString().equals("")) {
                     Toast.makeText(this, R.string.toast_addprofileactivity_noname, Toast.LENGTH_LONG).show();
                 } else if ((switch_addPeriod.isChecked()) && (editText_period.getText().toString().equals(""))) {
@@ -173,7 +164,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.cancel_editProfile:
+            case R.id.button_activityEditProfile_cancel:
                 onBackPressed();
 
                 break;

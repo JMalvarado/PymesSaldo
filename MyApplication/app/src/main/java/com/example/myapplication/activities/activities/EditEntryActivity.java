@@ -439,7 +439,7 @@ public class EditEntryActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.Ingreso_editMov:
+            case R.id.button_activityEditEntry_addData:
                 String montoStr = editText_profit.getText().toString();
 
                 if ((editText_profit.getText().toString().equals(""))) {
@@ -480,7 +480,7 @@ public class EditEntryActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.cancel_editMov:
+            case R.id.button_activityEditEntry_cancel:
                 onBackPressed();
 
                 break;
