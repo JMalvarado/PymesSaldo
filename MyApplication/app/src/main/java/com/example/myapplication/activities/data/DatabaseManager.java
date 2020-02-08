@@ -1068,6 +1068,18 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     /**
+     * Get specific entry from Ahorro with given date, time and amount
+     *
+     * @return
+     */
+    public Cursor getSaveEntryByDateTimeAmount(String Instancias_ID, String date, String time, double amount) {
+
+        return this.getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLA4_NOMBRE + " WHERE Fecha='" + date + "' AND Hora='" + time + "' AND Monto=" + amount +
+                        " AND Instancias_ID=" + Instancias_ID + " LIMIT 1", null);
+    }
+
+    /**
      * Get all the dept data from table Deudas
      *
      * @return Cursor with all the information in all the columns
@@ -1128,6 +1140,18 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public Integer deleteDept(String id, String instance_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLA5_NOMBRE, "ID=? AND Instancias_ID=?", new String[]{id, instance_id});
+    }
+
+    /**
+     * Delete a row from Ahorro table, with a given id and instance id
+     *
+     * @param id
+     * @param instance_id
+     * @return
+     */
+    public Integer deleteSave(String id, String instance_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLA4_NOMBRE, "ID=? AND Instancias_ID=?", new String[]{id, instance_id});
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1225,6 +1249,34 @@ public class DatabaseManager extends SQLiteOpenHelper {
         contentValues.put(Col_Descripcion, description);
 
         db.update(TABLA5_NOMBRE, contentValues, "ID=? AND Instancias_ID=?", new String[]{dept_ID, instance_ID});
+
+        return true;
+    }
+
+    /**
+     * Edit save entry
+     *
+     * @param id
+     * @param instance_ID
+     * @param new_instance_ID
+     * @param amount
+     * @param date
+     * @param time
+     * @param type
+     * @return
+     */
+    public boolean editSave(String id, String instance_ID, String new_instance_ID, Double amount, String date, String time, String type) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ID", id);
+        contentValues.put(Col_InstIDAhorro, new_instance_ID);
+        contentValues.put(Col_MontoAhorro, amount);
+        contentValues.put(Col_FechaAhorro, date);
+        contentValues.put(Col_HoraAhorro, time);
+        contentValues.put(Col_TipoMovAhorro, type);
+
+        db.update(TABLA4_NOMBRE, contentValues, "ID=? AND Instancias_ID=?", new String[]{id, instance_ID});
 
         return true;
     }

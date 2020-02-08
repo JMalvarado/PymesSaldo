@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -75,7 +74,7 @@ public class SaveMoneyFragment extends Fragment {
     }
 
     /**
-     * Get integer with the total balance of the saved money
+     * Get double with the total balance of the saved money
      *
      * @return total saved money
      */

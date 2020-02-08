@@ -43,7 +43,6 @@ public class EditEntryActivity extends AppCompatActivity {
     private TextView textView_instanceName;
     private Spinner spinner_categories;
     private Spinner spinner_profiles;
-    private RadioGroup radioGroup_addMov;
     private RadioButton radioButton_profit;
     private RadioButton radioButton_spend;
 
@@ -63,6 +62,7 @@ public class EditEntryActivity extends AppCompatActivity {
     private String id_inst;
     private String new_id_inst;
     private int spinner_DefaultPosition = 0;
+    private double currentAmount;
     private ArrayAdapter<String> spinnerAdapterProfiles;
 
     @Override
@@ -83,7 +83,6 @@ public class EditEntryActivity extends AppCompatActivity {
         textView_date = findViewById(R.id.textView_editEntry_date);
         textView_time = findViewById(R.id.textView_editEntry_time);
         textView_instanceName = findViewById(R.id.textView_editEntry_instanceName);
-        radioGroup_addMov = findViewById(R.id.radioGroup_addMov);
         radioButton_profit = findViewById(R.id.radioButton_activityEditMov_Ingreso);
         radioButton_spend = findViewById(R.id.radioButton_activityEditMov_Gasto);
 
@@ -214,9 +213,11 @@ public class EditEntryActivity extends AppCompatActivity {
         if (ingreso.equals("0.0")) {
             radioButton_spend.setChecked(true);
             editText_profit.setText(gasto);
+            currentAmount = Double.parseDouble(gasto);
         } else {
             radioButton_profit.setChecked(true);
             editText_profit.setText(ingreso);
+            currentAmount = Double.parseDouble(ingreso);
         }
         editText_description.setText(descr);
 
@@ -455,22 +456,35 @@ public class EditEntryActivity extends AppCompatActivity {
                 double ingresoInt;
                 double gastoInt;
 
+                String saveType;
+                double newAmount;
                 // Set 0 to blank spaces
                 if (radioButton_spend.isChecked()) {
                     ingresoInt = 0;
-                    gastoInt = Double.parseDouble(montoStr);
+                    gastoInt = newAmount = Double.parseDouble(montoStr);
+                    saveType = "A";
                 } else {
-                    ingresoInt = Double.parseDouble(montoStr);
+                    ingresoInt = newAmount = Double.parseDouble(montoStr);
                     gastoInt = 0;
+                    saveType = "R";
                 }
 
                 String descripcion = editText_description.getText().toString();
 
-                boolean isResultadd = db.editEntryData(id, date, time, ingresoInt,
+                boolean isResult = db.editEntryData(id, date, time, ingresoInt,
                         gastoInt, descripcion, id_inst, new_id_inst, category_id);
 
-                if (isResultadd) {
+                if (isResult) {
                     Toast.makeText(getApplicationContext(), getString(R.string.toast_addEntryActivity_succesAdd), Toast.LENGTH_LONG).show();
+
+                    // Get save entry to edit
+                    Cursor saveEntry = db.getSaveEntryByDateTimeAmount(MainActivity.idInstance, fecha, hora, currentAmount);
+                    if (saveEntry.getCount() != 0) {
+                        // Edit save entry
+                        saveEntry.moveToNext();
+                        String id = saveEntry.getString(0);
+                        db.editSave(id, MainActivity.idInstance, MainActivity.idInstance, newAmount, date, time, saveType);
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), getString(R.string.toast_addEntryActivity_noSuccesAdd), Toast.LENGTH_LONG).show();
                 }

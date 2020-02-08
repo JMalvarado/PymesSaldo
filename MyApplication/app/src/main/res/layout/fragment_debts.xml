@@ -19,8 +19,9 @@
             android:id="@+id/textView_fragmentDebt_instanceName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorWhite"
-            android:textSize="14sp" />
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

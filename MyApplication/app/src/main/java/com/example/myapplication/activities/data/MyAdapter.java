@@ -2,7 +2,6 @@ package com.example.myapplication.activities.data;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -144,6 +143,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                             switch (which) {
                                 case 0:
                                     db.deleteEntryData(MainActivity.idInstance, data.getId());
+
+                                    // Get save entry to delete
+                                    double amount;
+                                    if (data.getIngreso().equals("0.0")) {
+                                        amount = Double.parseDouble(data.getGasto());
+                                    } else {
+                                        amount = Double.parseDouble(data.getIngreso());
+                                    }
+                                    Cursor saveEntry = db.getSaveEntryByDateTimeAmount(MainActivity.idInstance, data.getFecha(), data.getHora(), amount);
+                                    if (saveEntry.getCount() != 0) {
+                                        // Edit save entry
+                                        saveEntry.moveToNext();
+                                        String id = saveEntry.getString(0);
+                                        db.deleteSave(id, MainActivity.idInstance);
+                                    }
+
                                     new Task().execute();
                                     break;
 

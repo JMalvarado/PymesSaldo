@@ -20,8 +20,9 @@
             android:id="@+id/textView_fragmentBalanceCustom_instanceName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorWhite"
-            android:textSize="14sp" />
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -193,10 +194,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="15dp">
+                android:layout_marginBottom="15dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -236,9 +237,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_marginBottom="15dp">
+                android:foreground="?android:attr/selectableItemBackground">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -278,9 +279,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_marginBottom="15dp">
+                android:foreground="?android:attr/selectableItemBackground">
 
                 <LinearLayout
                     android:layout_width="match_parent"
