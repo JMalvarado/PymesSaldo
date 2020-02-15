@@ -1,6 +1,7 @@
 package com.example.myapplication.activities.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -212,6 +213,7 @@ public class ReportGraphicsFragment extends Fragment {
     /**
      * show data in charts.
      */
+    @SuppressLint("StaticFieldLeak")
     private class Task extends AsyncTask<String, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -346,8 +348,12 @@ public class ReportGraphicsFragment extends Fragment {
                 float percentageProfits = (totalAmountCategoryProfits * 100) / (totalProfits);
                 float percentageSpends = (totalAmountCategorySpends * 100) / (totalSpends);
 
-                percentagesProfitsList.add(new PieEntry(percentageProfits, categoriesNames.get(i)));
-                percentagesSpendsList.add(new PieEntry(percentageSpends, categoriesNames.get(i)));
+                if (totalAmountCategoryProfits != 0.0f) {
+                    percentagesProfitsList.add(new PieEntry(percentageProfits, categoriesNames.get(i)));
+                }
+                if (totalAmountCategorySpends != 0.0f) {
+                    percentagesSpendsList.add(new PieEntry(percentageSpends, categoriesNames.get(i)));
+                }
             }
 
             return null;

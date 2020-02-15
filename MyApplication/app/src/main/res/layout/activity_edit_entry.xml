@@ -67,10 +67,12 @@
                 </RadioGroup>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp">
+                    android:layout_marginRight="16dp"
+                    app:boxStrokeColor="@color/colorAccent">
 
                     <EditText
                         android:id="@+id/etIngreso_editEntry"
@@ -84,10 +86,12 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    app:boxStrokeColor="@color/colorAccent"
                     app:counterEnabled="true"
                     app:counterMaxLength="20">
 

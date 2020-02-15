@@ -9,8 +9,10 @@
     android:paddingRight="16dp">
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:boxStrokeColor="@color/colorAccent"
         app:counterEnabled="true"
         app:counterMaxLength="20">
 
@@ -27,8 +29,10 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:boxStrokeColor="@color/colorAccent">
 
         <EditText
             android:id="@+id/editText_dialogEditDebt_amount"

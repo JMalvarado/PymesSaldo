@@ -64,7 +64,7 @@
         android:id="@+id/spinner_navHeader_profiles"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/spinner_rect" />
+        android:spinnerMode="dropdown"
+        />
 
 </LinearLayout>

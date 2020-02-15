@@ -5,6 +5,7 @@
     android:id="@+id/Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".activities.fragments.AddMovFragment">
 
@@ -42,15 +43,17 @@
         android:background="?android:attr/listDivider" />
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:boxStrokeColor="@color/colorAccent">
 
         <EditText
             android:id="@+id/etIngreso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:autofillHints=""
             android:hint="@string/addentry_textView_hintIngreso"
             android:inputType="numberDecimal"
@@ -60,8 +63,12 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:boxStrokeColor="@color/colorAccent"
         app:counterEnabled="true"
         app:counterMaxLength="20">
 
@@ -69,8 +76,6 @@
             android:id="@+id/etdescripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:autofillHints=""
             android:hint="@string/addentry_textView_hintDescr"
             android:inputType="text"
