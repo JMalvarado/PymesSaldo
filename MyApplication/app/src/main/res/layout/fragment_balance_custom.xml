@@ -31,7 +31,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="3dp"
-        android:background="@color/colorWhite"
         android:gravity="center"
         android:text="@string/fragment_balanceCustom_textview_period"
         android:textSize="20sp"
@@ -40,7 +39,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="1">
@@ -125,7 +123,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingTop="3dp"
