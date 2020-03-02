@@ -524,21 +524,30 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     /**
-     * Get the data from column ingresos in the given month and year. Doesn't take the entry 'Remanentes'
+     * Get the data from column ingresos in the given month and year. Doesn't take the entry 'Remanentes' if the parameter "with_remnants" is false
      *
      * @return
      */
-    public ArrayList<Double> getEntryInMonthYearIngresos(String Instancias_ID, String month, String year) {
+    public ArrayList<Double> getEntryInMonthYearIngresos(String Instancias_ID, String month, String year, boolean with_remnants) {
         //valores a usar.
         double ingreso;
 
         //lista a retornar
-
         ArrayList<Double> ingresos = new ArrayList<>();
 
-        Cursor consulta = this.getReadableDatabase().rawQuery(
-                "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
-                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+        //Cursor
+        Cursor consulta;
+
+        if (with_remnants) {
+            consulta = this.getReadableDatabase().rawQuery(
+                    "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                            "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID, null);
+        } else {
+            consulta = this.getReadableDatabase().rawQuery(
+                    "SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                            "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+        }
+
 
         while (consulta.moveToNext()) {
             ingreso = consulta.getDouble(5);

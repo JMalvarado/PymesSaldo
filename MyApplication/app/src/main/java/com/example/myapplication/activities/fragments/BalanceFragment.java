@@ -127,8 +127,8 @@ public class BalanceFragment extends Fragment {
 
         // Get data
         // actual month
-        String balance = getMonthBalance(monthtwodigits, year);
-        String profit = Double.toString(getTotalProfit(monthtwodigits, year));
+        String balance = getMonthBalance(monthtwodigits, year, false);
+        String profit = Double.toString(getTotalProfit(monthtwodigits, year, false));
         String spend = Double.toString(getTotalSpend(monthtwodigits, year));
 
         // Get previous month
@@ -175,7 +175,7 @@ public class BalanceFragment extends Fragment {
         }
 
         // Previous balance (remnants)
-        String balanceprev = getMonthBalance(monthprev, yearprev);
+        String balanceprev = getMonthBalance(monthprev, yearprev, true);
 
         // Add prev balance to database
         if (Double.parseDouble(balanceprev) != 0) {
@@ -253,8 +253,8 @@ public class BalanceFragment extends Fragment {
      *
      * @return total profit
      */
-    private double getTotalProfit(String month, String year) {
-        ArrayList<Double> profit = db.getEntryInMonthYearIngresos(idInstance, month, year);
+    private double getTotalProfit(String month, String year, boolean with_remnants) {
+        ArrayList<Double> profit = db.getEntryInMonthYearIngresos(idInstance, month, year, with_remnants);
 
         double totalProfit = 0;
 
@@ -291,8 +291,8 @@ public class BalanceFragment extends Fragment {
      *
      * @return balance
      */
-    private String getMonthBalance(String month, String year) {
-        double totalProfit = getTotalProfit(month, year);
+    private String getMonthBalance(String month, String year, boolean with_remnants) {
+        double totalProfit = getTotalProfit(month, year, with_remnants);
         double totalSpend = getTotalSpend(month, year);
 
         double balance = totalProfit - totalSpend;
