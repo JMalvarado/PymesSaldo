@@ -14,7 +14,7 @@
 
     <TextView
         android:id="@+id/textview_entriesReportList_mount"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
         android:autoSizeMaxTextSize="26sp"
         android:autoSizeMinTextSize="12sp"

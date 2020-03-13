@@ -186,6 +186,7 @@ public class BalanceFragment extends Fragment {
                     categoryId,
                     monthtwodigits,
                     year);
+            // If not: add new special entry
             if (remnantList.getCount() == 0) {
                 db.addEntry(dateNow,
                         time,
@@ -194,11 +195,12 @@ public class BalanceFragment extends Fragment {
                         getString(R.string.fragment_balance_class_remnantDescription),
                         MainActivity.idInstance,
                         Integer.toString(categoryId));
+                // Else: edit remnant previous entry (In case there was an edited entry for last month)
             } else {
                 remnantList.moveToPosition(0);
                 db.editEntryData(remnantList.getString(0),
-                        dateNow,
-                        time,
+                        remnantList.getString(3),
+                        remnantList.getString(4),
                         Double.parseDouble(balanceprev),
                         0,
                         getString(R.string.fragment_balance_class_remnantDescription),
