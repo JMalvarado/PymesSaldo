@@ -16,6 +16,12 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".activities.activities.HelpFunctionsActivity"
+            android:label="@string/helpFunctionsName"/>
+        <activity
+            android:name=".activities.activities.HelpConceptsActivity"
+            android:label="@string/helpConceptsName" />
+        <activity
             android:name=".activities.activities.HelpActivity"
             android:label="@string/help_name" />
         <activity

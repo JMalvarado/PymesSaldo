@@ -15,6 +15,8 @@
     <string name="editEntry_name">Editar movimiento</string>
     <string name="editProfile_name">Editar estado financiero</string>
     <string name="help_name">Ayuda</string>
+    <string name="helpConceptsName">Conceptos</string>
+    <string name="helpFunctionsName">Funciones</string>
     <string name="welcome_title1">¡Felicidades!</string>
     <string name="welcome_title2">Te recompensamos</string>
     <string name="welcome_title3">Gratuita</string>
@@ -266,6 +268,8 @@
     <string name="debt_options_subtract">Restar monto</string>
 
     <string name="activityHelp_title1">Conceptos</string>
+    <string name="activityHelp_title1_expl">Muestra definiciones básicas</string>
+    <string name="activityHelp_title1_exampl">Estado financiero, saldo inicial, ciclo definido, remanentes…</string>
     <string name="activityHelp_subtitle1">Estado financiero:</string>
     <string name="activityHelp_content1">Se refiere a cualquier entidad que represente gastos y/o ingresos económicos, ya sea un negocio o franquicia (supermercado, tienda), cuenta personal, cuenta bancaria, tarjeta de cŕedito, entre otras.</string>
     <string name="activityHelp_subtitle2">Saldo inicial:</string>
@@ -277,6 +281,8 @@
     <string name="activityHelp_subtitle5">Movimiento:</string>
     <string name="activityHelp_content5">Representa un ingreso o gasto, contiene como información: la descripción, fecha, hora, monto y categoría.</string>
     <string name="activityHelp_title2">Funciones</string>
+    <string name="activityHelp_title2_expl">Explica las funciones</string>
+    <string name="activityHelp_title2_exampl">Agregar movimiento, Ahorro, deuda, explorar, categorías…</string>
     <string name="activityHelp_subtitle6">Agregar movimiento:</string>
     <string name="activityHelp_content6">Se ingresa mediante el botón flotante ubicado en la esquina inferior derecha, permite agregar 4 tipos de entradas:</string>
     <string name="activityHelp_content6_1">Movimiento común: Gasto o Ingreso.</string>
