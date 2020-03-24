@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -251,11 +253,18 @@ public class BalanceCustomFragment extends Fragment implements View.OnClickListe
                 });
 
                 builder.setNegativeButton(getString(R.string.dialog_instances_negativeButton), (dialogInterface, which) -> {
-                    dialogInterface.dismiss();
                 });
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                positiveButton.setBackgroundColor(getResources().getColor(R.color.transparent, null));
+                positiveButton.setTextColor(getResources().getColor(R.color.colorPrimary, null));
+
+                Button negativeButton = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+                negativeButton.setBackgroundColor(getResources().getColor(R.color.transparent, null));
+                negativeButton.setTextColor(getResources().getColor(R.color.colorPrimary, null));
 
                 break;
 

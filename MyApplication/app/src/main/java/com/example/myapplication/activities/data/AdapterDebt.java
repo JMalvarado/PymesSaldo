@@ -55,7 +55,7 @@ public class AdapterDebt extends RecyclerView.Adapter<AdapterDebt.MyViewHolder> 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.debt_list, parent, false);
 
-        return new AdapterDebt.MyViewHolder(v);
+        return new MyViewHolder(v);
     }
 
     @Override
@@ -220,7 +220,6 @@ public class AdapterDebt extends RecyclerView.Adapter<AdapterDebt.MyViewHolder> 
         }
 
         builder.setView(subView);
-        AlertDialog alertDialog = builder.create();
 
         // Positive option
         builder.setPositiveButton(context.getResources().getString(R.string.alert_positiveBttn_addCategory),
@@ -403,12 +402,8 @@ public class AdapterDebt extends RecyclerView.Adapter<AdapterDebt.MyViewHolder> 
         builder.show();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        //        FloatingActionButton fab_add;
-//        FloatingActionButton fab_subtract;
-//        FloatingActionButton fab_edit;
-//        FloatingActionButton fab_delete;
         CardView cardView;
         TextView textView_description;
         TextView textView_amount;
@@ -416,11 +411,7 @@ public class AdapterDebt extends RecyclerView.Adapter<AdapterDebt.MyViewHolder> 
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
-//            fab_add = itemView.findViewById(R.id.fab_debtList_add);
-//            fab_subtract = itemView.findViewById(R.id.fab_debtList_subtract);
-//            fab_edit = itemView.findViewById(R.id.fab_debtList_edit);
-//            fab_delete = itemView.findViewById(R.id.fab_debtList_delete);
+            
             cardView = itemView.findViewById(R.id.cardView_debtList);
             textView_description = itemView.findViewById(R.id.textView_debtList_description);
             textView_amount = itemView.findViewById(R.id.textView_debtList_amount);

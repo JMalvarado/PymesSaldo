@@ -70,6 +70,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     // Database manager instance
     private DatabaseManager db;
 
+    // Id all categories icon
+    private final static int todasId = 923;
+
     @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -234,7 +237,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
         // Add option: "Todas"
         //categoriesList.add(getString(R.string.fragment_search_category_spinner));
-        categoriesList.add(new CustomItems(getString(R.string.fragment_search_category_spinner), R.drawable.ic_categories_64));
+        categoriesList.add(new CustomItems(getString(R.string.fragment_search_category_spinner), todasId));
 
         // Add categories names to categoriesList
         while (categoriesData.moveToNext()) {
@@ -245,9 +248,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         }
 
         // Create adapter for the spinner of categories
-        //spinnerAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, categoriesList);
-        //spinner_categories.setAdapter(spinnerAdapter);
-        CustomAdapter customAdapter = new CustomAdapter(view.getContext(), categoriesList);
+        CustomAdapter customAdapter = new CustomAdapter(view.getContext(), categoriesList, getActivity());
         spinner_categories.setAdapter(customAdapter);
 
         // Set default position
@@ -257,7 +258,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         spinner_categories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //String itemSelected = adapterView.getItemAtPosition(i).toString();
                 int categID;
                 CustomItems items = (CustomItems) adapterView.getSelectedItem();
                 String category_name = items.getSpinnerText();
@@ -478,11 +478,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
 
                 RackMonthPicker rackMonthPicker = new RackMonthPicker(view.getContext());
-
+                
                 rackMonthPicker.setLocale(Locale.ENGLISH);
                 rackMonthPicker.setPositiveText(getString(R.string.alert_positiveBttn_addCategory));
                 rackMonthPicker.setNegativeText(getString(R.string.alert_negativeBttn_addCategory));
-                rackMonthPicker.setColorTheme(R.color.colorAccent);
+                rackMonthPicker.setColorTheme(R.color.color_primary);
                 rackMonthPicker.setSelectedMonth(calendar.get(Calendar.MONTH));
                 rackMonthPicker.setSelectedYear(calendar.get(Calendar.YEAR));
                 rackMonthPicker.setMonthType(MonthType.NUMBER);
@@ -831,6 +831,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class Task extends AsyncTask<String, Void, Cursor> {
 
         private Context myContext;

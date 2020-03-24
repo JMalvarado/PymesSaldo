@@ -2,6 +2,7 @@ package com.example.myapplication.activities.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -19,7 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -99,14 +99,13 @@ public class EditEntryActivity extends AppCompatActivity {
         while (categoriesData.moveToNext()) {
             String categName = categoriesData.getString(1);
             String categIcon = categoriesData.getString(2);
-            int categIconId = getResources().getIdentifier(categIcon, "drawable", this.getPackageName());
+            int categIconId = Integer.parseInt(categIcon);
             categoriesList.add(new CustomItems(categName, categIconId));
         }
 
         // Create adapter for the spinner of categories
-        CustomAdapter customAdapter = new CustomAdapter(this, categoriesList);
+        CustomAdapter customAdapter = new CustomAdapter(this, categoriesList, this);
         spinner_categories.setAdapter(customAdapter);
-
 
         // Set spinner categories onClickListener
         spinner_categories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -169,13 +168,12 @@ public class EditEntryActivity extends AppCompatActivity {
                 while (categoriesData.moveToNext()) {
                     String categName = categoriesData.getString(1);
                     String categIcon = categoriesData.getString(2);
-                    int categIconId = getResources().getIdentifier(categIcon, "drawable",
-                            adapterView.getContext().getPackageName());
+                    int categIconId = Integer.parseInt(categIcon);
                     categoriesList.add(new CustomItems(categName, categIconId));
                 }
 
                 // Create adapter for the spinner of categories
-                CustomAdapter customAdapter = new CustomAdapter(adapterView.getContext(), categoriesList);
+                CustomAdapter customAdapter = new CustomAdapter(adapterView.getContext(), categoriesList, (FragmentActivity) view.getContext());
                 spinner_categories.setAdapter(customAdapter);
 
                 if (new_id_inst.equals(MainActivity.idInstance)) {
@@ -266,84 +264,81 @@ public class EditEntryActivity extends AppCompatActivity {
                 int monthPick = calendar.get(Calendar.MONTH);
                 int yearPick = calendar.get(Calendar.YEAR);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        strDay = Integer.toString(i2);
-                        strMonth = Integer.toString(i1 + 1);
-                        strYear = Integer.toString(i);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), (datePicker, i, i1, i2) -> {
+                    strDay = Integer.toString(i2);
+                    strMonth = Integer.toString(i1 + 1);
+                    strYear = Integer.toString(i);
 
-                        // Cast day with 1 digit to 2
-                        switch (strDay) {
-                            case "1":
-                                strDay = "01";
-                                break;
-                            case "2":
-                                strDay = "02";
-                                break;
-                            case "3":
-                                strDay = "03";
-                                break;
-                            case "4":
-                                strDay = "04";
-                                break;
-                            case "5":
-                                strDay = "05";
-                                break;
-                            case "6":
-                                strDay = "06";
-                                break;
-                            case "7":
-                                strDay = "07";
-                                break;
-                            case "8":
-                                strDay = "08";
-                                break;
-                            case "9":
-                                strDay = "09";
-                                break;
-                            default:
-                                break;
-                        }
-
-                        // Cast month with 1 digit to 2
-                        switch (strMonth) {
-                            case "1":
-                                strMonth = "01";
-                                break;
-                            case "2":
-                                strMonth = "02";
-                                break;
-                            case "3":
-                                strMonth = "03";
-                                break;
-                            case "4":
-                                strMonth = "04";
-                                break;
-                            case "5":
-                                strMonth = "05";
-                                break;
-                            case "6":
-                                strMonth = "06";
-                                break;
-                            case "7":
-                                strMonth = "07";
-                                break;
-                            case "8":
-                                strMonth = "08";
-                                break;
-                            case "9":
-                                strMonth = "09";
-                                break;
-                            default:
-                                break;
-                        }
-
-                        // Show in format DD-MM-YYYY
-                        textView_date.setText(new StringBuilder().append(strDay).append("-").append(strMonth).append("-").append(strYear).toString());
-                        // Store in format YYYY-MM-DD
-                        date = new StringBuilder().append(strYear).append("-").append(strMonth).append("-").append(strDay).toString();
+                    // Cast day with 1 digit to 2
+                    switch (strDay) {
+                        case "1":
+                            strDay = "01";
+                            break;
+                        case "2":
+                            strDay = "02";
+                            break;
+                        case "3":
+                            strDay = "03";
+                            break;
+                        case "4":
+                            strDay = "04";
+                            break;
+                        case "5":
+                            strDay = "05";
+                            break;
+                        case "6":
+                            strDay = "06";
+                            break;
+                        case "7":
+                            strDay = "07";
+                            break;
+                        case "8":
+                            strDay = "08";
+                            break;
+                        case "9":
+                            strDay = "09";
+                            break;
+                        default:
+                            break;
                     }
+
+                    // Cast month with 1 digit to 2
+                    switch (strMonth) {
+                        case "1":
+                            strMonth = "01";
+                            break;
+                        case "2":
+                            strMonth = "02";
+                            break;
+                        case "3":
+                            strMonth = "03";
+                            break;
+                        case "4":
+                            strMonth = "04";
+                            break;
+                        case "5":
+                            strMonth = "05";
+                            break;
+                        case "6":
+                            strMonth = "06";
+                            break;
+                        case "7":
+                            strMonth = "07";
+                            break;
+                        case "8":
+                            strMonth = "08";
+                            break;
+                        case "9":
+                            strMonth = "09";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    // Show in format DD-MM-YYYY
+                    textView_date.setText(new StringBuilder().append(strDay).append("-").append(strMonth).append("-").append(strYear).toString());
+                    // Store in format YYYY-MM-DD
+                    date = new StringBuilder().append(strYear).append("-").append(strMonth).append("-").append(strDay).toString();
                 }, yearPick, monthPick, dayPick);
                 datePickerDialog.show();
 

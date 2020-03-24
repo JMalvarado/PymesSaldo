@@ -14,9 +14,10 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="16dp"
-        app:boxStrokeColor="@color/colorAccent">
+        app:boxStrokeColor="@color/colorAccent"
+        app:hintTextColor="@color/colorAccent">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_fragmentAddDebt_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,9 +36,10 @@
         android:layout_marginRight="16dp"
         app:boxStrokeColor="@color/colorAccent"
         app:counterEnabled="true"
-        app:counterMaxLength="20">
+        app:counterMaxLength="20"
+        app:hintTextColor="@color/colorAccent">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_fragmentAddDebt_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,7 +92,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="45dp"
-            android:background="@drawable/roundcornerbrownlight"
             android:backgroundTint="@color/colorAccent"
             android:paddingStart="25dp"
             android:paddingTop="5dp"
@@ -107,7 +108,6 @@
             android:id="@+id/button_fragmentAddDebt_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/roundcornerbrownlight"
             android:backgroundTint="@color/colorPrimaryDark"
             android:paddingStart="25dp"
             android:paddingTop="5dp"

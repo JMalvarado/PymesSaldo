@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".activities.data.IconPackApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,31 +21,37 @@
         <activity
             android:name=".activities.activities.WelcomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/WelcomeTheme" />
+            android:theme="@style/WelcomeTheme"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.activities.EditProfileActivity"
             android:label="@string/editProfile_name"
             android:screenOrientation="portrait"
-            android:theme="@style/myTheme" />
+            android:theme="@style/myTheme"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.activities.EditEntryActivity"
             android:label="@string/editEntry_name"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.activities.AddEntryActivity"
             android:label="@string/addEntry_name"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.activities.DataSearch"
             android:label="@string/dataSearch_name" />
         <activity
             android:name=".activities.activities.AddProfileActivity"
             android:label="@string/addProfile_name"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.activities.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -55,7 +62,8 @@
             android:name=".activities.activities.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

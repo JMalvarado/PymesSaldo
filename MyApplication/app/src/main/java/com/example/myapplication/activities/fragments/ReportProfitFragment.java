@@ -1,6 +1,7 @@
 package com.example.myapplication.activities.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -93,6 +94,7 @@ public class ReportProfitFragment extends Fragment {
     /**
      * show data in recycler view.
      */
+    @SuppressLint("StaticFieldLeak")
     private class Task extends AsyncTask<String, Void, Void> {
 
         @Override

@@ -12,12 +12,14 @@
     <RadioGroup
         android:id="@+id/radioGroup_addMov"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/radioButton_fragmentAddMov_Ingreso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:checked="true"
             android:text="@string/fragment_addMov_radiobttn_Ingreso"
             android:textSize="20sp"
@@ -48,16 +50,25 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        app:boxStrokeColor="@color/colorAccent">
+        app:boxStrokeColor="@color/colorAccent"
+        app:hintTextColor="@color/colorAccent">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etIngreso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/addentry_textView_hintIngreso"
+            android:inputType="numberDecimal"
+            android:padding="15dip" />
+
+        <!--<EditText
             android:id="@+id/etIngreso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:hint="@string/addentry_textView_hintIngreso"
             android:inputType="numberDecimal"
-            android:padding="15dip" />
+            android:padding="15dip" />-->
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,9 +81,10 @@
         android:layout_marginRight="16dp"
         app:boxStrokeColor="@color/colorAccent"
         app:counterEnabled="true"
-        app:counterMaxLength="20">
+        app:counterMaxLength="20"
+        app:hintTextColor="@color/colorAccent">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etdescripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,6 +93,16 @@
             android:inputType="text"
             android:maxLength="20"
             android:padding="15dip" />
+
+        <!--<EditText
+            android:id="@+id/etdescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/addentry_textView_hintDescr"
+            android:inputType="text"
+            android:maxLength="20"
+            android:padding="15dip" />-->
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,7 +125,7 @@
         <Spinner
             android:id="@+id/spinner_addEntry_category"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp" />
 
@@ -179,7 +201,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="45dp"
-            android:background="@drawable/roundcornerbrownlight"
             android:backgroundTint="@color/colorAccent"
             android:paddingStart="25dp"
             android:paddingTop="5dp"
@@ -196,7 +217,6 @@
             android:id="@+id/button_fragmentAddMov_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/roundcornerbrownlight"
             android:backgroundTint="@color/colorPrimaryDark"
             android:paddingStart="25dp"
             android:paddingTop="5dp"

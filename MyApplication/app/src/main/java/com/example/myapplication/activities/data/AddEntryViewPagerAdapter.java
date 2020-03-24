@@ -13,6 +13,8 @@ import com.example.myapplication.activities.fragments.AddMovFragment;
 import com.example.myapplication.activities.fragments.SavingFragment;
 import com.example.myapplication.activities.fragments.TransferFragment;
 
+import java.util.Objects;
+
 /**
  * Adapter for tabs in add entry activity
  */
@@ -48,7 +50,7 @@ public class AddEntryViewPagerAdapter extends FragmentPagerAdapter {
 
         }
 
-        return fragment;
+        return Objects.requireNonNull(fragment);
     }
 
     @Override

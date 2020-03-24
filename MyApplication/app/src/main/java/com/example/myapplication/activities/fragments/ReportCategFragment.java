@@ -277,7 +277,6 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
         builder.setTitle(getString(R.string.dialogExportFile_title));
         builder.setMessage(getString(R.string.dialogExportFile_mssg));
         builder.setView(subView);
-        AlertDialog alertDialog = builder.create();
 
         // Positive option
         builder.setPositiveButton(getString(R.string.alert_positiveBttn_addCategory), (dialogInterface, i) -> new TaskCreateXLSX().execute());
@@ -292,6 +291,7 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
     /**
      * get data from db dialog.
      */
+    @SuppressLint("StaticFieldLeak")
     private class Task extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -384,6 +384,7 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
     /**
      * Create XLSX file
      */
+    @SuppressLint("StaticFieldLeak")
     private class TaskCreateXLSX extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {

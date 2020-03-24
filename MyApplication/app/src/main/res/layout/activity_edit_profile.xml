@@ -33,9 +33,10 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="60dp"
-        app:boxStrokeColor="@color/colorAccent">
+        app:boxStrokeColor="@color/colorAccent"
+        app:hintTextColor="@color/colorAccent">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_editProfile_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,7 +99,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="45dp"
-            android:background="@drawable/roundcornerbrownlight"
             android:backgroundTint="@color/colorAccent"
             android:onClick="onClickEditProfile"
             android:paddingStart="25dp"
@@ -116,7 +116,6 @@
             android:id="@+id/button_activityEditProfile_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/roundcornerbrownlight"
             android:backgroundTint="@color/colorPrimaryDark"
             android:onClick="onClickEditProfile"
             android:paddingStart="25dp"

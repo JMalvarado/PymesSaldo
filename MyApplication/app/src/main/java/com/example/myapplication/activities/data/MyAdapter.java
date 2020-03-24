@@ -1,8 +1,10 @@
 package com.example.myapplication.activities.data;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
@@ -22,6 +25,8 @@ import com.example.myapplication.activities.activities.DataSearch;
 import com.example.myapplication.activities.activities.EditEntryActivity;
 import com.example.myapplication.activities.activities.MainActivity;
 import com.example.myapplication.activities.fragments.SearchFragment;
+import com.maltaisn.icondialog.pack.IconDrawableLoader;
+import com.maltaisn.icondialog.pack.IconPack;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -38,11 +43,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private List<ListData> listData;
     private Context context;
+    private FragmentActivity activity;
     private DatabaseManager db;
 
-    public MyAdapter(List<ListData> listData, Context context) {
+    public MyAdapter(List<ListData> listData, Context context, FragmentActivity activity) {
         this.listData = listData;
         this.context = context;
+        this.activity = activity;
     }
 
     @NonNull
@@ -93,10 +100,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         myViewHolder.tvCategory.setText(db.getCategoryName(data.getCategId(), MainActivity.idInstance));
 
+
+        IconPack iconPack = ((IconPackApp) activity.getApplication()).getIconPack();
         // Get and set category icon
-        String categoryIcName = db.getCategoryIconName(db.getCategoryName(data.getCategId(), MainActivity.idInstance), MainActivity.idInstance);
-        int imageID = context.getResources().getIdentifier(categoryIcName, "drawable", context.getPackageName());
-        myViewHolder.imageView_ic.setImageResource(imageID);
+        String categoryIcId = db.getCategoryIconName(db.getCategoryName(data.getCategId(), MainActivity.idInstance), MainActivity.idInstance);
+        int imageID = Integer.parseInt(categoryIcId);
+        Drawable icDrawable = Objects.requireNonNull(iconPack).getIconDrawable(imageID, new IconDrawableLoader(Objects.requireNonNull(context)));
+        myViewHolder.imageView_ic.setImageDrawable(icDrawable);
 
         myViewHolder.cardView.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(context, view);
@@ -177,40 +187,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             popupMenu.inflate(R.menu.entry_options);
             popupMenu.show();
         });
-
-        /*myViewHolder.fab_dit.setOnClickListener(view -> {
-            Intent editIntent = new Intent(view.getContext(), EditEntryActivity.class);
-            editIntent.putExtra("ID", data.getId());
-            editIntent.putExtra("INGRESO", data.getIngreso());
-            editIntent.putExtra("GASTO", data.getGasto());
-            editIntent.putExtra("FECHA", data.getFecha());
-            editIntent.putExtra("HORA", data.getHora());
-            editIntent.putExtra("DESCR", data.getDescr());
-            editIntent.putExtra("CATEG", data.getCategId());
-
-            context.startActivity(editIntent);
-        });
-
-        final CharSequence[] opciones;
-        opciones = new CharSequence[]{context.getResources().getString(R.string.alert_optSi), context.getResources().getString(R.string.alert_optNo)};
-
-        myViewHolder.fab_delete.setOnClickListener(view -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-            builder.setCancelable(false);
-            builder.setTitle(R.string.alert_title_deleteData);
-            builder.setItems(opciones, (dialog, which) -> {
-                switch (which) {
-                    case 0:
-                        db.deleteEntryData(MainActivity.idInstance, data.getId());
-                        new Task().execute();
-                        break;
-
-                    case 1:
-                        break;
-                }
-            });
-            builder.show();
-        });*/
     }
 
     @Override
@@ -241,14 +217,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             tvProfit = itemView.findViewById(R.id.textView_dataList_ingr);
             linearLayout_data = itemView.findViewById(R.id.linearLayout_data);
             tvCategory = itemView.findViewById(R.id.textView_dataList_category);
-//            fab_dit = itemView.findViewById(R.id.fab_dataList_edit);
-//            fab_delete = itemView.findViewById(R.id.fab_dataList_delete);
             imageView_item = itemView.findViewById(R.id.imageView_dataList_item);
             imageView_ic = itemView.findViewById(R.id.imageView_dataList_ic);
             cardView = itemView.findViewById(R.id.cardView_dataList);
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class Task extends AsyncTask<String, Void, Cursor> {
 
         Task() {

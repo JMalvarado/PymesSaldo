@@ -12,6 +12,8 @@ import com.example.myapplication.activities.fragments.ReportGraphicsFragment;
 import com.example.myapplication.activities.fragments.ReportProfitFragment;
 import com.example.myapplication.activities.fragments.ReportSpendFragment;
 
+import java.util.Objects;
+
 /**
  * Adapter for tabs in report fragment
  */
@@ -42,7 +44,7 @@ public class ReportCategViewPagerAdapter extends FragmentStatePagerAdapter {
                 break;
         }
 
-        return fragment;
+        return Objects.requireNonNull(fragment);
     }
 
     @Override

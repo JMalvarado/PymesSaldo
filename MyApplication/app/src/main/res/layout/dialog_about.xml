@@ -97,7 +97,7 @@
                 android:contentDescription="@string/welcome_imageButtonDecr"
                 android:padding="0dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_facebookcute_100" />
+                android:src="@drawable/ic_facebooknormal_100" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
                 android:contentDescription="@string/welcome_imageButtonDecr"
                 android:padding="0dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_youtubecute_100" />
+                android:src="@drawable/ic_youtubenormal_100" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -147,7 +147,7 @@
                 android:contentDescription="@string/welcome_imageButtonDecr"
                 android:padding="0dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_instagramcute_100" />
+                android:src="@drawable/ic_instagramnormal_100" />
 
             <TextView
                 android:layout_width="wrap_content"

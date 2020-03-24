@@ -47,14 +47,17 @@
                 <RadioGroup
                     android:id="@+id/radioGroup_addMov"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/radioButton_activityEditMov_Ingreso"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
                         android:checked="true"
                         android:text="@string/fragment_addMov_radiobttn_Ingreso"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <RadioButton
@@ -62,6 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/fragment_addMov_radiobttn_Gasto"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                 </RadioGroup>
@@ -72,9 +76,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    app:boxStrokeColor="@color/colorAccent">
+                    app:boxStrokeColor="@color/colorAccent"
+                    app:hintTextColor="@color/colorAccent">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etIngreso_editEntry"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -93,9 +98,10 @@
                     android:layout_marginRight="16dp"
                     app:boxStrokeColor="@color/colorAccent"
                     app:counterEnabled="true"
-                    app:counterMaxLength="20">
+                    app:counterMaxLength="20"
+                    app:hintTextColor="@color/colorAccent">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etdescripcion_editEntry"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -229,7 +235,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="45dp"
-                        android:background="@drawable/roundcornerbrownlight"
                         android:backgroundTint="@color/colorAccent"
                         android:onClick="onClickEditEntry"
                         android:paddingStart="25dp"
@@ -247,7 +252,6 @@
                         android:id="@+id/button_activityEditEntry_cancel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/roundcornerbrownlight"
                         android:backgroundTint="@color/colorPrimaryDark"
                         android:onClick="onClickEditEntry"
                         android:paddingStart="25dp"

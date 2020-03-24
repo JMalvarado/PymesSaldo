@@ -263,7 +263,7 @@ public class DataSearch extends AppCompatActivity {
         textView_profit.setText(profitDf);
         textView_spend.setText(spendDf);
 
-        rvAdapter = new MyAdapter(listItems, this);
+        rvAdapter = new MyAdapter(listItems, this, this);
 
         rvList.setAdapter(rvAdapter);
 
@@ -316,7 +316,6 @@ public class DataSearch extends AppCompatActivity {
         builder.setTitle(getString(R.string.dialogExportFile_title));
         builder.setMessage(getString(R.string.dialogExportFile_mssg));
         builder.setView(subView);
-        AlertDialog alertDialog = builder.create();
 
         // Positive option
         builder.setPositiveButton(getString(R.string.alert_positiveBttn_addCategory), (dialogInterface, i) -> new TaskCreateXLSX().execute());
@@ -331,6 +330,7 @@ public class DataSearch extends AppCompatActivity {
     /**
      * Create XLSX file
      */
+    @SuppressLint("StaticFieldLeak")
     private class TaskCreateXLSX extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
