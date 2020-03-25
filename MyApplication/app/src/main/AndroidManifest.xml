@@ -17,7 +17,7 @@
         tools:replace="android:allowBackup">
         <activity
             android:name=".activities.activities.HelpFunctionsActivity"
-            android:label="@string/helpFunctionsName"/>
+            android:label="@string/helpFunctionsName" />
         <activity
             android:name=".activities.activities.HelpConceptsActivity"
             android:label="@string/helpConceptsName" />
@@ -60,7 +60,6 @@
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -72,7 +71,6 @@
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

@@ -9,11 +9,33 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="icdStyle">@style/CustomIconDialogStyle</item>
         <item name="toolbarStyle">@style/CustomToolbarStyle</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <!-- Icon dialog style -->
+    <style name="CustomIconDialogStyle" parent="IcdStyle">
+        <item name="icdSelectedIconColor">@color/colorAccent</item>
+        <item name="icdListHeaderStyle">@style/CustomHeaderStyle</item>
+        <item name="icdListStickyHeaderStyle">@style/CustomStickyHeaderStyle</item>
+    </style>
+
+    <style name="CustomHeaderStyle" parent="IcdListHeaderStyle">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CustomStickyHeaderStyle" parent="IcdListStickyHeaderStyle">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- **************************************************************** -->
 
     <style name="CustomToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
         <item name="titleTextColor">@color/colorBlack</item>
