@@ -478,7 +478,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
 
                 RackMonthPicker rackMonthPicker = new RackMonthPicker(view.getContext());
-                
+
                 rackMonthPicker.setLocale(Locale.ENGLISH);
                 rackMonthPicker.setPositiveText(getString(R.string.alert_positiveBttn_addCategory));
                 rackMonthPicker.setNegativeText(getString(R.string.alert_negativeBttn_addCategory));
