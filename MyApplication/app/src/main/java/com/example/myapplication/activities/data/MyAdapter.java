@@ -281,21 +281,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 } else if (SearchFragment.radioButtonDatesIsChecked) {
                     if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked)) {
                         String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                        resultado = db.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected);
+                        resultado = db.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected, false);
                     } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
                         String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
-                        resultado = db.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected);
+                        resultado = db.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected, false);
                     } else if (SearchFragment.checkboxBegIsChecked) {
-                        resultado = db.getEntryAllData(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+                        resultado = db.getEntryAllData(MainActivity.idInstance, SearchFragment.categoryIDSelected, false);
                     } else {
                         String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
                         String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                        resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                        resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected, false);
                     }
                 } else {
                     String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
                     String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                    resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                    resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected, false);
                 }
             } else if (SearchFragment.type.equals(context.getResources().getString(R.string.fragment_search_type_spinner_profit))) {
                 if (SearchFragment.radioButtonMonthIsChecked) {
@@ -303,21 +303,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 } else if (SearchFragment.radioButtonDatesIsChecked) {
                     if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked)) {
                         String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                        resultado = db.getEntryProfitFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected);
+                        resultado = db.getEntryProfitFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected, false);
                     } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
                         String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
-                        resultado = db.getEntryProfitFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected);
+                        resultado = db.getEntryProfitFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected, false);
                     } else if (SearchFragment.checkboxBegIsChecked) {
-                        resultado = db.getEntryAllProfit(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+                        resultado = db.getEntryAllProfit(MainActivity.idInstance, SearchFragment.categoryIDSelected, false);
                     } else {
                         String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
                         String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                        resultado = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                        resultado = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected, false);
                     }
                 } else {
                     String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
                     String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                    resultado = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                    resultado = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected, false);
                 }
             } else {
                 if (SearchFragment.radioButtonMonthIsChecked) {
@@ -325,21 +325,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 } else if (SearchFragment.radioButtonDatesIsChecked) {
                     if ((SearchFragment.checkboxBegIsChecked) && (!SearchFragment.checkboxFinalIsChecked)) {
                         String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                        resultado = db.getEntrySpendFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected);
+                        resultado = db.getEntrySpendFromBegToDate(MainActivity.idInstance, finalDate, SearchFragment.categoryIDSelected, false);
                     } else if ((!SearchFragment.checkboxBegIsChecked) && (SearchFragment.checkboxFinalIsChecked)) {
                         String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
-                        resultado = db.getEntrySpendFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected);
+                        resultado = db.getEntrySpendFromDateToToday(MainActivity.idInstance, begDate, SearchFragment.categoryIDSelected, false);
                     } else if (SearchFragment.checkboxBegIsChecked) {
-                        resultado = db.getEntryAllSpend(MainActivity.idInstance, SearchFragment.categoryIDSelected);
+                        resultado = db.getEntryAllSpend(MainActivity.idInstance, SearchFragment.categoryIDSelected, false);
                     } else {
                         String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
                         String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                        resultado = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                        resultado = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected, false);
                     }
                 } else {
                     String begDate = SearchFragment.begYear + "-" + SearchFragment.begMonth + "-" + SearchFragment.begDay;
                     String finalDate = SearchFragment.finYear + "-" + SearchFragment.finMonth + "-" + SearchFragment.finDay;
-                    resultado = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected);
+                    resultado = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finalDate, SearchFragment.categoryIDSelected, false);
                 }
             }
 

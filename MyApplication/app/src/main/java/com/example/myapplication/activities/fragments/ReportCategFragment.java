@@ -312,9 +312,9 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
         @Override
         protected Void doInBackground(String... strings) {
             // Get Entries from database with period and instance as filter
-            Cursor profits = db.getEntryProfitInDate(MainActivity.idInstance, strings[0], strings[1], 0);
+            Cursor profits = db.getEntryProfitInDate(MainActivity.idInstance, strings[0], strings[1], 0, true);
             // Get Entries from database with period and instance as filter
-            Cursor spends = db.getEntrySpendInDate(MainActivity.idInstance, strings[0], strings[1], 0);
+            Cursor spends = db.getEntrySpendInDate(MainActivity.idInstance, strings[0], strings[1], 0, true);
 
             // Get categories from database with instance as filter
             Cursor categories = db.getCategoriesByInstance(MainActivity.idInstance);

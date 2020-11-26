@@ -150,7 +150,7 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.MyViewHold
             ArrayList<String> entriesTime = new ArrayList<>();
             ArrayList<Double> entriesAmount = new ArrayList<>();
             if (type.equals("I")) {
-                Cursor profits = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finDate, categId);
+                Cursor profits = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finDate, categId, true);
 
                 while (profits.moveToNext()) {
                     String description = profits.getString(7);
@@ -174,7 +174,7 @@ public class AdapterReport extends RecyclerView.Adapter<AdapterReport.MyViewHold
                 }
                 profits.moveToPosition(-1);
             } else {
-                Cursor spends = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finDate, categId);
+                Cursor spends = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finDate, categId, true);
 
                 while (spends.moveToNext()) {
                     String description = spends.getString(7);

@@ -560,18 +560,34 @@ public class DatabaseManager extends SQLiteOpenHelper {
     /**
      * Get the data from in the given month and year with specific category
      *
+     * @param Instancias_ID
+     * @param category
+     * @param month
+     * @param year
+     * @param with_remnants
+     *
      * @return
      */
-    public Cursor getEntryInMonthYearByCategory(String Instancias_ID, int category, String month, String year) {
+    public Cursor getEntryInMonthYearByCategory(String Instancias_ID, int category, String month, String year, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
-                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID, null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID, null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
-                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
 
         return resultado;
@@ -600,18 +616,34 @@ public class DatabaseManager extends SQLiteOpenHelper {
     /**
      * Get the Profit data from in the given month and year with specific category
      *
+     * @param Instancias_ID
+     * @param category
+     * @param month
+     * @param year
+     * @param with_remnants
+     *
      * @return
      */
-    public Cursor getIngresosInMonthYearByCategory(String Instancias_ID, int category, String month, String year) {
+    public Cursor getIngresosInMonthYearByCategory(String Instancias_ID, int category, String month, String year, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
-                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
-                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Gasto=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
 
         return resultado;
@@ -620,18 +652,34 @@ public class DatabaseManager extends SQLiteOpenHelper {
     /**
      * Get the Spend data from in the given month and year with specific category
      *
+     * @param Instancias_ID
+     * @param category
+     * @param month
+     * @param year
+     * @param with_remnants
+     *
      * @return
      */
-    public Cursor getGastosInMonthYearByCategory(String Instancias_ID, int category, String month, String year) {
+    public Cursor getGastosInMonthYearByCategory(String Instancias_ID, int category, String month, String year, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
-                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
-                    "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE strftime('%Y',Fecha)='" + year + "' " +
+                        "AND strftime('%m',Fecha)='" + month + "' AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
 
         return resultado;
@@ -716,16 +764,27 @@ public class DatabaseManager extends SQLiteOpenHelper {
     /**
      * Get all the data from table Saldos
      *
+     * @param Instancias_ID
+     * @param category
+     * @param with_remnants
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryAllData(String Instancias_ID, int category) {
+    public Cursor getEntryAllData(String Instancias_ID, int category, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID, null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
 
         return resultado;
@@ -734,16 +793,27 @@ public class DatabaseManager extends SQLiteOpenHelper {
     /**
      * Get all the profit data from table Saldos
      *
+     * @param Instancias_ID
+     * @param category
+     * @param with_remnants
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryAllProfit(String Instancias_ID, int category) {
+    public Cursor getEntryAllProfit(String Instancias_ID, int category, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Gasto=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
 
         return resultado;
@@ -752,16 +822,27 @@ public class DatabaseManager extends SQLiteOpenHelper {
     /**
      * Get all the spend data from table Saldos
      *
+     * @param Instancias_ID
+     * @param category
+     * @param with_remnants
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryAllSpend(String Instancias_ID, int category) {
+    public Cursor getEntryAllSpend(String Instancias_ID, int category, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Ingreso=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
 
         return resultado;
@@ -831,19 +912,31 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * Get the data from table Saldos from beginning to a given date
      *
      * @param finalDate
+     * @param with_remnants
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryDataFromBegToDate(String Instancias_ID, String finalDate, int category) {
+    public Cursor getEntryDataFromBegToDate(String Instancias_ID, String finalDate, int category, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
-                    "AND Instancias_ID=" + Instancias_ID, null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID, null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
-                    "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
+
         return resultado;
     }
 
@@ -851,19 +944,31 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * Get the profit data from table Saldos from beginning to a given date
      *
      * @param finalDate
+     * @param with_remnants
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryProfitFromBegToDate(String Instancias_ID, String finalDate, int category) {
+    public Cursor getEntryProfitFromBegToDate(String Instancias_ID, String finalDate, int category, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
-                    "AND Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
-                    "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Gasto=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
+
         return resultado;
     }
 
@@ -871,19 +976,31 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * Get the spend data from table Saldos from beginning to a given date
      *
      * @param finalDate
+     * @param with_remnants
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntrySpendFromBegToDate(String Instancias_ID, String finalDate, int category) {
+    public Cursor getEntrySpendFromBegToDate(String Instancias_ID, String finalDate, int category, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
-                    "AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
-                    "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha <= '" + finalDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
+
         return resultado;
     }
 
@@ -891,19 +1008,31 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * Get all the data from table Saldos from a given date to the end of times
      *
      * @param beginDate
+     * @param with_remnants
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryDataFromDateToToday(String Instancias_ID, String beginDate, int category) {
+    public Cursor getEntryDataFromDateToToday(String Instancias_ID, String beginDate, int category, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
-                    "AND Instancias_ID=" + Instancias_ID, null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID, null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
-                    "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
+
         return resultado;
     }
 
@@ -911,19 +1040,31 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * Get all the profit data from table Saldos from a given date to the end of times
      *
      * @param beginDate
+     * @param with_remnants
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryProfitFromDateToToday(String Instancias_ID, String beginDate, int category) {
+    public Cursor getEntryProfitFromDateToToday(String Instancias_ID, String beginDate, int category, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
-                    "AND Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
-                    "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Gasto=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
+
         return resultado;
     }
 
@@ -931,19 +1072,31 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * Get all the spend data from table Saldos from a given date to the end of times
      *
      * @param beginDate
+     * @param with_remnants
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntrySpendFromDateToToday(String Instancias_ID, String beginDate, int category) {
+    public Cursor getEntrySpendFromDateToToday(String Instancias_ID, String beginDate, int category, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
-                    "AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
-                    "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE Fecha >= '" + beginDate + "' " +
+                        "AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
+
         return resultado;
     }
 
@@ -952,19 +1105,31 @@ public class DatabaseManager extends SQLiteOpenHelper {
      *
      * @param beginDate
      * @param finalDate
+     * @param with_remnants
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryDataInDate(String Instancias_ID, String beginDate, String finalDate, int category) {
+    public Cursor getEntryDataInDate(String Instancias_ID, String beginDate, String finalDate, int category, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
-                    "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID, null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID, null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
-                    "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category, null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
+
         return resultado;
     }
 
@@ -991,19 +1156,31 @@ public class DatabaseManager extends SQLiteOpenHelper {
      *
      * @param beginDate
      * @param finalDate
+     * @param with_remnants
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntryProfitInDate(String Instancias_ID, String beginDate, String finalDate, int category) {
+    public Cursor getEntryProfitInDate(String Instancias_ID, String beginDate, String finalDate, int category, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
-                    "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Gasto=0", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
-                    "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0", null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Gasto=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Gasto=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
+
         return resultado;
     }
 
@@ -1012,19 +1189,31 @@ public class DatabaseManager extends SQLiteOpenHelper {
      *
      * @param beginDate
      * @param finalDate
+     * @param with_remnants
      * @return Cursor with all the information in all the columns
      */
-    public Cursor getEntrySpendInDate(String Instancias_ID, String beginDate, String finalDate, int category) {
+    public Cursor getEntrySpendInDate(String Instancias_ID, String beginDate, String finalDate, int category, boolean with_remnants) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor resultado;
 
-        if (category == 0) {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
-                    "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+        if (with_remnants) {
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
+            }
         } else {
-            resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
-                    "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0", null);
+            if (category == 0) {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Ingreso=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            } else {
+                resultado = db.rawQuery("SELECT * FROM " + TABLA1_NOMBRE + " WHERE (Fecha BETWEEN '" + beginDate + "' " +
+                        "AND '" + finalDate + "') AND Instancias_ID=" + Instancias_ID + " AND Categorias_ID=" + category + " AND Ingreso=0" + " AND Descripcion!='" + context.getString(R.string.fragment_balance_class_remnantDescription) + "'", null);
+            }
         }
+
         return resultado;
     }
 

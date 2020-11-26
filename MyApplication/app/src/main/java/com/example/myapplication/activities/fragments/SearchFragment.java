@@ -894,16 +894,16 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
             if (type.equals(getResources().getString(R.string.fragment_search_type_spinner_all))) {
                 if (radioButtonMonthIsChecked) {
-                    resultado = db.getEntryInMonthYearByCategory(MainActivity.idInstance, categoryIDSelected, monthSelected, yearSelected);
+                    resultado = db.getEntryInMonthYearByCategory(MainActivity.idInstance, categoryIDSelected, monthSelected, yearSelected, false);
                 } else if (radioButtonDatesIsChecked) {
                     if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                        resultado = db.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected);
+                        resultado = db.getEntryDataFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected, false);
                     } else if ((!checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
-                        resultado = db.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected);
+                        resultado = db.getEntryDataFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected, false);
                     } else if (checkboxBegIsChecked) {
-                        resultado = db.getEntryAllData(MainActivity.idInstance, categoryIDSelected);
+                        resultado = db.getEntryAllData(MainActivity.idInstance, categoryIDSelected, false);
                     } else {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
@@ -917,25 +917,25 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                         editor.putString(MainActivity.idInstance, defaultPeriod);
                         editor.apply();
                         // DB process
-                        resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                        resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected, false);
                     }
                 } else {
                     String begDate = begYear + "-" + begMonth + "-" + begDay;
                     String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                    resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                    resultado = db.getEntryDataInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected, false);
                 }
             } else if (type.equals(getResources().getString(R.string.fragment_search_type_spinner_profit))) {
                 if (radioButtonMonthIsChecked) {
-                    resultado = db.getIngresosInMonthYearByCategory(MainActivity.idInstance, categoryIDSelected, monthSelected, yearSelected);
+                    resultado = db.getIngresosInMonthYearByCategory(MainActivity.idInstance, categoryIDSelected, monthSelected, yearSelected, false);
                 } else if (radioButtonDatesIsChecked) {
                     if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                        resultado = db.getEntryProfitFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected);
+                        resultado = db.getEntryProfitFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected, false);
                     } else if ((!checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
-                        resultado = db.getEntryProfitFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected);
+                        resultado = db.getEntryProfitFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected, false);
                     } else if (checkboxBegIsChecked) {
-                        resultado = db.getEntryAllProfit(MainActivity.idInstance, categoryIDSelected);
+                        resultado = db.getEntryAllProfit(MainActivity.idInstance, categoryIDSelected, false);
                     } else {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
@@ -948,25 +948,25 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                         editor.putString(MainActivity.idInstance, defaultPeriod);
                         editor.apply();
                         // DB process
-                        resultado = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                        resultado = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected, false);
                     }
                 } else {
                     String begDate = begYear + "-" + begMonth + "-" + begDay;
                     String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                    resultado = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                    resultado = db.getEntryProfitInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected, false);
                 }
             } else {
                 if (radioButtonMonthIsChecked) {
-                    resultado = db.getGastosInMonthYearByCategory(MainActivity.idInstance, categoryIDSelected, monthSelected, yearSelected);
+                    resultado = db.getGastosInMonthYearByCategory(MainActivity.idInstance, categoryIDSelected, monthSelected, yearSelected, false);
                 } else if (radioButtonDatesIsChecked) {
                     if ((checkboxBegIsChecked) && (!checkboxFinalIsChecked)) {
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                        resultado = db.getEntrySpendFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected);
+                        resultado = db.getEntrySpendFromBegToDate(MainActivity.idInstance, finalDate, categoryIDSelected, false);
                     } else if ((!checkboxBegIsChecked) && (checkboxFinalIsChecked)) {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
-                        resultado = db.getEntrySpendFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected);
+                        resultado = db.getEntrySpendFromDateToToday(MainActivity.idInstance, begDate, categoryIDSelected, false);
                     } else if (checkboxBegIsChecked) {
-                        resultado = db.getEntryAllSpend(MainActivity.idInstance, categoryIDSelected);
+                        resultado = db.getEntryAllSpend(MainActivity.idInstance, categoryIDSelected, false);
                     } else {
                         String begDate = begYear + "-" + begMonth + "-" + begDay;
                         String finalDate = finYear + "-" + finMonth + "-" + finDay;
@@ -980,12 +980,12 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                         editor.putString(MainActivity.idInstance, defaultPeriod);
                         editor.apply();
                         // DB process
-                        resultado = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                        resultado = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected, false);
                     }
                 } else {
                     String begDate = begYear + "-" + begMonth + "-" + begDay;
                     String finalDate = finYear + "-" + finMonth + "-" + finDay;
-                    resultado = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected);
+                    resultado = db.getEntrySpendInDate(MainActivity.idInstance, begDate, finalDate, categoryIDSelected, false);
                 }
             }
 
