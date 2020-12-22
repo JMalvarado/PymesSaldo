@@ -41,7 +41,7 @@ public class WelcomeActivity extends AppCompatActivity {
         imageButton_wa = findViewById(R.id.imageButton_activityWelcome_wa);
         imageButton_wa.setOnClickListener(v -> {
             Intent intentURLWA = new Intent(Intent.ACTION_VIEW);
-            intentURLWA.setData(Uri.parse("https://bit.ly/2PJjOuq"));
+            intentURLWA.setData(Uri.parse("https://api.whatsapp.com/send?phone=50663139143"));
             startActivity(intentURLWA);
         });
 

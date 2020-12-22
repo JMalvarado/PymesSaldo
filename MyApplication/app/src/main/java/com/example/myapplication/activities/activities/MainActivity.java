@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity
     // Components view
     private FloatingActionButton fab_addProfile;
     private FloatingActionButton fab_confProfile;
-    private TextView textView_webLink;
-    private ImageButton imageButton_subscribe;
+    //private TextView textView_webLink;
+    //private ImageButton imageButton_subscribe;
     public static FloatingActionButton fab_addEntry;
 
     // Variables
@@ -81,20 +81,20 @@ public class MainActivity extends AppCompatActivity
         fab_addEntry = findViewById(R.id.fab);
 
         // Textview web link
-        textView_webLink = findViewById(R.id.textView_activityMain_webLink);
-        textView_webLink.setOnClickListener(v -> {
+        //textView_webLink = findViewById(R.id.textView_activityMain_webLink);
+        /*textView_webLink.setOnClickListener(v -> {
             Intent intentURLWeb = new Intent(Intent.ACTION_VIEW);
             intentURLWeb.setData(Uri.parse("https://nuevaescueladigital.com"));
             startActivity(intentURLWeb);
-        });
+        });*/
 
         // ImageButton subscribe link
-        imageButton_subscribe = findViewById(R.id.imageButton_activityMain_subscribe);
-        imageButton_subscribe.setOnClickListener(v -> {
+        //imageButton_subscribe = findViewById(R.id.imageButton_activityMain_subscribe);
+        /*imageButton_subscribe.setOnClickListener(v -> {
             Intent intentURLSubscribe = new Intent(Intent.ACTION_VIEW);
             intentURLSubscribe.setData(Uri.parse("https://forms.gle/HMgg8fP6njJYVBCd9"));
             startActivity(intentURLSubscribe);
-        });
+        });*/
 
         // Floating Button action
         fab_addEntry.setOnClickListener(view -> {
@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity
             dialogAbout.setContentView(R.layout.dialog_about);
             dialogAbout.show();
 
-            ImageButton imageButton_facebook = dialogAbout.findViewById(R.id.imageButton_dialogAbout_facebook);
+            /*ImageButton imageButton_facebook = dialogAbout.findViewById(R.id.imageButton_dialogAbout_facebook);
             ImageButton imageButton_youtube = dialogAbout.findViewById(R.id.imageButton_dialogAbout_youtube);
             ImageButton imageButton_instagram = dialogAbout.findViewById(R.id.imageButton_dialogAbout_instagram);
 
@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity
                 Intent intentURLInstagram = new Intent(Intent.ACTION_VIEW);
                 intentURLInstagram.setData(Uri.parse("http://instagram.com/ned_nuevaescueladigital/"));
                 startActivity(intentURLInstagram);
-            });
+            });*/
 
         } else if (id == R.id.action_contact) {
             // Constant
@@ -334,7 +334,7 @@ public class MainActivity extends AppCompatActivity
 
             imageButton_WA.setOnClickListener(v -> {
                 Intent intentURLWA = new Intent(Intent.ACTION_VIEW);
-                intentURLWA.setData(Uri.parse("https://bit.ly/2PJjOuq"));
+                intentURLWA.setData(Uri.parse("https://api.whatsapp.com/send?phone=50663139143"));
                 startActivity(intentURLWA);
             });
         }
