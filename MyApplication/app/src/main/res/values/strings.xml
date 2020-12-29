@@ -14,6 +14,7 @@
     <string name="debt_name">Deudas</string>
     <string name="editEntry_name">Editar movimiento</string>
     <string name="editProfile_name">Editar estado financiero</string>
+    <string name="eula_name">EULA</string>
     <string name="help_name">Ayuda</string>
     <string name="helpConceptsName">Conceptos</string>
     <string name="helpFunctionsName">Funciones</string>
@@ -155,6 +156,7 @@
     <string name="imageview_descr">imageview balance</string>
     <string name="button_add">Ingresar</string>
     <string name="button_cancel">Cancelar</string>
+    <string name="button_ok">Aceptar</string>
 
     <!-- Toast, snack bar and alerts -->
     <string name="toast_addprofileactivity_noinitialprofit">Por favor ingrese un saldo inicial</string>
@@ -267,6 +269,22 @@
     <string name="debt_options_add">Agregar monto</string>
     <string name="debt_options_subtract">Restar monto</string>
 
+    <!-- EULA -->
+    <string name="activityEula_content">Este contrato de licencia de usuario final (CLUF) es un acuerdo legal entre usted y NED para el uso de la aplicación NED-Cuentas. Este contrato se ejerce sobre la adquisición y uso del software NED-Cuentas directamente de NED o indirectamente a través de un revendedor o distribuidor autorizado de NED. Lea este acuerdo detenidamente antes de comenzar a utilizar las funcionalidades que ofrece NED-Cuentas. Este contrato proporciona una licencia para utilizar el software NED-Cuentas y contiene información sobre la garantía y exenciones de responsabilidad. Al hacer clic en "Aceptar", usted confirma su adquisición del Software y acepta quedar sujeto a los términos y condiciones de este acuerdo. Si está leyendo este acuerdo en nombre de una empresa u otra entidad legal, declara que tiene la autoridad para enlazar a dicha entidad y sus afiliadas a estos términos y condiciones. Si no tiene dicha autoridad o si no está de acuerdo con los términos y condiciones de este contrato, presione "Cancelar".</string>
+    <string name="activityEula_title">Contrato de licencia para el usuario final (CLUF) de NED-Cuentas</string>
+    <string name="activityEula_subtitle_licenceconcesion">Concesión de licencia:</string>
+    <string name="activityEula_subtitle_dontallowed">No se le permite:</string>
+    <string name="activityEula_subtitle_property">Propiedad intelectual:</string>
+    <string name="activityEula_subtitle_termination">Terminación:</string>
+    <string name="activityEula_subtitle_law">Ley que rige:</string>
+    <string name="activityEula_content_dontallowed">Editar, alterar, modificar, adaptar, traducir o cambiar la totalidad o parte del Software NED-Cuentas o permitir que la totalidad o parte del Software NED-Cuentas se combine o se incorpore a cualquier otro software. Tampoco se permite descompilar, desensamblar o realizar ingeniería inversa del Software NED-Cuentas o intentar hacer cosas como reproducir, copiar, distribuir, revender o utilizar de otro modo el Software NED-Cuentas para cualquier propósito comercial. No se permite que un tercero utilice el Software NED-Cuentas en nombre o en beneficio de un tercero. No se permite utilizar el Software NED-Cuentas de cualquier forma que infrinja las leyes locales, nacionales o internacionales aplicables. No se permite usar el Software NED-Cuentas para cualquier propósito que NED considere que es un incumplimiento a este acuerdo.</string>
+    <string name="activityEula_content_property">NED conservará en todo momento la propiedad del Software NED-Cuentas tal como lo descargó usted originalmente y todas las descargas posteriores del Software NED-Cuentas por parte de usted. El Software NED-Cuentas (y los derechos de autor y otros derechos de propiedad intelectual de cualquier naturaleza en el Software NED-Cuentas, incluidas las modificaciones realizadas al mismo) son y seguirán siendo propiedad de NED. NED se reserva el derecho de otorgar licencias para que terceros utilicen el Software NED-Cuentas.</string>
+    <string name="activityEula_content_licenceconcesion">Por la presente, NED le otorga una licencia personal, intransferible y no exclusiva para usar el software NED-Cuentas en sus dispositivos de acuerdo con los términos de este acuerdo. Se le permite cargar el software NED-Cuentas bajo su control. Usted es responsable de garantizar que su dispositivo cumpla con los requisitos mínimos del software NED-Cuentas.</string>
+    <string name="activityEula_content_termination">Este acuerdo entra en vigencia a partir de la fecha en que utiliza por primera vez el Software NED-Cuentas y continuará hasta su finalización. Puede rescindirlo en cualquier momento mediante notificación por escrito al correo electrónico de NED. También terminará inmediatamente si no cumple con cualquier término de este acuerdo. Tras dicha terminación, las licencias otorgadas por este contrato finalizarán inmediatamente y usted acepta detener todo acceso y uso del Software. Las disposiciones que, por su naturaleza, continúan y sobreviven, sobrevivirán a cualquier terminación de este acuerdo.</string>
+    <string name="activityEula_content_law">Este acuerdo, y cualquier disputa que surja de o en conexión con este acuerdo, se regirá e interpretará de acuerdo con las leyes de Costa Rica.</string>
+    <string name="activityEula_updates"></string>
+
+    <!-- Help -->
     <string name="activityHelp_title1">Conceptos</string>
     <string name="activityHelp_title1_expl">Muestra definiciones básicas</string>
     <string name="activityHelp_title1_exampl">Estado financiero, saldo inicial, ciclo definido, remanentes…</string>
@@ -308,5 +326,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_e_u_l_a">EULAActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 
 </resources>

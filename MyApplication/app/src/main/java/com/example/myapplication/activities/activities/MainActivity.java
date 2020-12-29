@@ -8,6 +8,23 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.data.DatabaseManager;
@@ -20,31 +37,8 @@ import com.example.myapplication.activities.fragments.ReportCategFragment;
 import com.example.myapplication.activities.fragments.SaveMoneyFragment;
 import com.example.myapplication.activities.fragments.SearchFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.Gravity;
-import android.view.View;
-
-import androidx.core.view.GravityCompat;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-
-import android.view.MenuItem;
-
 import com.google.android.material.navigation.NavigationView;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
-import android.view.Menu;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.Spinner;
-import android.widget.TextView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,6 +56,7 @@ public class MainActivity extends AppCompatActivity
     // Variables
     public static String idInstance;
     public static boolean isFirstStart;
+    public static boolean isEulaAccepted;
     private Fragment fragment = null;
     private NavigationView navigationView;
 
@@ -124,16 +119,22 @@ public class MainActivity extends AppCompatActivity
         // Shared preferences of main configuration
         SharedPreferences prefsConfig = getSharedPreferences("config", Context.MODE_PRIVATE);
         isFirstStart = prefsConfig.getBoolean("FIRSTSTART", true);
+        isEulaAccepted = prefsConfig.getBoolean("EULAAccepted", false);
 
         // Start welcome screen if is the first run of the app
         if (isFirstStart) {
-            isFirstStart = false;
-            SharedPreferences.Editor editorConfig = prefsConfig.edit();
-            editorConfig.putBoolean("FIRSTSTART", isFirstStart);
-            editorConfig.apply();
+            if (!isEulaAccepted) {
+                Intent EulaIntent = new Intent(this, EulaActivity.class);
+                startActivity(EulaIntent);
+            } else {
+                isFirstStart = false;
+                SharedPreferences.Editor editorConfig = prefsConfig.edit();
+                editorConfig.putBoolean("FIRSTSTART", isFirstStart);
+                editorConfig.apply();
 
-            Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
-            startActivity(welcomeIntent);
+                Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
+                startActivity(welcomeIntent);
+            }
         } else {
             /* Make an initial query to verify if there is any instance created.
            If not, show the activity to create a profile. */
