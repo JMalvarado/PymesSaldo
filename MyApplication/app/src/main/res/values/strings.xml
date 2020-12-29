@@ -175,7 +175,7 @@
     <string name="toast_balanceFragment_info_remanents">Remanentes</string>
     <string name="toast_balanceFragment_info_equalPlusRemanents">Balance más remanentes</string>
     <string name="toast_reportCategFragment_info_noPeriodSelected">Primero seleccione un periodo</string>
-    <string name="toast_fileSaved">Archivo guardado</string>
+    <string name="toast_fileSaved">Elija la ubicación</string>
     <string name="snack_mainActivity_exit">Presione Salir</string>
     <string name="snack_mainActivity_exit_button">Salir</string>
     <string name="snack_fileDownloaded_button">Abrir</string>

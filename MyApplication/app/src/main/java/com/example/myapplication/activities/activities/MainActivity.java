@@ -208,12 +208,7 @@ public class MainActivity extends AppCompatActivity
                         Menu menuNav = navigationView.getMenu();
                         MenuItem navItemPeriodBalance = menuNav.findItem(R.id.nav_period_balance);
                         // Set state for period option
-                        assert period != null;
-                        if (period.equals("0")) {
-                            navItemPeriodBalance.setEnabled(false);
-                        } else {
-                            navItemPeriodBalance.setEnabled(true);
-                        }
+                        navItemPeriodBalance.setEnabled(!period.equals("0"));
                     }
 
                     @Override
@@ -243,11 +238,7 @@ public class MainActivity extends AppCompatActivity
                 // Set state for period option
                 String period = prefs.getString("PERIOD", null);
                 assert period != null;
-                if (period.equals("0")) {
-                    navItemPeriodBalance.setEnabled(false);
-                } else {
-                    navItemPeriodBalance.setEnabled(true);
-                }
+                navItemPeriodBalance.setEnabled(!period.equals("0"));
             }
         }
     }

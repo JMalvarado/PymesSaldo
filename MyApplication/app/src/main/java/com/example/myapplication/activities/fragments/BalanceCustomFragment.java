@@ -15,7 +15,6 @@ import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -548,7 +547,6 @@ public class BalanceCustomFragment extends Fragment implements View.OnClickListe
     private String getWhereClause(String[] instanceList) {
         String where = "";
         for (int i = 0; i < instanceList.length; i++) {
-            Log.d("IDGETWHERECLAUSE", "getWhereClause: " + instanceList[i]);
             String tmp = "Instancias_ID=";
             tmp = tmp.concat(instanceList[i]);
             if (!(i == instanceList.length - 1)) {
@@ -557,8 +555,6 @@ public class BalanceCustomFragment extends Fragment implements View.OnClickListe
                 where = where.concat(tmp);
             }
         }
-
-        Log.d("WHERECLAUSE", "getWhereClause: " + where);
 
         return where;
     }

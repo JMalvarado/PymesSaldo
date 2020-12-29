@@ -8,9 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -40,9 +41,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
@@ -61,7 +61,7 @@ public class DataSearch extends AppCompatActivity {
     private TextView textView_profit;
     private TextView textView_spend;
     private TextView textView_balance;
-    private TextView textView_directory;
+    //private TextView textView_directory;
     private ImageButton imageButton_download;
     private EditText editText_fileName;
 
@@ -82,6 +82,9 @@ public class DataSearch extends AppCompatActivity {
     private ArrayList<String> gastos;
     private ArrayList<String> ids;
     private ArrayList<String> categIds;
+
+    // Constants
+    private static final int WRITE_REQUEST_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,7 +294,7 @@ public class DataSearch extends AppCompatActivity {
 
         // Initialize
         editText_fileName = subView.findViewById(R.id.dialogLayoutExportFile_editText_fileName);
-        textView_directory = subView.findViewById(R.id.dialogLayoutExportFile_textView_directory);
+        //textView_directory = subView.findViewById(R.id.dialogLayoutExportFile_textView_directory);
 
         // Set actual date and time as file name
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -309,7 +312,7 @@ public class DataSearch extends AppCompatActivity {
         fileName = new String[]{dateNow + "_" + timeToShow};
         editText_fileName.setText(fileName[0]);
         String directory = getString(R.string.dialogExportFile_directoryName);
-        textView_directory.setText(directory.concat("/").concat(getString(R.string.dialogExportFile_folderName_Entries)));
+        //textView_directory.setText(directory.concat("/").concat(getString(R.string.dialogExportFile_folderName_Entries)));
 
         // Alert dialog build
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(this));
@@ -325,6 +328,39 @@ public class DataSearch extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == WRITE_REQUEST_CODE) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    if (data != null
+                            && data.getData() != null) {
+                        writeInFile(data.getData());
+                    }
+                    break;
+                case Activity.RESULT_CANCELED:
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Write in xlsx file the workbook content
+     */
+    private void writeInFile(@NonNull Uri uri) {
+        OutputStream outputStream;
+        try {
+            outputStream = getContentResolver().openOutputStream(uri);
+            workbook.write(outputStream);
+            assert outputStream != null;
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -351,7 +387,20 @@ public class DataSearch extends AppCompatActivity {
                 fileName[0] = fileName[0].concat(".xlsx");
             }
 
-            String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            intent.putExtra(Intent.EXTRA_TITLE, fileName[0]);
+
+            // Optionally, specify a URI for the directory that should be opened in
+            // the system file picker when your app creates the document.
+            // intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri);
+
+            startActivityForResult(intent, WRITE_REQUEST_CODE);
+
+
+
+            /*String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
             File folder = new File(extStorageDirectory, getString(R.string.dialogExportFile_folderName_Entries));
             folder.mkdir();
             File file = new File(folder, fileName[0]);
@@ -359,15 +408,16 @@ public class DataSearch extends AppCompatActivity {
                 file.createNewFile();
             } catch (IOException e1) {
                 e1.printStackTrace();
-            }
+            }*/
 
-            try {
+            /*try {
+                File file = new File();
                 FileOutputStream fileOut = new FileOutputStream(file);
                 workbook.write(fileOut);
                 fileOut.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
 
             dialogSaving.dismiss();
 

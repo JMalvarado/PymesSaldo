@@ -7,18 +7,13 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +21,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.activities.MainActivity;
@@ -43,9 +44,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
     private FloatingActionButton fab_dateFinal;
     private TextView textView_dateBegin;
     private TextView textView_dateFinal;
-    private TextView textView_directory;
+    //private TextView textView_directory;
     private ImageButton imageButton_download;
     private EditText editText_fileName;
 
@@ -84,6 +84,9 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
     private Workbook workbook;
     private Dialog dialogSaving;
     private Dialog dialogLoading;
+
+    // Constants
+    private static final int WRITE_REQUEST_CODE = 101;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -252,7 +255,7 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
 
         // Initialize
         editText_fileName = subView.findViewById(R.id.dialogLayoutExportFile_editText_fileName);
-        textView_directory = subView.findViewById(R.id.dialogLayoutExportFile_textView_directory);
+        //textView_directory = subView.findViewById(R.id.dialogLayoutExportFile_textView_directory);
 
         // Set actual date and time as file name
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -270,7 +273,7 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
         fileName = new String[]{dateNow + "_" + timeToShow};
         editText_fileName.setText(fileName[0]);
         String directory = getString(R.string.dialogExportFile_directoryName);
-        textView_directory.setText(directory.concat("/").concat(getString(R.string.dialogExportFile_folderName)));
+        //textView_directory.setText(directory.concat("/").concat(getString(R.string.dialogExportFile_folderName)));
 
         // Alert dialog build
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
@@ -286,6 +289,40 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
         });
 
         builder.show();
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == WRITE_REQUEST_CODE) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    if (data != null
+                            && data.getData() != null) {
+                        writeInFile(data.getData());
+                    }
+                    break;
+                case Activity.RESULT_CANCELED:
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Write in xlsx file the workbook content
+     */
+    private void writeInFile(@NonNull Uri uri) {
+        OutputStream outputStream;
+        try {
+            outputStream = Objects.requireNonNull(getActivity()).getContentResolver().openOutputStream(uri);
+            workbook.write(outputStream);
+            assert outputStream != null;
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -405,7 +442,18 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
                 fileName[0] = fileName[0].concat(".xlsx");
             }
 
-            String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            intent.putExtra(Intent.EXTRA_TITLE, fileName[0]);
+
+            // Optionally, specify a URI for the directory that should be opened in
+            // the system file picker when your app creates the document.
+            // intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri);
+
+            startActivityForResult(intent, WRITE_REQUEST_CODE);
+
+            /*String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
             File folder = new File(extStorageDirectory, getString(R.string.dialogExportFile_folderName));
             folder.mkdir();
             File file = new File(folder, fileName[0]);
@@ -422,7 +470,7 @@ public class ReportCategFragment extends Fragment implements View.OnClickListene
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+*/
             dialogSaving.dismiss();
 
             Toast.makeText(getContext(), getString(R.string.toast_fileSaved), Toast.LENGTH_SHORT).show();
